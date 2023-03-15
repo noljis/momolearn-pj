@@ -46,8 +46,8 @@ public class MyLectures  {
     @JoinColumn(name = "lecture_id")
 	private Lectures lecture; //강의id
 	
-	@Column(name="cate_name")
+	@Column(name="rege_name")
 	@CreationTimestamp
-	private LocalDateTime cateName; //수강신청일
+	private LocalDateTime regeName; //수강신청일
 
 }
