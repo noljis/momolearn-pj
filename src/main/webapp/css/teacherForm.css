@@ -1,0 +1,27 @@
+.tr {
+    background-color: #36cedb;
+}
+
+.td {
+    
+    
+    color: white;
+    
+}
+.button {
+    border: 1px solid #181d38;  /*---테두리 정의---*/
+    font:12px;      /*--폰트 정의---*/
+    font-weight:bold;   /*--폰트 굵기---*/
+    color:#181d38;    /*--폰트 색깔---*/
+    border-radius: 5px;    
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.button:hover {
+    border: #36cedb;  /*---테두리 정의---*/
+    background-color: #36cedb;
+    font:12px;      /*--폰트 정의---*/
+    color: white;    /*--폰트 색깔---*/
+    
+}
