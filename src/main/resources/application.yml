@@ -3,11 +3,10 @@ server:
   servlet:
     context-path: /momolearn
 spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    password: tiger 
-    url: jdbc:mysql://localhost/momo?characterEncoding=UTF-8
-    username: root
+  profiles:
+   include: db
+  datasource: 
+   driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL8Dialect
