@@ -1,54 +1,46 @@
 package com.momolearn.model.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 
 @Entity
-@SequenceGenerator(
-        name="TEACHERS_SEQ_GEN", //시퀀스 제너레이터 이름
-        sequenceName="TEACHERS_SEQ", //시퀀스 이름
-        initialValue=1, //시작값
-        allocationSize=1 //메모리를 통해 할당할 범위 사이즈
-        )
-public class Teachers  {
+//ApplyTeacher를 참조하고 있는데 연락처, 희망분야, 자기소개 ,포폴링크 속성이 필요할까?
+public class Teachers {	
 	
 	@Id
-	@Column(name = "lec_no", length = 6)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TEACHERS_SEQ_GEN")
-	private Integer lecNo;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(length = 20)
+	private Integer teacherNo;	//강사번호
 	
-	@Column(name = "phone_num", length = 20, nullable = false)
-	private String phoneNum;
+	@Column(name = "phone_num", nullable = false)
+	private String phoneNum;	//연락처
 
 	@Column(length = 20, nullable = false)
-	private String hope;
+	private String hope; //희망분야
 	
 	@Column(length = 255, nullable = false)
-	private String intro;
+	private String intro;	//자기소개 수정할 수 있는 부분
 	
 	@Column(name = "pf_link", length = 100, nullable = false)
-	private String pfLink;
+	private String pfLink;	//포폴링크
 	
-	@ManyToOne(cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "members_id")
-	private Members members;
+	//양방향 연관관계의 주인. 대상테이블에 외래키가 존재 
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "apply_id")
+	private ApplyTeacher applyTeacher;
 	
-	
-
 }
