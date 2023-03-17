@@ -1,8 +1,8 @@
 # ✏️ MOMOLEARN(모모런) 
 
 ## 💡프로젝트 소개
-▫️ 온라인 강의 플랫폼 MOMOLEARN 입니다 
-▫️ 모모런에서는 강의 수강뿐만 아니라, 수강생들끼리 소통할 수 있는 Q&A, 커뮤니티 등 <br>
+▫️ 온라인 강의 플랫폼 MOMOLEARN 입니다. <br>
+▫️ 모모런에서는 강의 수강뿐만 아니라, 수강생들끼리 소통할 수 있는 Q&A, 커뮤니티 등
 다양한 기능을 제공하여 학습을 보다 쉽고 효과적으로 할 수 있도록 도와줍니다.
 
 ## 💻 기능 설명
@@ -27,7 +27,7 @@
 <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> 
 <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
 <img src="https://img.shields.io/badge/Apache Tomcat-F8DC75?style=for-the-badge&logo=apachetomcat&logoColor=black"> 
-<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
+<img src="https://img.shields.io/badge/github-CB08C5?style=for-the-badge&logo=github&logoColor=white">
 <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
 <img src="https://img.shields.io/badge/miro-EAB700?style=for-the-badge&logo=miro&logoColor=black">
 <img src="https://img.shields.io/badge/VisualStudioCode-00A6CC?style=for-the-badge&logo=visualstudiocode&logoColor=white">
