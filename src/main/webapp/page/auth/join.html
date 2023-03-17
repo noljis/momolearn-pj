@@ -174,7 +174,8 @@
 			<div class="join">
 				<h2 class="text-primary">회원가입</h2>
 				<span class="text-primary" style="font-weight: bold">* 필수입력</span>
-				<form name="f" action="${pageContext.request.contextPath}/StdMembers/insert" method="post">
+				<!-- 파일업로드를 먼저 해주기 위함 -->
+				<form name="f" action="${pageContext.request.contextPath}/momolearn/member/imagedown" method="post" enctype="multipart/form-data">
 					<div class="join_a">
 						<h4>*아이디</h4>
 						<input type="text" name="id" id="id" placeholder="아이디를 입력해주세요."
