@@ -3,7 +3,7 @@
 ## 💡 프로젝트 소개
 ⚡ 온라인 강의 플랫폼 MOMOLEARN 입니다. <br>
 ⚡ 모모런에서는 강의 수강뿐만 아니라, 수강생들끼리 소통할 수 있는 Q&A, 커뮤니티 등 <br>
-&nbsp;&nbsp;&nbsp; 다양한 기능을 제공하여 학습을 보다 쉽고 효과적으로 할 수 있도록 도와줍니다.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 다양한 기능을 제공하여 학습을 보다 쉽고 효과적으로 할 수 있도록 도와줍니다.
 
 ## 💻 기능 설명
 1. 회원가입/로그인
@@ -30,8 +30,8 @@
 <img src="https://img.shields.io/badge/Apache Tomcat-F8DC75?style=for-the-badge&logo=apachetomcat&logoColor=black"> 
 <img src="https://img.shields.io/badge/github-CB08C5?style=for-the-badge&logo=github&logoColor=white">
 <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
-<img src="https://img.shields.io/badge/miro-EAB700?style=for-the-badge&logo=miro&logoColor=black">
-<img src="https://img.shields.io/badge/slack-4F007A?style=for-the-badge&logo=slack&logoColor=white"> <br>
+<img src="https://img.shields.io/badge/miro-EAB700?style=for-the-badge&logo=miro&logoColor=black"> <br>
+<img src="https://img.shields.io/badge/slack-4F007A?style=for-the-badge&logo=slack&logoColor=white">
 <img src="https://img.shields.io/badge/notion-00C9C2?style=for-the-badge&logo=notion&logoColor=black">
 <img src="https://img.shields.io/badge/bootstrap-9933FF?style=for-the-badge&logo=bootstrap&logoColor=white">
 </p>
