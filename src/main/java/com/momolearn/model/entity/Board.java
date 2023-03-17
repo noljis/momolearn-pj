@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,39 +20,45 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Getter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@Getter
 @DynamicInsert
 
 @Entity
-public class Community  {
+public class Board  {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer comNo;
+	private Integer comNo;	//게시글 번호
 	
-	@Column(length = 50, nullable = false)
-	private String comTitle;
+	//Members 객체 단방향 참조
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "mem_id")
+	private Members members;	//회원id 
 	
 	@Column(length = 20, nullable = false)
-	private String subject;
+	private String type;	//게시글유형, notice / community
+	
+	@Column(length = 50, nullable = false)
+	private String comTitle;	//글제목
+	
+	@Column(length = 20, nullable = false)
+	private String subject;		//말머리
 	
 	@CreatedDate
-	private LocalDateTime comRegdate;
+	private LocalDateTime comRegdate;	//작성시간
 	
 	@Column(columnDefinition = "TEXT", nullable = false)
-	private String comContent;
+	private String comContent;	//글내용
 	
 	@Column(length = 6, nullable = false)
 	@ColumnDefault("0")
-	private Integer comViewCount;
+	private Integer comViewCount; //조회수
 	
-	@ManyToOne
-	@JoinColumn(name = "memId")
-	private Members members;
 	
 	@Builder
-	public Community(String comTitle, String subject, String comContent, Members memId) {
+	public Board(String type, String comTitle, String subject, String comContent, Members memId) {
+		this.type = type;
 		this.comTitle = comTitle;
 		this.subject = subject;
 		this.comContent = comContent;

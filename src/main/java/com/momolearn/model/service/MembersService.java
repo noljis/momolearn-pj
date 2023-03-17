@@ -11,4 +11,12 @@ public class MembersService {
 	@Autowired
 	private MembersDAO membersDAO;
 
+	//회원가입
+	public void joinMember() {
+		
+		
+	}
+	
+	
+
 }

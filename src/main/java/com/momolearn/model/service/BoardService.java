@@ -3,12 +3,12 @@ package com.momolearn.model.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.momolearn.model.CommunityDAO;
+import com.momolearn.model.BoardDAO;
 
 @Service
-public class CommunityService {
+public class BoardService {
 	
 	@Autowired
-	private CommunityDAO communityDAO;
+	private BoardDAO boardDAO;
 
 }

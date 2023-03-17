@@ -1,19 +1,26 @@
 server:
   port: 80
   servlet:
-    context-path: /momolearn
+   context-path: /momolearn
+   multipart:
+    enabled: true # 멀티파트 업로드 지원여부 (default: true)
+    #fize-size-threshold 값을 초과한다면 파일은 spring.servlet.multipart.location 경로에 저장되어 해당 파일을 읽어서 작업
+    file-size-threshold: 1MB #파일이 메모리에 기록되는 임계값 (default: 0B)
+    location: #업로드된 파일의 임시 저장 공간 location을 설정하지 않으면 System.getProperty("java.io.tmpdir"); 경로에 저장
+    max-file-size: 100MB #파일의 최대 사이즈 (default: 1MB)
+    max-request-size: 100MB #요청의 최대 사이즈 (default: 10MB)
+    
 spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    password: tiger 
-    url: jdbc:mysql://localhost/momo?characterEncoding=UTF-8
-    username: root
+  profiles:
+   include: db
+  datasource: 
+   driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL8Dialect
     generate-ddl: false
     hibernate:
-      ddl-auto: none
+      ddl-auto: create
     show-sql: true
   mvc:
     view:
@@ -21,3 +28,6 @@ spring:
       suffix: .jsp
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
+  jackson:
+    # LocalDateTime 타입의 값을 JSON 형식으로 직렬화할 때, 다음과 같은 형식으로 변환 
+    date-time-format: yyyy-MM-dd'T'HH:mm

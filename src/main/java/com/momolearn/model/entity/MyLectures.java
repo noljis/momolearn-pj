@@ -2,52 +2,52 @@ package com.momolearn.model.entity;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
 
-import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Setter
 
 @Entity
-@SequenceGenerator(name = "MYLECTURES_SEQ_GEN", // 시퀀스 제너레이터 이름
-sequenceName = "MYLECTURES_SEQ", // 시퀀스 이름
-initialValue = 1, // 시작값
-allocationSize = 1 // 메모리를 통해 할당할 범위 사이즈
-)
 public class MyLectures  {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MYLECTURES_SEQ_GEN")
-	@Column(name = "mylec_id")
-	private Integer mylecId;	//카테고리id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer mylecId;	//수강id
 	
-	//lectures 테이블과 다대일 단방향
-	@ManyToOne
+	//Members 객체와 다대일 단방향. 양방향이 될 경우 연관관계의 주인이 됨
+	//수강중인 강의를 불러올때 회원객체 정보 가져옴: 단방향
+	//회원을 불러올때 수강중인 강의 정보 가져옴: 양방향
+	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
 	private Members member; //학생id
 	
-	//lectures 테이블과 다대일 단방향
-	@ManyToOne
+	//Lectures 객체와 다대일 단방향. 양방향이 될 경우 연관관계의 주인이 됨
+	//수강중인 강의를 불러올때 강의 정보까지 한꺼번에 불러오기: 단방향
+	//강의를 불러올때 해당강의를 수강중인 학생 정보까지 한꺼번에 조회: 양방향.. 좀 더 생각해보기
+	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lecture_id")
 	private Lectures lecture; //강의id
 	
-	@Column(name="lec_rege")
-	@CreationTimestamp
+	@CreatedDate
 	private LocalDateTime lecRege; //수강신청일
+	
+	//양방향일 경우 setter작성
+	//member와 양방향
+	public void setMember(Members member) {
+		this.member = member;
+	}
 
 }
