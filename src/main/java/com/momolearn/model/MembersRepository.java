@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.momolearn.model.entity.Members;
 
 @Repository
-public interface MembersDAO extends JpaRepository<Members, String>{
+public interface MembersRepository extends JpaRepository<Members, String>{
 
 }

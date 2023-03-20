@@ -40,7 +40,7 @@ public class Members  {
 	private String email; //이메일
 	
 	@Column(length = 255, nullable = false)
-	@ColumnDefault("'/profile/user.jpg'")
+	@ColumnDefault("'user.jpg'")
 	private String profile; //default : /img/profile/user.jpg
 	
 	@Column(length = 20, nullable = false)
