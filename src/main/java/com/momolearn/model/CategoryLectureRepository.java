@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.momolearn.model.entity.Category;
 
 @Repository
-public interface CategoryLectureDAO extends JpaRepository<Category, String>{
+public interface CategoryLectureRepository extends JpaRepository<Category, String>{
 
 }

@@ -57,6 +57,5 @@ public class LecturesController {
 	
 	//4. 수강신청
 	
-	
 
 }
