@@ -8,6 +8,9 @@ server:
     max-file-size: 10MB #파일의 최대 사이즈 (default: 1MB)
     max-request-size: 10MB #요청의 최대 사이즈 (default: 10MB)
     
+upload:
+ path: "src/main/webapp/img"
+    
 spring:
   profiles:
    include: db
@@ -21,7 +24,7 @@ spring:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     generate-ddl: false
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     show-sql: true
   mvc:
     view:
