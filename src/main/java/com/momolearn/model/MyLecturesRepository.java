@@ -3,9 +3,9 @@ package com.momolearn.model;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.momolearn.model.entity.Members;
+import com.momolearn.model.entity.MyLectures;
 
 @Repository
-public interface MembersDAO extends JpaRepository<Members, String>{
+public interface MyLecturesRepository extends JpaRepository<MyLectures, String>{
 
 }
