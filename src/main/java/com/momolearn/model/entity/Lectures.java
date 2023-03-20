@@ -41,7 +41,7 @@ public class Lectures  {
     private String title; //강의제목
 
     @Column(length = 255, nullable = false)
-    @ColumnDefault("'/lecture/default.jpg'")
+    @ColumnDefault("'default.jpg'")
     private String image; //강의썸네일 default null not null 차이점
 
     @Column(length = 6, nullable = false)
