@@ -29,6 +29,10 @@ public class TeachersService {
 		return mapper.map(applyTeacher, ApplyTeacherDTO.class);
 		
 	}
+
+	public Object getApplyTeacherList() {
+		return null;
+	}
 	
 	
 
