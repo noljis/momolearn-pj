@@ -59,8 +59,9 @@
             <a href="../page/lecture/lectures.html" class="nav-item nav-link">강의</a> &nbsp;&nbsp;&nbsp;&nbsp;
             <a href="../page/community/community.html" class="nav-item nav-link">커뮤니티</a> &nbsp;&nbsp;&nbsp;&nbsp;
             <a href="../page/notice/notice.html" class="nav-item nav-link">공지사항</a> &nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="../page/auth/login.html" class="btn btn-primary">로그인</a>&nbsp;&nbsp;&nbsp;
-            <a href="../page/auth/join.html" class="btn btn-primary">가입하기</a>&nbsp;&nbsp;&nbsp;
+            <a href="../page/auth/login.jsp" class="btn btn-primary">로그인</a>&nbsp;&nbsp;&nbsp;
+            <a href="../page/auth/join.jsp" class="btn btn-primary">가입하기</a>&nbsp;&nbsp;&nbsp;
+       
         </div>
     </nav>
     <!-- Navbar End -->
@@ -185,6 +186,36 @@
 
     <!-- Template Javascript -->
     <script src="../js/main.js"></script>
+    
+    	<script type="text/javascript">
+		function validLogin(){
+			axios.post('member/isLogin', {}, {
+			})
+			 .then(function (resData) {
+				 valid(resData['data']);
+			 })
+		}
+		
+		function valid(userId) {
+			if(userId == '' || userId.length == 0) {
+			}else{
+				document.getElementById("logout_btn").style.display="block";
+				document.getElementById("login_btn").style.display="none";
+			}
+		}
+		
+		function shoppingCart() {
+			axios.post('member/isLogin', {}, {
+			})
+			 .then(function (resData) {
+				 if(resData['data'] == null || resData['data'].length == 0) {
+					 alert('회원 전용입니다');
+				 }else{
+					 window.location = "shoppingCart/showCart?id=" + resData['data'];
+				 }
+			 })
+		}
+	</script>
 </body>
 
 </html>

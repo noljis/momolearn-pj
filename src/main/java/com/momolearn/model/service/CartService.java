@@ -9,7 +9,7 @@ import com.momolearn.model.CartRepository;
 public class CartService {
 	
 	@Autowired
-	private CartRepository cartDAO;
+	private CartRepository cartRepository;
 	
 
 }
