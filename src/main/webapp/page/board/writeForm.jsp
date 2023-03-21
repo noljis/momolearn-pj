@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -21,15 +23,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
-    <link href="../../lib/animate/animate.min.css" rel="stylesheet">
-    <link href="../../lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="../lib/animate/animate.min.css" rel="stylesheet">
+    <link href="../lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Template Stylesheet -->
-    <link href="../../css/style.css" rel="stylesheet">
-    <link href="../../css/write.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/write.css" rel="stylesheet">
 </head>
 
 <body>
@@ -118,37 +120,40 @@
                 <div class="card mb-4">
                     <div class="card-header">글쓰기</div>
                     <div class="card-body">
-                        <form>
+                        <!-- Form Row-->
+                        <form class="container" action="../board/write" method="post">
                             <div class="mb-3">
-                                <label class="small mb-1" for="inputUsername">제목</label>
-                                <input class="form-control" id="inputUsername" type="text" placeholder="제목을 입력하세요">
+                                <label class="small mb-1" for="inputComTitle">제목</label>
+                                <input class="form-control" id="comTitle" name="comTitle" type="text" placeholder="제목을 입력하세요">
                             </div>
-                            <!-- Form Row-->
+                            <div>
+                            	<input id="type" name="type" value="community" type="hidden">
+                            </div>
                             <div class="row gx-3 mb-3">
                                 <div class="col-md-6">
-                                    <label class="small mb-1" for="inputFirstName">카테고리</label>
-                                    <select name="subject" id="subject" class="form-control" placeholder="카테고리를 선택하세요">
-                                        <option value="">-----선 택-----</option>
-                                        <option value="시험 후기">시험 후기</option>
-                                        <option value="잡담">잡담</option>
-                                        <option value="스터디원 모집">스터디원 모집</option>
-                                        <option value="정보 공유">정보 공유</option>
+                                    <label class="small mb-1" for="inputSubject">카테고리</label>
+                                    <select name="subject" id="subject" class="form-control" >
+                                        <option value="">---선 택---</option>
+                                        <option value="자유">자  유</option>
+                                        <option value="질문">질  문</option>
+                                        <option value="정보">정  보</option>
+                                        <option value="모집">모  집</option>
                                     </select>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="small mb-1" for="inputLastName">작성자</label>
-                                    <input class="form-control" id="inputLastName" type="text" value="당신의아이디" readonly>
+                                    <label class="small mb-1" for="inputdMemId">작성자</label>
+                                    <input class="form-control" id="memId" name="memId" type="text" value="test01" readonly>
                                 </div>
                             </div>
                             <!-- Form Row        -->
                             <!-- Form Group (email address)-->
                             <div class="mb-3">
-                                <label class="small mb-1" for="inputEmailAddress">글 내용</label>
-                                <textarea rows="10" cols="50" id="content" name="comContent" class="form-control" placeholder="글 내용을 입력하세요"></textarea>
+                                <label class="small mb-1" for="inputComContent">글 내용</label>
+                                <textarea rows="10" cols="50" id="comContent" name="comContent" class="form-control" placeholder="글 내용을 입력하세요"></textarea>
                             </div>
                             <!-- Save changes button-->
-                            <button class="btn btn-primary" type="button">등록</button>
-                            <button class="btn btn-primary" type="button" onclick="location.href='/community.html'">글목록</button>
+                            <button class="btn btn-primary" type="submit" >등록</button>
+                            <button class="btn btn-primary" type="button" onclick="location.href='../board/list'">글목록</button>
                         </form>
                     </div>
                 </div>

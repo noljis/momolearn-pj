@@ -1,6 +1,6 @@
 package com.momolearn.model.dto;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,6 +16,6 @@ public class MembersDTO {
 	private String email; //이메일
 	private String profile; //프로필이미지
 	private String grade; //등급
-	private Date regdate; //가입일자
+	private LocalDateTime regdate; //가입일자
 
 }

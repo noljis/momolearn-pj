@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.momolearn.model.entity.Cart;
 
 @Repository
-public interface CartRepository extends JpaRepository<Cart, String>{
+public interface CartRepository extends JpaRepository<Cart, Integer>{
 
 }

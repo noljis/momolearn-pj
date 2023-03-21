@@ -35,8 +35,8 @@ dependencies {
 	implementation 'io.springfox:springfox-swagger2:2.9.2'
 	// https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui
 	implementation 'io.springfox:springfox-swagger-ui:2.9.2'
-	//문자열 조작 관련 다양한 메서드를 제공
-	implementation 'org.springframework:spring-core:5.3.13'
+	//문자열 조작 관련 다양한 메서드를 제공:5.3.13
+	implementation 'org.springframework:spring-core'
 	
 }
 
