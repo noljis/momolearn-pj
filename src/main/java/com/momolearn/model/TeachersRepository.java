@@ -7,7 +7,6 @@ import com.momolearn.model.entity.Teachers;
 
 @Repository
 public interface TeachersRepository extends JpaRepository<Teachers, Integer>{
-	
-	
+
 
 }
