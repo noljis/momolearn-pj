@@ -4,16 +4,12 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.momolearn.model.MembersRepository;
 import com.momolearn.model.entity.Members;
-import com.momolearn.util.DBUtil;
 
 import lombok.RequiredArgsConstructor;
 
@@ -43,14 +39,33 @@ public class MembersService {
     
     //id중복체크
     public boolean checkId(String memId) throws Exception {
-        return !membersRepository.existsByMemId(memId);
+//    	String id = membersRepository.findIdByMemId(memId);
+//    	System.out.println("입력받은 데이터:" +id);
+//    	if (id == null) { //존재하지 않는다면
+//    		return true;
+//    	}
+//    	else {
+//    		return false;
+//    	}
+    	System.out.println("입력받은 데이터2222:" +memId);
+    	// Members 테이블에서 아이디값들을 가져옴
+		List<Members> members  = membersRepository.findAll();
+		
+		// 컨트롤러에서 전달받은 memId 값과 비교하여 중복 여부를 확인
+		for(Members member : members) {
+			if(memId.equals(member.getMemId())) {
+				return false; // 이미 존재하는 아이디인 경우
+			}
+		}
+		// 중복되는 아이디가 없을 경우 true를 리턴
+		return true;
     }
     
 	//로그인
     @Transactional
     public Members loginMember(String memId, String password) throws SQLException {
         try {
-        	Members loginData = membersRepository.findByMemIdAndPassword(memId, password);
+        	Members loginData = membersRepository.findByMemIdAndPw(memId, password);
             System.out.println(loginData);
             return loginData;
         } catch (Exception e) {
@@ -60,39 +75,30 @@ public class MembersService {
     }
 	 
     //로그인 회원정보 확인
-	public boolean validateUser(String memId, String memPassword) throws Exception {
-	        return membersRepository.existsByMemIdAndMemPassword(memId, memPassword);
+	public boolean validateUser(String memId, String password) throws Exception {
+		Members member = membersRepository.findById(memId).orElse(null);
+		System.out.println("member출력 ===" +member);
+        if (member != null && member.getPw().equals(password)) {
+            return true;
+        }
+        return false;
 	}
     
 	//본인 조회 - jpa
-    public static Members getMember (String id) {
-		EntityManager em = DBUtil.getEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		Members member = null;
-		
-		try {
-			tx.begin();
-			member = em.find(Members.class, id);
-			
-			System.out.println(member);
-			
-			tx.commit();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			
-		}finally {
-			em.close();
-		}
-		
-		return member;
+    public Members getMember (String memId) {
+    	Members member = membersRepository.findByMemId(memId);
+        if (member == null) {
+            // 회원 정보를 찾을 수 없는 경우 예외 처리
+            throw new RuntimeException("해당 회원을 찾을 수 없습니다.");
+        }
+        return member;
 	}
     
     //본인 프로필 수정
     @Transactional
-    public Members updateMember(String id, Members updatedMember) {
-        Members member = membersRepository.findById(id)
-                                          .orElseThrow(() -> new RuntimeException("Member not found with id " + id));
+    public Members updateMember(String memId, Members updatedMember) {
+        Members member = membersRepository.findById(memId)
+                                          .orElseThrow(() -> new RuntimeException("Member not found with memId " + memId));
         
         // update the member fields
         member.setMemId(updatedMember.getMemId());
@@ -108,9 +114,9 @@ public class MembersService {
     
     //회원 한명 삭제
     @Transactional
-    public void deleteMember(String id) throws SQLException {
+    public void deleteMember(String memId) throws SQLException {
         try {
-            Optional<Members> membersOptional = membersRepository.findById(id);
+            Optional<Members> membersOptional = membersRepository.findById(memId);
             if (membersOptional.isPresent()) {
                 Members members = membersOptional.get();
                 membersRepository.delete(members);
@@ -127,14 +133,25 @@ public class MembersService {
 
 	
 	//id찾기 (email로 찾기)
-	public Members findId(String email) throws SQLException{
-		return membersRepository.findIdByEmail(email);
+	public String findId(String email) throws SQLException{
+		Members member = membersRepository.findByEmail(email);
+        if (member != null) {
+            return member.getMemId();
+        }
+        return null;
 	}
 	
 	//pw찾기 (id,email로 찾기)
-	public Members findPw(String id, String email) throws SQLException{
-		return membersRepository.findPwByIdAndEmail(id, email);
+	public String findPw(String memId, String email) throws SQLException{
+		Members member = membersRepository.findByMemIdAndEmail(memId, email);
+        if (member == null) {
+            // 비밀번호를 찾을 수 없는 경우 예외 처리
+            throw new RuntimeException("해당 회원을 찾을 수 없습니다.");
+        }
+        return member.getPw();
 	}
+	
+
 	
 	//관리자 - 모든 회원 검색
 	public List<Members> getAllMembers() {
@@ -146,5 +163,7 @@ public class MembersService {
 		return false ;
 		
 	}
+    
+    
 
 }

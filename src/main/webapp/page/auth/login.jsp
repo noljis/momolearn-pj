@@ -71,8 +71,8 @@
             <a href="../community/community.html" class="nav-item nav-link">커뮤니티</a> &nbsp;&nbsp;&nbsp;&nbsp;
             <a href="../notice/notice.html" class="nav-item nav-link">공지사항</a> &nbsp;&nbsp;&nbsp;&nbsp;
             <!--로그인 여부에 따라서 달라짐 Start-->
-            <a href="../auth/login.html" class="btn btn-primary">로그인</a>&nbsp;&nbsp;&nbsp;
-            <a href="../auth/join.html" class="btn btn-primary">가입하기</a>&nbsp;&nbsp;&nbsp;
+            <a href="../auth/login.jsp" class="btn btn-primary">로그인</a>&nbsp;&nbsp;&nbsp;
+            <a href="../auth/join.jsp" class="btn btn-primary">가입하기</a>&nbsp;&nbsp;&nbsp;
              <!--로그인 여부에 따라서 달라짐 End-->
         </div>
     </nav>
@@ -186,7 +186,7 @@
 	
 	<script>	
 	function login(obj) {
-		axios.post('member/validateUser', {}, {
+		axios.post('${pageContext.request.contextPath}/member/validateUser', {}, {
 			params : {
 				memId : document.getElementById("memId").value,
 				pw : document.getElementById("password").value

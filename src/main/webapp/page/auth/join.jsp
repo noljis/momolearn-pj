@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="com.momolearn.model.entity.Members"%>
 <%@ page import="com.momolearn.model.MembersRepository"%>
-<%@ page import="com.momolearn.controller.MembersController"%>
+<%@ page import="com.momolearn.controller.MembersSignInController"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -69,8 +69,8 @@
 		<a href="../community/community.html" class="nav-item nav-link">커뮤니티</a> &nbsp;&nbsp;&nbsp;&nbsp;
 		<a href="../notice/notice.html" class="nav-item nav-link">공지사항</a> &nbsp;&nbsp;&nbsp;&nbsp;
 		<!--로그인 여부에 따라서 달라짐 Start-->
-		<a href="../auth/login.html" class="btn btn-primary">로그인</a>&nbsp;&nbsp;&nbsp;
-		<a href="../auth/join.html" class="btn btn-primary">가입하기</a>&nbsp;&nbsp;&nbsp;
+		<a href="../auth/login.jsp" class="btn btn-primary">로그인</a>&nbsp;&nbsp;&nbsp;
+		<a href="../auth/join.jsp" class="btn btn-primary">가입하기</a>&nbsp;&nbsp;&nbsp;
 		 <!--로그인 여부에 따라서 달라짐 End-->
 	</div>
 </nav>
@@ -86,7 +86,7 @@
 						<h4>*아이디</h4>
 						<input type="text" name="memId" id="memId" placeholder="아이디를 입력해주세요."
 							minlength="5" maxlength="20" onsubmit="return checkId(this)">
-						<input type="button" style="background-color: #78d5e7; color: white; font-weight: bolder;" value="ID중복확인" onclick="dedupId()">
+						<input type="button" style="background-color: #78d5e7; color: white; font-weight: bolder;" value="ID중복확인" onclick="dedupId()" >
 					</div>
 					<div class="join_a">
 						<h4>*비밀번호</h4>
@@ -206,75 +206,49 @@
     <script src="../../js/main.js"></script>
     
     <script>
-	
-	//아이디 길이 제한
-	function checkId(f) {
-		var id = f.id.value;
-		id = id.trim();
-		if (id.length < 5) {
-			alert("아이디는 5자 이상 입력해주십시오.");
-			return false;
-		}
-		return true;
-	}
-	
-	
-	var check = false; //중복 여부 확인 
-	
-	//아이디 중복 제크
-	function idCheck() {
-		
-		var resData = document.getElementById('memId').value ;
-		
-		if(f.memId.value==""){
-			alert("아이디를 입력하세요@");
-			f.id.focus();
-			return false;
-		}
-		
-		if (f.memId.value.length < 5) {
-			alert("아이디는 5자 이상 입력해주십시오.");
-			return false;
-		}
-		
-		axios({
-			method : 'GET', 
-			url : "member/checkOk?memId="+resData
-		
-		}).then(function (resData) {
-			 validate(resData['data']);
-		 });
-		
-	}
-	
+    
+    var check ; // 중복 체크 여부 확인 
+    
 	//id 중복체크
 	function dedupId() {
-		alert(1);
+		
 		
 		axios.post('${pageContext.request.contextPath}/member/checkOk', {}, {
 			params : {
-				id : document.getElementById("memId").value
+				memId : document.getElementById("memId").value
 			}
 		})
 		 .then(function (resData) {
 			 validate(resData['data']);
 		 })
 	}
+	//사용여부
 	function validate(val) {
 		const memId = document.getElementById("memId").value;
 		
-		if(memId == ""){
-			alert('아이디를 입력하세요~');
-			return;
-		}else if(val == true) {
-			alert('사용가능한 아이디 입니다.')
-			document.getElementById("submit").disabled=false;
-			document.getElementById("memId").readOnly=true;
+	
+		if (memId.length < 5) {
+			alert("아이디는 5자 이상 입력해주세요.");
 			
-		}else {
-			alert('이미 존재하는 아이디 입니다.');
+		}else{
+			if(memId == ""){
+				alert('아이디를 입력하세요.');
+				return;
+				
+			}else if(val == true) {
+				alert('사용가능한 아이디 입니다.')
+				document.getElementById("submit").disabled=false;
+				document.getElementById("memId").readOnly=true;
+				check = true;
+				
+			}else {
+				alert('이미 존재하는 아이디 입니다.');
+				check = false;
+			}
 		}
+		
 	}
+
 	
 	//입력 태그 null값 경고
 	function blank() {
@@ -303,10 +277,10 @@
 			f.name.focus();
 			return false;
 		}
+		
 		//중복 체크 확인
 		if(check ==false){
 			alert("아이디 중복확인 해주세요.");
-			return false;
 		}
 		
 		f.submit();

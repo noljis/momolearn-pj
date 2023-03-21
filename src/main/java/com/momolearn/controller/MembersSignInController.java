@@ -1,12 +1,8 @@
 package com.momolearn.controller;
 
 
-import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +17,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.momolearn.model.dto.MembersDTO;
 import com.momolearn.model.entity.Members;
-import com.momolearn.model.service.FileService;
 import com.momolearn.model.service.MembersService;
-import com.momolearn.util.DBUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,112 +28,12 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping("member")
 @SessionAttributes({"id"})
-public class MembersController {
+public class MembersSignInController {
 	
 	@Autowired
 	private MembersService membersService;
-
 	
-	@Autowired
-	private FileService fileService;
-	
-    /**
-     * 회원가입 
-     */
-	// 회원가입 폼
-    @GetMapping("/joinView")
-    protected ModelAndView memJoinView() throws SQLException {
-		
-		ModelAndView mv = new ModelAndView();
-		
-		mv.setViewName("page/auth/join");   
-		return mv;
-	}
-    
-//	public String memJoin(@RequestParam("id") String id, @RequestParam("password") String password, @RequestParam("email") String email, 
-//							@RequestParam("name") String name, @RequestParam("profile") MultipartFile file) throws IOException{
-//		//사진 디렉토리에 저장: 반환타입 String[유저id.확장자]
-//		String profile = fileService.getProfile(id, file);
-//		
-//		//?회원가입 메소드
-//	    
-//		//?저장되고 이동할 경로
-//	    return ""; 
-//	}
-    //회원가입 진행
-//	@PostMapping(value = "/join", produces = "application/json; charset=UTF-8")
-//	public Members memJoin(Members members , @RequestParam("id") String id, @RequestParam("profile") MultipartFile file) throws SQLException{
-//		EntityManager em = DBUtil.getEntityManager();
-//		EntityTransaction tx = em.getTransaction();
-//		try {
-//			
-//			//사진 디렉토리에 저장: 반환타입 String[유저id.확장자]
-//			String profile = fileService.getProfile(id, file);
-//			
-//			tx.begin();
-//			em.persist(members);
-//			tx.commit();
-//			
-//		} catch (Exception e) {
-//			tx.rollback();
-//			e.printStackTrace();
-//			
-//		} finally {
-//			em.close();
-//		}
-//		
-//        return members;
-//	}
-	// 회원 정보 등록 후 정보 보기
-	// http://localhost/team2_studyroom/StdMembers/insert
-	@PostMapping(value = "/insert", produces = "application/json; charset=UTF-8")
-	protected ModelAndView memInsert(Model sessionData, Members members, @RequestParam("memId") String memId, @RequestParam("profile") MultipartFile file) throws SQLException, IOException {
-		ModelAndView mv = new ModelAndView();
-		System.out.println("insert() -----");
-		
-        // profile 파일 저장
-        fileService.getProfile(memId, file);
-        
-        // grade, regdate 값 설정
-        members.setGrade("student");
-        members.setRegdate(LocalDateTime.now());
-		
-		Members newmem = membersService.memJoin(members);
 
-		sessionData.addAttribute("members", members);
-		mv.setViewName("page/auth/myInfo");
-
-		return mv;
-	}
-
-	// 아이디 중복 체크 확인
-	//@RequestMapping(value = "/checkOk", method = RequestMethod.POST)
-	public boolean dedupId(@RequestParam(value = "mem_id") String memIdCheck) throws Exception {
-		System.out.println("------- " + memIdCheck);
-		boolean check = membersService.checkId(memIdCheck);
-System.out.println(check);
-		return check;
-	}
-
-    /**
-     * 로그인 
-     */
-//	@RequestMapping(value = "/login", method=RequestMethod.POST)
-//	public String login(Model sessionData, @RequestParam("id") String id, @RequestParam("password") String password) throws SQLException {
-//		
-//		boolean validate = membersService.loginMember(id, password);
-//		System.out.println("----"+validate);
-//		
-//		if(validate == true) { //로그인성공
-//			System.out.println("id확인 " + id);
-//			( sessionData).addAttribute("id", id);  //세션에 데이터  저장
-//			
-//			
-//			return "redirect:/main.jsp"; //로그인 후 메인화면
-//		}else {
-//			return "redirect:/loginError.jsp"; //에러메시지 창 띄우는걸로 수정하기	
-//		}
-//	}
 	@PostMapping(value = "/login", produces = "application/json;charset=UTF-8")
 	public String login(Model sessionData, @RequestParam("memId") String memId, @RequestParam("password") String password) throws Exception {
 		Members members = membersService.loginMember(memId, password);
@@ -154,7 +46,7 @@ System.out.println(check);
 	
 	// 로그인 정보 확인
 	@PostMapping(value = "/validateUser")
-	public boolean validateUser(@RequestParam(value = "memId") String memId, @RequestParam(value = "pw") String memPw) throws Exception {
+	public boolean validateUser(@RequestParam(value = "memId") String memId, @RequestParam(value = "password") String memPw) throws Exception {
 		boolean check = membersService.validateUser(memId, memPw);
 		
 		return check;
