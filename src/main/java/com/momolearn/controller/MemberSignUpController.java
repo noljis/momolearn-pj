@@ -41,7 +41,7 @@ public class MemberSignUpController {
 	}
 	
 
-	// 회원가입 후 정보 보기
+	// 회원가입 후 정보 보기 ( 회원가입 실패 / 정보 화면 미구현)
 	@PostMapping(value = "member/join", produces = "application/json; charset=UTF-8")
 	protected ModelAndView memInsert(Model sessionData, Members members, @RequestParam("memId") String memId,@RequestParam("password") String pw, @RequestParam("name") String name, @RequestParam("email") String email,@RequestParam("profile") MultipartFile file) throws SQLException, IOException {
 		ModelAndView mv = new ModelAndView();
@@ -71,7 +71,7 @@ public class MemberSignUpController {
 		return mv;
 	}
     
-	//아이디 중복 체크
+	//아이디 중복 체크 (성공)
 	@PostMapping("member/checkOk")
 	public boolean dedupId( String memId) throws Exception {
 		System.out.println("입력받은 데이터 : " + memId);
