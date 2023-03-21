@@ -1,7 +1,9 @@
 package com.momolearn.controller;
 
 
+import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -56,8 +58,6 @@ public class MembersController {
 		return mv;
 	}
     
-    //회원가입 진행
-	@PostMapping("/join")
 //	public String memJoin(@RequestParam("id") String id, @RequestParam("password") String password, @RequestParam("email") String email, 
 //							@RequestParam("name") String name, @RequestParam("profile") MultipartFile file) throws IOException{
 //		//사진 디렉토리에 저장: 반환타입 String[유저id.확장자]
@@ -68,60 +68,61 @@ public class MembersController {
 //		//?저장되고 이동할 경로
 //	    return ""; 
 //	}
-	public Members memJoin(Members members , @RequestParam("id") String id, @RequestParam("profile") MultipartFile file) throws SQLException{
-		EntityManager em = DBUtil.getEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		try {
-			
-			//사진 디렉토리에 저장: 반환타입 String[유저id.확장자]
-			String profile = fileService.getProfile(id, file);
-			
-			tx.begin();
-			em.persist(members);
-			tx.commit();
-			
-		} catch (Exception e) {
-			tx.rollback();
-			e.printStackTrace();
-			
-		} finally {
-			em.close();
-		}
+    //회원가입 진행
+//	@PostMapping(value = "/join", produces = "application/json; charset=UTF-8")
+//	public Members memJoin(Members members , @RequestParam("id") String id, @RequestParam("profile") MultipartFile file) throws SQLException{
+//		EntityManager em = DBUtil.getEntityManager();
+//		EntityTransaction tx = em.getTransaction();
+//		try {
+//			
+//			//사진 디렉토리에 저장: 반환타입 String[유저id.확장자]
+//			String profile = fileService.getProfile(id, file);
+//			
+//			tx.begin();
+//			em.persist(members);
+//			tx.commit();
+//			
+//		} catch (Exception e) {
+//			tx.rollback();
+//			e.printStackTrace();
+//			
+//		} finally {
+//			em.close();
+//		}
+//		
+//        return members;
+//	}
+	// 회원 정보 등록 후 정보 보기
+	// http://localhost/team2_studyroom/StdMembers/insert
+	@PostMapping(value = "/insert", produces = "application/json; charset=UTF-8")
+	protected ModelAndView memInsert(Model sessionData, Members members, @RequestParam("memId") String memId, @RequestParam("profile") MultipartFile file) throws SQLException, IOException {
+		ModelAndView mv = new ModelAndView();
+		System.out.println("insert() -----");
 		
-        return members;
+        // profile 파일 저장
+        fileService.getProfile(memId, file);
+        
+        // grade, regdate 값 설정
+        members.setGrade("student");
+        members.setRegdate(LocalDateTime.now());
+		
+		Members newmem = membersService.memJoin(members);
+
+		sessionData.addAttribute("members", members);
+		mv.setViewName("page/auth/myInfo");
+
+		return mv;
 	}
 
-	
 	// 아이디 중복 체크 확인
-	// http://localhost/team2_studyroom/StdMembers/checkOk?id=값
-	@RequestMapping(value = "/checkOk", method = RequestMethod.GET)
-	protected String idCheck(String id) throws Exception {
-
-		String check = "아이디 중복입니다.";
-
-		boolean result = membersService.duplecateID(id);
-
-		if (result == true) {
-			check = "사용가능한 아이디 입니다.";
-		}
-		System.out.println("checkOk() -----" + result);
-
-		return check;
-	}
-	// 아이디 중복 체크 확인
-	@PostMapping(value = "dedupId")
+	//@RequestMapping(value = "/checkOk", method = RequestMethod.POST)
 	public boolean dedupId(@RequestParam(value = "mem_id") String memIdCheck) throws Exception {
+		System.out.println("------- " + memIdCheck);
 		boolean check = membersService.checkId(memIdCheck);
-	
+System.out.println(check);
 		return check;
 	}
-	//
-	@PostMapping(value = "/validateUser")
-	public boolean validateUser(@RequestParam(value = "id") String memId, @RequestParam(value = "pw") String memPw) throws Exception {
-		boolean check = membersService.validateUser(memId, memPw);
-		
-		return check;
-	}
+
     /**
      * 로그인 
      */
@@ -143,11 +144,20 @@ public class MembersController {
 //	}
 	@PostMapping(value = "/login", produces = "application/json;charset=UTF-8")
 	public String login(Model sessionData, @RequestParam("memId") String memId, @RequestParam("password") String password) throws Exception {
-		MembersDTO membersDTO = membersService.loginMember(memId, password);
-		System.out.println("----" + membersDTO);
+		Members members = membersService.loginMember(memId, password);
+		System.out.println("----" + members);
 		sessionData.addAttribute("memId", memId); // 세션에 데이터 저장
+		sessionData.addAttribute("password", password); // 세션에 데이터 저장
 		
 		return "redirect:/page/main.html";
+	}
+	
+	// 로그인 정보 확인
+	@PostMapping(value = "/validateUser")
+	public boolean validateUser(@RequestParam(value = "memId") String memId, @RequestParam(value = "pw") String memPw) throws Exception {
+		boolean check = membersService.validateUser(memId, memPw);
+		
+		return check;
 	}
 	
 	//로그아웃

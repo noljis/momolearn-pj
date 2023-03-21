@@ -79,14 +79,14 @@
 		
 			<div class="join">
 				<h2 class="text-primary">회원가입</h2>
-				<span  style="font-weight: bold; color: navy;;;">* 필수입력</span>
+				<span  style="font-weight: bold; color: navy;">* 필수입력</span>
 				<!-- 파일업로드를 먼저 해주기 위함 -->
 				<form name="f" action="${pageContext.request.contextPath}/member/join" method="post" enctype="multipart/form-data">
 					<div class="join_a">
 						<h4>*아이디</h4>
 						<input type="text" name="memId" id="memId" placeholder="아이디를 입력해주세요."
 							minlength="5" maxlength="20" onsubmit="return checkId(this)">
-						<input type="button" style="background-color: #78d5e7; color: white; font-weight: bolder;" value="ID중복확인" onclick="idCheck()">
+						<input type="button" style="background-color: #78d5e7; color: white; font-weight: bolder;" value="ID중복확인" onclick="dedupId()">
 					</div>
 					<div class="join_a">
 						<h4>*비밀번호</h4>
@@ -124,7 +124,7 @@
 						</div>
 					</div>
 					<div class="submit">
-						<input type="button" style="background-color: #78d5e7;" value="회원가입" onclick="blank()" onclick="alert('회원가입 되셨습니다')>
+						<input type="button" style="background-color: #78d5e7;" value="회원가입" onclick="blank()" onclick="alert('회원가입 되셨습니다')">
 					</div>
 
 					<div class="text">
@@ -227,7 +227,7 @@
 		var resData = document.getElementById('memId').value ;
 		
 		if(f.memId.value==""){
-			alert("아이디를 입력하세요.");
+			alert("아이디를 입력하세요@");
 			f.id.focus();
 			return false;
 		}
@@ -241,28 +241,19 @@
 			method : 'GET', 
 			url : "member/checkOk?memId="+resData
 		
-		}).then(function(resData){ //응답 시
-			console.log(response);
-			alert(resData);
-			check = true;
-			
-		}).catch(function (error) { //오류 발생 시 
-			alert("사용 불가능한 아이디 입니다.") ;
-			
-		}).then(function(){ //항시
-			
-			alert("사용 가능한 아이디 입니다.");
-			check = true;
-			
-		});
+		}).then(function (resData) {
+			 validate(resData['data']);
+		 });
 		
 	}
 	
 	//id 중복체크
 	function dedupId() {
-		axios.post('주소 변경', {}, {
+		alert(1);
+		
+		axios.post('${pageContext.request.contextPath}/member/checkOk', {}, {
 			params : {
-				mem_id : document.getElementById("memId").value
+				id : document.getElementById("memId").value
 			}
 		})
 		 .then(function (resData) {
@@ -273,7 +264,7 @@
 		const memId = document.getElementById("memId").value;
 		
 		if(memId == ""){
-			alert('아이디를 입력하세요.');
+			alert('아이디를 입력하세요~');
 			return;
 		}else if(val == true) {
 			alert('사용가능한 아이디 입니다.')
@@ -288,9 +279,9 @@
 	//입력 태그 null값 경고
 	function blank() {
 		//아이디
-		if(f.memId.value==""){
-			alert("아이디를 입력하세요.sss");
-			f.memId.focus();
+		if(f.id.value==""){
+			alert("아이디를 입력하세요..");
+			f.id.focus();
 			return false;
 		}
 		//비밀번호

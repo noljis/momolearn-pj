@@ -81,7 +81,7 @@
 	<div class="wrap">
 		<div class="login">
 			<h2 id="h2" class="text-primary" >로그인</h2>
-			<form name="f" action="member/login" method="post">
+			<form name="f" action="${pageContext.request.contextPath}/member/login" method="post">
 				<div class="login_id">
 					<h5>아이디</h5>
 					<input type="text" id="memId" name="memId" placeholder="아이디를 입력해주세요.">

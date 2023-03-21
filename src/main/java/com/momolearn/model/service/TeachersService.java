@@ -4,9 +4,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
-import com.momolearn.model.TeachersRepository;
-
 import com.momolearn.exception.NotExistException;
 import com.momolearn.model.ApplyTeacherRepository;
 import com.momolearn.model.TeachersRepository;
