@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.momolearn.model.entity.Teachers;
 
 @Repository
-public interface TeachersRepository extends JpaRepository<Teachers, String>{
+public interface TeachersRepository extends JpaRepository<Teachers, Integer>{
+
 
 }

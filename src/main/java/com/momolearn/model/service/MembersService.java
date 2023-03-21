@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.momolearn.model.MembersRepository;
+
 import com.momolearn.model.dto.MembersDTO;
 import com.momolearn.model.entity.Members;
 import com.momolearn.util.DBUtil;
@@ -20,12 +21,15 @@ import com.momolearn.util.DBUtil2;
 
 import lombok.RequiredArgsConstructor;
 
+
 @Service
 @RequiredArgsConstructor //생성자 자동 생성
 public class MembersService {
 	
+
 	@Autowired //의존관계를 자동으로 설정해 준다. (DAO 객체 주입)
 	private MembersRepository membersRepository;
+
 
 	//회원가입
     public static Members memJoin(Members members) throws SQLException {
