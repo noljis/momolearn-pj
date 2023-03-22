@@ -38,6 +38,8 @@ dependencies {
 	implementation 'io.springfox:springfox-swagger-ui:2.9.2'
 	//문자열 조작 관련 다양한 메서드를 제공:5.3.13
 	implementation 'org.springframework:spring-core'
+	//jsonObject, jsonArray 사용
+    implementation 'com.google.code.gson:gson:2.8.8'
 	
 }
 
