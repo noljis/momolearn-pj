@@ -1,11 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%
-session.setAttribute("id", "test04");
-session.setAttribute("name", "강사1");
-session.setAttribute("profile", "test04.jpg");
-session.setAttribute("grade", "teacher");
-%>
+
 <!-- 검색기능 없는 헤더 -->
 <!DOCTYPE html>
 <html>
@@ -63,7 +58,8 @@ session.setAttribute("grade", "teacher");
         <a href="../page/lecture/lectures.jsp" class="nav-item nav-link">강의</a> &nbsp;&nbsp;&nbsp;&nbsp;
         <a href="${pageContext.request.contextPath}/board/" class="nav-item nav-link">커뮤니티</a> &nbsp;&nbsp;&nbsp;&nbsp;
         <a href="${pageContext.request.contextPath}/notice/" class="nav-item nav-link">공지사항</a> &nbsp;&nbsp;&nbsp;&nbsp;
-        <!-- 세션ID 존재할 경우 나오는 메뉴 Start-->
+       <!-- 세션ID 존재할 경우 나오는 메뉴 Start-->
+       <c:if test="${not empty sessionScope.id}">
         <a href="" class="nav-item nav-link"><i class="fa fa-shopping-cart" style="font-size:24px;color:#06BBCC"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
         <div class="nav-item dropdown">
         <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
@@ -81,7 +77,15 @@ session.setAttribute("grade", "teacher");
             </c:choose>
             <a href="" class="dropdown-item">로그아웃</a>
         </div>
+       </div>
+       </c:if>
         <!-- 세션ID 존재할 경우 나오는 메뉴 End-->
+        <!-- 세션ID 존재하지 않을때 나오는 메뉴 Start -->
+        <c:if test="${empty sessionScope.id}">
+		 <a href="../page/member/login.jsp" class="btn btn-primary">로그인</a>&nbsp;&nbsp;&nbsp;
+         <a href="../page/member/join.jsp" class="btn btn-primary">가입하기</a>&nbsp;&nbsp;&nbsp;
+         </c:if>
+         <!-- 세션ID 존재하지 않을때 나오는 메뉴 End --> 
         </div>
     </nav>
     <!-- Navbar End -->
@@ -96,9 +100,6 @@ session.setAttribute("grade", "teacher");
 
 <!-- Template Javascript -->
 <script src="../js/main.js"></script>
-<!-- axios 사용을 위한 추가 설정 -->
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="../js/search.js"></script>
 
 </body>
 </html>

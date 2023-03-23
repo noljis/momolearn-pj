@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%
+<%-- <%
 session.setAttribute("id", "test04");
 session.setAttribute("name", "강사1");
 session.setAttribute("profile", "test04.jpg");
 session.setAttribute("grade", "teacher");
-%>
+%> --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,29 +67,33 @@ session.setAttribute("grade", "teacher");
         <a href="${pageContext.request.contextPath}/board/" class="nav-item nav-link">커뮤니티</a> &nbsp;&nbsp;&nbsp;&nbsp;
         <a href="${pageContext.request.contextPath}/notice/" class="nav-item nav-link">공지사항</a> &nbsp;&nbsp;&nbsp;&nbsp;
         <!-- 세션ID 존재할 경우 나오는 메뉴 Start-->
+       <c:if test="${not empty sessionScope.id}">
         <a href="" class="nav-item nav-link"><i class="fa fa-shopping-cart" style="font-size:24px;color:#06BBCC"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
         <div class="nav-item dropdown">
         <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-            <img class="profile-image rounded-circle" src="${pageContext.request.contextPath}/img/profile/${sessionScope.profile}" style="width: 50px; height: 50px; border: 2px solid #06BBCC;">&nbsp;&nbsp;${sessionScope.name}</a>
-        <div class="dropdown-menu fade-down">
-            <a href="" class="dropdown-item">내 정보</a>
-            <a href="" class="dropdown-item">내 강의</a>
-            <c:choose>
-                <c:when test="${sessionScope.grade == 'admin'}">
-                    <a href="" class="dropdown-item">관리자메뉴</a>
-                </c:when>
-                <c:when test="${sessionScope.grade == 'teacher'}">
-                    <a href="${pageContext.request.contextPath}/lectures/uploadcheck" class="dropdown-item">강의 등록</a>
-                </c:when>
-            </c:choose>
-            <a href="" class="dropdown-item">로그아웃</a>
+            <img class="profile-image rounded-circle" src="img/profile/${sessionScope.profile}" style="width: 50px; height: 50px; border: 2px solid #06BBCC;">&nbsp;&nbsp;${sessionScope.name}</a>
+	        <div class="dropdown-menu fade-down">
+	            <a href="" class="dropdown-item">내 정보</a>
+	            <a href="" class="dropdown-item">내 강의</a>
+	            <c:choose>
+	                <c:when test="${sessionScope.grade == 'admin'}">
+	                    <a href="" class="dropdown-item">관리자메뉴</a>
+	                </c:when>
+	                <c:when test="${sessionScope.grade == 'teacher'}">
+	                    <a href="${pageContext.request.contextPath}/lectures/uploadcheck" class="dropdown-item">강의 등록</a>
+	                </c:when>
+	            </c:choose>
+	            <a href="" class="dropdown-item">로그아웃</a>
+	        </div>
         </div>
+        </c:if>
         <!-- 세션ID 존재할 경우 나오는 메뉴 End-->
-
-            
-        </div>
-        <!-- <a href="login.html" class="btn btn-primary">로그인</a>&nbsp;&nbsp;&nbsp;
-        <a href="join.html" class="btn btn-primary">가입하기</a>&nbsp;&nbsp;&nbsp; -->
+        <!-- 세션ID 존재하지 않을때 나오는 메뉴 Start -->
+        <c:if test="${empty sessionScope.id}">
+		 <a href="../page/member/login.jsp" class="btn btn-primary">로그인</a>&nbsp;&nbsp;&nbsp;
+         <a href="../page/member/join.jsp" class="btn btn-primary">가입하기</a>&nbsp;&nbsp;&nbsp;
+         </c:if>
+         <!-- 세션ID 존재하지 않을때 나오는 메뉴 End --> 
     </div>
 </nav>
 
@@ -103,9 +107,7 @@ session.setAttribute("grade", "teacher");
 
 <!-- Template Javascript -->
 <script src="../js/main.js"></script>
-<!-- axios 사용을 위한 추가 설정 -->
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="../js/search.js"></script>
+
 
 </body>
 </html>
