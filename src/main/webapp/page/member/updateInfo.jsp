@@ -1,3 +1,9 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -30,6 +36,11 @@
     <!-- Template Stylesheet -->
     <link href="../../css/style.css" rel="stylesheet">
 </head>
+<style>
+.a {
+	margin-right: 100px;
+}
+</style>
 
 <body>
     <!-- Spinner Start -->
@@ -43,7 +54,7 @@
 
     <!-- Navbar Start navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0-->
     <nav class="navbar navbar-expand-lg bg-body-tertiary shadow">
-        <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+        <a href="../main.jsp" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
             <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>MOMOLEARN</h2>
         </a>
         <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -67,11 +78,11 @@
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">My Pages&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
                 <div class="dropdown-menu fade-down">
-                    <a href="../auth/myinfo.html" class="dropdown-item">내 정보</a>
+                    <a class="dropdown-item" onclick='location.href="${pageContext.request.contextPath}/member/myinfo"'>내 정보</a>
                     <a href="../lecture/mylecture.html" class="dropdown-item">내 강의</a>
                     <a href="#" class="dropdown-item">메뉴</a>
                     <a href="#" class="dropdown-item">메뉴</a>
-                    <a href="index.html" class="dropdown-item">로그아웃</a>
+                    <a class="dropdown-item" onclick='location.href="${pageContext.request.contextPath}/member/sessionOut"' >로그아웃</a>
                 </div>
             </div>
             <!-- 세션ID 존재할 경우 나오는 메뉴 End-->
@@ -85,10 +96,10 @@
         <div class="container py-5">
             <div class="row justify-content-center">
                 <div class="col-lg-10 text-center">
-                    <h1 class="display-4 text-white animated slideInDown">내프로필</h1>
+                    <h1 class="display-4 text-white animated slideInDown">내 정보</h1>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb justify-content-center">
-                            <li class="breadcrumb-item text-white active" aria-current="page">페이지 간단 설명(생략가능)</li>
+                            <li class="breadcrumb-item text-white active" aria-current="page"></li>
                         </ol>
                     </nav>
                 </div>
@@ -96,6 +107,84 @@
         </div>
     </div>
     <!-- Header End -->
+	
+	<!-- Info Start -->
+	    <!-- Form Start -->
+    <form id="sm" name="pej" method="post" onsubmit="return allCheck()" action="">
+        <div align="center">
+            <h2>내 정보 수정하기</h2> <!-- class="nav-item nav-link" -->
+
+            <div>
+                <div class="col-sm-5">
+                    <table class="table table-bordered">
+
+                        <tr>
+                            <!-- 1 -->
+                            <td>아이디</td>
+                            <td>${members.memId }</td>
+
+                        </tr>
+                        
+                        <tr>
+                            <!-- 2 -->
+                            <td>기존 비밀번호</td>
+                            <td><input class="updateInfo" type="password" name="originPw" "></td>
+                        </tr>
+                       	<tr>
+                            <!-- 3 -->
+                            <td>새 비밀번호</td>
+    						<td><input class="updateInfo" type="password" name="newPw1" "></td>
+                        </tr>
+                        
+                        <tr>
+                            <!-- 4 -->
+                            <td>새 비밀번호 확인</td>
+                            <td><input class="updateInfo" type="password" name="newPw2" "></td>
+                        </tr>                      
+                        <tr>
+                            <!-- 5 -->
+                            <td>이름</td>
+                            <td><input class="updateInfo" type="text" name="name" value="${members.name}"></td>
+                        </tr>
+                        <tr>
+                            <!-- 6 -->
+                            <td>이메일</td>
+                            <td>${members.email }</td>
+                        </tr>
+                        
+                       <tr>
+                       		<!-- 7 -->
+                            <td>등급</td>
+                            <td>${members.grade }</td>
+                        </tr>
+                        
+                       <tr>
+                       		<!-- 8 -->
+                            <td>프로필사진</td>
+                            <td>						
+                            	<div class="mb-3">
+									<input class="form-control" type="file" id="profile" name="file">
+								</div>
+							</td>
+                        </tr>                        
+
+
+                        <tr>
+                            <td colspan="2" align="center">
+	                            <input class="btnBox" type="button" value="수정하기" onclick="location.href='${pageContext.request.contextPath}/member/updatepage?id=${members.memId}'">&nbsp;
+				
+								<button class="btnBox" id="delete_btn" onclick='location.href="${pageContext.request.contextPath}/member/delete?id=${members.memId}"'> 탈퇴하기</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+	</form>
+    <!-- Form End -->
+	<!-- Info End -->
+
+    
 
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
@@ -129,7 +218,7 @@
                         개인정보보호책임자: 이누구 | 이메일: info@momolearn.com
                         주소:서울시 강남구 강남대로 420 역삼빌딩 1205호
 
-                        <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+                        <!--/*** This template is free as long as you keep the footer memberor’s credit link/attribution link/backlink. If you'd like to use the template without the footer memberor’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
                         Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a><br><br>
                         Distributed By <a class="border-bottom" href="https://themewagon.com">ThemeWagon</a>
                     </div>
@@ -162,6 +251,9 @@
 
     <!-- Template Javascript -->
     <script src="../../js/main.js"></script>
+    
+    	<!-- axios 사용을 위한 추가 설정 -->
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </body>
 
 </html>

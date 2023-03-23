@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="com.momolearn.model.entity.Members"%>
 <%@ page import="com.momolearn.model.MembersRepository"%>
-<%@ page import="com.momolearn.controller.MembersController"%>
+<%@ page import="com.momolearn.controller.MemberSignUpController"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -49,48 +49,48 @@
     <!-- Spinner End -->
 
 
-  <!-- Navbar Start navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0-->
-  <nav class="navbar navbar-expand-lg bg-body-tertiary shadow">
-	<a href="../index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
-		<h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>MOMOLEARN</h2>
-	</a>
-	<button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-		<span class="navbar-toggler-icon"></span>
-	</button>
-	<div class="collapse navbar-collapse" id="navbarCollapse">
-		<div class="navbar-nav ms-auto p-4 p-lg-0">
-			<!-- <a href="index.html" class="nav-item nav-link active">홈</a> -->
-			<form class="d-flex" role="search">
-				<input class="form-control me-2" type="search" placeholder="강의 검색" aria-label="Search">
-				<button class="btn btn-outline-primary" type="submit">Search</button>
-			</form> &nbsp;&nbsp;&nbsp;&nbsp;
+ <!-- Navbar Start navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0-->
+	<nav class="navbar navbar-expand-lg bg-body-tertiary shadow">
+		<a href="../index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+			<h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>MOMOLEARN</h2>
+		</a>
+		<button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarCollapse">
+			<div class="navbar-nav ms-auto p-4 p-lg-0">
+				<!-- <a href="index.html" class="nav-item nav-link active">홈</a> -->
+				<form class="d-flex" role="search">
+					<input class="form-control me-2" type="search" placeholder="강의 검색" aria-label="Search">
+					<button class="btn btn-outline-primary" type="submit">Search</button>
+				</form> &nbsp;&nbsp;&nbsp;&nbsp;
+			</div>
+				<a href="../lecture/lectures.html" class="nav-item nav-link">강의</a> &nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="../community/community.html" class="nav-item nav-link">커뮤니티</a> &nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="../notice/notice.html" class="nav-item nav-link">공지사항</a> &nbsp;&nbsp;&nbsp;&nbsp;
+				<!--로그인 여부에 따라서 달라짐 Start-->
+            <a class="btn btn-primary" onclick='location.href="${pageContext.request.contextPath}/member/loginView"'>로그인</a>&nbsp;&nbsp;&nbsp;
+            <a class="btn btn-primary" onclick='location.href="${pageContext.request.contextPath}/member/joinView"'>가입하기</a>&nbsp;&nbsp;&nbsp;
+				 <!--로그인 여부에 따라서 달라짐 End-->
 		</div>
-		<a href="../lecture/lectures.html" class="nav-item nav-link">강의</a> &nbsp;&nbsp;&nbsp;&nbsp;
-		<a href="../community/community.html" class="nav-item nav-link">커뮤니티</a> &nbsp;&nbsp;&nbsp;&nbsp;
-		<a href="../notice/notice.html" class="nav-item nav-link">공지사항</a> &nbsp;&nbsp;&nbsp;&nbsp;
-		<!--로그인 여부에 따라서 달라짐 Start-->
-		<a href="../auth/login.html" class="btn btn-primary">로그인</a>&nbsp;&nbsp;&nbsp;
-		<a href="../auth/join.html" class="btn btn-primary">가입하기</a>&nbsp;&nbsp;&nbsp;
-		 <!--로그인 여부에 따라서 달라짐 End-->
-	</div>
-</nav>
+	</nav>
 <!-- Navbar End -->
 	<div class="wrap">
 		
 			<div class="join">
 				<h2 class="text-primary">회원가입</h2>
-				<span  style="font-weight: bold; color: navy;;;">* 필수입력</span>
+				<span  style="font-weight: bold; color: navy;">* 필수입력</span>
 				<!-- 파일업로드를 먼저 해주기 위함 -->
 				<form name="f" action="${pageContext.request.contextPath}/member/join" method="post" enctype="multipart/form-data">
 					<div class="join_a">
 						<h4>*아이디</h4>
 						<input type="text" name="memId" id="memId" placeholder="아이디를 입력해주세요."
 							minlength="5" maxlength="20" onsubmit="return checkId(this)">
-						<input type="button" style="background-color: #78d5e7; color: white; font-weight: bolder;" value="ID중복확인" onclick="idCheck()">
+						<input type="button" style="background-color: #78d5e7; color: white; font-weight: bolder;" value="ID중복확인" onclick="dedupId()" >
 					</div>
 					<div class="join_a">
 						<h4>*비밀번호</h4>
-						<input type="password" name="password" placeholder="비밀번호를 입력해주세요."
+						<input type="password"  name="password" placeholder="비밀번호를 입력해주세요."
 							maxlength="16">
 					</div>
 					<div class="join_a">
@@ -120,11 +120,11 @@
 					<div class="">
 						<h4>*프로필사진</h4>
 						<div class="mb-3">
-							<input class="form-control" type="file" id="profile">
+							<input class="form-control" type="file" id="profile" name="file">
 						</div>
 					</div>
 					<div class="submit">
-						<input type="button" style="background-color: #78d5e7;" value="회원가입" onclick="blank()" onclick="alert('회원가입 되셨습니다')>
+						<input type="button" style="background-color: #78d5e7;" value="회원가입" onclick="blank()">
 					</div>
 
 					<div class="text">
@@ -171,7 +171,7 @@
                         개인정보보호책임자: 이누구 | 이메일: info@momolearn.com
                         주소:서울시 강남구 강남대로 420 역삼빌딩 1205호
 
-                        <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+                        <!--/*** This template is free as long as you keep the footer memberor’s credit link/attribution link/backlink. If you'd like to use the template without the footer memberor’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
                         Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a><br><br>
                         Distributed By <a class="border-bottom" href="https://themewagon.com">ThemeWagon</a>
                     </div>
@@ -206,90 +206,55 @@
     <script src="../../js/main.js"></script>
     
     <script>
-	
-	//아이디 길이 제한
-	function checkId(f) {
-		var id = f.id.value;
-		id = id.trim();
-		if (id.length < 5) {
-			alert("아이디는 5자 이상 입력해주십시오.");
-			return false;
-		}
-		return true;
-	}
-	
-	
-	var check = false; //중복 여부 확인 
-	
-	//아이디 중복 제크
-	function idCheck() {
-		
-		var resData = document.getElementById('memId').value ;
-		
-		if(f.memId.value==""){
-			alert("아이디를 입력하세요.");
-			f.id.focus();
-			return false;
-		}
-		
-		if (f.memId.value.length < 5) {
-			alert("아이디는 5자 이상 입력해주십시오.");
-			return false;
-		}
-		
-		axios({
-			method : 'GET', 
-			url : "member/checkOk?memId="+resData
-		
-		}).then(function(resData){ //응답 시
-			console.log(response);
-			alert(resData);
-			check = true;
-			
-		}).catch(function (error) { //오류 발생 시 
-			alert("사용 불가능한 아이디 입니다.") ;
-			
-		}).then(function(){ //항시
-			
-			alert("사용 가능한 아이디 입니다.");
-			check = true;
-			
-		});
-		
-	}
-	
+    
+    var check ; // 중복 체크 여부 확인 
+    
 	//id 중복체크
 	function dedupId() {
-		axios.post('주소 변경', {}, {
+		
+		
+		axios.post('${pageContext.request.contextPath}/member/checkOk', {}, {
 			params : {
-				mem_id : document.getElementById("memId").value
+				memId : document.getElementById("memId").value
 			}
 		})
 		 .then(function (resData) {
 			 validate(resData['data']);
 		 })
 	}
+	//사용여부
 	function validate(val) {
 		const memId = document.getElementById("memId").value;
 		
-		if(memId == ""){
-			alert('아이디를 입력하세요.');
-			return;
-		}else if(val == true) {
-			alert('사용가능한 아이디 입니다.')
-			document.getElementById("submit").disabled=false;
-			document.getElementById("memId").readOnly=true;
+	
+		if (memId.length < 5) {
+			alert("아이디는 5자 이상 입력해주세요.");
 			
-		}else {
-			alert('이미 존재하는 아이디 입니다.');
+		}else{
+			if(memId == ""){
+				alert('아이디를 입력하세요.');
+				return;
+				
+			}else if(val == true) {
+				alert('사용가능한 아이디 입니다.')
+				document.getElementById("submit").disabled=false;
+				document.getElementById("memId").readOnly=true;
+				check = true;
+				
+			}else {
+				alert('이미 존재하는 아이디 입니다.');
+				check = false;
+			}
 		}
+		
 	}
+
 	
 	//입력 태그 null값 경고
 	function blank() {
 		//아이디
 		if(f.memId.value==""){
-			alert("아이디를 입력하세요.sss");
+			alert("아이디를 입력하세요..");
 			f.memId.focus();
 			return false;
 		}
@@ -312,10 +277,10 @@
 			f.name.focus();
 			return false;
 		}
+		
 		//중복 체크 확인
 		if(check ==false){
 			alert("아이디 중복확인 해주세요.");
-			return false;
 		}
 		
 		f.submit();
