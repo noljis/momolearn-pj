@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class ApplyTeacherDTO {
 
     private int id;
-    private String applyId;
+    private String membersMemId;
     private String phoneNum;
     private String hopeFiled;
     private String intro;

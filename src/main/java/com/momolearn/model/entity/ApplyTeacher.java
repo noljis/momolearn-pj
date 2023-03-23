@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,8 +15,10 @@ import javax.persistence.OneToOne;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -24,6 +27,9 @@ import lombok.NoArgsConstructor;
 @Getter
 @DynamicInsert
 
+@Builder
+
+@EntityListeners(AuditingEntityListener.class)
 @Entity
 public class ApplyTeacher  {	//강사신청 테이블. 회원한명당 하나의 강사신청을 할 수 있다.
     @Id
@@ -60,3 +66,5 @@ public class ApplyTeacher  {	//강사신청 테이블. 회원한명당 하나의
     @OneToOne(mappedBy = "applyTeacher")
     public Teachers teacher;
 }
+
+

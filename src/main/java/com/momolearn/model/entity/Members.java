@@ -17,11 +17,13 @@ import org.springframework.data.annotation.CreatedDate;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 @DynamicInsert
 
 @Entity
@@ -59,4 +61,7 @@ public class Members  {
 	@OneToOne(mappedBy = "members")
 	public ApplyTeacher applyTeacher;
 	
+	public Members(String memId) {
+		this.memId = memId;		
+	}
 }
