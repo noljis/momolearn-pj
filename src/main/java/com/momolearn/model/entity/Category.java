@@ -33,7 +33,7 @@ public class Category  {
 	@OneToMany(mappedBy = "category")
 	public List<CategoryLecture> categoryLecture = new ArrayList<>();
 	
-	@Builder
+	
 	public Category(String cateName) {
 		this.cateName = cateName;
 	}

@@ -12,10 +12,12 @@ import javax.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 
 @Entity
 //ApplyTeacher를 참조하고 있는데 연락처, 희망분야, 자기소개 ,포폴링크 속성이 필요할까?
@@ -42,5 +44,9 @@ public class Teachers {
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "apply_id")
 	private ApplyTeacher applyTeacher;
+	
+	public void setTeacherNo(Integer teacherNo) {
+		this.teacherNo = teacherNo;
+	}
 	
 }

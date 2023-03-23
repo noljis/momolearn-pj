@@ -20,20 +20,26 @@ public class FileService {
 	public String getProfile(String memId, MultipartFile file) throws IOException {
 		//fileName: 원래 파일명
 		String fileName = file.getOriginalFilename();
+		
 		//fileExtension: 확장자명
 	    String fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1);
+	    
 	    //savedFileName: 디렉토리에 저장될 파일명[유저id.확장자]
 	    String savedFileName = memId + "." + fileExtension;
 	    
 	    try {
 	        //프로필 사진 저장할 경로
 	        String savePath = uploadPath + "/profile/"; // src/main/webapp/img/profile/
+	        
 	        //file.getBytes(): 파일을 다운받기 위해 byte배열로 변환함
 	        byte[] bytes = file.getBytes();
+	        
 	        //src/main/webapp/img/profile/[유저id.확장자]
 	        Path path = Paths.get(savePath + savedFileName);
+	        
 	        //path에 파일(bytes)을 저장함
 	        Files.write(path, bytes);
+	        
 	    } catch (IOException e) {
 	        e.printStackTrace();
 	        e.getMessage();

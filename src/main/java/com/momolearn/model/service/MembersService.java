@@ -1,323 +1,183 @@
 package com.momolearn.model.service;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.momolearn.exception.NotExistException;
 import com.momolearn.model.MembersRepository;
-
 import com.momolearn.model.dto.MembersDTO;
 import com.momolearn.model.entity.Members;
-import com.momolearn.util.DBUtil;
-import com.momolearn.util.DBUtil2;
 
 import lombok.RequiredArgsConstructor;
 
-
 @Service
-@RequiredArgsConstructor //생성자 자동 생성
+@RequiredArgsConstructor // 생성자 자동 생성
 public class MembersService {
-	
 
-	@Autowired //의존관계를 자동으로 설정해 준다. (DAO 객체 주입)
+	@Autowired // 의존관계를 자동으로 설정해 준다. (DAO 객체 주입)
 	private MembersRepository membersRepository;
 
+	private ModelMapper mapper = new ModelMapper();
 
 	//회원가입
-    public static Members memJoin(Members members) throws SQLException {
-    	EntityManager em = DBUtil.getEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		try {
-			tx.begin();
-			em.persist(members);
-			tx.commit();
-			
-		} catch (Exception e) {
-			tx.rollback();
-			e.printStackTrace();
-			
-		} finally {
-			em.close();
-		}
-		
-        return members;
+    @Transactional
+    public Members memJoin(Members members) throws SQLException {
+        try {
+            Members savedMembers = membersRepository.save(members);
+            return savedMembers;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new SQLException("Failed to join member.");
+        }
     }
     
-    //아이디 중복 확인
-    public static boolean duplecateID(String id) throws Exception{
-		boolean result = true ;
-		
-	    try{
-	    	Connection con = DBUtil2.getConnection();
-	        String sql= "select id from members where id =?";
-	        
-	        
-	        PreparedStatement pstmt=con.prepareStatement(sql);
-	        pstmt.setString(1, id);
-	        
-	        ResultSet rs=pstmt.executeQuery();
-	        
-	        //존재하는 id라면 false로 바꾸기
-	        if(rs.next()){
-	        	result= false;
-	        }
-	        
-	    }catch(Exception e){
-	     	System.out.println("아이디 중복 확인 실패 : " + e);
-	     	e.printStackTrace();
-	     	throw e;
-	    }
-		return result;
-	}
-    
+    //id중복체크
     public boolean checkId(String memId) throws Exception {
-		EntityManager em = DBUtil.getEntityManager();
-		
-		Long count = null;
-		try {
-			count = em.createQuery("select count(m) from Members m where m.mem_Id = :mem_Id", Long.class)
-					.setParameter("memId", memId)
-					.getSingleResult();
-		} finally {
-			em.close();
-		}
-		
-		return count == 0;
-	}
 
-	public boolean validateUser(String memId, String memPassword) throws Exception{
-		EntityManager em = DBUtil.getEntityManager();
+    	// Members 테이블에서 아이디값들을 가져옴
+		List<Members> members  = membersRepository.findAll();
 		
-		Long count = null;
-		try {
-			count = em.createQuery("select count(m) from User m where m_id = :m_id and m_password = :m_password", Long.class)
-					.setParameter("m_id", memId)
-					.setParameter("m_password", memPassword)
-					.getSingleResult();
-			
-		} finally {
-			em.close();			
+		// 컨트롤러에서 전달받은 memId 값과 비교하여 중복 여부를 확인
+		for(Members member : members) {
+			if(memId.equals(member.getMemId())) {
+				return false; // 이미 존재하는 아이디인 경우
+			}
 		}
 		
-		return count == 1;
+		return true; // 중복되는 아이디가 없을 경우 true를 리턴
+    }
+    
+	//로그인
+    @Transactional
+    public Members loginMember(String memId, String password) throws SQLException {
+        
+    	try {
+        	boolean data = validateUser(memId,password);
+        	
+        	if(data == true) {
+        		Members loginData = membersRepository.findByMemIdAndPw(memId, password);
+        		System.out.println(loginData);
+        		return loginData;
+        	}
+        	
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new SQLException("로그인 실패: 아이디를 확인하세요.");
+        }
+		return null;
+    }
+	 
+    //로그인 회원정보 확인
+	public boolean validateUser(String memId, String password) throws Exception {
+		Members member = membersRepository.findByMemId(memId);
+		
+
+		System.out.println("member출력 ===" +member.getPw());
+		System.out.println("member출력 ===" +password);
+		
+        if (member != null && member.getPw().equals(password)) {
+            return true;
+        }
+        return false;
 	}
     
 	//본인 조회 - jpa
-    public static Members getMember (String id) {
-		EntityManager em = DBUtil.getEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		Members member = null;
-		
-		try {
-			tx.begin();
-			member = em.find(Members.class, id);
-			
-			System.out.println(member);
-			
-			tx.commit();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			
-		}finally {
-			em.close();
-		}
-		
-		return member;
+    public Members getMember (String memId) {
+    	Members member = membersRepository.findByMemId(memId);
+        if (member == null) {
+            // 회원 정보를 찾을 수 없는 경우 예외 처리
+            throw new RuntimeException("해당 회원을 찾을 수 없습니다.");
+        }
+        return member;
 	}
     
-    //본인 프로필 수정
-    public static boolean memUpdate(String id, String pw, String name, String email, String profile, String grade) throws SQLException {
-		EntityManager em = DBUtil.getEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		Members mem = null;
-		
-		try {
-			tx.begin();
-			mem = em.find(Members.class, id);
-			if (mem != null) {
-				// before update
-				System.out.println("update 전 : " + mem);
-//				mem.setMemId(id);
-//				mem.setPw(pw);
-//				mem.setName();
-//				mem.setEmail();
-//				mem.setProfile();
-//				mem.setGrade();
-				
-				
-			} else {
-				System.out.println("업데이트 하려는 사람의 정보를 찾지 못하였습니다");
-			}
-			em.persist(mem); //persist -> update
-			tx.commit(); 
-			// after update
-			System.out.println("update 후 : " + mem);
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			em.close();
-		}
+   
 
-		return false;
-		
+	//id로 한명의 회원정보 불러오기
+	public MembersDTO getOneMember(String id) throws NotExistException {
+
+		Members member = membersRepository.findById(id).orElseThrow(() -> new NotExistException("해당 회원을 찾을 수 없습니다."));
+
+		return mapper.map(member, MembersDTO.class);
 	}
     
-    //회원 한명 삭제
-	public void deleteMember(String id) {
-		EntityManager em = DBUtil.getEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		try {
-			tx.begin();
-			//find로 찾기 
-			Members members = em.find(Members.class, id);
-			if (members != null) {
-				em.remove(members);
-			}else {
-				System.out.println("이미 탈퇴처리가 완료된 회원입니다.");
-			}
-			tx.commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally {
-			em.close();
-		}
-	}
+    //본인 프로필 수정 (미확인)
+//    @Transactional
+//    public Members updateMember(String memId, String email, String name, String pw, String file) {
+//        Members member = membersRepository.findById(memId)
+//                                          .orElseThrow(() -> new RuntimeException("Member not found with memId " + memId));
+//        
+//        Members updatedMember = null;
+//		// update the member fields
+//        member.setMemId(updatedMember.getMemId());
+//        member.setPw(updatedMember.getPw());
+//        member.setName(updatedMember.getName());
+//        member.setEmail(updatedMember.getEmail());
+//        member.setProfile(updatedMember.getProfile());
+//        
+//
+//        return membersRepository.save(member);
+//    }
+
+    
+    //회원 한명 삭제  (미확인)
+//    @Transactional
+//    public void deleteMember(String memId) throws SQLException {
+//        try {
+//            Optional<Members> membersOptional = membersRepository.findById(memId);
+//            if (membersOptional.isPresent()) {
+//                Members members = membersOptional.get();
+//                membersRepository.delete(members);
+//            } else {
+//                System.out.println("이미 탈퇴처리가 완료된 회원입니다.");
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            throw new SQLException("Failed to delete member.");
+//        }
+//    }
+
 	
 	
-	//로그인
-	public MembersDTO loginMember(String memId, String password) throws SQLException {
-		EntityManager em = DBUtil.getEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		
-		try {
-			tx.begin();
 
-			MembersDTO loginData = (MembersDTO) em.createNamedQuery("Members.findByLoginInfo").setParameter("memId", memId).setParameter("password", password).getSingleResult();
-			
-			em.persist(loginData);
-			
-			System.out.println(loginData);
-
-			tx.commit();
-			
-			return loginData;
-			
-		} catch (Exception e) {
-			tx.rollback();
-			e.printStackTrace();
-		} finally {
-			em.close();
-		}
-		
-		return null;
-	}
 	
 	//id찾기 (email로 찾기)
-	public Members findId(String email) throws SQLException{
-		EntityManager em = DBUtil.getEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		Members members = null;
-		try {
-			
-			tx.begin();
-			
-			members = (Members) em.createNamedQuery("Members.findByEmail").setParameter("email", email).getSingleResult();
-			
-			System.out.println(members); //테스트
-
-			tx.commit();
-			
-		} catch (Exception e) {
-			tx.rollback();
-			e.printStackTrace();
-		} finally {
-			em.close();
-		}
-		return members;
-	}
+//	public String findId(String email) throws SQLException{
+//		Members member = membersRepository.findByEmail(email);
+//        if (member != null) {
+//            return member.getMemId();
+//        }
+//        return null;
+//	}
+	
 	//pw찾기 (id,email로 찾기)
-	public Members findPwd(String id, String email) throws SQLException{
-		EntityManager em = DBUtil.getEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		Members members = null;
-		try {
-			
-			tx.begin();
-			
-			members = (Members) em.createNamedQuery("Members.findPassword").setParameter("id", id).setParameter("email", email).getSingleResult();
-			
-			System.out.println(members); //테스트
+//	public String findPw(String memId, String email) throws SQLException{
+//		Members member = membersRepository.findByMemIdAndEmail(memId, email);
+//        if (member == null) {
+//            // 비밀번호를 찾을 수 없는 경우 예외 처리
+//            throw new RuntimeException("해당 회원을 찾을 수 없습니다.");
+//        }
+//        return member.getPw();
+//	}
+	
 
-			tx.commit();
-			
-		} catch (Exception e) {
-			tx.rollback();
-			e.printStackTrace();
-		} finally {
-			em.close();
-		}
-		return members;
-	}
 	
 	//관리자 - 모든 회원 검색
-	public List<Members> getAllMembers() {
-		EntityManager em = DBUtil.getEntityManager();
-		
-		//jpql
-		String sql = "select m from Members m";
-		//createQuery : 쿼리 데이터 조회
-		//getResultList : 조회된 데이터 추출
-		List<Members> all = em.createQuery(sql).getResultList();
-
-		em.close();
-		
-		return all;
-	}
+//	public List<Members> getAllMembers() {
+//		return membersRepository.findAll();
+//	}
 	
-	//관리자 프로필 수정
-    public static boolean adminUpdate(String id, String pw, String name, String email, String profile, String grade) throws SQLException {
-		EntityManager em = DBUtil.getEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		Members mem = null;
-		
-		try {
-			tx.begin();
-			mem = em.find(Members.class, id);
-			if (mem != null) {
-				// before update
-				System.out.println("update 전 : " + mem);
-//				mem.setMemId(id);
-//				mem.setPw(pw);
-//				mem.setName();
-//				mem.setEmail();
-//				mem.setProfile();
-//				mem.setGrade();
-				
-				
-			} else {
-				System.out.println("업데이트 하려는 사람의 정보를 찾지 못하였습니다");
-			}
-			em.persist(mem); //persist -> update
-			tx.commit(); 
-			// after update
-			System.out.println("update 후 : " + mem);
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			em.close();
-		}
-
-		return false;
-		
-	}
+	//관리자 프로필 수정 -- 회원정보 수정이랑 같이 쓸지?!
+//    public boolean adminUpdate() throws SQLException {
+//		return false ;
+//		
+//	}
+    
 
 }
