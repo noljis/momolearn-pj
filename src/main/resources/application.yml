@@ -14,8 +14,6 @@ upload:
 spring:
   profiles:
    include: db
-  datasource: 
-   driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL8Dialect
@@ -35,3 +33,8 @@ spring:
   jackson:
     # LocalDateTime 타입의 값을 JSON 형식으로 직렬화할 때, 다음과 같은 형식으로 변환 
     date-time-format: yyyy-MM-dd'T'HH:mm
+    
+logging:
+  level:
+    org:
+      hibernate: debug

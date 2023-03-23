@@ -15,9 +15,6 @@ public interface MembersRepository extends JpaRepository<Members, String>{
     //회원가입
     Members save(Members members); 
     
- 	//id를 이용해 회원 한명 불러오기
-    Members findByMemId(String memId);
-    
     //로그인
     Members findByMemIdAndPw(String memId, String pw);
     
@@ -30,7 +27,7 @@ public interface MembersRepository extends JpaRepository<Members, String>{
     // 회원 삭제 
     void deleteByMemId(String memId);
 	
-    
-    
-    
+	Members findByMemId(String memId); // pk를 이용해 회원 한명 불러오기
+
+   
 }
