@@ -30,7 +30,7 @@ function drawTable(list) {
 		thumbnailLink.href = `/lecture/detail/${lecture.id}`;
 
 		const thumbnail = document.createElement("img");
-		thumbnail.src = `../../momolearn/img/lecture/${lecture.image}`;
+		thumbnail.src = `/../../momolearn/img/lecture/${lecture.image}`;
 		thumbnail.alt = "Lecture Thumbnail";
 		thumbnail.style.maxWidth = "100%";
 		thumbnail.style.maxHeight = "210px";
@@ -122,7 +122,7 @@ function drawTable(list) {
 function dataReceive(title) {
 	axios({
 		method: "GET",
-		url: "../../momolearn/lectures/searchLecture/" + title
+		url: "/../../momolearn/lectures/searchLecture/" + title
 	}).then(function(resData) {
 		lecture = resData.data;
 		console.log('넘어온 데이터' + lecture);
