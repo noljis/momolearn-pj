@@ -12,11 +12,13 @@ import lombok.NoArgsConstructor;
 public class BoardDTO  {
 	
 	private int comNo;
-	private String memId;
+	private String membersMemId;
 	private String type;
 	private String comTitle;
 	private String subject;
 	private LocalDateTime comRegdate;
 	private String comContent;
 	private int comViewCount;
+	
+
 }

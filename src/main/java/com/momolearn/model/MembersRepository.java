@@ -9,8 +9,6 @@ import com.momolearn.model.entity.Members;
 @Repository
 public interface MembersRepository extends JpaRepository<Members, String>{
 	
-//spring data jpa
-	
     //모든 회원정보 불러오기
     List<Members> findAll(); 
 
