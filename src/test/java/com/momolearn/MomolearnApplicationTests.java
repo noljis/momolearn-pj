@@ -1,6 +1,7 @@
 package com.momolearn;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -86,6 +87,16 @@ class MomolearnApplicationTests {
 		mock.perform(get("/lectures/uploadcheck")
 			.session(session)
 			.param("id", "test04"))
+			.andExpect(status().isOk())
+			.andDo(print());
+		
+		//id와 approve(=true)로 강사 조회 테스트
+		mock.perform(multipart("/lectures/uploadlecture")
+			.param("title", "자바의 정석")
+			.param("price", "5000")
+			.param("teacher_no", "1")
+			.param("info", "강의 설명")
+			.param("description", "1"))
 			.andExpect(status().isOk())
 			.andDo(print());
 		

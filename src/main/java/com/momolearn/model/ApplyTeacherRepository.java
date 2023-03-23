@@ -13,7 +13,7 @@ import com.momolearn.model.entity.ApplyTeacher;
 
 public interface ApplyTeacherRepository extends JpaRepository<ApplyTeacher, Integer>{
 
-	//회원id로 강사내역 조회
+		//회원id로 강사내역 조회
 		public Optional<ApplyTeacher> findByMembersMemId(String id);
 		
 		//회원id와 승인여부(ApproveIsTrue)로 강사내역 조회
