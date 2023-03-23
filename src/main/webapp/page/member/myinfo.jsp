@@ -78,7 +78,7 @@
 	
 	<!-- Info Start -->
 	    <!-- Form Start -->
-    <form id="sm" name="pej" method="post" onsubmit="return allCheck()" action="">
+    <form id="sm" name="pej">
         <div align="center">
             <h2>내 정보</h2> <!-- class="nav-item nav-link" -->
 

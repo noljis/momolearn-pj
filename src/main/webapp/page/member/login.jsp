@@ -75,7 +75,7 @@
 					<li><a id="a" href=""><i class="fa-solid fa-comment"></i></a></li>
 				</div>
 				<div class="text">
-					아직 회원이 아니신가요? &nbsp; <a href="./join.jsp"> 회원가입 하러가기</a>
+					아직 회원이 아니신가요? &nbsp; <a href="${pageContext.request.contextPath}/member/joinView"> 회원가입 하러가기</a>
 				</div>
 			</form>
 		</div>
