@@ -14,6 +14,7 @@ import com.momolearn.model.CategoryRepository;
 import com.momolearn.model.CoursesRepository;
 import com.momolearn.model.LecturesRepository;
 import com.momolearn.model.TeachersRepository;
+import com.momolearn.model.dto.CategoryDTO;
 import com.momolearn.model.dto.LecturesDTO;
 import com.momolearn.model.entity.Category;
 import com.momolearn.model.entity.CategoryLecture;
@@ -105,6 +106,13 @@ public class LecturesService {
 		    }
 		}
 		return category;
+	}
+	//모든 카테고리 조회
+	public List<CategoryDTO> getAllCategory() {
+		
+		List<Category> category = categoryRepository.findAll();
+		
+		return Arrays.asList(mapper.map(category, CategoryDTO[].class));
 	}
 
 
