@@ -71,8 +71,8 @@
             <a href="../community/community.html" class="nav-item nav-link">커뮤니티</a> &nbsp;&nbsp;&nbsp;&nbsp;
             <a href="../notice/notice.html" class="nav-item nav-link">공지사항</a> &nbsp;&nbsp;&nbsp;&nbsp;
             <!--로그인 여부에 따라서 달라짐 Start-->
-            <a href="../auth/login.jsp" class="btn btn-primary">로그인</a>&nbsp;&nbsp;&nbsp;
-            <a href="../auth/join.jsp" class="btn btn-primary">가입하기</a>&nbsp;&nbsp;&nbsp;
+            <a class="btn btn-primary" onclick='location.href="${pageContext.request.contextPath}/member/loginView"'>로그인</a>&nbsp;&nbsp;&nbsp;
+            <a class="btn btn-primary" onclick='location.href="${pageContext.request.contextPath}/member/joinView"'>가입하기</a>&nbsp;&nbsp;&nbsp;
              <!--로그인 여부에 따라서 달라짐 End-->
         </div>
     </nav>
@@ -99,7 +99,7 @@
 					</div>
 				</div>
 				<div class="submit">
-					<input type="button" style="background-color: #36cedb;" value="로그인" onclick="blank()" onclick="login(this.form)" >
+					<input type="button" style="background-color: #36cedb;" value="로그인" onclick="blank()" >
 				</div>
 				<div class="text">
 					<p id="p">sns계정으로 시작하기</p>
@@ -185,27 +185,11 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
 	
 	<script>	
-	function login(obj) {
-		axios.post('${pageContext.request.contextPath}/member/validateUser', {}, {
-			params : {
-				memId : document.getElementById("memId").value,
-				pw : document.getElementById("password").value
-			}
-		})
-		 .then(function (resData) {
-			 if(resData['data'] == true) {
-				 obj.submit();
-			 }else{
-				 alert('아이디(로그인 전용 아이디) 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해주세요.');
-			 }
-		 })
-	}
-	
 	function blank() {
 		//아이디 빈칸이라면 경고
 		if (f.memId.value == "") {
 			alert("아이디를 입력하세요.");
-			f.id.focus();
+			f.memId.focus();
 			return false;
 
 		}
@@ -218,6 +202,6 @@
 		f.submit();
 
 	}
-</script>
+	</script>
 </body>
 </html>

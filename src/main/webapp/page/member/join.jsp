@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="com.momolearn.model.entity.Members"%>
 <%@ page import="com.momolearn.model.MembersRepository"%>
-<%@ page import="com.momolearn.controller.MembersSignInController"%>
+<%@ page import="com.momolearn.controller.MemberSignUpController"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -49,31 +49,31 @@
     <!-- Spinner End -->
 
 
-  <!-- Navbar Start navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0-->
-  <nav class="navbar navbar-expand-lg bg-body-tertiary shadow">
-	<a href="../index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
-		<h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>MOMOLEARN</h2>
-	</a>
-	<button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-		<span class="navbar-toggler-icon"></span>
-	</button>
-	<div class="collapse navbar-collapse" id="navbarCollapse">
-		<div class="navbar-nav ms-auto p-4 p-lg-0">
-			<!-- <a href="index.html" class="nav-item nav-link active">홈</a> -->
-			<form class="d-flex" role="search">
-				<input class="form-control me-2" type="search" placeholder="강의 검색" aria-label="Search">
-				<button class="btn btn-outline-primary" type="submit">Search</button>
-			</form> &nbsp;&nbsp;&nbsp;&nbsp;
+ <!-- Navbar Start navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0-->
+	<nav class="navbar navbar-expand-lg bg-body-tertiary shadow">
+		<a href="../index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+			<h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>MOMOLEARN</h2>
+		</a>
+		<button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarCollapse">
+			<div class="navbar-nav ms-auto p-4 p-lg-0">
+				<!-- <a href="index.html" class="nav-item nav-link active">홈</a> -->
+				<form class="d-flex" role="search">
+					<input class="form-control me-2" type="search" placeholder="강의 검색" aria-label="Search">
+					<button class="btn btn-outline-primary" type="submit">Search</button>
+				</form> &nbsp;&nbsp;&nbsp;&nbsp;
+			</div>
+				<a href="../lecture/lectures.html" class="nav-item nav-link">강의</a> &nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="../community/community.html" class="nav-item nav-link">커뮤니티</a> &nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="../notice/notice.html" class="nav-item nav-link">공지사항</a> &nbsp;&nbsp;&nbsp;&nbsp;
+				<!--로그인 여부에 따라서 달라짐 Start-->
+            <a class="btn btn-primary" onclick='location.href="${pageContext.request.contextPath}/member/loginView"'>로그인</a>&nbsp;&nbsp;&nbsp;
+            <a class="btn btn-primary" onclick='location.href="${pageContext.request.contextPath}/member/joinView"'>가입하기</a>&nbsp;&nbsp;&nbsp;
+				 <!--로그인 여부에 따라서 달라짐 End-->
 		</div>
-		<a href="../lecture/lectures.html" class="nav-item nav-link">강의</a> &nbsp;&nbsp;&nbsp;&nbsp;
-		<a href="../community/community.html" class="nav-item nav-link">커뮤니티</a> &nbsp;&nbsp;&nbsp;&nbsp;
-		<a href="../notice/notice.html" class="nav-item nav-link">공지사항</a> &nbsp;&nbsp;&nbsp;&nbsp;
-		<!--로그인 여부에 따라서 달라짐 Start-->
-		<a href="../auth/login.jsp" class="btn btn-primary">로그인</a>&nbsp;&nbsp;&nbsp;
-		<a href="../auth/join.jsp" class="btn btn-primary">가입하기</a>&nbsp;&nbsp;&nbsp;
-		 <!--로그인 여부에 따라서 달라짐 End-->
-	</div>
-</nav>
+	</nav>
 <!-- Navbar End -->
 	<div class="wrap">
 		
@@ -90,7 +90,7 @@
 					</div>
 					<div class="join_a">
 						<h4>*비밀번호</h4>
-						<input type="password" name="password" placeholder="비밀번호를 입력해주세요."
+						<input type="password"  name="password" placeholder="비밀번호를 입력해주세요."
 							maxlength="16">
 					</div>
 					<div class="join_a">
@@ -120,11 +120,11 @@
 					<div class="">
 						<h4>*프로필사진</h4>
 						<div class="mb-3">
-							<input class="form-control" type="file" id="profile">
+							<input class="form-control" type="file" id="profile" name="file">
 						</div>
 					</div>
 					<div class="submit">
-						<input type="button" style="background-color: #78d5e7;" value="회원가입" onclick="blank()" onclick="alert('회원가입 되셨습니다')">
+						<input type="button" style="background-color: #78d5e7;" value="회원가입" onclick="blank()">
 					</div>
 
 					<div class="text">
@@ -171,7 +171,7 @@
                         개인정보보호책임자: 이누구 | 이메일: info@momolearn.com
                         주소:서울시 강남구 강남대로 420 역삼빌딩 1205호
 
-                        <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+                        <!--/*** This template is free as long as you keep the footer memberor’s credit link/attribution link/backlink. If you'd like to use the template without the footer memberor’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
                         Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a><br><br>
                         Distributed By <a class="border-bottom" href="https://themewagon.com">ThemeWagon</a>
                     </div>
@@ -253,9 +253,9 @@
 	//입력 태그 null값 경고
 	function blank() {
 		//아이디
-		if(f.id.value==""){
+		if(f.memId.value==""){
 			alert("아이디를 입력하세요..");
-			f.id.focus();
+			f.memId.focus();
 			return false;
 		}
 		//비밀번호
