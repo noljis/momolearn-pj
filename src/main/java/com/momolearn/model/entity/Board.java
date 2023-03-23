@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,18 +15,21 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @DynamicInsert
-
+@EntityListeners(AuditingEntityListener.class)
 @Entity
+@ToString//임시
 public class Board  {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,11 +61,22 @@ public class Board  {
 	
 	
 	@Builder
-	public Board(String type, String comTitle, String subject, String comContent, Members memId) {
+	public Board(String type, String comTitle, String subject, String comContent, Members membersMemId, Integer comViewCount) {
 		this.type = type;
 		this.comTitle = comTitle;
 		this.subject = subject;
 		this.comContent = comContent;
-		this.members = memId;
+		this.members = membersMemId;
+		this.comViewCount = comViewCount;
 	}
+
+	
+	
+	public void update(String comTitle, String subject, String comContent) {
+		this.comTitle = comTitle;
+		this.subject = subject;
+		this.comContent = comContent;
+		
+	}
+	
 }

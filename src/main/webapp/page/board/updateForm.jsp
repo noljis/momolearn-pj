@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -23,18 +24,25 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
-    <link href="../lib/animate/animate.min.css" rel="stylesheet">
-    <link href="../lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="../../lib/animate/animate.min.css" rel="stylesheet">
+    <link href="../../lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Template Stylesheet -->
-    <link href="../css/style.css" rel="stylesheet">
-    <link href="../css/write.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+    <link href="../../css/read.css" rel="stylesheet">
 </head>
 
 <body>
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <!-- Spinner End -->
 
 
     <!-- Navbar Start navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0-->
@@ -54,7 +62,7 @@
                 </form> &nbsp;&nbsp;&nbsp;&nbsp;
             </div>
             <a href="../lecture/lectures.html" class="nav-item nav-link">강의</a> &nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="../community/community.html" class="nav-item nav-link">커뮤니티</a> &nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="../board/board.html" class="nav-item nav-link">커뮤니티</a> &nbsp;&nbsp;&nbsp;&nbsp;
             <a href="../notice/notice.html" class="nav-item nav-link">공지사항</a> &nbsp;&nbsp;&nbsp;&nbsp;
             <!--로그인 여부에 따라서 달라짐 Start-->
             <!-- 세션ID 존재할 경우 나오는 메뉴 Start-->
@@ -111,13 +119,14 @@
             <div class="col-xl-15">
                 <!-- Account details card-->
                 <div class="card mb-4">
-                    <div class="card-header">글쓰기</div>
+                    <div class="card-header">글 수정하기</div>
                     <div class="card-body">
                         <!-- Form Row-->
-                        <form class="container" action="../board" method="post">
+                        <form class="container" action="../${dto.comNo}" method="post">
+                        	<input type="hidden" name="_method" value="put"/>
                             <div class="mb-3">
                                 <label class="small mb-1" for="inputComTitle">제목</label>
-                                <input class="form-control" id="comTitle" name="comTitle" type="text" placeholder="제목을 입력하세요">
+                                <input class="form-control" id="comTitle" name="comTitle" type="text" placeholder="제목을 입력하세요" value="${dto.comTitle}">
                             </div>
                             <div>
                             	<input id="type" name="type" value="community" type="hidden">
@@ -126,27 +135,28 @@
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputSubject">카테고리</label>
                                     <select name="subject" id="subject" class="form-control" >
-                                        <option value="">---선 택---</option>
-                                        <option value="자유">자  유</option>
-                                        <option value="질문">질  문</option>
-                                        <option value="정보">정  보</option>
-                                        <option value="모집">모  집</option>
+	                                    <option value="">---선 택---</option>
+										<option value="자유"<c:if test="${dto.subject eq '자유'}">selected</c:if>>자  유</option>
+										<option value="질문"<c:if test="${dto.subject eq '잡담'}">selected</c:if>>질  문</option>
+										<option value="정보"<c:if test="${dto.subject eq '정보'}">selected</c:if>>정  보</option>
+										<option value="모집"<c:if test="${dto.subject eq '모집'}">selected</c:if>>모  집</option>
                                     </select>
+                                        
                                 </div>
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputdMembersMemId">작성자</label>
-                                    <input class="form-control" id="membersMemId" name="membersMemId" type="text" value="test01" readonly>
+                                    <input class="form-control" id="membersMemId" name="membersMemId" type="text" value="${dto.membersMemId}" readonly>
                                 </div>
                             </div>
                             <!-- Form Row        -->
                             <!-- Form Group (email address)-->
                             <div class="mb-3">
                                 <label class="small mb-1" for="inputComContent">글 내용</label>
-                                <textarea rows="10" cols="50" id="comContent" name="comContent" class="form-control" placeholder="글 내용을 입력하세요"></textarea>
+                                <textarea rows="10" cols="50" id="comContent" name="comContent" class="form-control" placeholder="글 내용을 입력하세요" >${dto.comContent}</textarea>
                             </div>
                             <!-- Save changes button-->
                             <button class="btn btn-primary" type="submit" >등록</button>
-                            <button class="btn btn-primary" type="button" onclick="location.href='../board'">글목록</button>
+                            <button class="btn btn-primary" type="button" onclick="location.href='../'">글목록</button>
                         </form>
                     </div>
                 </div>

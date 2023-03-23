@@ -1,3 +1,8 @@
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="tf" tagdir="/WEB-INF/tags"%>
+    
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -21,25 +26,18 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
-    <link href="../../lib/animate/animate.min.css" rel="stylesheet">
-    <link href="../../lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="../lib/animate/animate.min.css" rel="stylesheet">
+    <link href="../lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Template Stylesheet -->
-    <link href="../../css/style.css" rel="stylesheet">
-    <link href="../../css/read.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/board.css" rel="stylesheet">
 </head>
 
 <body>
-    <!-- Spinner Start -->
-    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
-            <span class="sr-only">Loading...</span>
-        </div>
-    </div>
-    <!-- Spinner End -->
 
 
     <!-- Navbar Start navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0-->
@@ -90,7 +88,7 @@
                     <h1 class="display-4 text-white animated slideInDown">커뮤니티</h1>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb justify-content-center">
-                            <li class="breadcrumb-item text-white active" aria-current="page">read a post</li>
+                            <li class="breadcrumb-item text-white active" aria-current="page">페이지 간단 설명(생략가능)</li>
                         </ol>
                     </nav>
                 </div>
@@ -99,84 +97,144 @@
     </div>
     <!-- Header End -->
 
-    <!-- 블로그 시작-->
-    <div class="blog-single gray-bg">
+
+    <!-- Categories Start -->
+    <div class="container-xxl py-5 category">
         <div class="container">
-            <div class="row align-items-start">
-                <div class="col-lg-15 m-15px-tb">
-                    <article class="article">
-                        <div class="article-title">
-                            <h6><a href="#">시험후기</a></h6>
-                            <h2>시험보고 온 후기 남겨요</h2>
-                            <div class="media">
-                                <div class="avatar">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" title="" alt="">
-                                </div>
-                                <div class="media-body">
-                                    <label>접니다</label>
-                                </div>
-                                <div class="detail">
-                                    <span>작성일 2023/03/14</span>
-                                    <span style="float: right;">댓글 0</span>
-                                    <span style="float: right;">추천 0</span>
-                                    <span style="float: right;">조회 0</span>
-                                </div>
-                            </div>
+            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                <h6 class="section-title bg-white text-center text-primary px-3">Community</h6>
+                <h1 class="mb-5">Community Community</h1>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 게시판 시작 -->
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-3 col-md-6">
+                <div class="card bg-pattern">
+                    <div class="card-body">
+                        <div class="float-right">
+                            <i class="fa fa-archive text-primary h4 ml-3"></i>
                         </div>
-                        <div class="article-content">
-                            <p>Aenean eleifend ante maecenas pulvinar montes lorem et pede dis dolor pretium donec dictum. Vici consequat justo enim. Venenatis eget adipiscing luctus lorem. Adipiscing veni amet luctus enim sem libero tellus viverra venenatis aliquam. Commodo natoque quam pulvinar elit.</p>
-                            <p>Eget aenean tellus venenatis. Donec odio tempus. Felis arcu pretium metus nullam quam aenean sociis quis sem neque vici libero. Venenatis nullam fringilla pretium magnis aliquam nunc vulputate integer augue ultricies cras. Eget viverra feugiat cras ut. Sit natoque montes tempus ligula eget vitae pede rhoncus maecenas consectetuer commodo condimentum aenean.</p>
-                            <h4>What are my payment options?</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                            <blockquote>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
-                                <p class="blockquote-footer">Someone famous in <cite title="Source Title">Dick Grayson</cite></p>
-                            </blockquote>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        <h5 class="font-size-20 mt-0 pt-1">24</h5>
+                        <p class="text-muted mb-0">Total Projects</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <div class="card bg-pattern">
+                    <div class="card-body">
+                        <div class="float-right">
+                            <i class="fa fa-th text-primary h4 ml-3"></i>
                         </div>
-                    </article>
-                    <div class="contact-form article-comment">
-                        <h4>댓글</h4>
-                        <form id="contact-form" method="POST">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <input name="Name" id="name" placeholder="Name *" class="form-control" type="text">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <input name="Email" id="email" placeholder="Email *" class="form-control" type="email">
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <textarea name="message" id="message" placeholder="Your message *" rows="4" class="form-control"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="send">
-                                        <button class="px-btn theme"><span>작성</span> <i class="arrow"></i></button>
+                        <h5 class="font-size-20 mt-0 pt-1">18</h5>
+                        <p class="text-muted mb-0">Completed Projects</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <div class="card bg-pattern">
+                    <div class="card-body">
+                        <div class="float-right">
+                            <i class="fa fa-file text-primary h4 ml-3"></i>
+                        </div>
+                        <h5 class="font-size-20 mt-0 pt-1">06</h5>
+                        <p class="text-muted mb-0">Pending Projects</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <form>
+                            <div class="form-group mb-0">
+                                <label>Search</label>
+                                <div class="input-group mb-0">
+                                    <input type="text" class="form-control" placeholder="Search..." aria-describedby="project-search-addon" />
+                                    <div class="input-group-append">
+                                        <button class="btn btn-danger" type="button" id="project-search-addon"><i class="fa fa-search search-icon font-12"></i></button>
                                     </div>
                                 </div>
                             </div>
                         </form>
                     </div>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
 
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive project-list">
+                            <table class="table project-table table-centered table-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">번호</th>
+                                        <th scope="col">카테고리</th>
+                                        <th scope="col">제목</th>
+                                        <th scope="col">작성일</th>
+                                        <th scope="col">글쓴이</th>
+                                        <th scope="col">조회</th>
+                                        <th scope="col">추천</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                	<!-- 게시글 시작 -->
+                                <c:forEach items="${list}" var="c">
+                                    <tr>
+                                        <th scope="row">${c.comNo}</th>
+                                        <td>
+                                            <span class="text-success font-12"><i class="mdi mdi-checkbox-blank-circle mr-1"></i>${c.subject}</span>
+                                        </td>
+                                        <td><a href="../board/${c.comNo}" id="title">${c.comTitle}</a></td>
+                                        <td><tf:formatDateTime value="${c.comRegdate}" pattern="yyyy-MM-dd HH:mm" /></td>
+                                        <td>
+                                            <div class="team">
+                                                <a href="javascript: void(0);" class="team-member" data-toggle="tooltip" data-placement="top" title="" data-original-title="Roger Drake">
+                                                    <img src="https://bootdey.com/img/Content/avatar/avatar6.png" class="rounded-circle avatar-xs" alt="" />${c.members.memId}
+                                                </a>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0">${c.comViewCount}</p>
+                                        </td>
 
-
-                    <button type="button" class="btn btn-primary" style="margin-top: 15px;" onclick="location.href='/board.html'">목록</button>
-                    <div class="text-right mt-3" style="float: right;">
-                        <button type="button" class="btn btn-primary" onclick="location.href='/update.html'">수정</button>&nbsp;
-                        <button type="button" class="btn btn-primary">삭제</button>&nbsp;
-                        <!-- <button type="button" class="btn btn-default">Cancel</button>&nbsp; -->
+                                        <td>
+                                            <p class="mb-0">2</p>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                                    <!-- 게시글 끝-->
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- end project-list -->
+                        
+                        <button class="btn btn-outline-primary" style="float: right;" type="submit" onclick="location.href='../board/writeForm'">글쓰기</button>
+                        <div class="pt-3">
+                            <ul class="pagination justify-content-center mb-0">
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">Next</a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- end row -->
     </div>
-    <!-- 블로그 끝 -->
- 
+        
 
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
