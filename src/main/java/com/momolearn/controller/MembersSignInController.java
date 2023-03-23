@@ -44,6 +44,55 @@ public class MembersSignInController {
 		return mv;
 	}
     
+	// id 찾기 페이지 이동 (확인)
+	@RequestMapping(value = "/findIdForm", method = RequestMethod.GET)
+	public String findIdForm() {
+		return "redirect:/page/member/findId.jsp";
+	}
+
+	// id 찾기  (미흡)
+	@RequestMapping(value = "/findId", method = RequestMethod.POST)
+	public String findId(Model model, @RequestParam("email") String email ) throws SQLException {
+		
+		System.out.println("호출~~~~~~~~~~~~~~~~~~~~~~~~");
+		
+		Members members = membersService.findId(email);
+		
+        if (members == null) {
+            model.addAttribute("msg", "일치하는 회원 정보가 없습니다.");
+            
+        } else {
+            model.addAttribute("members", members);
+        }
+        
+        return "redirect:/page/member/findIdResult.jsp"; // 이동할 JSP 파일명
+	}
+	
+	// pwd 찾기 페이지 이동 (확인)
+	@RequestMapping(value = "/findPwdForm", method = RequestMethod.GET)
+	public String findPwdForm() {
+		return "redirect:/page/member/findPw.jsp";
+	}
+
+	// pwd 찾기 (미흡)
+	@RequestMapping(value = "/findPwd", method = RequestMethod.POST)
+	public String findPwd(Model model, @RequestParam("memId") String memId, @RequestParam("email") String email) throws SQLException {
+		System.out.println("메소드 호출!!!!");
+		Members members = membersService.findPw(memId,email);
+		
+		
+        if (members == null) {
+            model.addAttribute("msg", "일치하는 회원 정보가 없습니다.");
+            System.out.println("비번발견실패''''''''''");       
+        } else {
+            model.addAttribute("members", members);
+            System.out.println("비번발견~~~~" + members.getPw());
+        }
+        
+        return "redirect:/page/member/findPwResult.jsp"; // 이동할 JSP 파일명
+	
+	}
+    
 	//로그인 (확인)
 	@PostMapping(value = "/login", produces = "application/json;charset=UTF-8")
 	public String login(Model sessionData, @RequestParam("memId") String memId, 

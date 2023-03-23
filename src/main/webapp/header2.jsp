@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%
+<%--
 session.setAttribute("id", "test04");
 session.setAttribute("name", "강사1");
 session.setAttribute("profile", "test04.jpg");
 session.setAttribute("grade", "teacher");
-%>
+--%>
 <!-- 검색기능 없는 헤더 -->
 <!DOCTYPE html>
 <html>
@@ -67,7 +67,7 @@ session.setAttribute("grade", "teacher");
         <a href="" class="nav-item nav-link"><i class="fa fa-shopping-cart" style="font-size:24px;color:#06BBCC"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
         <div class="nav-item dropdown">
         <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-            <img class="profile-image rounded-circle" src="${pageContext.request.contextPath}/img/profile/${sessionScope.profile}" style="width: 50px; height: 50px; border: 2px solid #06BBCC;">&nbsp;&nbsp;${sessionScope.name}</a>
+            <img class="profile-image rounded-circle" src="${pageContext.request.contextPath}/img/profile/${members.profile}" style="width: 50px; height: 50px; border: 2px solid #06BBCC;">&nbsp;&nbsp;${members.name}</a>
         <div class="dropdown-menu fade-down">
             <a href="" class="dropdown-item">내 정보</a>
             <a href="" class="dropdown-item">내 강의</a>
@@ -79,7 +79,7 @@ session.setAttribute("grade", "teacher");
                     <a href="${pageContext.request.contextPath}/lectures/uploadcheck" class="dropdown-item">강의 등록</a>
                 </c:when>
             </c:choose>
-            <a href="" class="dropdown-item">로그아웃</a>
+            <a class="dropdown-item" onclick='location.href="${pageContext.request.contextPath}/member/sessionOut"'>로그아웃</a>
         </div>
         <!-- 세션ID 존재할 경우 나오는 메뉴 End-->
         </div>

@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<%
+<%--
 session.setAttribute("id", "test04");
 session.setAttribute("name", "강사1");
 session.setAttribute("profile", "test04.jpg");
 session.setAttribute("grade", "teacher");
-%>
+--%>
 <!DOCTYPE html>
 <html>
 
@@ -117,8 +117,7 @@ session.setAttribute("grade", "teacher");
 <script src="../lib/waypoints/waypoints.min.js"></script>
 <script src="../lib/owlcarousel/owl.carousel.min.js"></script>
 
-<!-- Template Javascript -->
-<script src="../js/main.js"></script>
+
 <!-- axios 사용을 위한 추가 설정 -->
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="../js/search.js"></script>

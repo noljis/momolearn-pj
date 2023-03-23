@@ -8,9 +8,8 @@ import com.momolearn.model.entity.Members;
 
 @Repository
 public interface MembersRepository extends JpaRepository<Members, String>{
-	
-    //모든 회원정보 불러오기
-    List<Members> findAll(); 
+	// id로 회원 한명 불러오기
+	Members findByMemId(String memId);
 
     //회원가입
     Members save(Members members); 
@@ -25,9 +24,11 @@ public interface MembersRepository extends JpaRepository<Members, String>{
     Members findByMemIdAndEmail(String memId, String email);
 
     // 회원 삭제 
-    void deleteByMemId(String memId);
+//    void deleteByMemId(String memId);
+    
+    //모든 회원정보 불러오기
+//  List<Members> findAll(); 
 	
-	Members findByMemId(String memId); // pk를 이용해 회원 한명 불러오기
 
    
 }

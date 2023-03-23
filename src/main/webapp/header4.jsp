@@ -1,15 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <%--
 session.setAttribute("id", "test04");
 session.setAttribute("name", "강사1");
 session.setAttribute("profile", "test04.jpg");
 session.setAttribute("grade", "teacher");
 --%>
-
-<!-- 로고만 있는 헤더 -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,47 +38,36 @@ session.setAttribute("grade", "teacher");
 
     <!-- Template Stylesheet -->
     <link href="../css/style.css" rel="stylesheet">
+    
+    <style type="text/css">
+    nav div {
+    	text-align:right;
+    }
+    </style>
 </head>
 <body>
-<!-- Spinner Start -->
-    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
-            <span class="sr-only">Loading...</span>
+    <!-- Spinner Start -->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary shadow">
+        <a href="../index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+            <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>MOMOLEARN</h2>
+        </a>
+        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto p-4 p-lg-0">
+                <!-- <a href="index.html" class="nav-item nav-link active">홈</a> -->
+       
+            </div>
+            <a href="../page/lecture/lectures.html" class="nav-item nav-link"></a> &nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="../page/community/community.html" class="nav-item nav-link"></a> &nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="../page/notice/notice.html" class="nav-item nav-link"></a> &nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="../member/login.jsp" class="btn btn-primary">로그인</a>&nbsp;&nbsp;&nbsp;
+            <a href="../member/join.jsp" class="btn btn-primary">가입하기</a>&nbsp;&nbsp;&nbsp;
+       
         </div>
-    </div>
-    <!-- Spinner End -->
-
-
-	<!-- Navbar Start navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0-->
-	<nav class="navbar navbar-expand-lg bg-body-tertiary shadow">
-	    <a href="${pageContext.request.contextPath}/page/index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
-	        <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>MOMOLEARN</h2>
-	    </a>
-	    <div class="collapse navbar-collapse" id="navbarCollapse">
-	        <div class="navbar-nav ms-auto p-4 p-lg-0">
-	        </div>
-	        <!-- 세션ID 존재할 경우 나오는 메뉴 Start-->
-	        <div class="nav-item dropdown">
-	        <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-	            <img class="profile-image rounded-circle" src="${pageContext.request.contextPath}/img/profile/${sessionScope.profile}" style="width: 50px; height: 50px; border: 2px solid #06BBCC;">&nbsp;&nbsp;${sessionScope.name}</a>
-	        <div class="dropdown-menu fade-down">
-	            <a class="dropdown-item" onclick='location.href="${pageContext.request.contextPath}/member/myinfo"'>내 정보</a>
-	            <a href="" class="dropdown-item">내 강의</a>
-	            <c:choose>
-	                <c:when test="${sessionScope.grade == 'admin'}">
-	                    <a href="" class="dropdown-item">관리자메뉴</a>
-	                </c:when>
-	                <c:when test="${sessionScope.grade == 'teacher'}">
-	                    <a href="${pageContext.request.contextPath}/lectures/uploadcheck" class="dropdown-item">강의 등록</a>
-	                </c:when>
-	            </c:choose>
-	            <a class="dropdown-item" onclick='location.href="${pageContext.request.contextPath}/member/sessionOut"'>로그아웃</a>
-	        </div>
-	        <!-- 세션ID 존재할 경우 나오는 메뉴 End-->
-	        </div>
-	    </div>
-	</nav>
-	<!-- Navbar End -->
+    </nav>
+    <!-- Navbar End -->
 
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

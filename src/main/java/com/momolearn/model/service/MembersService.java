@@ -86,6 +86,27 @@ public class MembersService {
         }
         return false;
 	}
+	
+	//id찾기 (email로 찾기)
+	public Members findId(String email) throws SQLException{
+		
+		Members member = membersRepository.findByEmail(email);
+		
+        if (member == null) {
+            return null;
+        }
+        return member;
+	}
+	
+	//pw찾기 (id,email로 찾기)
+	public Members findPw(String memId, String email) throws SQLException{
+		
+		Members member = membersRepository.findByMemIdAndEmail(memId, email);
+        if (member == null) {
+        	return null;
+        }
+        return member;
+	}
     
 	//본인 조회 - jpa
     public Members getMember (String memId) {
@@ -142,30 +163,6 @@ public class MembersService {
 //            throw new SQLException("Failed to delete member.");
 //        }
 //    }
-
-	
-	
-
-	
-	//id찾기 (email로 찾기)
-//	public String findId(String email) throws SQLException{
-//		Members member = membersRepository.findByEmail(email);
-//        if (member != null) {
-//            return member.getMemId();
-//        }
-//        return null;
-//	}
-	
-	//pw찾기 (id,email로 찾기)
-//	public String findPw(String memId, String email) throws SQLException{
-//		Members member = membersRepository.findByMemIdAndEmail(memId, email);
-//        if (member == null) {
-//            // 비밀번호를 찾을 수 없는 경우 예외 처리
-//            throw new RuntimeException("해당 회원을 찾을 수 없습니다.");
-//        }
-//        return member.getPw();
-//	}
-	
 
 	
 	//관리자 - 모든 회원 검색

@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta content="" name="keywords">
 <meta content="" name="description">
-<title>로그인 페이지</title>
+<title>아이디 찾기</title>
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon">
@@ -33,7 +33,7 @@
 
     <!-- Template Stylesheet -->
 	<link href="../../css/style.css" rel="stylesheet">
-	<link rel="stylesheet" href="../../css/login.css">
+	<link rel="stylesheet" href="../../css/find.css">
 
 	<!-- <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap"
 	rel="stylesheet">   -->
@@ -45,39 +45,20 @@
 	<jsp:include page="../../header4.jsp"></jsp:include>
 
 	<div class="wrap">
-		<div class="login">
-			<h2 id="h2" class="text-primary" >로그인</h2>
-			<form name="f" action="${pageContext.request.contextPath}/member/login" method="post">
-				<div class="login_id">
-					<h5>아이디</h5>
-					<input type="text" id="memId" name="memId" placeholder="아이디를 입력해주세요.">
-				</div>
-				<div class="login_pw">
-					<h5>비밀번호</h5>
-					<input class="input" type="password" name="password" placeholder="비밀번호를 입력해주세요.">
-				</div>
-				<div class="login_etc">
-					<div class="checkbox">
-						<input type="checkbox"> 아이디 저장<br>
-						<a id="a" href="${pageContext.request.contextPath}/member/findIdForm" method="GET">아이디 찾기</a>
-						&nbsp; <a>|</a> &nbsp;
-						<a id="a" href="${pageContext.request.contextPath}/member/findPwdForm" method="POST">비밀번호 찾기</a>
-					</div>
-				</div>
-				<div class="submit">
-					<input type="button" style="background-color: #36cedb;" value="로그인" onclick="blank()" >
-				</div>
-				<div class="text">
-					<p id="p">sns계정으로 시작하기</p>
-				</div>
-				<div class="login_sns">
-					<li><a id="a" href=""><i class="fa-sharp fa-solid fa-n"></i></a></li>
-					<li><a id="a" href=""><i class="fa-solid fa-comment"></i></a></li>
-				</div>
-				<div class="text">
-					아직 회원이 아니신가요? &nbsp; <a href="./join.jsp"> 회원가입 하러가기</a>
-				</div>
-			</form>
+		<div class="find">
+			<c:choose>
+				<c:when test="${not empty members}">
+					${members.memId}</b> 님의 비밀번호는
+					<b>${members.pw}</b> 입니다.
+				</c:when>
+				<c:when test="${empty members}">
+					아이디 또는 이메일 입력이 잘못되어 비밀번호를 찾을 수 없습니다.<br>
+				</c:when>
+			</c:choose>
+			<div class="box" >
+				<input type="button" value="뒤로가기" onclick="history.back()">
+				<input type="button" value="메인화면" onclick="location.href='${pageContext.request.contextPath}/page/index.html'">
+			</div>
 		</div>
 	</div>
 
@@ -102,24 +83,5 @@
 		
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
 	
-	<script>	
-	function blank() {
-		//아이디 빈칸이라면 경고
-		if (f.memId.value == "") {
-			alert("아이디를 입력하세요.");
-			f.memId.focus();
-			return false;
-
-		}
-		//비밀번호 빈칸이라면 경고
-		if (f.password.value == "") {
-			alert("비밀번호를 입력하세요.");
-			f.password.focus();
-			return false;
-		}
-		f.submit();
-
-	}
-	</script>
 </body>
 </html>

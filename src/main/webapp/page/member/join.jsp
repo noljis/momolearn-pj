@@ -40,7 +40,7 @@
     <script src="https://kit.fontawesome.com/f51a30e87b.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <jsp:include page="../../header3.jsp"></jsp:include>
+    <jsp:include page="../../header4.jsp"></jsp:include>
 	<div class="wrap">
 		
 			<div class="join">
