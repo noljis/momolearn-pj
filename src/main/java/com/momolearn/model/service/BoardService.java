@@ -1,17 +1,10 @@
 package com.momolearn.model.service;
 
-
-
-import java.util.List;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,25 +16,18 @@ import com.momolearn.model.dto.BoardSaveDTO;
 import com.momolearn.model.entity.Board;
 import com.momolearn.model.entity.Members;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @Service
 public class BoardService {
 	
-	@Autowired
-	private BoardRepository boardRepository;
+	private final BoardRepository boardRepository;
 	
-	@Autowired
-	private MembersRepository membersRepository;
+	private final MembersRepository membersRepository;
 	
 	public ModelMapper mapper = new ModelMapper();
 	
-	
-	//모든 게시글 목록
-	public List<BoardDTO> findAll() {
-		System.out.println("findAll() service-------------");
-		List<Board> posts = boardRepository.findAll(Sort.by(Sort.Direction.DESC, "comNo"));
-		//TypeToken: Generic Type정보를 런타임에도 얻을 수 있다. 원래는 컴파일 타임에만 검사됨
-		return mapper.map(posts, new TypeToken<List<BoardDTO>>() {}.getType());
-	}
 	
 	//게시글 작성
 	@Transactional
@@ -84,10 +70,11 @@ public class BoardService {
 		entity.update(dto.getComTitle(), dto.getSubject(), dto.getComContent());
 	}
 	
-	//페이징
-	@Transactional(readOnly = true)
-	public Page<Board> paging(Pageable pageable){
-		return boardRepository.findAll(pageable);
+	//목록보기+페이징
+	public Page<BoardDTO> paging(Pageable pageable){
+		Page<Board> entityPage = boardRepository.findAll(pageable);
+		Page<BoardDTO> dtoPage = new BoardDTO().toDtoPage(entityPage);
+		return dtoPage;
 	}
 
 }

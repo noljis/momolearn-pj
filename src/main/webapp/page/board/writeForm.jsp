@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -78,6 +81,11 @@
                             <div class="mb-3">
                                 <label class="small mb-1" for="inputComTitle">제목</label>
                                 <input class="form-control" id="comTitle" name="comTitle" type="text" placeholder="제목을 입력하세요">
+                                <spring:hasBindErrors name="boardSaveDTO">
+						            <c:if test="${errors.hasFieldErrors('comTitle') }">                                     
+						              <span style="color: red;font:bold">${errors.getFieldError( 'comTitle' ).defaultMessage }</span>
+									</c:if>
+								</spring:hasBindErrors>
                             </div>
                             <div>
                             	<input id="type" name="type" value="community" type="hidden">
@@ -92,6 +100,11 @@
                                         <option value="정보">정  보</option>
                                         <option value="모집">모  집</option>
                                     </select>
+                                    <spring:hasBindErrors name="boardSaveDTO">
+							            <c:if test="${errors.hasFieldErrors('subject') }">                                     
+							              <span style="color: red;font:bold">${errors.getFieldError( 'subject' ).defaultMessage }</span>
+										</c:if>
+									</spring:hasBindErrors>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputdMembersMemId">작성자</label>
@@ -103,6 +116,11 @@
                             <div class="mb-3">
                                 <label class="small mb-1" for="inputComContent">글 내용</label>
                                 <textarea rows="10" cols="50" id="comContent" name="comContent" class="form-control" placeholder="글 내용을 입력하세요"></textarea>
+                            	<spring:hasBindErrors name="boardSaveDTO">
+						            <c:if test="${errors.hasFieldErrors('comContent') }">                                     
+						              <span style="color: red;font:bold">${errors.getFieldError( 'comContent' ).defaultMessage }</span>
+									</c:if>
+								</spring:hasBindErrors>
                             </div>
                             <!-- Save changes button-->
                             <button class="btn btn-primary" type="submit" >등록</button>

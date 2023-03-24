@@ -117,8 +117,6 @@ session.setAttribute("grade", "teacher");
 <script src="../lib/waypoints/waypoints.min.js"></script>
 <script src="../lib/owlcarousel/owl.carousel.min.js"></script>
 
-<!-- Template Javascript -->
-<script src="../js/main.js"></script>
 <!-- axios 사용을 위한 추가 설정 -->
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="../js/search.js"></script>

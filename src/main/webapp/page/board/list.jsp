@@ -155,7 +155,7 @@
                                         <td>
                                             <div class="team">
                                                 <a href="javascript: void(0);" class="team-member" data-toggle="tooltip" data-placement="top" title="" data-original-title="Roger Drake">
-                                                    <img src="https://bootdey.com/img/Content/avatar/avatar6.png" class="rounded-circle avatar-xs" alt="" />${c.members.memId}
+                                                    <img src="https://bootdey.com/img/Content/avatar/avatar6.png" class="rounded-circle avatar-xs" alt="" />${c.membersMemId}
                                                 </a>
                                             </div>
                                         </td>
@@ -177,15 +177,21 @@
                         <button class="btn btn-outline-primary" style="float: right;" type="submit" onclick="location.href='../board/writeForm'">글쓰기</button>
                         <div class="pt-3">
                             <ul class="pagination justify-content-center mb-0">
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                            
+                                <li class="page-item ${startPage == nowPage? 'disabled':''}">
+                                    <a class="page-link" href="../board/?page=${nowPage-2}" tabindex="-1" >Previous</a>
                                 </li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">Next</a>
-                                </li>
+                                
+                                <c:forEach var="page" begin="${startPage}" end="${endPage}">
+                                
+	                                <li class="page-item ${page == nowPage?'active':''}"><a class="page-link" href="../board/?page=${page-1}"><c:out value="${page}"/></a></li>
+                                
+                                </c:forEach>
+                                
+	                                <li class="page-item ${endPage == nowPage? 'disabled':''}">
+	                                    <a class="page-link" href="../board/?page=${nowPage}" tabindex="+1" >Next</a>
+	                                </li>
+                                
                             </ul>
                         </div>
                     </div>

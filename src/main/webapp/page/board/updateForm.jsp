@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -78,7 +80,7 @@
                         	<input type="hidden" name="_method" value="put"/>
                             <div class="mb-3">
                                 <label class="small mb-1" for="inputComTitle">제목</label>
-                                <input class="form-control" id="comTitle" name="comTitle" type="text" placeholder="제목을 입력하세요" value="${dto.comTitle}">
+                                <input class="form-control" id="comTitle" name="comTitle" type="text" placeholder="제목을 입력하세요"  value="${dto.comTitle}">
                             </div>
                             <div>
                             	<input id="type" name="type" value="community" type="hidden">
