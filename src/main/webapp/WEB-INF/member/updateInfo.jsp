@@ -1,7 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     
 <!DOCTYPE html>
@@ -14,27 +12,7 @@
     <meta content="" name="keywords">
     <meta content="" name="description">
 
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon">
-
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
-
-    <!-- Icon Font Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-
-    <!-- Libraries Stylesheet -->
-    <link href="../../lib/animate/animate.min.css" rel="stylesheet">
-    <link href="../../lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Template Stylesheet -->
-    <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
+    <jsp:include page="../../separate/head.jsp"></jsp:include>
 </head>
 <style>
 .a {
@@ -42,7 +20,7 @@
 }
 </style>
 
-<jsp:include page="../../header2.jsp"></jsp:include>
+<jsp:include page="../../separate/header2.jsp"></jsp:include>
 
     <!-- Header Start -->
     <div class="container-fluid bg-primary py-5 mb-5 page-header">
@@ -63,7 +41,7 @@
 	
 	<!-- Info Start -->
 	    <!-- Form Start -->
-    <form id="sm" name="pej" method="post" onsubmit="return allCheck()" action="">
+    <form name="f" id="sm" name="pej" method="post" onsubmit="return allCheck()" action="${pageContext.request.contextPath}/member/update">
         <div align="center">
             <h2>내 정보 수정하기</h2> <!-- class="nav-item nav-link" -->
 
@@ -81,23 +59,32 @@
                         <tr>
                             <!-- 2 -->
                             <td>기존 비밀번호</td>
-                            <td><input class="updateInfo" type="password" name="originPw" "></td>
+                            <td>
+                            	<input class="updateInfo" type="password" id="originPw" name="originPw" onclick="passConfirm()" required>
+                            	<span id="passResult"></span>
+                            </td>
                         </tr>
                        	<tr>
                             <!-- 3 -->
                             <td>새 비밀번호</td>
-    						<td><input class="updateInfo" type="password" name="newPw1" "></td>
+    						<td>
+    							<input class="updateInfo" type="password" id="password" name="password" oninput="checkPassword1()" required>
+    							<span id="checkResult1"></span>
+    						</td>
                         </tr>
                         
                         <tr>
                             <!-- 4 -->
                             <td>새 비밀번호 확인</td>
-                            <td><input class="updateInfo" type="password" name="newPw2" "></td>
+                            <td>
+                            	<input class="updateInfo" type="password" id="password2" name="password2" oninput="checkPassword2()" required>
+                            	<span id="checkResult2"></span>
+                            </td>
                         </tr>                      
                         <tr>
                             <!-- 5 -->
                             <td>이름</td>
-                            <td><input class="updateInfo" type="text" name="name" value="${members.name}"></td>
+                            <td><input class="updateInfo" type="text" name="name" value="${members.name}" required></td>
                         </tr>
                         <tr>
                             <!-- 6 -->
@@ -137,28 +124,72 @@
     <!-- Form End -->
 	<!-- Info End -->
 
-    
-
-    <jsp:include page="../../footer.jsp"></jsp:include>
-
-
     <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+	<jsp:include page="../../separate/script.jsp"></jsp:include>
+	<jsp:include page="../../separate/footer.jsp"></jsp:include>
+	
+	<script>
+	const savedPw = "${members.pw}";
+	var check1 = false; 
+	var check2 = false;
+	var check3 = false;
+	
+	function passConfirm() {
+		
+		const inputPw = document.getElementById("originPw").value;
 
+		if (inputPw === "") {
+		 	document.getElementById("passResult").innerHTML = "";
+		
+	 	} else if (inputPw === savedPw) {
+			document.getElementById("passResult").innerHTML = "비밀번호가 일치합니다.";
+			check1 = true;
+		
+		} else {
+			document.getElementById("passResult").innerHTML = "비밀번호가 일치하지 않습니다.";
+		}
+		
+	 	
+	}
+	
+ 	function checkPassword1() {
+ 		
+		const password = document.getElementById("password").value;
+		const password2 = document.getElementById("password2").value;
+		
+		if (password === savedPw) {
+			document.getElementById("checkResult1").innerHTML = "기존 비밀번호와 일치합니다. 다시 입력해주세요.";
+			
+		}else {
+			document.getElementById("checkResult1").innerHTML = "사용가능한 비밀번호입니다.";
+			check2 = true;
+		}
+		checkAllTrue();
+	}
+	
+ 	function checkPassword2() {
+	
+		const password = document.getElementById("password").value;
+		const password2 = document.getElementById("password2").value;
+		
+		if (password !== password2){
+			document.getElementById("checkResult2").innerHTML = "비밀번호가 일치하지 않습니다.";
+			
+		} else {
+			document.getElementById("checkResult2").innerHTML = "비밀번호가 일치합니다.";
+			check3 = true;
+		}
+		checkAllTrue();
+	}	 
+ 	
+	function checkAllTrue() {
+		if (check1 && check2 && check3) {
+			document.getElementById("f").submit();
+		}
+	}
+	
 
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../../lib/wow/wow.min.js"></script>
-    <script src="../../lib/easing/easing.min.js"></script>
-    <script src="../../lib/waypoints/waypoints.min.js"></script>
-    <script src="../../lib/owlcarousel/owl.carousel.min.js"></script>
-
-    <!-- Template Javascript -->
-    <script src="../../js/main.js"></script>
-    
-    	<!-- axios 사용을 위한 추가 설정 -->
-	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	</script>
+	
 </body>
-
 </html>

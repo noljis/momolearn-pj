@@ -42,7 +42,7 @@
 
 </head>
 <body>
-	<jsp:include page="../../header4.jsp"></jsp:include>
+	<jsp:include page="../../separate/header4.jsp"></jsp:include>
 
 	<div class="wrap">
 		<div class="find">
@@ -69,7 +69,7 @@
 		</div>
 	</div>
 
-	<jsp:include page="../../footer.jsp"></jsp:include>
+	<jsp:include page="../../separate/footer.jsp"></jsp:include>
 	
 	
 	<!-- Back to Top -->

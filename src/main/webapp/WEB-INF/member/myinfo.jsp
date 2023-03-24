@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     
 <%@ page import="java.io.PrintWriter"%>    
 <%@ page import="com.momolearn.model.entity.Members" %>
@@ -8,16 +7,6 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-
-
-<%
-	System.out.println("**********");
-	System.out.println(session.getAttribute("members"));
-%>
-
-
-
-    
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -28,27 +17,7 @@
     <meta content="" name="keywords">
     <meta content="" name="description">
 
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon">
-
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
-
-    <!-- Icon Font Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-
-    <!-- Libraries Stylesheet -->
-    <link href="../../lib/animate/animate.min.css" rel="stylesheet">
-    <link href="../../lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Template Stylesheet -->
-    <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
+    <jsp:include page="../../separate/head.jsp"></jsp:include>
 </head>
 <style>
 .a {
@@ -57,7 +26,7 @@
 </style>
 
 <body>
-    <jsp:include page="../../header2.jsp"></jsp:include>
+    <jsp:include page="../../separate/header2.jsp"></jsp:include>
 
     <!-- Header Start -->
     <div class="container-fluid bg-primary py-5 mb-5 page-header">
@@ -78,7 +47,7 @@
 	
 	<!-- Info Start -->
 	    <!-- Form Start -->
-    <form id="sm" name="pej">
+    <form id="sm" name="pej" method="post" onsubmit="return allCheck()" action="">
         <div align="center">
             <h2>내 정보</h2> <!-- class="nav-item nav-link" -->
 
@@ -127,8 +96,9 @@
                         <tr>
                             <td colspan="2" align="center">
 	                            <input class="btnBox" type="button" value="수정하기" onclick="location.href='${pageContext.request.contextPath}/member/updatepage?memId=${members.memId}'">&nbsp;
-				
-								<button class="btnBox" id="delete_btn" onclick='location.href="${pageContext.request.contextPath}/member/delete?memId=${members.memId}"'> 탈퇴하기</button>
+								<c:if test="${members.grade ne 'admin'}">
+									<button class="btnBox" id="delete_btn" onclick='location.href="${pageContext.request.contextPath}/member/delete?memId=${members.memId}"'> 탈퇴하기</button>
+	                			</c:if>	
                             </td>
                         </tr>
                     </table>
@@ -139,28 +109,9 @@
     <!-- Form End -->
 	<!-- Info End -->
 
-    
-
-    <jsp:include page="../../footer.jsp"></jsp:include>
-
-
     <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
-
-
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../../lib/wow/wow.min.js"></script>
-    <script src="../../lib/easing/easing.min.js"></script>
-    <script src="../../lib/waypoints/waypoints.min.js"></script>
-    <script src="../../lib/owlcarousel/owl.carousel.min.js"></script>
-
-    <!-- Template Javascript -->
-    <script src="../../js/main.js"></script>
-    
-    	<!-- axios 사용을 위한 추가 설정 -->
-	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<jsp:include page="../../separate/script.jsp"></jsp:include>
+	<jsp:include page="../../separate/footer.jsp"></jsp:include>
 </body>
 
 </html>

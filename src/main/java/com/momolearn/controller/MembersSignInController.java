@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.momolearn.model.MembersRepository;
 import com.momolearn.model.entity.Members;
 import com.momolearn.model.service.MembersService;
 
@@ -34,6 +33,13 @@ public class MembersSignInController {
 	@Autowired
 	private MembersService membersService;
 	
+	//main으로 화면 이동
+    @GetMapping("/mainView")
+    protected String mainView() throws SQLException {
+		
+		return "forward:/WEB-INF/main.jsp";
+	}
+    
 	//로그인 입력폼 (확인)
     @GetMapping("/loginView")
     protected ModelAndView memJoinView() throws SQLException {
@@ -46,7 +52,7 @@ public class MembersSignInController {
 	}
     
 	// id 찾기 페이지 이동 (확인)
-	@RequestMapping(value = "/findIdForm", method = RequestMethod.GET)
+	@RequestMapping(value = "/findIdView", method = RequestMethod.GET)
 	public String findIdForm() {
 		
 		return "member/findId";
@@ -68,11 +74,11 @@ public class MembersSignInController {
             model.addAttribute("member", member);
         }
         
-        return "forward:/WEB-INF/page/member/findIdResult.jsp"; // 이동할 JSP 파일명
+        return "forward:/WEB-INF/member/findIdResult.jsp"; // 이동할 JSP 파일명
 	}
 	
 	// pwd 찾기 페이지 이동 (확인)
-	@RequestMapping(value = "/findPwdForm", method = RequestMethod.GET)
+	@RequestMapping(value = "/findPwdView", method = RequestMethod.GET)
 	public String findPwdForm() {
 		
 		return "member/findPw";
@@ -92,7 +98,7 @@ public class MembersSignInController {
             
         }
         
-        return "forward:/WEB-INF/page/member/findPwResult.jsp"; // 이동할 JSP 파일명
+        return "forward:/WEB-INF/member/findPwResult.jsp"; // 이동할 JSP 파일명
 	
 	}
     
@@ -104,7 +110,6 @@ public class MembersSignInController {
 		Members members = membersService.loginMember(memId, password);
 		
 		if (members != null) { // 로그인성공
-			System.out.println("id확인 " + memId);
 			sessionData.addAttribute("members", members); // 세션에 프로필 저장
 
 			return "forward:/WEB-INF/main.jsp"; // 로그인 후 메인화면
@@ -117,7 +122,6 @@ public class MembersSignInController {
 		
 	}
 	
-	
 	//로그아웃 (확인)
 	@GetMapping(value = "/sessionOut")
 	public String sessionOut(SessionStatus status) throws Exception {
@@ -125,15 +129,11 @@ public class MembersSignInController {
 		status.setComplete();
 		status = null;
 		
-		System.out.println(status);
-		
 		return "redirect:/member/refresh";
 	}
 	
 	@GetMapping(value = "/refresh")
 	public String refresh() throws Exception {
-		
-		System.out.println("refresh 호출");
 		
 		return "redirect:/page/index.html"; //index.html로 이동
 	}
@@ -145,26 +145,24 @@ public class MembersSignInController {
 	@RequestMapping(value = "/myinfo", method = RequestMethod.GET)
 	public String viewOne(Model sessionData, @ModelAttribute("members") Members mem) throws SQLException {
 		
-		return "forward:/WEB-INF/page/member/myinfo.jsp";
+		return "forward:/WEB-INF/member/myinfo.jsp";
 	}
 		
 	//프로필 수정 페이지 이동 (확인)
 	@RequestMapping(value = "/updatepage", method = RequestMethod.GET)
 	public String updatePage(Model sessionData, @ModelAttribute("members") Members mem) throws SQLException {
 
-		return "forward:/WEB-INF/page/member/updateInfo.jsp";
+		return "forward:/WEB-INF/member/updateInfo.jsp";
 	}
 	
 	//프로필 수정 기능 (미확인)
-//	@RequestMapping(value = "/update", method = RequestMethod.POST)
-//	public String update(@ModelAttribute("memId") String id, @RequestParam("name") String name, @RequestParam("email") String email, @RequestParam("password") String pw, @RequestParam("profile") String file) throws SQLException {
-//
-//		System.out.println("update() ----- " + id);
-//		
-//		membersService.updateMember(id, email, name, pw, file);
-//
-//		return "auth/updateSuccess";
-//	}
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public String update(@ModelAttribute("members") Members updatedMember, Model model) throws SQLException {
+
+		membersService.updateMember(updatedMember);
+
+		return "auth/updateSuccess";
+	}
 	
 	//회원 삭제 (미확인)
 //	@RequestMapping(value = "/delete", method = RequestMethod.GET)
@@ -197,7 +195,6 @@ public class MembersSignInController {
 	//http://localhost/team2_studyroom/WEB-INF/auth/error.jsp
 	@ExceptionHandler
 	public String totalEx(SQLException e, HttpServletRequest req) { 
-		System.out.println("예외 처리 전담");
 		e.printStackTrace();
 
 		req.setAttribute("errorMsg", e.getMessage());

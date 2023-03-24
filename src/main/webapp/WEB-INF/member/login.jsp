@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta content="" name="keywords">
 <meta content="" name="description">
-<title>아이디 찾기</title>
+<title>로그인 페이지</title>
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon">
@@ -33,7 +33,7 @@
 
     <!-- Template Stylesheet -->
 	<link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/find.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/login.css">
 
 	<!-- <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap"
 	rel="stylesheet">   -->
@@ -42,32 +42,46 @@
 
 </head>
 <body>
-	<jsp:include page="../../header4.jsp"></jsp:include>
+	<jsp:include page="../../separate/header4.jsp"></jsp:include>
 
 	<div class="wrap">
-		<div class="find">
-			<form name="f"
-				action="${pageContext.request.contextPath}/member/findId"
-				method="post">
-				<div class="w3-center w3-large w3-margin-top">
-					<h3>아이디 찾기</h3>
+		<div class="login">
+			<h2 id="h2" class="text-primary" >로그인</h2>
+			<form name="f" action="${pageContext.request.contextPath}/member/login" method="post">
+				<div class="login_id">
+					<h5>아이디</h5>
+					<input type="text" id="memId" name="memId" placeholder="아이디를 입력해주세요.">
 				</div>
-				<div>
-					<p>
-						<input type="text" id="email" name="email" placeholder="이메일을 입력해주세요."  required >
-					</p>
-					<p class="w3-center">
-						<input type="submit" value="아이디찾기" id=findIdBtn onclick="blank()">
-						<input type="button" value="뒤로가기" onclick="history.back()">
-						<input type="button" value="메인화면"
-							onclick="location.href='${pageContext.request.contextPath}/page/index.html'">
-					</p>
+				<div class="login_pw">
+					<h5>비밀번호</h5>
+					<input class="input" type="password" name="password" placeholder="비밀번호를 입력해주세요.">
+				</div>
+				<div class="login_etc">
+					<div class="checkbox">
+						<input type="checkbox"> 아이디 저장<br>
+						<a id="a" href="${pageContext.request.contextPath}/member/findIdView">아이디 찾기</a>
+						&nbsp; <a>|</a> &nbsp;
+						<a id="a" href="${pageContext.request.contextPath}/member/findPwdView">비밀번호 찾기</a>
+					</div>
+				</div>
+				<div class="submit">
+					<input type="button" style="background-color: #36cedb;" value="로그인" onclick="blank()" >
+				</div>
+				<div class="text">
+					<p id="p">sns계정으로 시작하기</p>
+				</div>
+				<div class="login_sns">
+					<li><a id="a" href=""><i class="fa-sharp fa-solid fa-n"></i></a></li>
+					<li><a id="a" href=""><i class="fa-solid fa-comment"></i></a></li>
+				</div>
+				<div class="text">
+					아직 회원이 아니신가요? &nbsp; <a href="${pageContext.request.contextPath}/member/joinView"> 회원가입 하러가기</a>
 				</div>
 			</form>
 		</div>
 	</div>
 
-	<jsp:include page="../../footer.jsp"></jsp:include>
+	<jsp:include page="../../separate/footer.jsp"></jsp:include>
 	
 	
 	<!-- Back to Top -->
@@ -88,16 +102,24 @@
 		
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
 	
-<script>
+	<script>	
 	function blank() {
-		//빈칸입력시 경고
-		if (f.email.value == "") {
-			alert("이메일을 입력하세요.");
-			f.email.focus();
+		//아이디 빈칸이라면 경고
+		if (f.memId.value == "") {
+			alert("아이디를 입력하세요.");
+			f.memId.focus();
+			return false;
+
+		}
+		//비밀번호 빈칸이라면 경고
+		if (f.password.value == "") {
+			alert("비밀번호를 입력하세요.");
+			f.password.focus();
 			return false;
 		}
 		f.submit();
+
 	}
-</script>
+	</script>
 </body>
 </html>

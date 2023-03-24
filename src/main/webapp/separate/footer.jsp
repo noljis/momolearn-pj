@@ -1,7 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <!-- Footer Start -->
 <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
@@ -59,7 +56,6 @@
 <script src="../js/main.js"></script>
 <!-- axios 사용을 위한 추가 설정 -->
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="../js/search.js"></script>
 
 
 </html>

@@ -38,7 +38,7 @@ public class MemberSignUpController {
 		
 		ModelAndView mv = new ModelAndView();
 		
-		mv.setViewName("/member/join");   
+		mv.setViewName("member/join");   
 		return mv;
 	}
 
@@ -46,8 +46,6 @@ public class MemberSignUpController {
 	@PostMapping(value = "member/join", produces = "application/json; charset=UTF-8")
 	protected ModelAndView memInsert(Model sessionData, Members members, @RequestParam("memId") String memId,@RequestParam("password") String pw, @RequestParam("name") String name, @RequestParam("email") String email,@RequestParam("file") MultipartFile file) throws SQLException, IOException {
 		ModelAndView mv = new ModelAndView();
-		
-		System.out.println("insert() -----");
 		
         // profile 파일 저장
 		if(file == null) {
@@ -76,10 +74,8 @@ public class MemberSignUpController {
 	//아이디 중복 체크 (성공)
 	@PostMapping("member/checkOk")
 	public boolean dedupId( String memId) throws Exception {
-		System.out.println("입력받은 데이터 : " + memId);
 		
 		boolean check = membersService.checkId(memId);
-		System.out.println(check);
 		
 		return check;
 	}			
