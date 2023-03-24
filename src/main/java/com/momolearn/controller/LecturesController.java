@@ -23,25 +23,29 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonObject;
 import com.momolearn.exception.MessageException;
 import com.momolearn.exception.NotExistException;
+import com.momolearn.model.dto.CategoryDTO;
 import com.momolearn.model.dto.LecturesDTO;
 import com.momolearn.model.dto.MembersDTO;
 import com.momolearn.model.dto.TeachersDTO;
+import com.momolearn.model.entity.Members;
 import com.momolearn.model.service.FileService;
 import com.momolearn.model.service.LecturesService;
 import com.momolearn.model.service.MembersService;
 import com.momolearn.model.service.TeachersService;
 
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
 @RequestMapping("lectures")
-@SessionAttributes({ "id" })
+@SessionAttributes({"members"})
+@RequiredArgsConstructor
 public class LecturesController {
 	
-	@Autowired
-	private LecturesService lecturesService;
+	
+	private final LecturesService lecturesService;
 	
 	@Autowired
 	private TeachersService teachersService;
@@ -59,13 +63,13 @@ public class LecturesController {
 	 */
 	@ApiOperation(value = "강의 업로드 클릭시 유효성검사 메소드", notes = "유효성검사 후 강의 등록 폼으로 이동")
 	@RequestMapping(value = "/uploadcheck", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
-	public String uploadLectureCheck(Model model, @ModelAttribute("id") String id) throws NotExistException {
+	public String uploadLectureCheck(Model model, @ModelAttribute("members") Members members) throws NotExistException {
 
 		// 강사 찾기 teacher로 찾아야함
-		TeachersDTO teacher = teachersService.getOneTeachers(id);
+		TeachersDTO teacher = teachersService.getOneTeachers(members.getMemId());
 
 		// 강사가 존재하면 강사의 회원정보 불러오기
-		MembersDTO member = membersService.getOneMember(id);
+		MembersDTO member = membersService.getOneMember(members.getMemId());
 
 		System.out.println("결과: " + teacher);
 		System.out.println("결과: " + member);
@@ -170,6 +174,13 @@ public class LecturesController {
 		return "data_res"; // WEB-INF/main_res.jsp
 	}
 	
+	//9. 전체 카테고리 조회
+	@GetMapping(value = "/categoryall", produces = "application/json;charset=UTF-8")
+	public String getAllCategory(Model model) {
+		List<CategoryDTO> category = lecturesService.getAllCategory();
+		model.addAttribute("category", category);
+		return "lecture/lecture-list"; // WEB-INF/lecture/lecture-list.jsp
+	}
 	//NotExistException 관련 예외처리
 	@ExceptionHandler
 	public String notExistException(NotExistException ne, Model model) {
