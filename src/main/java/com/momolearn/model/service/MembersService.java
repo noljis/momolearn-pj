@@ -28,6 +28,7 @@ public class MembersService {
 	//회원가입
     @Transactional
     public Members memJoin(Members members) throws SQLException {
+    	
         try {
             Members savedMembers = membersRepository.save(members);
             return savedMembers;
@@ -75,9 +76,9 @@ public class MembersService {
 	 
     //로그인 회원정보 확인
 	public boolean validateUser(String memId, String password) throws Exception {
+	
 		Members member = membersRepository.findByMemId(memId);
 		
-
 		System.out.println("member출력 ===" +member.getPw());
 		System.out.println("member출력 ===" +password);
 		
@@ -118,8 +119,6 @@ public class MembersService {
         return member;
 	}
     
-   
-
 	//id로 한명의 회원정보 불러오기
 	public MembersDTO getOneMember(String id) throws NotExistException {
 

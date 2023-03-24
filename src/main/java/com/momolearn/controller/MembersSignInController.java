@@ -40,56 +40,59 @@ public class MembersSignInController {
 		
 		ModelAndView mv = new ModelAndView();
 		
-		mv.setViewName("redirect:/page/member/login.jsp");   
+		mv.setViewName("member/login");   
+		
 		return mv;
 	}
     
 	// id 찾기 페이지 이동 (확인)
 	@RequestMapping(value = "/findIdForm", method = RequestMethod.GET)
 	public String findIdForm() {
-		return "redirect:/page/member/findId.jsp";
+		
+		return "member/findId";
 	}
 
-	// id 찾기  (미흡)
+	// id 찾기  (확인)
 	@RequestMapping(value = "/findId", method = RequestMethod.POST)
 	public String findId(Model model, @RequestParam("email") String email ) throws SQLException {
 		
-		System.out.println("호출~~~~~~~~~~~~~~~~~~~~~~~~");
 		
-		Members members = membersService.findId(email);
+		Members member = membersService.findId(email);
 		
-        if (members == null) {
+        if (member == null) {
+        	
             model.addAttribute("msg", "일치하는 회원 정보가 없습니다.");
             
         } else {
-            model.addAttribute("members", members);
+        	
+            model.addAttribute("member", member);
         }
         
-        return "redirect:/page/member/findIdResult.jsp"; // 이동할 JSP 파일명
+        return "forward:/WEB-INF/page/member/findIdResult.jsp"; // 이동할 JSP 파일명
 	}
 	
 	// pwd 찾기 페이지 이동 (확인)
 	@RequestMapping(value = "/findPwdForm", method = RequestMethod.GET)
 	public String findPwdForm() {
-		return "redirect:/page/member/findPw.jsp";
+		
+		return "member/findPw";
 	}
 
-	// pwd 찾기 (미흡)
+	// pwd 찾기 (확인)
 	@RequestMapping(value = "/findPwd", method = RequestMethod.POST)
 	public String findPwd(Model model, @RequestParam("memId") String memId, @RequestParam("email") String email) throws SQLException {
-		System.out.println("메소드 호출!!!!");
-		Members members = membersService.findPw(memId,email);
+	
+		Members member = membersService.findPw(memId,email);
 		
-		
-        if (members == null) {
+        if (member == null) {
             model.addAttribute("msg", "일치하는 회원 정보가 없습니다.");
-            System.out.println("비번발견실패''''''''''");       
+            
         } else {
-            model.addAttribute("members", members);
-            System.out.println("비번발견~~~~" + members.getPw());
+            model.addAttribute("member", member);
+            
         }
         
-        return "redirect:/page/member/findPwResult.jsp"; // 이동할 JSP 파일명
+        return "forward:/WEB-INF/page/member/findPwResult.jsp"; // 이동할 JSP 파일명
 	
 	}
     
@@ -99,17 +102,16 @@ public class MembersSignInController {
 						@RequestParam("password") String password) throws Exception {
 		
 		Members members = membersService.loginMember(memId, password);
-		System.out.println("----" + members);
 		
 		if (members != null) { // 로그인성공
 			System.out.println("id확인 " + memId);
 			sessionData.addAttribute("members", members); // 세션에 프로필 저장
 
-			return "redirect:/page/main.jsp"; // 로그인 후 메인화면
+			return "forward:/WEB-INF/main.jsp"; // 로그인 후 메인화면
 			
 		} else {
 			
-			return "redirect:/page/loginError.jsp"; // 에러메시지 창 띄우는걸로 수정하기
+			return "loginError"; // 에러메시지 창 띄우는걸로 수정하기
 		}
 		
 		
@@ -118,25 +120,22 @@ public class MembersSignInController {
 	
 	//로그아웃 (확인)
 	@GetMapping(value = "/sessionOut")
-	public ModelAndView sessionOut(SessionStatus status) throws Exception {
+	public String sessionOut(SessionStatus status) throws Exception {
 
 		status.setComplete();
 		status = null;
 		
-		ModelAndView mv = new ModelAndView();
+		System.out.println(status);
 		
-		mv.setViewName("redirect:/member/refresh");
-
-		return mv;
+		return "redirect:/member/refresh";
 	}
 	
 	@GetMapping(value = "/refresh")
-	public ModelAndView refresh() throws Exception { 
-		ModelAndView mv = new ModelAndView();
+	public String refresh() throws Exception {
 		
-		mv.setViewName("redirect:/page/index.html");
+		System.out.println("refresh 호출");
 		
-		return mv;
+		return "redirect:/page/index.html"; //index.html로 이동
 	}
 	
     /**
@@ -145,16 +144,15 @@ public class MembersSignInController {
 	//로그인 후 정보조회 (확인)
 	@RequestMapping(value = "/myinfo", method = RequestMethod.GET)
 	public String viewOne(Model sessionData, @ModelAttribute("members") Members mem) throws SQLException {
-
 		
-		return "redirect:/page/member/myinfo.jsp";
+		return "forward:/WEB-INF/page/member/myinfo.jsp";
 	}
 		
 	//프로필 수정 페이지 이동 (확인)
 	@RequestMapping(value = "/updatepage", method = RequestMethod.GET)
 	public String updatePage(Model sessionData, @ModelAttribute("members") Members mem) throws SQLException {
 
-		return "redirect:/page/member/updateInfo.jsp";
+		return "forward:/WEB-INF/page/member/updateInfo.jsp";
 	}
 	
 	//프로필 수정 기능 (미확인)
@@ -204,7 +202,7 @@ public class MembersSignInController {
 
 		req.setAttribute("errorMsg", e.getMessage());
 
-		return "forward:/page/error.jsp";
+		return "error";
 	}
 
 	

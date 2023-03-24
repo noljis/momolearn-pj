@@ -29,11 +29,11 @@
     <link href="../../lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Template Stylesheet -->
-	<link href="../../css/style.css" rel="stylesheet">
-	<link rel="stylesheet" href="../../css/find.css">
+	<link href="${pageContext.request.contextPath}//css/style.css" rel="stylesheet">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/find.css">
 
 	<!-- <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap"
 	rel="stylesheet">   -->
@@ -47,12 +47,11 @@
 	<div class="wrap">
 		<div class="find">
 			<c:choose>
-				<c:when test="${not empty members}">
-					<b>${members.memId}</b> 님의 비밀번호는
-					<b>${members.pw}</b> 입니다.
+				<c:when test="${not empty member}">
+					회원님의 아이디는 <b>${member.memId}</b> 입니다.<br>
 				</c:when>
-				<c:when test="${empty members}">
-					아이디 또는 이메일 입력이 잘못되어 비밀번호를 찾을 수 없습니다.<br>
+				<c:when test="${empty member}">
+					존재하지 않는 아이디입니다.<br>
 				</c:when>
 			</c:choose>
 			<div class="box" >
@@ -63,12 +62,6 @@
 	</div>
 
 	<jsp:include page="../../footer.jsp"></jsp:include>
-	
-	
 
-
-
-		
-	
 </body>
 </html>

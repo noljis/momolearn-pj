@@ -38,10 +38,9 @@ public class MemberSignUpController {
 		
 		ModelAndView mv = new ModelAndView();
 		
-		mv.setViewName("redirect:/page/member/join.jsp");   
+		mv.setViewName("/member/join");   
 		return mv;
 	}
-	
 
 	// 회원가입 후 정보 보기 
 	@PostMapping(value = "member/join", produces = "application/json; charset=UTF-8")
@@ -49,7 +48,6 @@ public class MemberSignUpController {
 		ModelAndView mv = new ModelAndView();
 		
 		System.out.println("insert() -----");
-		
 		
         // profile 파일 저장
 		if(file == null) {
@@ -59,24 +57,22 @@ public class MemberSignUpController {
 			members.setProfile(savedFileName);
 			
 		}
-		
         
 		members.setMemId(memId);
-		members.setPw(pw);
-		members.setName(name);
 		members.setEmail(email);
-        members.setGrade("student");
+		members.setGrade("student");
+		members.setName(name);
+		members.setPw(pw);
         members.setRegdate(LocalDateTime.now());
 		
 		Members newmem = membersService.memJoin(members);
 		
 		sessionData.addAttribute("members", members); // 회원가입 정보를 모델에 담아서 리턴
-		mv.setViewName("redirect:/page/member/joinInfo.jsp"); //정보화면으로 넘어가기
+		mv.setViewName("member/joinInfo"); //정보화면으로 넘어가기
 
 		return mv;
 	}
 	
-
 	//아이디 중복 체크 (성공)
 	@PostMapping("member/checkOk")
 	public boolean dedupId( String memId) throws Exception {

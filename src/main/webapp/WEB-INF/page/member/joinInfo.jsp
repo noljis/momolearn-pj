@@ -34,16 +34,16 @@
     <link href="../../lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Template Stylesheet -->
-    <link href="../../css/style.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
     
-    <link href="../../css/teacherForm.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/teacherForm.css" rel="stylesheet">
 </head>
 
 <body>
-   <jsp:include page="../../header3.jsp"></jsp:include>
+   <jsp:include page="../../header4.jsp"></jsp:include>
 	
     <!-- Header Start -->
     <div class="container-fluid bg-primary py-5 mb-5 page-header">
@@ -112,7 +112,7 @@
 
                         <tr>
                             <td colspan="2" align="center">
-                                <a href="login.jsp">로그인 하러가기</a>
+                                <a href="${pageContext.request.contextPath}/member/loginView">로그인 하러가기</a>
                             </td>
                         </tr>
                     </table>

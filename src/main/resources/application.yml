@@ -23,7 +23,7 @@ spring:
     show-sql: true
   mvc:
     view:
-      prefix: /WEB-INF/
+      prefix: /WEB-INF/page/
       suffix: .jsp
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER

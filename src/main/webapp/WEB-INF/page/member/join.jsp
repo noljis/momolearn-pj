@@ -30,11 +30,11 @@
    <link href="../../lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
    <!-- Customized Bootstrap Stylesheet -->
-   <link href="../../css/bootstrap.min.css" rel="stylesheet">
+   <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Template Stylesheet -->
-    <link href="../../css/style.css" rel="stylesheet">
-    <link href="../../css/join.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/join.css" rel="stylesheet">
 
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://kit.fontawesome.com/f51a30e87b.js" crossorigin="anonymous"></script>

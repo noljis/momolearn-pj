@@ -29,11 +29,11 @@
     <link href="../../lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Template Stylesheet -->
-	<link href="../../css/style.css" rel="stylesheet">
-	<link rel="stylesheet" href="../../css/find.css">
+	<link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/find.css">
 
 	<!-- <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap"
 	rel="stylesheet">   -->
