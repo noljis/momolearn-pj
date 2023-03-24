@@ -11,6 +11,3 @@
 
 <!-- Template Javascript -->
 <script src="${pageContext.request.contextPath}/js/main.js"></script>
-<!-- axios 사용을 위한 추가 설정 -->
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="${pageContext.request.contextPath}/js/select.js"></script>

@@ -9,7 +9,7 @@
 	<meta content="" name="keywords">
 	<meta content="" name="description">
 	
-	<jsp:include page="../../separate/head.jsp"></jsp:include>
+	<jsp:include page="/separate/head.jsp"></jsp:include>
 	<style>
       body {
         min-height: 100vh;
@@ -38,7 +38,7 @@
     </style>
 </head>
 <body>
-	<jsp:include page="../../separate/header3.jsp"></jsp:include>
+	<jsp:include page="/separate/header3.jsp"></jsp:include>
 	<!-- form Start -->
     <div>
       <form name="upload" action="${pageContext.request.contextPath}/momolearn/lectures/uploadlecture" method="post" enctype="multipart/form-data">
@@ -99,8 +99,8 @@
     </div>
 
 	<!-- Back to Top -->
-	<jsp:include page="../../separate/script.jsp"></jsp:include>
-	<jsp:include page="../../separate/footer.jsp"></jsp:include>
+	<jsp:include page="/separate/script.jsp"></jsp:include>
+	<jsp:include page="/separate/footer.jsp"></jsp:include>
 </body>
 
 </html>

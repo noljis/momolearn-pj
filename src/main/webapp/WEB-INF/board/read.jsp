@@ -12,12 +12,12 @@
     <meta content="" name="keywords">
     <meta content="" name="description">
 
-    <jsp:include page="../../separate/head.jsp"></jsp:include>
+    <jsp:include page="/separate/head.jsp"></jsp:include>
 </head>
 
 <body>
 
-<jsp:include page="../../separate/header2.jsp"></jsp:include>
+<jsp:include page="/separate/header2.jsp"></jsp:include>
 
     <!-- 블로그 시작-->
     <div class="blog-single gray-bg">
@@ -158,8 +158,8 @@
  
 
     <!-- Back to Top -->
-	<jsp:include page="../../separate/script.jsp"></jsp:include>
-	<jsp:include page="../../separate/footer.jsp"></jsp:include>
+	<jsp:include page="/separate/script.jsp"></jsp:include>
+	<jsp:include page="/separate/footer.jsp"></jsp:include>
 </body>
 
 </html>
