@@ -43,6 +43,9 @@
 	                <c:when test="${sessionScope.members.grade == 'teacher'}">
 	                    <a href="${pageContext.request.contextPath}/lectures/uploadcheck" class="dropdown-item">강의 등록</a>
 	                </c:when>
+	                <c:when test="${sessionScope.members.grade == 'student'}">
+	                    <a href="${pageContext.request.contextPath}/teacher/applyform" class="dropdown-item">강사 신청</a>
+	                </c:when>
 	            </c:choose>
 	            <a href="" class="dropdown-item">로그아웃</a>
 	        </div>

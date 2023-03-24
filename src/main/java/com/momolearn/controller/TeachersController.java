@@ -1,27 +1,32 @@
 package com.momolearn.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.momolearn.exception.NotExistException;
+import com.momolearn.model.dto.MembersDTO;
+import com.momolearn.model.entity.Members;
 import com.momolearn.model.service.MembersService;
 import com.momolearn.model.service.TeachersService;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
 @RequestMapping("teachers")
+@SessionAttributes({"members"})
+@RequiredArgsConstructor
 public class TeachersController {
 	
-	@Autowired
-	private TeachersService teachersService;
+	private final TeachersService teachersService;
 	
-	@Autowired
-	private MembersService membersService;
+	private final MembersService membersService;
 	
 	
 /* 1. 회원 : 강사 신청
@@ -48,13 +53,32 @@ public class TeachersController {
  */
 	
 	//회원
-	//강사 신청폼으로 이동 : 세션 id 넘기기
-	@RequestMapping(value = "/applyform", method = RequestMethod.POST)
-	public String applyform(Model sessionData, @RequestParam("id") String id) {
+	//로그인 상태 확인후 강사 신청폼으로 이동
+	@GetMapping(value = "/applyform", produces = "application/json;charset=UTF-8")
+	public String applyForm(Model model, @ModelAttribute("members") Members members) throws NotExistException {
 		
-		return "redirect:/teachers/at-form.jsp";
+		MembersDTO member = membersService.getOneMember(members.getMemId());
+		log.info(members.getMemId());
+
+		model.addAttribute("member", member);
+		log.info("member : "+member);
+		
+		return "teachers/at-form";
 	}
 	
+	//신청폼 작성 
+/*
+ *  	- [1] 강사 신청페이지 : at-form.jsp 
+ * 			1) 초기 상태 : 컨트롤러에서 세션 id로 id, name, email 조회
+ *		 		- 신청 폼에서는 조회한 데이터가 입력이 되어있고(ID, 이름, 메일주소)
+ * 	 		2) 강사 신청에 필요한 정보 입력
+ * 				- 입력이 필요한 속성 : 연락처, 포트폴리오url, 희망분야(선택), 자기소개
+ * 			3) 입력 후 제출 버튼 : ApplyTeacher에 제출 정보 저장
+ */
+//	@PostMapping(produces = "application/json;charset=UTF-8")
+//	public String writeForm() {
+//		
+//	}
 	
 	//강사 신청서를 applyTeacher에 저장
 //	@PostMapping("/applysave")
@@ -78,8 +102,8 @@ public class TeachersController {
 	
 	//관리자
 	//강사 신청서 목록 페이지로 이동
-	@RequestMapping(value = "/approve", method = RequestMethod.GET)
-	public String applyapproveform() {
+	@GetMapping(value = "/approveForm", produces = "application/json;charset=UTF-8")
+	public String applyApproveForm() {
 		
 		return "redirect:/teachers/at-list.jsp";
 	}

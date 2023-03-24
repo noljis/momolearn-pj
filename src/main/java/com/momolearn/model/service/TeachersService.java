@@ -20,14 +20,15 @@ import com.momolearn.model.entity.ApplyTeacher;
 import com.momolearn.model.entity.Members;
 import com.momolearn.model.entity.Teachers;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class TeachersService {
 
-	@Autowired
-	private TeachersRepository teachersRepository;
+	private final TeachersRepository teachersRepository;
 
-	@Autowired
-	private ApplyTeacherRepository applyTeacherRepository;
+	private final ApplyTeacherRepository applyTeacherRepository;
 
 	private ModelMapper mapper = new ModelMapper();
 
