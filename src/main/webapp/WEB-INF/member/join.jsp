@@ -13,14 +13,14 @@
     <meta content="" name="keywords">
     <meta content="" name="description">
 
-   <jsp:include page="../../separate/head.jsp"></jsp:include>
-    <link href="../../css/join.css" rel="stylesheet">
+   <jsp:include page="/separate/head.jsp"></jsp:include>
+    <link href="${pageContext.request.contextPath}/css/join.css" rel="stylesheet">
 
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://kit.fontawesome.com/f51a30e87b.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <jsp:include page="../../separate/header3.jsp"></jsp:include>
+    <jsp:include page="/separate/header3.jsp"></jsp:include>
 	<div class="wrap">
 		
 			<div class="join">
@@ -86,8 +86,8 @@
 		
 	</div>
 	<!-- Back to Top -->
-	<jsp:include page="../../separate/script.jsp"></jsp:include>
-	<jsp:include page="../../separate/footer.jsp"></jsp:include>
+	<jsp:include page="/separate/script.jsp"></jsp:include>
+	<jsp:include page="/separate/footer.jsp"></jsp:include>
     
     <script>
     

@@ -13,12 +13,12 @@
     <meta content="" name="keywords">
     <meta content="" name="description">
 
-    <jsp:include page="../../separate/head.jsp"></jsp:include>
-    <jsp:include page="../../css/board.css"></jsp:include>
+    <jsp:include page="/separate/head.jsp"></jsp:include>
+    <jsp:include page="${pageContext.request.contextPath}/css/board.css"></jsp:include>
 </head>
 
 <body>
-<jsp:include page="../../separate/header.jsp"></jsp:include>
+<jsp:include page="/separate/header.jsp"></jsp:include>
 <div id="searchList">
     <!-- Header Start -->
     <div class="container-fluid bg-primary py-5 mb-5 page-header">
@@ -130,7 +130,7 @@
                                         <td>
                                             <span class="text-success font-12"><i class="mdi mdi-checkbox-blank-circle mr-1"></i>${c.subject}</span>
                                         </td>
-                                        <td><a href="../board/${c.comNo}" id="title">${c.comTitle}</a></td>
+                                        <td><a href="${pageContext.request.contextPath}/board/${c.comNo}" id="title">${c.comTitle}</a></td>
                                         <td><tf:formatDateTime value="${c.comRegdate}" pattern="yyyy-MM-dd HH:mm" /></td>
                                         <td>
                                             <div class="team">
@@ -154,7 +154,7 @@
                         </div>
                         <!-- end project-list -->
                         
-                        <button class="btn btn-outline-primary" style="float: right;" type="submit" onclick="location.href='../board/writeForm'">글쓰기</button>
+                        <button class="btn btn-outline-primary" style="float: right;" type="submit" onclick="location.href='${pageContext.request.contextPath}/board/writeForm'">글쓰기</button>
                         <div class="pt-3">
                             <ul class="pagination justify-content-center mb-0">
                                 <li class="page-item disabled">
@@ -177,8 +177,8 @@
         
 </div>
 <!-- Back to Top -->
-<jsp:include page="../../separate/script.jsp"></jsp:include>
-<jsp:include page="../../separate/footer.jsp"></jsp:include>
+<jsp:include page="/separate/script.jsp"></jsp:include>
+<jsp:include page="/separate/footer.jsp"></jsp:include>
 </body>
 
 </html>

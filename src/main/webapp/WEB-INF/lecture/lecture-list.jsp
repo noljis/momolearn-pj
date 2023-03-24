@@ -10,10 +10,10 @@
     <meta content="" name="keywords">
     <meta content="" name="description">
 
-    <jsp:include page="../../separate/head.jsp"></jsp:include>
+    <jsp:include page="/separate/head.jsp"></jsp:include>
 </head>
 <body>
-<jsp:include page="../../separate/header.jsp"></jsp:include>
+<jsp:include page="/separate/header.jsp"></jsp:include>
 <!-- searchList: 스터디 검색시 비동기로 출력-->
 <div id="searchList">
 
@@ -41,8 +41,8 @@
 
 
 <!-- Back to Top -->
-<jsp:include page="../../separate/script.jsp"></jsp:include>
-<jsp:include page="../../separate/footer.jsp"></jsp:include>
+<jsp:include page="/separate/script.jsp"></jsp:include>
+<jsp:include page="/separate/footer.jsp"></jsp:include>
 </body>
 </body>
 </html>
