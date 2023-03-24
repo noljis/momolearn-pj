@@ -22,7 +22,7 @@ function drawTable2(list) {
 		card.style.backgroundColor = "#E8F5FF";
 
 		let thumbnailLink = document.createElement("a");
-		thumbnailLink.href = `/momolearn/lecture/detail/${lecture.id}`;
+		thumbnailLink.href = `/../../momolearn/lectures/detail/${lecture.id}`;
 
 		let thumbnail = document.createElement("img");
 		thumbnail.src = `/../../momolearn/img/lecture/${lecture.image}`;
@@ -38,7 +38,7 @@ function drawTable2(list) {
 		const name = document.createElement("h5");
 		name.textContent = lecture.title;
 		name.style.cursor = "pointer";
-		name.setAttribute('onclick', `location.href="momolearn/lecture/detail/${lecture.id}"`);
+		name.setAttribute('onclick', `location.href="/../../momolearn/lectures/detail/${lecture.id}"`);
 
 		let description = document.createElement("p");
 		description.textContent = lecture.info;
@@ -112,7 +112,7 @@ function drawTable2(list) {
 
 	return document.getElementById("lectureList").appendChild(container);
 }
-
+//카테고리 검색
 function drawTable3(list) {
 	let container = document.createElement("div");
 	container.className = "container";
@@ -135,7 +135,7 @@ function drawTable3(list) {
 		card.style.backgroundColor = "#E8F5FF";
 
 		let thumbnailLink = document.createElement("a");
-		thumbnailLink.href = `/momolearn/lecture/detail/${lecture.id}`;
+		thumbnailLink.href = `/../../momolearn/lectures/detail/${lecture.id}`;
 
 		let thumbnail = document.createElement("img");
 		thumbnail.src = `/../../momolearn/img/lecture/${lecture.image}`;
@@ -151,7 +151,7 @@ function drawTable3(list) {
 		const name = document.createElement("h5");
 		name.textContent = lecture.title;
 		name.style.cursor = "pointer";
-		name.setAttribute('onclick', `location.href="momolearn/lecture/detail/${lecture.id}"`);
+		name.setAttribute('onclick', `location.href="/../../momolearn/lectures/detail/${lecture.id}"`);
 
 		let description = document.createElement("p");
 		description.textContent = lecture.info;

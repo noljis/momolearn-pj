@@ -27,7 +27,7 @@ function drawTable(list) {
 		card.style.backgroundColor = "#E8F5FF";
 
 		const thumbnailLink = document.createElement("a");
-		thumbnailLink.href = `/momolearn/lecture/detail/${lecture.id}`;
+		thumbnailLink.href = `/../../momolearn/lectures/detail/${lecture.id}`;
 
 		const thumbnail = document.createElement("img");
 		thumbnail.src = `/../../momolearn/img/lecture/${lecture.image}`;
@@ -43,7 +43,7 @@ function drawTable(list) {
 		const name = document.createElement("h5");
 		name.textContent = lecture.title;
 		name.style.cursor = "pointer";
-		name.setAttribute('onclick', `location.href="momolearn/lecture/detail/${lecture.id}"`);
+		name.setAttribute('onclick', `location.href="/../../momolearn/lectures/detail/${lecture.id}"`);
 
 
 		const description = document.createElement("p");
