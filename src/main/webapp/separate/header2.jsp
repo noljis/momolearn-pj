@@ -35,10 +35,11 @@
 	            <a href="" class="dropdown-item">내 강의</a>
 	            <c:choose>
 	            	<c:when test="${sessionScope.members.grade == 'student'}">
-                        <a href="${pageContext.request.contextPath}/teacher/applyform" class="dropdown-item">강사 신청</a>
+                        <a href="${pageContext.request.contextPath}/applyteacher/myapplylist" class="dropdown-item">강사 신청</a>
                     </c:when>
 	                <c:when test="${sessionScope.members.grade == 'admin'}">
 	                    <a href="" class="dropdown-item">관리자메뉴</a>
+                        <a href="${pageContext.request.contextPath}/applyteacher/applylist" class="dropdown-item">강사 신청 목록</a>
 	                </c:when>
 	                <c:when test="${sessionScope.members.grade == 'teacher'}">
 	                    <a href="${pageContext.request.contextPath}/lectures/uploadcheck" class="dropdown-item">강의 등록</a>
