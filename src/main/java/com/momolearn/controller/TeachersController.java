@@ -1,19 +1,12 @@
 package com.momolearn.controller;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.momolearn.model.MembersRepository;
-import com.momolearn.model.dto.ApplyTeacherDTO;
-import com.momolearn.model.entity.ApplyTeacher;
-import com.momolearn.model.entity.Members;
 import com.momolearn.model.service.MembersService;
 import com.momolearn.model.service.TeachersService;
 
@@ -21,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-@SessionAttributes({"id"})
 @RequestMapping("teachers")
 public class TeachersController {
 	

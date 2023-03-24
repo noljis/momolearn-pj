@@ -2,7 +2,6 @@ package com.momolearn.model.service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -11,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
+import com.google.gson.reflect.TypeToken;
 import com.momolearn.exception.NotExistException;
 import com.momolearn.model.ApplyTeacherRepository;
 import com.momolearn.model.TeachersRepository;
@@ -31,50 +31,51 @@ public class TeachersService {
 
 	private ModelMapper mapper = new ModelMapper();
 
-	
-	//dto->entity 변환
+	// dto->entity 변환
 	public ApplyTeacher convertDtoToEntity(ApplyTeacherDTO dto) {
 		return ApplyTeacher.builder().id(dto.getId()).phoneNum(dto.getPhoneNum()).hopeFiled(dto.getHopeFiled())
 				.intro(dto.getIntro()).pfLink(dto.getPfLink()).approve(dto.getApprove())
 				.members(new Members(dto.getMembersMemId())).build();
 
-		//members 타입이 mapping이 안되고있음 -> builder패턴으로 하나하나 만들어서 반환
+		// members 타입이 mapping이 안되고있음 -> builder패턴으로 하나하나 만들어서 반환
 //        return mapper.map(dto, ApplyTeacher.class);
 	}
 
-	// 강사 신청서 목록 조회
-//	public List<ApplyTeacher> getAllApplyTeachers() {
-//		return applyTeacherRepository.findAll();
-//	}
-	
-	// 강사 신청서 목록 조회
-//	public List<ApplyTeacherDTO> getApplyTeacherLists() {
-//		
-//		List<ApplyTeacher> applyTeacherList = applyTeacherRepository.findAll();
-//		
-//		return mapper.map(applyTeacherList, ApplyTeacherDTO[].class); //수정필요
-//	}
-	
-	
-	// 회원ID로 강사 조회 Teachers -> applyTeacher -> members -> memId
-	public TeachersDTO getOneTeachers(String id) throws NotExistException{
-		Teachers teacher = teachersRepository.findByApplyTeacherMembersMemId(id).orElseThrow(() -> new NotExistException("현재 강사로 등록되어 있지 않습니다."));
-		return mapper.map(teacher, TeachersDTO.class);
+	// 강사 신청 목록 전체 조회
+	public List<ApplyTeacherDTO> findAllApplylists() {
+
+		List<ApplyTeacher> applylists = applyTeacherRepository.findAll();
+
+		return mapper.map(applylists, new TypeToken<List<ApplyTeacherDTO>>() {
+		}.getType());
+
 	}
+
+	// 회원ID로 강사 조회 Teachers -> applyTeacher -> members -> memId
+	public TeachersDTO getOneTeachers(String id) throws NotExistException {
+		
+		Teachers teacher = teachersRepository.findByApplyTeacherMembersMemId(id)
+				.orElseThrow(() -> new NotExistException("현재 강사로 등록되어 있지 않습니다."));
+		
+		return mapper.map(teacher, TeachersDTO.class);
 	
-	//강사번호로 이름만 반환
+	}
+
+	// 강사번호로 이름만 반환
 	public String getOneteacher(int id) {
-		
+
 		Optional<Teachers> teacher = teachersRepository.findById(id);
-		
+
 		return teacher.get().getApplyTeacher().getMembers().getName();
 	}
-	
-	// 강사 신청 승인하기 : approve를 false -> true로 변경
+
+	// 강사 신청 승인하기 : 선택한 id의 approve를 false -> true로 변경 findById?
 	@Modifying
 	@Transactional
 	public void approve(String id) {
+		
 		applyTeacherRepository.approve(id);
+		
 	}
 
 	// 강사 신청이 승인된 applyTeacher 정보를 Teacher에 등록
