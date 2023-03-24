@@ -5,6 +5,10 @@
 ⚡ 모모런에서는 강의 수강뿐만 아니라, 수강생들끼리 소통할 수 있는 Q&A, 커뮤니티 등 <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 다양한 기능을 제공하여 학습을 보다 쉽고 효과적으로 할 수 있도록 도와줍니다.
 
+## ‼️ 다음 파일을 받아주세요
+- [application-db.zip](https://github.com/HtaTeam2/momolearn-pj/files/11047249/application-db.zip) (경로 : src/main/resources)
+
+
 ## 💻 기능 설명
 1. 회원가입/로그인
 2. 회원/강사 프로필관리

@@ -12,32 +12,10 @@
     <meta content="" name="keywords">
     <meta content="" name="description">
 
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.ico" type="image/x-icon">
-
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
-
-    <!-- Icon Font Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-    <!-- Libraries Stylesheet -->
-    <link href="../lib/animate/animate.min.css" rel="stylesheet">
-    <link href="../lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Template Stylesheet -->
-    <link href="../css/style.css" rel="stylesheet">
-
+	<jsp:include page="../separate/head.jsp"></jsp:include>
 </head>
 <body>
-<jsp:include page="../header.jsp"></jsp:include>
+<jsp:include page="../separate/header.jsp"></jsp:include>
 <!-- searchList: 스터디 검색시 비동기로 출력-->
 <div id="searchList">
 	<!-- Carousel Start -->
@@ -102,21 +80,8 @@
 	<!-- End -->
 </div>
 <!-- Back to Top -->
-<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
-
-
-<!-- JavaScript Libraries -->
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="../lib/wow/wow.min.js"></script>
-<script src="../lib/easing/easing.min.js"></script>
-<script src="../lib/waypoints/waypoints.min.js"></script>
-<script src="../lib/owlcarousel/owl.carousel.min.js"></script>
-
-<!-- axios 사용을 위한 추가 설정 -->
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="../js/select.js"></script>
-<jsp:include page="../footer.jsp"></jsp:include>
+<jsp:include page="../separate/script.jsp"></jsp:include>
+<jsp:include page="../separate/footer.jsp"></jsp:include>
 </body>
 
 </html>
