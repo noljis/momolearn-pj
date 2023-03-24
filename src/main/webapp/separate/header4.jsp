@@ -6,7 +6,7 @@
 
     <!-- Spinner Start -->
     <nav class="navbar navbar-expand-lg bg-body-tertiary shadow">
-        <a href="../page/index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+        <a href="${pageContext.request.contextPath}/" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
             <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>MOMOLEARN</h2>
         </a>
         <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">

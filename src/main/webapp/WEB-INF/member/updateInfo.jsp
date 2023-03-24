@@ -42,7 +42,7 @@
 	
 	<!-- Info Start -->
 	    <!-- Form Start -->
-    <form name="f" id="sm" name="pej" method="post" onsubmit="return allCheck()" action="${pageContext.request.contextPath}/member/update">
+    <form name="f" id="sm" name="pej" action="${pageContext.request.contextPath}/member/update" method="post"  enctype="multipart/form-data">
         <div align="center">
             <h2>내 정보 수정하기</h2> <!-- class="nav-item nav-link" -->
 
@@ -61,7 +61,7 @@
                             <!-- 2 -->
                             <td>기존 비밀번호</td>
                             <td>
-                            	<input class="updateInfo" type="password" id="originPw" name="originPw" onclick="passConfirm()" required>
+                            	<input class="updateInfo" type="password" id="originPw" name="originPw" oninput="passConfirm()" required>
                             	<span id="passResult"></span>
                             </td>
                         </tr>
@@ -112,7 +112,7 @@
 
                         <tr>
                             <td colspan="2" align="center">
-	                            <input class="btnBox" type="button" value="수정하기" onclick="location.href='${pageContext.request.contextPath}/member/updatepage?id=${members.memId}'">&nbsp;
+	                            <input class="btnBox" type="submit" value="수정하기" >&nbsp;
 				
 								<button class="btnBox" id="delete_btn" onclick='location.href="${pageContext.request.contextPath}/member/delete?id=${members.memId}"'> 탈퇴하기</button>
                             </td>

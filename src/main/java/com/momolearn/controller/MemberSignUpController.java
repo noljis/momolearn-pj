@@ -6,13 +6,11 @@ import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.momolearn.model.MembersRepository;
 import com.momolearn.model.entity.Members;
@@ -34,8 +32,10 @@ public class MemberSignUpController {
     
 	// 회원가입 후 정보 보기 
 	@PostMapping(value = "member/join", produces = "application/json; charset=UTF-8")
-	protected ModelAndView memInsert(Model sessionData, Members members, @RequestParam("memId") String memId,@RequestParam("password") String pw, @RequestParam("name") String name, @RequestParam("email") String email,@RequestParam("file") MultipartFile file) throws SQLException, IOException {
-		ModelAndView mv = new ModelAndView();
+	public String memInsert(Model sessionData, Members members, @RequestParam("memId") String memId
+						,@RequestParam("password") String pw, @RequestParam("name") String name, 
+						@RequestParam("email") String email,
+						@RequestParam("file") MultipartFile file) throws SQLException, IOException {
 		
         // profile 파일 저장
 		if(file == null) {
@@ -56,9 +56,8 @@ public class MemberSignUpController {
 		Members newmem = membersService.memJoin(members);
 		
 		sessionData.addAttribute("members", members); // 회원가입 정보를 모델에 담아서 리턴
-		mv.setViewName("member/joinInfo"); //정보화면으로 넘어가기
 
-		return mv;
+		return "member/joinInfo";
 	}
 	
 	//아이디 중복 체크 (성공)

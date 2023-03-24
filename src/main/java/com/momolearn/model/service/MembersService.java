@@ -128,20 +128,36 @@ public class MembersService {
 	}
     
     //본인 프로필 수정 (미확인)
+//    @Transactional
+//    public Members updateMember(String memId, String pw, String name, String profile) {
+//        Members member = membersRepository.findById(memId)
+//                                          .orElseThrow(() -> new RuntimeException("Member not found with memId " + memId));
+//        
+//        Members members = null;
+//		// update the member fields
+//        member.setPw(pw);
+//        member.setName(name);
+//        member.setProfile(profile);
+//        
+//
+//        return membersRepository.save(member);
+//    }
+	
     @Transactional
-    public Members updateMember(Members updatedMember) {
-        Members member = membersRepository.findById(updatedMember.getMemId())
-                                          .orElseThrow(() -> new RuntimeException("회원 정보를 찾을 수 없습니다." + updatedMember.getMemId()));
-        
-        Members members = null;
-		// update the member fields
-        member.setPw(updatedMember.getPw());
-        member.setName(updatedMember.getName());
-        member.setProfile(updatedMember.getProfile());
-        
-
-        return membersRepository.save(member);
+    public Members updateMember (Members members) throws SQLException {
+    	
+        try {
+        	
+            Members updateMember = membersRepository.save(members);
+            return updateMember;
+            
+        } catch (Exception e) {
+        	
+            e.printStackTrace();
+            throw new SQLException("Failed to update member.");
+        }
     }
+    
 
     
     //회원 한명 삭제  (미확인)
