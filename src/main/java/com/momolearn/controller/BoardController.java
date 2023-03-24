@@ -40,7 +40,7 @@ public class BoardController {
 	
 	
 	//모든 게시글 목록
-	@GetMapping("/")
+	@GetMapping
 	public String list(Model model, @PageableDefault(sort = "comNo", direction = Sort.Direction.DESC) Pageable pageable) {
 		System.out.println("list()---------------");
 		
@@ -55,17 +55,16 @@ public class BoardController {
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
 		
-		return "forward:/page/board/list.jsp";
+		return "board/list";
 	}
 	
 	//게시글 작성창으로 이동
 	@GetMapping("/writeForm")
-	public String writeForm() {
-		return "forward:/page/board/writeForm.jsp";
+	public String writeForm(@ModelAttribute BoardSaveDTO dto) {
+		return "board/writeForm";
 	}
 	
 	//게시글 작성
-	//https://velog.io/@serendipity-dev/%EC%8A%A4%ED%94%84%EB%A7%81-%EB%B6%80%ED%8A%B8-%EA%B2%8C%EC%8B%9C%ED%8C%90-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-9-%EC%9B%B9-%EA%B3%84%EC%B8%B5-%EA%B0%9C%EB%B0%9C-4
 	@PostMapping
 	public String write(@Valid BoardSaveDTO dto, BindingResult bindingResult) throws NotExistException{
 		System.out.println("write()---------------");
@@ -79,12 +78,13 @@ public class BoardController {
 				log.info("등록 실패: "+error.getDefaultMessage());
 			}
 			
-			return "forward:/page/board/writeForm.jsp";
+			return "board/writeForm";
 		}
 		
 		int comNo = boardService.save(dto); //->해당 게시글로 가게할지?고민중
-		return "redirect:/board/";
+		return "redirect:/board";
 	}
+	
 	
 	
 	//게시글 보기 + 조회수증가
@@ -98,7 +98,7 @@ public class BoardController {
 		
 		model.addAttribute("dto", dto);
 		model.addAttribute("localDateTimeFormat", new SimpleDateFormat("yyyy-MM-dd hh:mm"));
-		return "forward:/page/board/read.jsp";
+		return "board/read";
 	}
 	
 	//게시글 수정화면으로 이동
@@ -106,7 +106,7 @@ public class BoardController {
 	public String updateForm(@PathVariable int comNo, Model model) throws NotExistException{
 		System.out.println("updateForm()----------------");
 		model.addAttribute("dto", boardService.read(comNo));
-		return "forward:/page/board/updateForm.jsp";
+		return "board/updateForm";
 	}
 	
 	//게시글 수정
@@ -119,11 +119,11 @@ public class BoardController {
 			//에러를 list에 저장
 			List<ObjectError> errorList = bindingResult.getAllErrors();
 			errorList.forEach(e -> System.out.print(e));
-			return "forward:/board/";
+			return "board/updateForm";
 		}
 		
 		boardService.update(comNo, dto);
-		return "redirect:/board/";
+		return "redirect:/board";
 		
 	}
 	
@@ -132,7 +132,7 @@ public class BoardController {
 	public String delete(@PathVariable int comNo) {
 		System.out.println("delete() ---------");
 		boardService.delete(comNo);
-		return "redirect:/board/";
+		return "redirect:/board";
 	}
 	
 	

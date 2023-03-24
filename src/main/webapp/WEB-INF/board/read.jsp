@@ -13,6 +13,7 @@
     <meta content="" name="description">
 
     <jsp:include page="../../separate/head.jsp"></jsp:include>
+    <link href="${pageContext.request.contextPath}/css/read.css" rel="stylesheet">
 </head>
 
 <body>
@@ -140,7 +141,7 @@
                             </div>
                     </div>
 
-                    <button type="button" class="btn btn-primary" style="margin-top: 15px;" onclick="location.href='../board/'">목록</button>
+                    <button type="button" class="btn btn-primary" style="margin-top: 15px;" onclick="location.href='../board'">목록</button>
                     <div class="text-right mt-3" style="float: right;">
                         <button type="button" class="btn btn-primary" onclick="location.href='../board/updateForm/${dto.comNo}'">수정</button>&nbsp;
                         <!-- <button id="btn-delete" class="btn btn-danger" >삭제</button>&nbsp; -->
