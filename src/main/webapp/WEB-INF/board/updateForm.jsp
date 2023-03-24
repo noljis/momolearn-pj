@@ -13,8 +13,8 @@
     <meta content="" name="keywords">
     <meta content="" name="description">
 
-    <jsp:include page="../../separate/head.jsp"></jsp:include>
-    <link href="../../css/write.css" rel="stylesheet">
+    <jsp:include page="/separate/head.jsp"></jsp:include>
+    <link href="${pageContext.request.contextPath}/css/write.css" rel="stylesheet">
 </head>
 <body>
 	<jsp:include page="../../separate/header2.jsp"></jsp:include>
@@ -101,8 +101,8 @@
 
 
     <!-- Back to Top -->
-<jsp:include page="../../separate/script.jsp"></jsp:include>
-<jsp:include page="../../separate/footer.jsp"></jsp:include>
+<jsp:include page="/separate/script.jsp"></jsp:include>
+<jsp:include page="/separate/footer.jsp"></jsp:include>
 </body>
 
 </html>

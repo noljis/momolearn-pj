@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.momolearn.model.MembersRepository;
 import com.momolearn.model.entity.Members;
 import com.momolearn.model.service.MembersService;
 
@@ -40,7 +39,7 @@ public class MembersSignInController {
 		
 		ModelAndView mv = new ModelAndView();
 		
-		mv.setViewName("redirect:/page/member/login.jsp");   
+		mv.setViewName("redirect:/login");   
 		return mv;
 	}
     
@@ -56,7 +55,7 @@ public class MembersSignInController {
 			System.out.println("id확인 " + memId);
 			sessionData.addAttribute("members", members); // 세션에 프로필 저장
 
-			return "redirect:/page/main.jsp"; // 로그인 후 메인화면
+			return "redirect:/"; // 로그인 후 메인화면
 			
 		} else {
 			
