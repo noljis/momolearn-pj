@@ -41,7 +41,7 @@
 	<jsp:include page="/separate/header3.jsp"></jsp:include>
 	<!-- form Start -->
     <div>
-      <form name="upload" action="${pageContext.request.contextPath}/momolearn/lectures/uploadlecture" method="post" enctype="multipart/form-data">
+      <form name="upload" action="${pageContext.request.contextPath}/momolearn/lectures/upload-lecture" method="post" enctype="multipart/form-data">
         
     	<div class="container">
         <div class="input-form-backgroud row">
@@ -59,7 +59,7 @@
                 <input type="text" class="form-control-plaintext form-control-sm border-bottom" name="category" id="category" placeholder="카테고리를 쉼표(,)로 구분하여 입력하세요.">
               </div>
               <div class="mb-3">
-                <label for="teacher_no">강사명<br><h5>${member.name}</h5></label>
+                <label for="teachersTeacherNo">강사명<br><h5>${member.name}</h5></label>
                 <input type="hidden" class="form-control-plaintext form-control-sm border-bottom" name="teachersTeacherNo" value="${teacher.teacherNo}">
               </div>
               <div class="mb-3">

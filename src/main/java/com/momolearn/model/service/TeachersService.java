@@ -5,7 +5,6 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
@@ -18,14 +17,15 @@ import com.momolearn.model.entity.ApplyTeacher;
 import com.momolearn.model.entity.Members;
 import com.momolearn.model.entity.Teachers;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class TeachersService {
 
-	@Autowired
-	private TeachersRepository teachersRepository;
+	private final TeachersRepository teachersRepository;
 
-	@Autowired
-	private ApplyTeacherRepository applyTeacherRepository;
+	private final ApplyTeacherRepository applyTeacherRepository;
 
 	private ModelMapper mapper = new ModelMapper();
 
@@ -38,9 +38,11 @@ public class TeachersService {
 //        return mapper.map(dto, ApplyTeacher.class);
 	}
 
-	// 회원ID로 강사 조회 Teachers -> applyTeacher -> members -> memId
+	//LectureController에서 사용: 회원ID와 승인여부로 강사 조회 Teachers -> applyTeacher -> members -> memId
 	public TeachersDTO getOneTeachers(String id) throws NotExistException{
-		Teachers teacher = teachersRepository.findByApplyTeacherMembersMemId(id).orElseThrow(() -> new NotExistException("현재 강사로 등록되어 있지 않습니다."));
+		
+		Teachers teacher = teachersRepository.findByMemIdAndApprove(id).orElseThrow(() -> new NotExistException("현재 강사로 등록되어 있지 않습니다."));
+		System.out.println(teacher);
 		return mapper.map(teacher, TeachersDTO.class);
 	}
 	
@@ -65,14 +67,14 @@ public class TeachersService {
 		return teachersRepository.save(newTeacher);
 	}
 
-	// id와 승인여부로 강사 한명 조회
-	public ApplyTeacherDTO getOneTeacher(String id) throws NotExistException {
-
-		ApplyTeacher applyTeacher = applyTeacherRepository.findByMembersMemIdAndApprove(id)
-				.orElseThrow(() -> new NotExistException("현재 강사로 등록되어 있지 않습니다."));
-
-		return mapper.map(applyTeacher, ApplyTeacherDTO.class);
-
-	}
+//	// id와 승인여부로 강사 한명 조회
+//	public ApplyTeacherDTO getOneTeacher(String id) throws NotExistException {
+//
+//		ApplyTeacher applyTeacher = applyTeacherRepository.findByMembersMemIdAndApprove(id)
+//				.orElseThrow(() -> new NotExistException("현재 강사로 등록되어 있지 않습니다."));
+//
+//		return mapper.map(applyTeacher, ApplyTeacherDTO.class);
+//
+//	}
 
 }

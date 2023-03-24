@@ -25,16 +25,19 @@
             </div>
             <div class="">
             	<!-- 조회한 카테고리 반복문 돌려주자 -->
-                <button type="button" class="btn btn-outline-primary">전체강의</button>
-                <c:if test="${not empty categoty}">
-	                <c:forEach var="category" items="${categories}">
-					    <button type="button" class="btn btn-outline-primary">전체강의</button>
+                <button id="catebtn2" type="button" class="btn btn-outline-primary">전체강의</button>
+                <c:if test="${not empty category}">
+	                <c:forEach var="cate" items="${category}">
+					    <button id="catebtn" type="button" class="btn btn-outline-primary" value="${cate.cateId}">${cate.cateName}</button>
 					</c:forEach>
                 </c:if>
             </div>
         </div>
     </div>
     <!-- Categories End -->
+    <!-- 강의 리스트 Start -->
+    <div id="lectureList"></div>
+    <!-- 강의 리스트 End -->
 
 </div>
 
@@ -43,6 +46,7 @@
 <!-- Back to Top -->
 <jsp:include page="/separate/script.jsp"></jsp:include>
 <jsp:include page="/separate/footer.jsp"></jsp:include>
+<script src="${pageContext.request.contextPath}/js/list.js"></script>
 </body>
 </body>
 </html>

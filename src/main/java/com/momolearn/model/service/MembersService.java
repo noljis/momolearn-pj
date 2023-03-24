@@ -28,6 +28,7 @@ public class MembersService {
 	//회원가입
     @Transactional
     public Members memJoin(Members members) throws SQLException {
+    	
         try {
             Members savedMembers = membersRepository.save(members);
             return savedMembers;
@@ -75,9 +76,9 @@ public class MembersService {
 	 
     //로그인 회원정보 확인
 	public boolean validateUser(String memId, String password) throws Exception {
+	
 		Members member = membersRepository.findByMemId(memId);
 		
-
 		System.out.println("member출력 ===" +member.getPw());
 		System.out.println("member출력 ===" +password);
 		
@@ -85,6 +86,27 @@ public class MembersService {
             return true;
         }
         return false;
+	}
+	
+	//id찾기 (email로 찾기)
+	public Members findId(String email) throws SQLException{
+		
+		Members member = membersRepository.findByEmail(email);
+		
+        if (member == null) {
+            return null;
+        }
+        return member;
+	}
+	
+	//pw찾기 (id,email로 찾기)
+	public Members findPw(String memId, String email) throws SQLException{
+		
+		Members member = membersRepository.findByMemIdAndEmail(memId, email);
+        if (member == null) {
+        	return null;
+        }
+        return member;
 	}
     
 	//본인 조회 - jpa
@@ -97,8 +119,6 @@ public class MembersService {
         return member;
 	}
     
-   
-
 	//id로 한명의 회원정보 불러오기
 	public MembersDTO getOneMember(String id) throws NotExistException {
 
@@ -109,21 +129,35 @@ public class MembersService {
     
     //본인 프로필 수정 (미확인)
 //    @Transactional
-//    public Members updateMember(String memId, String email, String name, String pw, String file) {
+//    public Members updateMember(String memId, String pw, String name, String profile) {
 //        Members member = membersRepository.findById(memId)
 //                                          .orElseThrow(() -> new RuntimeException("Member not found with memId " + memId));
 //        
-//        Members updatedMember = null;
+//        Members members = null;
 //		// update the member fields
-//        member.setMemId(updatedMember.getMemId());
-//        member.setPw(updatedMember.getPw());
-//        member.setName(updatedMember.getName());
-//        member.setEmail(updatedMember.getEmail());
-//        member.setProfile(updatedMember.getProfile());
+//        member.setPw(pw);
+//        member.setName(name);
+//        member.setProfile(profile);
 //        
 //
 //        return membersRepository.save(member);
 //    }
+	
+    @Transactional
+    public Members updateMember (Members members) throws SQLException {
+    	
+        try {
+        	
+            Members updateMember = membersRepository.save(members);
+            return updateMember;
+            
+        } catch (Exception e) {
+        	
+            e.printStackTrace();
+            throw new SQLException("Failed to update member.");
+        }
+    }
+    
 
     
     //회원 한명 삭제  (미확인)
@@ -142,30 +176,6 @@ public class MembersService {
 //            throw new SQLException("Failed to delete member.");
 //        }
 //    }
-
-	
-	
-
-	
-	//id찾기 (email로 찾기)
-//	public String findId(String email) throws SQLException{
-//		Members member = membersRepository.findByEmail(email);
-//        if (member != null) {
-//            return member.getMemId();
-//        }
-//        return null;
-//	}
-	
-	//pw찾기 (id,email로 찾기)
-//	public String findPw(String memId, String email) throws SQLException{
-//		Members member = membersRepository.findByMemIdAndEmail(memId, email);
-//        if (member == null) {
-//            // 비밀번호를 찾을 수 없는 경우 예외 처리
-//            throw new RuntimeException("해당 회원을 찾을 수 없습니다.");
-//        }
-//        return member.getPw();
-//	}
-	
 
 	
 	//관리자 - 모든 회원 검색
