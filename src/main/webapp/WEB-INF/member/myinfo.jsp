@@ -28,7 +28,7 @@
     <meta content="" name="keywords">
     <meta content="" name="description">
 
-    <jsp:include page="../../separate/head.jsp"></jsp:include>
+    <jsp:include page="/separate/head.jsp"></jsp:include>
 </head>
 <style>
 .a {
@@ -37,7 +37,7 @@
 </style>
 
 <body>
-    <jsp:include page="../../separate/header2.jsp"></jsp:include>
+    <jsp:include page="/separate/header2.jsp"></jsp:include>
 
     <!-- Header Start -->
     <div class="container-fluid bg-primary py-5 mb-5 page-header">
@@ -122,8 +122,8 @@
     
 
     <!-- Back to Top -->
-	<jsp:include page="../../separate/script.jsp"></jsp:include>
-	<jsp:include page="../../separate/footer.jsp"></jsp:include>
+	<jsp:include page="/separate/script.jsp"></jsp:include>
+	<jsp:include page="/separate/footer.jsp"></jsp:include>
 </body>
 
 </html>

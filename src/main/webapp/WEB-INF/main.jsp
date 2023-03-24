@@ -12,17 +12,17 @@
     <meta content="" name="keywords">
     <meta content="" name="description">
 
-	<jsp:include page="../separate/head.jsp"></jsp:include>
+	<jsp:include page="/separate/head.jsp"></jsp:include>
 </head>
 <body>
-<jsp:include page="../separate/header.jsp"></jsp:include>
+<jsp:include page="/separate/header.jsp"></jsp:include>
 <!-- searchList: 스터디 검색시 비동기로 출력-->
 <div id="searchList">
 	<!-- Carousel Start -->
     <div class="container-fluid p-0 mb-5">
         <div class="owl-carousel header-carousel position-relative">
             <div class="owl-carousel-item position-relative">
-                <img class="img-fluid" src="../img/carousel-1.jpg" alt="">
+                <img class="img-fluid" src="${pageContext.request.contextPath}/img/carousel-1.jpg" alt="">
                 <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center" style="background: rgba(24, 29, 56, .7);">
                     <div class="container">
                         <div class="row justify-content-start">
@@ -38,7 +38,7 @@
                 </div>
             </div>
             <div class="owl-carousel-item position-relative">
-                <img class="img-fluid" src="../img/carousel-2.jpg" alt="">
+                <img class="img-fluid" src="${pageContext.request.contextPath}/img/carousel-2.jpg" alt="">
                 <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center" style="background: rgba(24, 29, 56, .7);">
                     <div class="container">
                         <div class="row justify-content-start">
@@ -54,7 +54,7 @@
                 </div>
             </div>
             <div class="owl-carousel-item position-relative">
-                <img class="img-fluid" src="../img/carousel-3.jpg" alt="">
+                <img class="img-fluid" src="${pageContext.request.contextPath}/img/carousel-3.jpg" alt="">
                 <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center" style="background: rgba(24, 29, 56, .7);">
                     <div class="container">
                         <div class="row justify-content-start">
@@ -80,8 +80,8 @@
 	<!-- End -->
 </div>
 <!-- Back to Top -->
-<jsp:include page="../separate/script.jsp"></jsp:include>
-<jsp:include page="../separate/footer.jsp"></jsp:include>
+<jsp:include page="/separate/script.jsp"></jsp:include>
+<jsp:include page="/separate/footer.jsp"></jsp:include>
 </body>
 
 </html>

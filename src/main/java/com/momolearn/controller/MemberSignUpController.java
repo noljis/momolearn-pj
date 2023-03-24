@@ -38,7 +38,7 @@ public class MemberSignUpController {
 		
 		ModelAndView mv = new ModelAndView();
 		
-		mv.setViewName("redirect:/page/member/join.jsp");   
+		mv.setViewName("redirect:/join");   
 		return mv;
 	}
 	

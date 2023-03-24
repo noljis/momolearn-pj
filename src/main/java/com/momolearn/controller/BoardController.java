@@ -55,7 +55,7 @@ public class BoardController {
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
 		
-		return "forward:/page/board/list.jsp";
+		return "board/list";  
 	}
 	
 	//게시글 작성창으로 이동
@@ -98,7 +98,7 @@ public class BoardController {
 		
 		model.addAttribute("dto", dto);
 		model.addAttribute("localDateTimeFormat", new SimpleDateFormat("yyyy-MM-dd hh:mm"));
-		return "forward:/page/board/read.jsp";
+		return "board/read";
 	}
 	
 	//게시글 수정화면으로 이동
