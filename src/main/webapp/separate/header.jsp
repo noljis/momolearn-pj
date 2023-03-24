@@ -12,7 +12,8 @@
 
 <!-- Navbar Start navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0-->
 <nav class="navbar navbar-expand-lg bg-body-tertiary shadow">
-    <a href="${pageContext.request.contextPath}/member/mainView" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+
+    <a href="${pageContext.request.contextPath}/" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
         <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>MOMOLEARN</h2>
     </a>
     <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -37,6 +38,9 @@
 	            <a href="${pageContext.request.contextPath}/member/myinfo" class="dropdown-item">내 정보</a>
 	            <a href="" class="dropdown-item">내 강의</a>
 	            <c:choose>
+	            	<c:when test="${sessionScope.members.grade == 'student'}">
+                        <a href="${pageContext.request.contextPath}/teacher/applyform" class="dropdown-item">강사 신청</a>
+                    </c:when>
 	                <c:when test="${sessionScope.members.grade == 'admin'}">
 	                    <a href="" class="dropdown-item">관리자메뉴</a>
 	                </c:when>
@@ -51,11 +55,12 @@
         <!-- 세션ID 존재할 경우 나오는 메뉴 End-->
         <!-- 세션ID 존재하지 않을때 나오는 메뉴 Start -->
         <c:if test="${empty sessionScope.members.memId}">
-		 <a href="${pageContext.request.contextPath}/page/member/login.jsp" class="btn btn-primary">로그인</a>&nbsp;&nbsp;&nbsp;
-         <a href="${pageContext.request.contextPath}/page/member/join.jsp" class="btn btn-primary">가입하기</a>&nbsp;&nbsp;&nbsp;
+		 <a href="${pageContext.request.contextPath}/member/loginView" class="btn btn-primary">로그인</a>&nbsp;&nbsp;&nbsp;
+         <a href="${pageContext.request.contextPath}/member/joinView" class="btn btn-primary">가입하기</a>&nbsp;&nbsp;&nbsp;
          </c:if>
          <!-- 세션ID 존재하지 않을때 나오는 메뉴 End --> 
     </div>
 </nav>
-
-<jsp:include page="${pageContext.request.contextPath}/js/select.js"></jsp:include>
+<!-- axios 사용을 위한 추가 설정 -->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/select.js"></script>

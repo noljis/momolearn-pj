@@ -31,17 +31,7 @@ public class MemberSignUpController {
 	
 	@Autowired
 	private FileService fileService;
-	
-	//회원가입 입력폼
-    @GetMapping("member/joinView")
-    protected ModelAndView memJoinView() throws SQLException {
-		
-		ModelAndView mv = new ModelAndView();
-		
-		mv.setViewName("member/join");   
-		return mv;
-	}
-
+    
 	// 회원가입 후 정보 보기 
 	@PostMapping(value = "member/join", produces = "application/json; charset=UTF-8")
 	protected ModelAndView memInsert(Model sessionData, Members members, @RequestParam("memId") String memId,@RequestParam("password") String pw, @RequestParam("name") String name, @RequestParam("email") String email,@RequestParam("file") MultipartFile file) throws SQLException, IOException {

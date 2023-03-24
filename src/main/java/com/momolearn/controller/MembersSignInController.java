@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.momolearn.model.entity.Members;
 import com.momolearn.model.service.MembersService;
@@ -33,22 +32,18 @@ public class MembersSignInController {
 	@Autowired
 	private MembersService membersService;
 	
-	//main으로 화면 이동
-    @GetMapping("/mainView")
-    protected String mainView() throws SQLException {
+	//회원가입 입력폼
+    @GetMapping("/joinView")
+    protected String memJoinView() throws SQLException {
 		
-		return "forward:/WEB-INF/main.jsp";
+		return "member/join";
 	}
     
 	//로그인 입력폼 (확인)
     @GetMapping("/loginView")
-    protected ModelAndView memJoinView() throws SQLException {
+    protected String memLoginView() throws SQLException {
 		
-		ModelAndView mv = new ModelAndView();
-		
-		mv.setViewName("member/login");   
-		
-		return mv;
+		return "member/login";
 	}
     
 	// id 찾기 페이지 이동 (확인)
@@ -113,6 +108,7 @@ public class MembersSignInController {
 			sessionData.addAttribute("members", members); // 세션에 프로필 저장
 
 			return "forward:/WEB-INF/main.jsp"; // 로그인 후 메인화면
+
 			
 		} else {
 			
@@ -135,7 +131,7 @@ public class MembersSignInController {
 	@GetMapping(value = "/refresh")
 	public String refresh() throws Exception {
 		
-		return "redirect:/page/index.html"; //index.html로 이동
+		return "redirect:/"; // HomeController의 home() 메소드로 이동
 	}
 	
     /**

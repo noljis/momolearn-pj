@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -47,14 +46,11 @@ public class LecturesController {
 	
 	private final LecturesService lecturesService;
 	
-	@Autowired
-	private TeachersService teachersService;
+	private final TeachersService teachersService;
 	
-	@Autowired
-	private MembersService membersService; 
+	private final MembersService membersService; 
 	
-	@Autowired
-	private FileService fileService;
+	private final FileService fileService;
 
 	// 1. 강의 업로드 클릭시 유효성검사 후 강의 등록 폼으로 이동
 	/*

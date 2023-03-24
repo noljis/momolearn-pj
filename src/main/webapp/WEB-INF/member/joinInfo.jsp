@@ -11,13 +11,13 @@
     <meta content="" name="keywords">
     <meta content="" name="description">
 
-    <jsp:include page="../../separate/head.jsp"></jsp:include>
+    <jsp:include page="/separate/head.jsp"></jsp:include>
 
     <!-- Template Stylesheet -->
-    <link href="../../css/teacherForm.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/teacherForm.css" rel="stylesheet">
 </head>
 <body>
-   <jsp:include page="../../separate/header3.jsp"></jsp:include>
+   <jsp:include page="/separate/header3.jsp"></jsp:include>
 
     <!-- Header Start -->
     <div class="container-fluid bg-primary py-5 mb-5 page-header">
@@ -98,7 +98,7 @@
 	<!-- Info End -->
 
 	<!-- Back to Top -->
-	<jsp:include page="../../separate/script.jsp"></jsp:include>
-	<jsp:include page="../../separate/footer.jsp"></jsp:include>
+	<jsp:include page="/separate/script.jsp"></jsp:include>
+	<jsp:include page="/separate/footer.jsp"></jsp:include>
 </body>
 </html>
