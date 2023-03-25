@@ -20,6 +20,7 @@ import com.momolearn.model.LecturesRepository;
 import com.momolearn.model.TeachersRepository;
 import com.momolearn.model.dto.CategoryDTO;
 import com.momolearn.model.dto.CoursesDTO;
+import com.momolearn.model.dto.LectureCoursesDTO;
 import com.momolearn.model.dto.LecturesDTO;
 import com.momolearn.model.entity.Category;
 import com.momolearn.model.entity.CategoryLecture;
@@ -31,8 +32,6 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class LecturesService {
-
-	private TeachersRepository teachersRepository;
 
 	private final LecturesRepository lecturesRepository;
 
@@ -53,17 +52,11 @@ public class LecturesService {
 		try {
 			Lectures lecture = lecturesRepository.save(lectures);
 			return mapper.map(lecture, LecturesDTO.class);
+			
 		} catch (Exception e) {
+			
 			throw new MessageException("강의 등록에 실패했습니다.");
 		}
-	}
-
-	// 강의 전체 목록 조회
-	public List<LecturesDTO> getLectureLists() {
-
-		List<Lectures> leclist = lecturesRepository.findAll();
-
-		return Arrays.asList(mapper.map(leclist, LecturesDTO[].class));
 	}
 
 	// 강의명 부분검색
@@ -102,23 +95,6 @@ public class LecturesService {
 		return null;
 	}
 
-	// 강의 번호로 카테고리-강의 검색
-	public ArrayList<String> getCategory(int id) {
-		
-		List<CategoryLecture> categoryLectures = categoryLectureRepository.findByLectureId(id);
-		ArrayList<String> category = new ArrayList<>();
-		
-		if (categoryLectures != null) {
-			
-			for (CategoryLecture categoryLecture : categoryLectures) {
-				
-				category.add(categoryLecture.getCategory().getCateName());
-			}
-		}
-		
-		return category;
-	}
-
 	// 모든 카테고리 조회
 	public List<CategoryDTO> getAllCategory() {
 
@@ -132,35 +108,27 @@ public class LecturesService {
 
 		List<Lectures> lectures = lecturesRepository.findAll();
 		
-
 		return getLectureJson(lectures);
 	}
 
-	// 카테고리로 강의 조회
-	public List<LecturesDTO> searchCategotyLecture(int title) {
+	// 카테고리로 강의 조회 title: 카테고리 번호
+	public JsonArray searchCategotyLecture(int title) {
 		
-		List<CategoryLecture> categorylecture = categoryLectureRepository.findByCategoryCateId(title);
-		ArrayList<Lectures> lectures = new ArrayList<>();
+		List<Lectures> lectures = lecturesRepository.findByCategoryLectureCategoryCateId(title);
 		
-		if (categorylecture != null) {
-			
-			for (CategoryLecture categoryLecture : categorylecture) {
-				
-			 Optional<Lectures> lecture = lecturesRepository.findById(categoryLecture.getLecture().getId());
-		     lecture.ifPresent(lectures::add);			
-		    }
-			
-		}
-		
-		return Arrays.asList(mapper.map(lectures, LecturesDTO[].class));
+		return getLectureJson(lectures);
 	}
 
 	//강의번호로 강의 하나 조회
-	public LecturesDTO getLectureDetail(int title) throws NotExistException {
+	public LectureCoursesDTO getLectureDetail(int title) throws NotExistException {
 		
-		Lectures lecture = lecturesRepository.findById(title).orElseThrow(() -> new NotExistException("해당 강의가 존재하지 않습니다."));
+		Lectures lecture = lecturesRepository.findById(title);
 		
-		return mapper.map(lecture, LecturesDTO.class);
+		if(lecture == null) {
+			new NotExistException("해당 강의가 존재하지 않습니다.");
+		}
+		
+		return mapper.map(lecture, LectureCoursesDTO.class);
 	}
 
 	//강의 번호에 속한 강좌들 조회
@@ -176,8 +144,8 @@ public class LecturesService {
 		System.out.println(lectures.get(0).getCategoryLecture().get(0).getCategory().getCateName());
 		JsonObject lectureJson = null;
 		JsonArray lecturesJson = new JsonArray();
-		ArrayList<String> category = new ArrayList<>();
 		for (int i = 0; i < lectures.size(); i++) {
+			ArrayList<String> category = new ArrayList<>();
 			//해당 강의 번호로 카테고리 조회. member.getName, category.getateName, 
 			//강사번호로 강사 조회
 			lectureJson = new JsonObject();

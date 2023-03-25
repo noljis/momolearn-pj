@@ -2,7 +2,6 @@ package com.momolearn.controller;
 
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -17,14 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonIOException;
-import com.google.gson.JsonObject;
 import com.momolearn.exception.MessageException;
 import com.momolearn.exception.NotExistException;
 import com.momolearn.model.dto.CategoryDTO;
 import com.momolearn.model.dto.CoursesDTO;
+import com.momolearn.model.dto.LectureCoursesDTO;
 import com.momolearn.model.dto.LecturesDTO;
 import com.momolearn.model.dto.MembersDTO;
 import com.momolearn.model.dto.TeachersDTO;
@@ -142,13 +139,10 @@ public class LecturesController {
 	//5. 강의 정보페이지 + 강좌 목록 + 강좌 추가 버튼 + 강의바구니 버튼
 	@GetMapping(value = "/detail/{title}", produces = "application/json;charset=UTF-8")
 	public String getLectureDetail(Model model, @PathVariable int title) throws NotExistException {
-		//강의 정보 조회
-		LecturesDTO lecture = lecturesService.getLectureDetail(title);
-		//강좌 정보 조회
-		List<CoursesDTO> courses = lecturesService.getCourses(title);
+		//강의+강좌 정보 조회
+		LectureCoursesDTO lecture = lecturesService.getLectureDetail(title);
 		
 		model.addAttribute("lecture", lecture);
-		model.addAttribute("courses", courses);
 		
 		return "lecture/lecture-detail"; //WEB-INF/lecture/lecture-detail.jsp
 	}
@@ -170,7 +164,7 @@ public class LecturesController {
 			// 방 리스트를 데이터에 담아줌
 			model.addAttribute("data", lecturesService.searchLectures(title));
 		} catch (JsonIOException s) {
-			System.out.println("JSONException");
+			
 			model.addAttribute("data", "내부적인 오류로 검색하지 못했습니다.");
 			s.printStackTrace();
 		}
@@ -180,8 +174,11 @@ public class LecturesController {
 	//9. 전체 카테고리 조회
 	@GetMapping(value = "/categoryall", produces = "application/json;charset=UTF-8")
 	public String getAllCategory(Model model) {
+		
 		List<CategoryDTO> category = lecturesService.getAllCategory();
+		
 		model.addAttribute("category", category);
+		
 		return "lecture/lecture-list"; // WEB-INF/lecture/lecture-list.jsp
 	}
 	
@@ -189,49 +186,19 @@ public class LecturesController {
 	@GetMapping(value = "/search-category/{title}", produces = "application/json;charset=UTF-8")
 	public String searchCategory(Model model, @PathVariable int title) {
 		log.info("searchCategory()호출: " + title);
-		List<LecturesDTO> lectures = lecturesService.searchCategotyLecture(title);
+		
 		try {
-			// 배열이 비어있으면 String으로 예외던지기
-			if (lectures.isEmpty()) throw new NullPointerException();
-			// 방 리스트를 데이터에 담아줌
-			model.addAttribute("data", getLectureJson(lectures));
+			
+			model.addAttribute("data", lecturesService.searchCategotyLecture(title));
+			
 		} catch (JsonIOException s) {
-			System.out.println("JSONException");
+			
 			model.addAttribute("data", "내부적인 오류로 검색하지 못했습니다.");
 			s.printStackTrace();
-		} catch (NullPointerException ne) {
-			System.out.println("NullPointerException");
-			model.addAttribute("data", "검색된 강의가 없습니다.");
-			ne.printStackTrace();
-		}
+		} 
 		return "data_res"; // WEB-INF/main_res.jsp
 	}
 	
-	//강의목록에 보여질 Json데이터 메소드
-	public JsonArray getLectureJson(List<LecturesDTO> lectures) {
-		JsonObject lectureJson = null;
-		JsonArray lecturesJson = new JsonArray();
-		for (int i = 0; i < lectures.size(); i++) {
-			//해당 강의 번호로 카테고리 조회. member.getName, category.getateName, 
-			ArrayList<String> category = lecturesService.getCategory(lectures.get(i).getId());
-			//강사번호로 강사 조회
-			String teacher = teachersService.getOneteacher(lectures.get(i).getTeachersTeacherNo());
-			lectureJson = new JsonObject();
-			lectureJson.addProperty("id", lectures.get(i).getId());
-			lectureJson.addProperty("title", lectures.get(i).getTitle());
-			lectureJson.addProperty("image", lectures.get(i).getImage());
-			lectureJson.addProperty("price", lectures.get(i).getPrice());
-			lectureJson.addProperty("cnt", lectures.get(i).getCnt());
-			lectureJson.addProperty("info", lectures.get(i).getInfo());
-			lectureJson.addProperty("applyCnt", lectures.get(i).getApplyCnt());
-			lectureJson.addProperty("teacher", teacher);
-			//카테고리 배열 담아주기
-			lectureJson.addProperty("category", new Gson().toJson(category));
-			// 후에 JSONArray에 담아서 json 배열로 만들기
-			lecturesJson.add(lectureJson);
-		}
-		return lecturesJson;
-	}
 	//NotExistException 관련 예외처리
 	@ExceptionHandler(value = NotExistException.class)
 	public String notExistException(NotExistException ne, Model model) {
