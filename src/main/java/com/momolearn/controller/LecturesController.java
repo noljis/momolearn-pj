@@ -134,31 +134,8 @@ public class LecturesController {
 		try {
 			// 배열이 비어있으면 String으로 예외던지기
 			if (lectures.isEmpty()) throw new NullPointerException();
-			
-			JsonObject lectureJson = null;
-			JsonArray lecturesJson = new JsonArray();
-			
-			for (int i = 0; i < lectures.size(); i++) {
-				//해당 강의 번호로 카테고리 조회
-				ArrayList<String> category = lecturesService.getCategory(lectures.get(i).getId());
-				//강사번호로 강사 조회
-				String teacher = teachersService.getOneteacher(lectures.get(i).getTeachersTeacherNo());
-				lectureJson = new JsonObject();
-				lectureJson.addProperty("id", lectures.get(i).getId());
-				lectureJson.addProperty("title", lectures.get(i).getTitle());
-				lectureJson.addProperty("image", lectures.get(i).getImage());
-				lectureJson.addProperty("price", lectures.get(i).getPrice());
-				lectureJson.addProperty("cnt", lectures.get(i).getCnt());
-				lectureJson.addProperty("info", lectures.get(i).getInfo());
-				lectureJson.addProperty("applyCnt", lectures.get(i).getApplyCnt());
-				lectureJson.addProperty("teacher", teacher);
-				//카테고리 배열 담아주기
-				lectureJson.addProperty("category", new Gson().toJson(category));
-				// 후에 JSONArray에 담아서 json 배열로 만들기
-				lecturesJson.add(lectureJson);
-			}
 			// 방 리스트를 데이터에 담아줌
-			model.addAttribute("data", lecturesJson);
+			model.addAttribute("data", getLectureJson(lectures));
 		} catch (JsonIOException s) {
 			System.out.println("JSONException");
 			model.addAttribute("data", "내부적인 오류로 검색하지 못했습니다.");
@@ -168,7 +145,6 @@ public class LecturesController {
 			model.addAttribute("data", "검색된 강의가 없습니다.");
 			ne.printStackTrace();
 		}
-
 		return "data_res"; // WEB-INF/main_res.jsp
 	}
 	
@@ -197,31 +173,8 @@ public class LecturesController {
 		try {
 			// 배열이 비어있으면 String으로 예외던지기
 			if (lectures.isEmpty()) throw new NullPointerException();
-			
-			JsonObject lectureJson = null;
-			JsonArray lecturesJson = new JsonArray();
-			
-			for (int i = 0; i < lectures.size(); i++) {
-				//해당 강의 번호로 카테고리 조회
-				ArrayList<String> category = lecturesService.getCategory(lectures.get(i).getId());
-				//강사번호로 강사 조회
-				String teacher = teachersService.getOneteacher(lectures.get(i).getTeachersTeacherNo());
-				lectureJson = new JsonObject();
-				lectureJson.addProperty("id", lectures.get(i).getId());
-				lectureJson.addProperty("title", lectures.get(i).getTitle());
-				lectureJson.addProperty("image", lectures.get(i).getImage());
-				lectureJson.addProperty("price", lectures.get(i).getPrice());
-				lectureJson.addProperty("cnt", lectures.get(i).getCnt());
-				lectureJson.addProperty("info", lectures.get(i).getInfo());
-				lectureJson.addProperty("applyCnt", lectures.get(i).getApplyCnt());
-				lectureJson.addProperty("teacher", teacher);
-				//카테고리 배열 담아주기
-				lectureJson.addProperty("category", new Gson().toJson(category));
-				// 후에 JSONArray에 담아서 json 배열로 만들기
-				lecturesJson.add(lectureJson);
-			}
 			// 방 리스트를 데이터에 담아줌
-			model.addAttribute("data", lecturesJson);
+			model.addAttribute("data", getLectureJson(lectures));
 		} catch (JsonIOException s) {
 			System.out.println("JSONException");
 			model.addAttribute("data", "내부적인 오류로 검색하지 못했습니다.");
@@ -231,7 +184,6 @@ public class LecturesController {
 			model.addAttribute("data", "검색된 강의가 없습니다.");
 			ne.printStackTrace();
 		}
-
 		return "data_res"; // WEB-INF/main_res.jsp
 	}
 	
@@ -251,31 +203,8 @@ public class LecturesController {
 		try {
 			// 배열이 비어있으면 String으로 예외던지기
 			if (lectures.isEmpty()) throw new NullPointerException();
-			
-			JsonObject lectureJson = null;
-			JsonArray lecturesJson = new JsonArray();
-			
-			for (int i = 0; i < lectures.size(); i++) {
-				//해당 강의 번호로 카테고리 조회
-				ArrayList<String> category = lecturesService.getCategory(lectures.get(i).getId());
-				//강사번호로 강사 조회
-				String teacher = teachersService.getOneteacher(lectures.get(i).getTeachersTeacherNo());
-				lectureJson = new JsonObject();
-				lectureJson.addProperty("id", lectures.get(i).getId());
-				lectureJson.addProperty("title", lectures.get(i).getTitle());
-				lectureJson.addProperty("image", lectures.get(i).getImage());
-				lectureJson.addProperty("price", lectures.get(i).getPrice());
-				lectureJson.addProperty("cnt", lectures.get(i).getCnt());
-				lectureJson.addProperty("info", lectures.get(i).getInfo());
-				lectureJson.addProperty("applyCnt", lectures.get(i).getApplyCnt());
-				lectureJson.addProperty("teacher", teacher);
-				//카테고리 배열 담아주기
-				lectureJson.addProperty("category", new Gson().toJson(category));
-				// 후에 JSONArray에 담아서 json 배열로 만들기
-				lecturesJson.add(lectureJson);
-			}
 			// 방 리스트를 데이터에 담아줌
-			model.addAttribute("data", lecturesJson);
+			model.addAttribute("data", getLectureJson(lectures));
 		} catch (JsonIOException s) {
 			System.out.println("JSONException");
 			model.addAttribute("data", "내부적인 오류로 검색하지 못했습니다.");
@@ -285,8 +214,33 @@ public class LecturesController {
 			model.addAttribute("data", "검색된 강의가 없습니다.");
 			ne.printStackTrace();
 		}
-
 		return "data_res"; // WEB-INF/main_res.jsp
+	}
+	
+	//강의목록에 보여질 Json데이터 메소드
+	public JsonArray getLectureJson(List<LecturesDTO> lectures) {
+		JsonObject lectureJson = null;
+		JsonArray lecturesJson = new JsonArray();
+		for (int i = 0; i < lectures.size(); i++) {
+			//해당 강의 번호로 카테고리 조회
+			ArrayList<String> category = lecturesService.getCategory(lectures.get(i).getId());
+			//강사번호로 강사 조회
+			String teacher = teachersService.getOneteacher(lectures.get(i).getTeachersTeacherNo());
+			lectureJson = new JsonObject();
+			lectureJson.addProperty("id", lectures.get(i).getId());
+			lectureJson.addProperty("title", lectures.get(i).getTitle());
+			lectureJson.addProperty("image", lectures.get(i).getImage());
+			lectureJson.addProperty("price", lectures.get(i).getPrice());
+			lectureJson.addProperty("cnt", lectures.get(i).getCnt());
+			lectureJson.addProperty("info", lectures.get(i).getInfo());
+			lectureJson.addProperty("applyCnt", lectures.get(i).getApplyCnt());
+			lectureJson.addProperty("teacher", teacher);
+			//카테고리 배열 담아주기
+			lectureJson.addProperty("category", new Gson().toJson(category));
+			// 후에 JSONArray에 담아서 json 배열로 만들기
+			lecturesJson.add(lectureJson);
+		}
+		return lecturesJson;
 	}
 	//NotExistException 관련 예외처리
 	@ExceptionHandler(value = NotExistException.class)
