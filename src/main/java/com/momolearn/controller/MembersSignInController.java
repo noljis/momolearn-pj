@@ -3,7 +3,6 @@ package com.momolearn.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.momolearn.model.dto.MembersDTO;
 import com.momolearn.model.entity.Members;
 import com.momolearn.model.service.FileService;
 import com.momolearn.model.service.MembersService;
@@ -111,17 +109,20 @@ public class MembersSignInController {
 	public String login(Model sessionData, @RequestParam("memId") String memId, 
 						@RequestParam("password") String password) throws Exception {
 		
-		MembersDTO members = membersService.loginMember(memId, password);
+		Members members = membersService.loginMember(memId, password);
 		
 		if (members != null) { // 로그인성공
 			sessionData.addAttribute("members", members); // 세션에 프로필 저장
 
-			return "redirect:/"; // 로그인 후 메인화면
+//			return "redirect:/"; // 로그인 후 메인화면
+			return "forward:/WEB-INF/main.jsp"; // 로그인 후 메인화면
+
 			
 		} else {
 			
 			return "loginError"; // 에러메시지 창 띄우는걸로 수정하기
 		}
+		
 		
 	}
 	
@@ -188,7 +189,13 @@ public class MembersSignInController {
 		sessionData.addAttribute("members", members); // 수정 정보를 모델에 담아서 리턴
 		
 		return "forward:/WEB-INF/member/myinfo.jsp"; 
+	}
 		
+	public String update(@ModelAttribute("members") Members updatedMember, Model model) throws SQLException {
+
+		membersService.updateMember(updatedMember);
+
+		return "auth/updateSuccess";
 	}
 	
 	//회원 삭제 (미확인)

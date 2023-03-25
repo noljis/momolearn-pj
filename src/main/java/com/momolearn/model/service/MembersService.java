@@ -159,6 +159,20 @@ public class MembersService {
         }
     }
     
+//    @Transactional
+//    public Members updateMember(Members updatedMember) {
+//        Members member = membersRepository.findById(updatedMember.getMemId())
+//                                          .orElseThrow(() -> new RuntimeException("회원 정보를 찾을 수 없습니다." + updatedMember.getMemId()));
+//        
+//        Members members = null;
+//		// update the member fields
+//        member.setPw(updatedMember.getPw());
+//        member.setName(updatedMember.getName());
+//        member.setProfile(updatedMember.getProfile());
+//        
+//
+//        return membersRepository.save(member);
+//    }
 
     
     //회원 한명 삭제  (미확인)

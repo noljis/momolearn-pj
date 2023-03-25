@@ -7,7 +7,7 @@
 
         <head>
             <meta charset="utf-8">
-            <title>강사 신청서 작성</title>
+            <title>강사 신청서 수정</title>
             <meta content="width=device-width, initial-scale=1.0" name="viewport">
             <meta content="" name="keywords">
             <meta content="" name="description">
@@ -25,12 +25,12 @@
                 <div class="container py-5">
                     <div class="row justify-content-center">
                         <div class="col-lg-10 text-center">
-                            <h1 class="display-4 text-white animated slideInDown">강사 신청서 작성</h1>
-                            <nav aria-label="breadcrumb">
+                            <h1 class="display-4 text-white animated slideInDown">강사 신청서 수정</h1>
+                            <!-- <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb justify-content-center">
                                     <li class="breadcrumb-item text-white active" aria-current="page">신청서를 작성해 주세요.</li>
                                 </ol>
-                            </nav>
+                            </nav> -->
                         </div>
                     </div>
                 </div>
@@ -39,7 +39,7 @@
 
             <!-- Form Start -->
             <form id="sm" name="ta" method="post" onsubmit="return allCheck()"
-                action="${pageContext.request.contextPath}/applyteacher/submitform">
+                action="${pageContext.request.contextPath}/applyteacher/updateform">
                 <div align="center">
                     <h2>강사 등록 신청서</h2>
 
@@ -54,17 +54,17 @@
                                 <tr>
                                     <!-- 2 -->
                                     <td>내아이디</td>
-                                    <td><input type="text" id="id" name="id" disabled value="${member.memId}"></td>
+                                    <td><input type="text" id="id" name="id" disabled></td>
                                 </tr>
                                 <tr>
                                     <!-- 6 -->
                                     <td>이름</td>
-                                    <td><input type="text" id="name" name="name" disabled value="${member.name}"></td>
+                                    <td><input type="text" id="name" name="name" disabled></td>
                                 </tr>
                                 <tr>
                                     <!-- 5 -->
                                     <td>메일주소</td>
-                                    <td><input type="text" id="email" name="email" size="30" disabled value="${member.email}"></td>
+                                    <td><input type="text" id="email" name="email" size="30" disabled></td>
                                 </tr>
 
 
@@ -92,14 +92,13 @@
                                 <tr>
                                     <!-- 9 -->
                                     <td>자기소개</td>
-                                    <td><textarea id="intro" name="intro" cols="55" rows="5"
+                                    <td><textarea id="my_intro" name="intro" cols="55" rows="5"
                                             maxlength="700" placeholder="자기소개를 입력해주세요."></textarea></td>
                                 </tr>
 
                                 <tr>
                                     <td colspan="2" align="center">
-                                        <input class="button" class="btn btn-primary" type="submit" value="신청하기" onclick=""
-                                            onclick="alert('강사신청이 완료 되었습니다')">
+                                        <input class="button" class="btn btn-primary" type="submit" value="수정하기" onclick="alert('강사신청이 완료 되었습니다')">
                                         <input class="button" class="btn btn-primary" type="reset" value="다시입력" onclick="clear()">
                                     </td>
                                 </tr>
