@@ -20,7 +20,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+<<<<<<< HEAD
 import org.springframework.web.multipart.MultipartFile;
+=======
+>>>>>>> feature/shwork
 
 import com.momolearn.model.entity.Members;
 import com.momolearn.model.service.FileService;
@@ -37,9 +40,12 @@ public class MembersSignInController {
 	@Autowired
 	private MembersService membersService;
 	
+<<<<<<< HEAD
 	@Autowired
 	private FileService fileService;
 	
+=======
+>>>>>>> feature/shwork
 	//회원가입 입력폼
     @GetMapping("/joinView")
     protected String memJoinView() throws SQLException {
@@ -115,7 +121,11 @@ public class MembersSignInController {
 		if (members != null) { // 로그인성공
 			sessionData.addAttribute("members", members); // 세션에 프로필 저장
 
+<<<<<<< HEAD
 			return "redirect:/"; // 로그인 후 메인화면
+=======
+			return "forward:/WEB-INF/main.jsp"; // 로그인 후 메인화면
+>>>>>>> feature/shwork
 
 			
 		} else {
@@ -161,6 +171,7 @@ public class MembersSignInController {
 		
 	//프로필 수정 기능 (미확인)
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
+<<<<<<< HEAD
 	public String updatePage(HttpSession session, Model sessionData, 
 			Members members, @RequestParam("password") String password, 
 			@RequestParam("name") String name, 
@@ -190,6 +201,13 @@ public class MembersSignInController {
 		
 		return "forward:/WEB-INF/member/myinfo.jsp"; 
 		
+=======
+	public String update(@ModelAttribute("members") Members updatedMember, Model model) throws SQLException {
+
+		membersService.updateMember(updatedMember);
+
+		return "auth/updateSuccess";
+>>>>>>> feature/shwork
 	}
 	
 	//회원 삭제 (미확인)

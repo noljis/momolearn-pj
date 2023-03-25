@@ -7,7 +7,7 @@
 
         <head>
             <meta charset="utf-8">
-            <title>강사 신청서 작성</title>
+            <title>강사 신청서 상세 조회</title>
             <meta content="width=device-width, initial-scale=1.0" name="viewport">
             <meta content="" name="keywords">
             <meta content="" name="description">
@@ -25,12 +25,12 @@
                 <div class="container py-5">
                     <div class="row justify-content-center">
                         <div class="col-lg-10 text-center">
-                            <h1 class="display-4 text-white animated slideInDown">강사 신청서 작성</h1>
-                            <nav aria-label="breadcrumb">
+                            <h1 class="display-4 text-white animated slideInDown">강사 신청서 상세 조회</h1>
+                            <!-- <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb justify-content-center">
-                                    <li class="breadcrumb-item text-white active" aria-current="page">신청서를 작성해 주세요.</li>
+                                    <li class="breadcrumb-item text-white active" aria-current="page">신청서 상세보기</li>
                                 </ol>
-                            </nav>
+                            </nav> -->
                         </div>
                     </div>
                 </div>
@@ -38,8 +38,7 @@
             <!-- Header End -->
 
             <!-- Form Start -->
-            <form id="sm" name="ta" method="post" onsubmit="return allCheck()"
-                action="${pageContext.request.contextPath}/applyteacher/submitform">
+            <form id="sm" name="ta" method="post" action="${pageContext.request.contextPath}/applyteacher/updateform">
                 <div align="center">
                     <h2>강사 등록 신청서</h2>
 
@@ -53,18 +52,18 @@
                                 </tr>
                                 <tr>
                                     <!-- 2 -->
-                                    <td>내아이디</td>
+                                    <td>내아이디:</td>
                                     <td><input type="text" id="id" name="id" disabled value="${member.memId}"></td>
                                 </tr>
                                 <tr>
                                     <!-- 6 -->
-                                    <td>이름</td>
-                                    <td><input type="text" id="name" name="name" disabled value="${member.name}"></td>
+                                    <td>이름:</td>
+                                    <td><input type="text" id="name" name="name" disabled value="${member.memId}"></td>
                                 </tr>
                                 <tr>
                                     <!-- 5 -->
-                                    <td>메일주소</td>
-                                    <td><input type="text" id="email" name="email" size="30" disabled value="${member.email}"></td>
+                                    <td>메일주소:</td>
+                                    <td><input type="text" id="email" name="email" size="30" disabled value="${member.memId}"></td>
                                 </tr>
 
 
@@ -74,33 +73,39 @@
                                 </tr>
 
                                 <tr>
-                                    <td>연락처</td>
-                                    <td><input type="text" id="phonenum" name="phonenum" size="30" placeholder="연락처를 입력해주세요."></td>
+                                    <td>연락처:</td>
+                                    <td><input type="text" id="phonenum" name="phonenum" size="30" disabled value="${apply.phoneNum}"></td>
                                 </tr>
                                 <tr>
-                                    <td>포트폴리오 url</td>
-                                    <td><input type="text" id="url" name="url" size="30" placeholder="포트폴리오url을 입력해주세요."></td>
+                                    <td>포트폴리오 url:</td>
+                                    <td><input type="text" id="url" name="url" size="30" disabled value="${apply.pfLink}"></td>
                                 </tr>
                                 <tr>
                                     <!-- 9 -->
-                                    <td>희망분야</td>
+                                    <td>희망분야:</td>
                                     <td>
-                                        <input type="text" id="hope" name="hope" size="30" placeholder="희망분야를 입력해주세요.">
+                                        <input type="text" id="hope" name="hope" size="30" disabled value="${apply.hopeFiled}">
                                     </td>
 
                                 </tr>
                                 <tr>
                                     <!-- 9 -->
-                                    <td>자기소개</td>
-                                    <td><textarea id="intro" name="intro" cols="55" rows="5"
-                                            maxlength="700" placeholder="자기소개를 입력해주세요."></textarea></td>
+                                    <td>자기소개:</td>
+                                    <td><textarea id="my_intro" name="intro" cols="55" rows="5" maxlength="700"
+                                            disabled value="${apply.intro}"></textarea></td>
                                 </tr>
 
                                 <tr>
                                     <td colspan="2" align="center">
-                                        <input class="button" class="btn btn-primary" type="submit" value="신청하기" onclick=""
-                                            onclick="alert('강사신청이 완료 되었습니다')">
-                                        <input class="button" class="btn btn-primary" type="reset" value="다시입력" onclick="clear()">
+                                        <c:choose>
+                                            <c:when test="${sessionScope.members.grade == 'admin'}">
+                                                <input class="button" type="submit" value="승인" onclick=""
+                                                    onclick="alert('강사신청이 승인 되었습니다')">
+                                            </c:when>
+                                        </c:choose>
+                                        <input class="button" type="submit" value="수정" onclick="location.href='${pageContext.request.contextPath}/applyteacher/updateform'">
+                                        <input class="button" type="reset" value="삭제" onclick=""
+                                            onclick="alert('강사신청서가 삭제되었습니다')">
                                     </td>
                                 </tr>
                             </table>

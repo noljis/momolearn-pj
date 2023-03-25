@@ -24,13 +24,13 @@
                     <div class="container py-5">
                         <div class="row justify-content-center">
                             <div class="col-lg-10 text-center">
-                                <h1 class="display-4 text-white animated slideInDown">강사 신청서</h1>
-                                <nav aria-label="breadcrumb">
+                                <h1 class="display-4 text-white animated slideInDown">강사 신청 목록</h1>
+                                <!-- <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb justify-content-center">
                                         <li class="breadcrumb-item text-white active" aria-current="page">신청서를 작성해 주세요.
                                         </li>
                                     </ol>
-                                </nav>
+                                </nav> -->
                             </div>
                         </div>
                     </div>

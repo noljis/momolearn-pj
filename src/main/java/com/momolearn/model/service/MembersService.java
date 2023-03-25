@@ -128,6 +128,7 @@ public class MembersService {
 	}
     
     //본인 프로필 수정 (미확인)
+<<<<<<< HEAD
 //    @Transactional
 //    public Members updateMember(String memId, String pw, String name, String profile) {
 //        Members member = membersRepository.findById(memId)
@@ -158,6 +159,22 @@ public class MembersService {
         }
     }
     
+=======
+    @Transactional
+    public Members updateMember(Members updatedMember) {
+        Members member = membersRepository.findById(updatedMember.getMemId())
+                                          .orElseThrow(() -> new RuntimeException("회원 정보를 찾을 수 없습니다." + updatedMember.getMemId()));
+        
+        Members members = null;
+		// update the member fields
+        member.setPw(updatedMember.getPw());
+        member.setName(updatedMember.getName());
+        member.setProfile(updatedMember.getProfile());
+        
+
+        return membersRepository.save(member);
+    }
+>>>>>>> feature/shwork
 
     
     //회원 한명 삭제  (미확인)
