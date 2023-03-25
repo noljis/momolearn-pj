@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -114,7 +115,7 @@ public class MembersSignInController {
 		if (members != null) { // 로그인성공
 			sessionData.addAttribute("members", members); // 세션에 프로필 저장
 
-			return "redirect:/"; // 로그인 후 메인화면
+			return "forward:/WEB-INF/main.jsp"; // 로그인 후 메인화면
 
 			
 		} else {

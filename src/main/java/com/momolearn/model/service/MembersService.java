@@ -17,7 +17,6 @@ import com.momolearn.model.entity.Members;
 import lombok.RequiredArgsConstructor;
 
 @Service
-@RequiredArgsConstructor // 생성자 자동 생성
 public class MembersService {
 
 	@Autowired // 의존관계를 자동으로 설정해 준다. (DAO 객체 주입)
@@ -125,22 +124,21 @@ public class MembersService {
 	}
     
     //본인 프로필 수정 (미확인)
-//    @Transactional
-//    public MembersDTO updateMember (Members members) throws SQLException {
-//    	
-//        try {
-//        	
-//            Members updateMember = membersRepository.save(members);
-//            return mapper.map(updateMember, MembersDTO.class);
-//            
-//        } catch (Exception e) {
-//        	
-//            e.printStackTrace();
-//            throw new SQLException("Failed to update member.");
-//        }
-//    }
-    
-
+//  @Transactional
+//  public void deleteMember(String memId) throws SQLException {
+//      try {
+//          Optional<Members> membersOptional = membersRepository.findById(memId);
+//          if (membersOptional.isPresent()) {
+//              Members members = membersOptional.get();
+//              membersRepository.delete(members);
+//          } else {
+//              System.out.println("이미 탈퇴처리가 완료된 회원입니다.");
+//          }
+//      } catch (Exception e) {
+//          e.printStackTrace();
+//          throw new SQLException("Failed to delete member.");
+//      }
+//  }
     
     //회원 한명 삭제  (미확인)
 //    @Transactional
