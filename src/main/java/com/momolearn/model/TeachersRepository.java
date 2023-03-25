@@ -23,6 +23,5 @@ public interface TeachersRepository extends JpaRepository<Teachers, Integer>{
 	//강사 전체 목록 조회
 	List<Teachers> findAll();
 	
-	//회원ID로 강사정보 조회
 	Optional<Teachers> findByApplyTeacherMembersMemId(String memId);
 }

@@ -136,7 +136,7 @@ function dataReceive(title) {
 			drawTable(lecture);
 		}
 	}).catch(function() {
-		alert("실행중 문제 발생 : " + "값을 입력해주세요.");
+		alert("실행중 문제 발생 : " + "검색된 강의가 없습니다.");
 	});
 }
 //id=btn인 버튼을 클릭시 발생
