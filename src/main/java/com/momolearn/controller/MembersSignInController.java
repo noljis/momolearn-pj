@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.momolearn.model.dto.MembersDTO;
 import com.momolearn.model.entity.Members;
 import com.momolearn.model.service.FileService;
 import com.momolearn.model.service.MembersService;
@@ -110,19 +111,17 @@ public class MembersSignInController {
 	public String login(Model sessionData, @RequestParam("memId") String memId, 
 						@RequestParam("password") String password) throws Exception {
 		
-		Members members = membersService.loginMember(memId, password);
+		MembersDTO members = membersService.loginMember(memId, password);
 		
 		if (members != null) { // 로그인성공
 			sessionData.addAttribute("members", members); // 세션에 프로필 저장
 
 			return "redirect:/"; // 로그인 후 메인화면
-
 			
 		} else {
 			
 			return "loginError"; // 에러메시지 창 띄우는걸로 수정하기
 		}
-		
 		
 	}
 	

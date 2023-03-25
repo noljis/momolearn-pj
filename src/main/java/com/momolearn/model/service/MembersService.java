@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.momolearn.exception.NotExistException;
 import com.momolearn.model.MembersRepository;
+import com.momolearn.model.dto.LecturesDTO;
 import com.momolearn.model.dto.MembersDTO;
 import com.momolearn.model.entity.Members;
 
@@ -56,15 +57,15 @@ public class MembersService {
     
 	//로그인
     @Transactional
-    public Members loginMember(String memId, String password) throws SQLException {
+    public MembersDTO loginMember(String memId, String password) throws SQLException {
         
     	try {
         	boolean data = validateUser(memId,password);
         	
         	if(data == true) {
         		Members loginData = membersRepository.findByMemIdAndPw(memId, password);
-        		System.out.println(loginData);
-        		return loginData;
+//        		System.out.println(loginData);
+        		return mapper.map(loginData, MembersDTO.class);
         	}
         	
         } catch (Exception e) {

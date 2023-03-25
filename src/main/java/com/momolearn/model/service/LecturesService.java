@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.momolearn.exception.MessageException;
+import com.momolearn.exception.NotExistException;
 import com.momolearn.model.CategoryLectureRepository;
 import com.momolearn.model.CategoryRepository;
 import com.momolearn.model.CoursesRepository;
@@ -135,6 +136,12 @@ public class LecturesService {
 		    }
 		}
 		return Arrays.asList(mapper.map(lectures, LecturesDTO[].class));
+	}
+
+	//강의번호로 강의 하나 조회
+	public LecturesDTO getLectureDetail(int title) throws NotExistException {
+		Lectures lecture = lecturesRepository.findById(title).orElseThrow(() -> new NotExistException("해당 강의가 존재하지 않습니다."));
+		return null;
 	}
 
 }

@@ -4,7 +4,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>강의등록</title>
+	<title>강좌등록</title>
 	<meta content="width=device-width, initial-scale=1.0" name="viewport">
 	<meta content="" name="keywords">
 	<meta content="" name="description">
@@ -41,12 +41,13 @@
 	<jsp:include page="/separate/header3.jsp"></jsp:include>
 	<!-- form Start -->
     <div>
-      <form name="upload" action="${pageContext.request.contextPath}/momolearn/lectures/upload-lecture" method="post" enctype="multipart/form-data">
+      <form name="upload" action="${pageContext.request.contextPath}/momolearn/lectures/upload-course" method="post" enctype="multipart/form-data">
         
     	<div class="container">
         <div class="input-form-backgroud row">
           <div class="input-form col-md-12 mx-auto">
             <h2 class="mb-2">강의 등록하기</h2>
+            <form class="validation-form" novalidate>
               <div class="row">
                 <div class="mb-3">
                   <label for="title">강의명</label>
@@ -58,7 +59,7 @@
                 <input type="text" class="form-control-plaintext form-control-sm border-bottom" name="category" id="category" placeholder="카테고리를 쉼표(,)로 구분하여 입력하세요.">
               </div>
               <div class="mb-3">
-                <label for="teachersTeacherNo">강사명<br><h5>${member.name}</h5></label>
+                <label for="teacher_no">강사명<br><h5>${member.name}</h5></label>
                 <input type="hidden" class="form-control-plaintext form-control-sm border-bottom" name="teachersTeacherNo" value="${teacher.teacherNo}">
               </div>
               <div class="mb-3">
@@ -91,6 +92,7 @@
               </div>
               <div class="mb-4"></div>
               <button class="btn btn-primary btn-lg btn-block" type="submit">강좌 등록하기</button>
+            </form>
           </div>
         </div>
       </form>

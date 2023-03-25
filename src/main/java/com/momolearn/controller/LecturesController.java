@@ -77,7 +77,7 @@ public class LecturesController {
 		return "lecture/upload-lecture"; // 강의 업로드 폼으로 이동
 	}
 
-	// 2. 강의 업로드(members 세션을 못찾는 이슈)
+	// 2. 강의 업로드
 	/*
 	 * 1. html에 작성된 속성 강의명(title), 강사번호(teacher_no), 사진(MultipartFile), 가격(price),
 	 * 한줄설명(info), 상세설명(description) 2. id(autoincrement), cnt: default=0(강좌 등록할때마다
@@ -97,13 +97,14 @@ public class LecturesController {
 
 		// 강의 등록
 		LecturesDTO lecture = lecturesService.uploadLecture(lectureDTO);
-		System.out.println(lecture.getTitle());
+		System.out.println(lecture.getTitle());	
 
 //		//카테고리, 카테고리-강좌 저장
 		lecturesService.getCategory(category, lecture);
 		System.out.println(category);
 		//강의 model에 저장
 		model.addAttribute("lecture", lecture);
+		model.addAttribute("members", members);
 
 		return "lecture/upload-course"; // 강좌 업로드 폼으로 이동
 	}
@@ -143,7 +144,7 @@ public class LecturesController {
 				//강사번호로 강사 조회
 				String teacher = teachersService.getOneteacher(lectures.get(i).getTeachersTeacherNo());
 				lectureJson = new JsonObject();
-				lectureJson.addProperty("id", lectures.get(i).getTitle());
+				lectureJson.addProperty("id", lectures.get(i).getId());
 				lectureJson.addProperty("title", lectures.get(i).getTitle());
 				lectureJson.addProperty("image", lectures.get(i).getImage());
 				lectureJson.addProperty("price", lectures.get(i).getPrice());
@@ -171,7 +172,13 @@ public class LecturesController {
 		return "data_res"; // WEB-INF/main_res.jsp
 	}
 	
-	//5. 강의 정보페이지 + 강좌 목록 + 강좌 추가 버튼
+	//5. 강의 정보페이지 + 강좌 목록(비동기) + 강좌 추가 버튼 + 강의바구니 버튼
+	@GetMapping(value = "/detail/{title}", produces = "application/json;charset=UTF-8")
+	public String getLectureDetail(Model model, @PathVariable int title) throws NotExistException {
+		LecturesDTO lectures = lecturesService.getLectureDetail(title);
+		
+		return "lecture/lecture-detail"; //WEB-INF/lecture/lecture-detail.jsp
+	}
 	
 	//6. 강좌 시청
 	
@@ -200,7 +207,7 @@ public class LecturesController {
 				//강사번호로 강사 조회
 				String teacher = teachersService.getOneteacher(lectures.get(i).getTeachersTeacherNo());
 				lectureJson = new JsonObject();
-				lectureJson.addProperty("id", lectures.get(i).getTitle());
+				lectureJson.addProperty("id", lectures.get(i).getId());
 				lectureJson.addProperty("title", lectures.get(i).getTitle());
 				lectureJson.addProperty("image", lectures.get(i).getImage());
 				lectureJson.addProperty("price", lectures.get(i).getPrice());
@@ -254,7 +261,7 @@ public class LecturesController {
 				//강사번호로 강사 조회
 				String teacher = teachersService.getOneteacher(lectures.get(i).getTeachersTeacherNo());
 				lectureJson = new JsonObject();
-				lectureJson.addProperty("id", lectures.get(i).getTitle());
+				lectureJson.addProperty("id", lectures.get(i).getId());
 				lectureJson.addProperty("title", lectures.get(i).getTitle());
 				lectureJson.addProperty("image", lectures.get(i).getImage());
 				lectureJson.addProperty("price", lectures.get(i).getPrice());
@@ -282,19 +289,19 @@ public class LecturesController {
 		return "data_res"; // WEB-INF/main_res.jsp
 	}
 	//NotExistException 관련 예외처리
-	@ExceptionHandler
+	@ExceptionHandler(value = NotExistException.class)
 	public String notExistException(NotExistException ne, Model model) {
 		ne.printStackTrace();
 		model.addAttribute("errorMsg", ne.getMessage());
-		return "에러화면 이동"; //예: WEB-INF/showError.jsp
+		return "error"; //예: WEB-INF/error.jsp
 	}
 	
 	// MessageException 관련 예외처리
-	@ExceptionHandler
+	@ExceptionHandler(value = MessageException.class)
 	public String messageExceptio(MessageException ne, Model model) {
 		ne.printStackTrace();
 		model.addAttribute("errorMsg", ne.getMessage());
-		return "에러화면 이동"; // 예: WEB-INF/showError.jsp
+		return "error"; // 예: WEB-INF/error.jsp
 	}
 	
 
