@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     
 <%@ page import="java.io.PrintWriter"%>    
 <%@ page import="com.momolearn.model.entity.Members" %>
@@ -8,27 +7,18 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-
-
-<%
-	System.out.println("**********");
-	System.out.println(session.getAttribute("members"));
-%>
-
-
-
-    
 <!DOCTYPE html>
 <html lang="ko">
 
 <head>
-    <meta charset="utf-8">
-    <title>MOMOLEARN</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
+<meta charset="utf-8">
+<title>MOMOLEARN</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="" name="keywords">
+<meta content="" name="description">
 
     <jsp:include page="/separate/head.jsp"></jsp:include>
+    
 </head>
 <style>
 .a {
@@ -107,8 +97,9 @@
                         <tr>
                             <td colspan="2" align="center">
 	                            <input class="btnBox" type="button" value="수정하기" onclick="location.href='${pageContext.request.contextPath}/member/updatepage?memId=${members.memId}'">&nbsp;
-				
-								<button class="btnBox" id="delete_btn" onclick='location.href="${pageContext.request.contextPath}/member/delete?memId=${members.memId}"'> 탈퇴하기</button>
+								<c:if test="${members.grade ne 'admin'}">
+									<button class="btnBox" id="delete_btn" onclick='location.href="${pageContext.request.contextPath}/member/delete?memId=${members.memId}"'> 탈퇴하기</button>
+	                			</c:if>	
                             </td>
                         </tr>
                     </table>
@@ -118,8 +109,6 @@
 	</form>
     <!-- Form End -->
 	<!-- Info End -->
-
-    
 
     <!-- Back to Top -->
 	<jsp:include page="/separate/script.jsp"></jsp:include>

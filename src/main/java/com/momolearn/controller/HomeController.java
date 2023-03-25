@@ -17,5 +17,4 @@ public class HomeController {
 		return "main"; // WEB-INF/main.jsp
 	}
 	
-	
 }

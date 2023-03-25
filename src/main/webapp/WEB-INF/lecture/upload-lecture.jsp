@@ -38,7 +38,10 @@
     </style>
 </head>
 <body>
+<<<<<<< HEAD
+=======
 	<jsp:include page="/separate/header3.jsp"></jsp:include>
+>>>>>>> develop
 	<!-- form Start -->
     <div>
       <form name="upload" action="${pageContext.request.contextPath}/momolearn/lectures/upload-lecture" method="post" enctype="multipart/form-data">

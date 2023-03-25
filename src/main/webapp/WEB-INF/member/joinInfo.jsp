@@ -1,15 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     
-<%@ page import="java.io.PrintWriter"%>    
-<%@ page import="com.momolearn.model.entity.Members" %>
-<%@ page import="com.momolearn.model.MembersRepository" %>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
     <meta charset="utf-8">
     <title>MOMOLEARN</title>
@@ -22,11 +16,9 @@
     <!-- Template Stylesheet -->
     <link href="${pageContext.request.contextPath}/css/teacherForm.css" rel="stylesheet">
 </head>
-
 <body>
    <jsp:include page="/separate/header3.jsp"></jsp:include>
 
-	
     <!-- Header Start -->
     <div class="container-fluid bg-primary py-5 mb-5 page-header">
         <div class="container py-5">
@@ -105,11 +97,8 @@
     <!-- Form End -->
 	<!-- Info End -->
 
-    
-
 	<!-- Back to Top -->
 	<jsp:include page="/separate/script.jsp"></jsp:include>
 	<jsp:include page="/separate/footer.jsp"></jsp:include>
 </body>
-
 </html>

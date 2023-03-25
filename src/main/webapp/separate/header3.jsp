@@ -27,7 +27,7 @@
         <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
             <img class="profile-image rounded-circle" src="${pageContext.request.contextPath}/img/profile/${sessionScope.members.profile}" style="width: 50px; height: 50px; border: 2px solid #06BBCC;">&nbsp;&nbsp;${sessionScope.members.name}</a>
 	        <div class="dropdown-menu fade-down">
-	            <a href="" class="dropdown-item">내 정보</a>
+	            <a href="${pageContext.request.contextPath}/member/myinfo" class="dropdown-item">내 정보</a>
 	            <a href="" class="dropdown-item">내 강의</a>
 	            <c:choose>
 	          	 	<c:when test="${sessionScope.members.grade == 'student'}">
@@ -41,7 +41,7 @@
 	                    <a href="${pageContext.request.contextPath}/lectures/uploadcheck" class="dropdown-item">강의 등록</a>
 	                </c:when>
 	            </c:choose>
-	            <a href="" class="dropdown-item">로그아웃</a>
+	            <a href="${pageContext.request.contextPath}/member/sessionOut" class="dropdown-item">로그아웃</a>
 	        </div>
         </div>
         </c:if>
