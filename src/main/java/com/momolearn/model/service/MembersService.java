@@ -56,7 +56,7 @@ public class MembersService {
     
 	//로그인
     @Transactional
-    public Members loginMember(String memId, String password) throws SQLException {
+    public MembersDTO loginMember(String memId, String password) throws SQLException {
         
     	try {
         	boolean data = validateUser(memId,password);
@@ -64,7 +64,7 @@ public class MembersService {
         	if(data == true) {
         		Members loginData = membersRepository.findByMemIdAndPw(memId, password);
         		System.out.println(loginData);
-        		return loginData;
+        		return mapper.map(loginData, MembersDTO.class);
         	}
         	
         } catch (Exception e) {
@@ -79,9 +79,6 @@ public class MembersService {
 	
 		Members member = membersRepository.findByMemId(memId);
 		
-		System.out.println("member출력 ===" +member.getPw());
-		System.out.println("member출력 ===" +password);
-		
         if (member != null && member.getPw().equals(password)) {
             return true;
         }
@@ -89,34 +86,34 @@ public class MembersService {
 	}
 	
 	//id찾기 (email로 찾기)
-	public Members findId(String email) throws SQLException{
+	public MembersDTO findId(String email) throws SQLException{
 		
 		Members member = membersRepository.findByEmail(email);
 		
         if (member == null) {
             return null;
         }
-        return member;
+        return mapper.map(member, MembersDTO.class);
 	}
 	
 	//pw찾기 (id,email로 찾기)
-	public Members findPw(String memId, String email) throws SQLException{
+	public MembersDTO findPw(String memId, String email) throws SQLException{
 		
 		Members member = membersRepository.findByMemIdAndEmail(memId, email);
         if (member == null) {
         	return null;
         }
-        return member;
+        return mapper.map(member, MembersDTO.class);
 	}
     
 	//본인 조회 - jpa
-    public Members getMember (String memId) {
+    public MembersDTO getMember (String memId) {
     	Members member = membersRepository.findByMemId(memId);
         if (member == null) {
             // 회원 정보를 찾을 수 없는 경우 예외 처리
             throw new RuntimeException("해당 회원을 찾을 수 없습니다.");
         }
-        return member;
+        return mapper.map(member, MembersDTO.class);
 	}
     
 	//id로 한명의 회원정보 불러오기
@@ -129,34 +126,19 @@ public class MembersService {
     
     //본인 프로필 수정 (미확인)
 //    @Transactional
-//    public Members updateMember(String memId, String pw, String name, String profile) {
-//        Members member = membersRepository.findById(memId)
-//                                          .orElseThrow(() -> new RuntimeException("Member not found with memId " + memId));
-//        
-//        Members members = null;
-//		// update the member fields
-//        member.setPw(pw);
-//        member.setName(name);
-//        member.setProfile(profile);
-//        
-//
-//        return membersRepository.save(member);
+//    public MembersDTO updateMember (Members members) throws SQLException {
+//    	
+//        try {
+//        	
+//            Members updateMember = membersRepository.save(members);
+//            return mapper.map(updateMember, MembersDTO.class);
+//            
+//        } catch (Exception e) {
+//        	
+//            e.printStackTrace();
+//            throw new SQLException("Failed to update member.");
+//        }
 //    }
-	
-    @Transactional
-    public Members updateMember (Members members) throws SQLException {
-    	
-        try {
-        	
-            Members updateMember = membersRepository.save(members);
-            return updateMember;
-            
-        } catch (Exception e) {
-        	
-            e.printStackTrace();
-            throw new SQLException("Failed to update member.");
-        }
-    }
     
 
     

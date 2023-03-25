@@ -3,10 +3,8 @@ package com.momolearn.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +20,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.momolearn.model.dto.MembersDTO;
 import com.momolearn.model.entity.Members;
 import com.momolearn.model.service.FileService;
 import com.momolearn.model.service.MembersService;
@@ -66,7 +65,7 @@ public class MembersSignInController {
 	public String findId(Model model, @RequestParam("email") String email ) throws SQLException {
 		
 		
-		Members member = membersService.findId(email);
+		MembersDTO member = membersService.findId(email);
 		
         if (member == null) {
         	
@@ -91,7 +90,7 @@ public class MembersSignInController {
 	@RequestMapping(value = "/findPwd", method = RequestMethod.POST)
 	public String findPwd(Model model, @RequestParam("memId") String memId, @RequestParam("email") String email) throws SQLException {
 	
-		Members member = membersService.findPw(memId,email);
+		MembersDTO member = membersService.findPw(memId,email);
 		
         if (member == null) {
             model.addAttribute("msg", "일치하는 회원 정보가 없습니다.");
@@ -110,7 +109,7 @@ public class MembersSignInController {
 	public String login(Model sessionData, @RequestParam("memId") String memId, 
 						@RequestParam("password") String password) throws Exception {
 		
-		Members members = membersService.loginMember(memId, password);
+		MembersDTO members = membersService.loginMember(memId, password);
 		
 		if (members != null) { // 로그인성공
 			sessionData.addAttribute("members", members); // 세션에 프로필 저장
@@ -160,37 +159,47 @@ public class MembersSignInController {
 	}
 		
 	//프로필 수정 기능 (미확인)
-	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public String updatePage(HttpSession session, Model sessionData, 
-			Members members, @RequestParam("password") String password, 
-			@RequestParam("name") String name, 
-			@RequestParam("file") MultipartFile file) throws SQLException, IOException {
-		System.out.println("------------------- 1");
-		String memId = (String)session.getAttribute("memId"); // 세션에서 아이디 불러오기
-		System.out.println("------------2------- 1");
-			
-        // profile 파일 저장
-		if(file == null) {
-			members.setProfile("user.jpg");
-			System.out.println("------------4------- 1");
-		}else {
-			String savedFileName = fileService.getProfile(memId, file);
-			System.out.println("------ " + savedFileName);
-			members.setProfile(savedFileName);
-			
-		}
-		
-		System.out.println("------------6------- 1");
-		members.setName(name);
-		members.setPw(password);
-		
-		membersService.updateMember(members);
-		
-		sessionData.addAttribute("members", members); // 수정 정보를 모델에 담아서 리턴
-		
-		return "forward:/WEB-INF/member/myinfo.jsp"; 
-		
-	}
+//	@RequestMapping(value = "/update", method = RequestMethod.POST)
+//	public String updatePage( Model sessionData, Members mem,
+//			Members members, @RequestParam("password") String password, @RequestParam("originPw") String originPw, 
+//			@RequestParam("name") String name, 
+//			@RequestParam("file") MultipartFile file) throws SQLException, IOException {
+//		
+//		String memId = mem.getMemId(); // 세션에서 아이디 불러오기
+//		
+//		System.out.println( "file" +file);
+//			
+//        // profile 파일 저장
+//		if(file == null) {
+//			members.setProfile("user.jpg");
+//			members.setProfile(memId+".jpg");
+//		}else {
+//			String savedFileName = fileService.getProfile(memId, file);
+//			members.setProfile(savedFileName);
+//			
+//		}
+//		
+//		members.setName(name);
+//		
+//		System.out.println("originPw = " +originPw);
+//		
+//		System.out.println( "password = " + password);
+//		
+//		if( password == null) {
+//			members.setPw(password);
+//			
+//		} else if(originPw.equals(originPw)) {
+//			members.setPw(originPw);
+//			
+//		}
+//		
+//		membersService.updateMember(members);
+//		
+//		sessionData.addAttribute("members", members); // 수정 정보를 모델에 담아서 리턴
+//		
+//		return "forward:/WEB-INF/member/myinfo.jsp"; 
+//		
+//	}
 	
 	//회원 삭제 (미확인)
 //	@RequestMapping(value = "/delete", method = RequestMethod.GET)

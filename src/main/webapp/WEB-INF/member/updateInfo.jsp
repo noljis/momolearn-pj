@@ -63,14 +63,18 @@
                             <td>
                             	<input class="updateInfo" type="password" id="originPw" name="originPw" oninput="passConfirm()" required>
                             	<span id="passResult"></span>
+                            	<input type="button"  onclick="onUpdate()" value="수정">
+                            	<input type="button"  onclick="onCancle()" value="취소">
                             </td>
                         </tr>
                        	<tr>
                             <!-- 3 -->
                             <td>새 비밀번호</td>
     						<td>
-    							<input class="updateInfo" type="password" id="password" name="password" oninput="checkPassword1()" required>
-    							<span id="checkResult1"></span>
+	    						<div style="display: none;" id="newPw1">
+	    							<input class="updateInfo" type="password" id="password" name="password" oninput="checkPassword1()" >
+	    							<span id="checkResult1"></span>
+	    						</div>
     						</td>
                         </tr>
                         
@@ -78,8 +82,10 @@
                             <!-- 4 -->
                             <td>새 비밀번호 확인</td>
                             <td>
-                            	<input class="updateInfo" type="password" id="password2" name="password2" oninput="checkPassword2()" required>
-                            	<span id="checkResult2"></span>
+	                            <div style="display: none;" id="newPw2">
+	                            	<input class="updateInfo" type="password" id="password2" name="password2" oninput="checkPassword2()" >
+	                            	<span id="checkResult2"></span>
+	                            </div>
                             </td>
                         </tr>                      
                         <tr>
@@ -138,19 +144,34 @@
 	function passConfirm() {
 		
 		const inputPw = document.getElementById("originPw").value;
-
+		
 		if (inputPw === "") {
 		 	document.getElementById("passResult").innerHTML = "";
 		
 	 	} else if (inputPw === savedPw) {
 			document.getElementById("passResult").innerHTML = "비밀번호가 일치합니다.";
 			check1 = true;
-		
+			
 		} else {
 			document.getElementById("passResult").innerHTML = "비밀번호가 일치하지 않습니다.";
 		}
 		
+		checkAllTrue();
 	 	
+	}
+	
+	function onUpdate() {
+		
+	    document.getElementById("newPw1").style.display = "";
+	    document.getElementById("newPw2").style.display = "";
+		
+	}
+	
+	function onCancle() {
+		
+	    document.getElementById("newPw1").style.display = "none";
+	    document.getElementById("newPw2").style.display = "none";
+		
 	}
 	
  	function checkPassword1() {
@@ -184,12 +205,15 @@
 	}	 
  	
 	function checkAllTrue() {
-		if (check1 && check2 && check3) {
+		if (check1) {
+			document.getElementById("f").submit();
+		}
+		
+		else if (check1 && check2 && check3) {
 			document.getElementById("f").submit();
 		}
 	}
 	
-
 	</script>
 	
 </body>
