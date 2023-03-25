@@ -129,29 +129,26 @@ public class LecturesController {
 	@GetMapping(value = "/lectureList", produces = "application/json;charset=UTF-8")
 	public String getAllLectures(Model model)throws MessageException, IOException {
 		log.info("강의 전체목록 조회 메소드");
-		
-		List<LecturesDTO> lectures = lecturesService.getAllLectures();
 		try {
-			// 배열이 비어있으면 String으로 예외던지기
-			if (lectures.isEmpty()) throw new NullPointerException();
-			// 방 리스트를 데이터에 담아줌
-			model.addAttribute("data", getLectureJson(lectures));
+			model.addAttribute("data", lecturesService.getAllLectures());
 		} catch (JsonIOException s) {
 			System.out.println("JSONException");
 			model.addAttribute("data", "내부적인 오류로 검색하지 못했습니다.");
 			s.printStackTrace();
-		} catch (NullPointerException ne) {
-			System.out.println("NullPointerException");
-			model.addAttribute("data", "검색된 강의가 없습니다.");
-			ne.printStackTrace();
-		}
+		} 
 		return "data_res"; // WEB-INF/main_res.jsp
 	}
 	
-	//5. 강의 정보페이지 + 강좌 목록(비동기) + 강좌 추가 버튼 + 강의바구니 버튼
+	//5. 강의 정보페이지 + 강좌 목록 + 강좌 추가 버튼 + 강의바구니 버튼
 	@GetMapping(value = "/detail/{title}", produces = "application/json;charset=UTF-8")
 	public String getLectureDetail(Model model, @PathVariable int title) throws NotExistException {
-		LecturesDTO lectures = lecturesService.getLectureDetail(title);
+		//강의 정보 조회
+		LecturesDTO lecture = lecturesService.getLectureDetail(title);
+		//강좌 정보 조회
+		List<CoursesDTO> courses = lecturesService.getCourses(title);
+		
+		model.addAttribute("lecture", lecture);
+		model.addAttribute("courses", courses);
 		
 		return "lecture/lecture-detail"; //WEB-INF/lecture/lecture-detail.jsp
 	}
@@ -169,20 +166,13 @@ public class LecturesController {
 	@GetMapping(value = "/searchLecture/{title}", produces = "application/json;charset=UTF-8")
 	public String searchLecture(Model model, @PathVariable String title) {
 		log.info("searchLecture()호출: " + title);
-		List<LecturesDTO> lectures = lecturesService.searchLectures(title);
 		try {
-			// 배열이 비어있으면 String으로 예외던지기
-			if (lectures.isEmpty()) throw new NullPointerException();
 			// 방 리스트를 데이터에 담아줌
-			model.addAttribute("data", getLectureJson(lectures));
+			model.addAttribute("data", lecturesService.searchLectures(title));
 		} catch (JsonIOException s) {
 			System.out.println("JSONException");
 			model.addAttribute("data", "내부적인 오류로 검색하지 못했습니다.");
 			s.printStackTrace();
-		} catch (NullPointerException ne) {
-			System.out.println("NullPointerException");
-			model.addAttribute("data", "검색된 강의가 없습니다.");
-			ne.printStackTrace();
 		}
 		return "data_res"; // WEB-INF/main_res.jsp
 	}
@@ -222,7 +212,7 @@ public class LecturesController {
 		JsonObject lectureJson = null;
 		JsonArray lecturesJson = new JsonArray();
 		for (int i = 0; i < lectures.size(); i++) {
-			//해당 강의 번호로 카테고리 조회
+			//해당 강의 번호로 카테고리 조회. member.getName, category.getateName, 
 			ArrayList<String> category = lecturesService.getCategory(lectures.get(i).getId());
 			//강사번호로 강사 조회
 			String teacher = teachersService.getOneteacher(lectures.get(i).getTeachersTeacherNo());
