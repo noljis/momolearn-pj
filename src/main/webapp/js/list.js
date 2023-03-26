@@ -291,6 +291,6 @@ document.querySelector('#catebtn2').addEventListener('click', function() {
 			drawTable2(lecture2);
 		}
 	}).catch(function() {
-		alert("실행중 문제 발생 : " + "값을 입력해주세요.");
+		alert("실행중 문제 발생 : " + "검색된 강의가 없습니다.");
 	});
 });

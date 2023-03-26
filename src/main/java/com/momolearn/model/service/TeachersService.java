@@ -12,7 +12,7 @@ import com.momolearn.model.ApplyTeacherRepository;
 import com.momolearn.model.MembersRepository;
 import com.momolearn.model.TeachersRepository;
 import com.momolearn.model.dto.ApplyTeacherDTO;
-import com.momolearn.model.dto.TeachersDTO;
+import com.momolearn.model.dto.TeacherMemberDTO;
 import com.momolearn.model.entity.ApplyTeacher;
 import com.momolearn.model.entity.Teachers;
 
@@ -38,11 +38,11 @@ public class TeachersService {
 	}
 
 	//LectureController에서 사용: 회원ID와 승인여부로 강사 조회 Teachers -> applyTeacher -> members -> memId
-	public TeachersDTO getOneTeachers(String id) throws NotExistException{
+	public TeacherMemberDTO getOneTeachers(String id) throws NotExistException{
 		
 		Teachers teacher = teachersRepository.findByMemIdAndApprove(id).orElseThrow(() -> new NotExistException("현재 강사로 등록되어 있지 않습니다."));
-		System.out.println(teacher);
-		return mapper.map(teacher, TeachersDTO.class);
+		
+		return new TeacherMemberDTO(teacher.getApplyTeacher().getMembers().getName(), teacher.getTeacherNo());
 	}	
 
 //	// id와 승인여부로 강사 한명 조회

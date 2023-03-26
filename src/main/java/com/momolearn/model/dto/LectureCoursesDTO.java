@@ -25,5 +25,6 @@ public class LectureCoursesDTO {
     private String description;
     private int applyCnt;
     private List<CoursesDTO> courses;
+    private MembersDTO teachersApplyTeacherMembers;
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
@@ -23,7 +24,8 @@ public interface LecturesRepository extends JpaRepository<Lectures, Integer>{
 	List<Lectures> findByCategoryLectureCategoryCateId(int categoryId);
 	
 	//강의+강의에 종속된 강좌 조회
-	@EntityGraph(attributePaths = {"courses"})
-	Lectures findById(int id);
+//	@EntityGraph(attributePaths = {"courses", "teachers.applyTeacher.members"})
+	@Query("SELECT l from Lectures l join fetch l.teachers t join fetch t.applyTeacher at join fetch at.members m WHERE l.id=:id")
+	Lectures findById(@Param("id") int id);
 
 }

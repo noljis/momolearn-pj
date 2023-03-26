@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -21,14 +22,13 @@ import com.momolearn.exception.MessageException;
 import com.momolearn.exception.NotExistException;
 import com.momolearn.model.dto.CategoryDTO;
 import com.momolearn.model.dto.CoursesDTO;
+import com.momolearn.model.dto.CoursesListDTO;
 import com.momolearn.model.dto.LectureCoursesDTO;
 import com.momolearn.model.dto.LecturesDTO;
 import com.momolearn.model.dto.MembersDTO;
-import com.momolearn.model.dto.TeachersDTO;
-import com.momolearn.model.entity.Members;
+import com.momolearn.model.dto.TeacherMemberDTO;
 import com.momolearn.model.service.FileService;
 import com.momolearn.model.service.LecturesService;
-import com.momolearn.model.service.MembersService;
 import com.momolearn.model.service.TeachersService;
 
 import io.swagger.annotations.ApiOperation;
@@ -46,8 +46,6 @@ public class LecturesController {
 	
 	private final TeachersService teachersService;
 	
-	private final MembersService membersService; 
-	
 	private final FileService fileService;
 
 	// 1. 강의 업로드 클릭시 유효성검사 후 강의 등록 폼으로 이동
@@ -56,24 +54,21 @@ public class LecturesController {
 	 * 필요한 것 - 세션id
 	 */
 	@ApiOperation(value = "강의 업로드 클릭시 유효성검사 메소드", notes = "유효성검사 후 강의 등록 폼으로 이동")
-	@GetMapping(value = "/uploadcheck", produces = "application/json;charset=UTF-8")
-	public String uploadLectureCheck(Model model, @ModelAttribute("members") Members members) throws NotExistException {
+	@GetMapping(value = "/checkupload", produces = "application/json;charset=UTF-8")
+	public String checkUploadLecture(Model model, @ModelAttribute("members") MembersDTO members) throws NotExistException {
 		log.info(members + "로 유효성 검사 컨트롤러");
-		MembersDTO member = null;
 		// 강사 찾기 teacher로 찾아야함
-		TeachersDTO teacher = teachersService.getOneTeachers(members.getMemId());
-
+		TeacherMemberDTO teacher = teachersService.getOneTeachers(members.getMemId());
 		if(teacher != null) {
-			// 강사가 존재하면 강사의 회원정보 불러오기
-			member = membersService.getOneMember(members.getMemId());
+		
+			model.addAttribute("teacher", teacher);
+		
 		}
-
-		model.addAttribute("teacher", teacher);
-		model.addAttribute("member", member);
 
 		return "lecture/upload-lecture"; // 강의 업로드 폼으로 이동
 	}
 
+	
 	// 2. 강의 업로드
 	/*
 	 * 1. html에 작성된 속성 강의명(title), 강사번호(teacher_no), 사진(MultipartFile), 가격(price),
@@ -84,40 +79,54 @@ public class LecturesController {
 	 */
 	@ApiOperation(value = "강의 업로드 메소드", notes = "강의 등록 후 강좌 등록 화면으로 이동")
 	@PostMapping(value = "/upload-lecture", produces = "application/json;charset=UTF-8")
-	public String uploadLecture(Model model, @ModelAttribute LecturesDTO lectureDTO, @ModelAttribute("members") MembersDTO members,
+	public String uploadLecture(Model model, @ModelAttribute LecturesDTO lectureDTO,
 			@RequestParam("file") MultipartFile file, @RequestParam("category") String category)
 			throws MessageException, IOException {
 		
 		log.info("강의 업로드 메소드: " + lectureDTO.getTitle() + category);
 		// 썸네일 먼저 저장 -> 이름.확장자명으로 반환해서 setImage 대입
-		lectureDTO.setImage(fileService.getLectureImage(lectureDTO.getTitle(), file));
+		if(file == null) {
+			lectureDTO.setImage("default.jpg");
+		}else {
+			String thumbnail = fileService.getLectureImage(lectureDTO.getTitle(), file);
+			lectureDTO.setImage(thumbnail);
+		}
 
 		// 강의 등록
 		LecturesDTO lecture = lecturesService.uploadLecture(lectureDTO);
 		System.out.println(lecture.getTitle());	
 
-//		//카테고리, 카테고리-강좌 저장
+		//카테고리, 카테고리-강좌 저장
 		lecturesService.getCategory(category, lecture);
-		System.out.println(category);
 		//강의 model에 저장
 		model.addAttribute("lecture", lecture);
-		model.addAttribute("members", members);
 
-		return "lecture/upload-course"; // 강좌 업로드 폼으로 이동
+		return "redirct: /course-form/" + lecture.getTitle() + "/" + lecture.getId(); // 강좌 업로드 폼으로 이동
 	}
 	
+	//강좌 폼으로 이동
+	@GetMapping(value = "/course-form/{title}/{id}", produces = "application/json;charset=UTF-8")
+	public String courseForm(Model model, @PathVariable String title, @PathVariable int id) {
+		log.info("강좌 폼으로 이동: " + title + id);
+		model.addAttribute("title", title);
+		model.addAttribute("id", id);
+		
+		return "lecture/upload-course";
+	}
+
 	
 	//3. 강좌 업로드(작성중)
-	/*
+	/* 강좌 여러개 다중 저장 saveAll
 	 * */
 	@ApiOperation(value = "강좌 업로드 메소드", notes = "강의에 해당하는 강좌들을 등록")
 	@PostMapping(value = "/upload-course", produces = "application/json;charset=UTF-8")
-	public String uploadCourse(@ModelAttribute CoursesDTO coursesDTO)throws MessageException, IOException {
-		log.info("강좌 업로드 메소드: " + coursesDTO.getTitle());
+	public String uploadCourse(Model model, @RequestBody CoursesListDTO coursesListDTO)throws NotExistException {
 		
+		log.info("강좌 업로드 메소드: " + coursesListDTO.toString());
 		
-
-		return "lecture/upload-course"; // 강좌 업로드 폼으로 이동
+		List<CoursesDTO> courses = lecturesService.uploadCourses(coursesListDTO);
+		
+		return "redirect: /detail/" + courses.get(0).getLecturesId(); // 강좌 업로드 완료되면 강의 디테일로 이동
 	}
 	
 	
@@ -141,7 +150,7 @@ public class LecturesController {
 	public String getLectureDetail(Model model, @PathVariable int title) throws NotExistException {
 		//강의+강좌 정보 조회
 		LectureCoursesDTO lecture = lecturesService.getLectureDetail(title);
-		
+		System.out.println(lecture.getTeachersApplyTeacherMembers().getMemId());
 		model.addAttribute("lecture", lecture);
 		
 		return "lecture/lecture-detail"; //WEB-INF/lecture/lecture-detail.jsp
@@ -202,6 +211,7 @@ public class LecturesController {
 	//NotExistException 관련 예외처리
 	@ExceptionHandler(value = NotExistException.class)
 	public String notExistException(NotExistException ne, Model model) {
+		System.out.println(ne.getMessage());
 		ne.printStackTrace();
 		model.addAttribute("errorMsg", ne.getMessage());
 		return "error"; //예: WEB-INF/error.jsp
@@ -215,6 +225,5 @@ public class LecturesController {
 		return "error"; // 예: WEB-INF/error.jsp
 	}
 	
-
-
+	
 }

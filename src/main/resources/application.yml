@@ -21,7 +21,6 @@ spring:
     hibernate:
       ddl-auto: none
     show-sql: true
-    format_sql: true
   mvc:
     view:
       prefix: /WEB-INF/

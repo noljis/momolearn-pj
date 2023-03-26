@@ -3,7 +3,6 @@ package com.momolearn.model.service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -17,9 +16,9 @@ import com.momolearn.model.CategoryLectureRepository;
 import com.momolearn.model.CategoryRepository;
 import com.momolearn.model.CoursesRepository;
 import com.momolearn.model.LecturesRepository;
-import com.momolearn.model.TeachersRepository;
 import com.momolearn.model.dto.CategoryDTO;
 import com.momolearn.model.dto.CoursesDTO;
+import com.momolearn.model.dto.CoursesListDTO;
 import com.momolearn.model.dto.LectureCoursesDTO;
 import com.momolearn.model.dto.LecturesDTO;
 import com.momolearn.model.entity.Category;
@@ -43,13 +42,14 @@ public class LecturesService {
 
 	private ModelMapper mapper = new ModelMapper();
 
-	// 강의 업로드 후 강좌 등록을 위한 강의 조회
+	// 강의 업로드 후 강좌 등록을 위한 강의 조회(반환)
 	public LecturesDTO uploadLecture(LecturesDTO lectureDTO) throws MessageException {
-		System.out.println("강의 등록 메소드 uploadLecture" + lectureDTO.getTitle());
+		
 		Lectures lectures = mapper.map(lectureDTO, Lectures.class);
-		System.out.println(lectures.getTitle());
+		
 		// 저장
 		try {
+			
 			Lectures lecture = lecturesRepository.save(lectures);
 			return mapper.map(lecture, LecturesDTO.class);
 			
@@ -89,10 +89,30 @@ public class LecturesService {
 
 	}
 
-	// 강의 등록
-	public CoursesDTO uploadCourse(CoursesDTO coursesDTO) {
-		// TODO Auto-generated method stub
-		return null;
+	// 강좌 등록 CoursesListDTO: 속성 타입들이 List
+	public List<CoursesDTO> uploadCourses(CoursesListDTO coursesList) throws NotExistException{
+		System.out.println("강좌등록 서비스 메소드");
+		List<Courses> courses = new ArrayList<>();
+		
+		if(coursesList != null) {
+			//반복문으로 배열에 담아주기
+			for(int i = 0; i < coursesList.getLectureId().size(); i++) {
+				
+				Lectures lecture = lecturesRepository.findById(coursesList.getLectureId().get(i)).orElseThrow(() -> new NotExistException("강의가 존재하지 않습니다."));
+				System.out.println(lecture);
+				//builder로 저장
+				Courses course = Courses.builder()
+						.lecture(lecture)
+					    .title(coursesList.getTitle().get(i))
+					    .time(coursesList.getTime().get(i))
+					    .url(coursesList.getUrl().get(i))
+					    .build();
+				
+				courses.add(course);
+			}
+		}
+		
+		return Arrays.asList(mapper.map(coursesRepository.saveAll(courses), CoursesDTO[].class));
 	}
 
 	// 모든 카테고리 조회
@@ -125,6 +145,7 @@ public class LecturesService {
 		Lectures lecture = lecturesRepository.findById(title);
 		
 		if(lecture == null) {
+			System.out.println(lecture.getTeachers().getApplyTeacher().getMembers());
 			new NotExistException("해당 강의가 존재하지 않습니다.");
 		}
 		
@@ -141,10 +162,12 @@ public class LecturesService {
 	
 	//강의목록에 보여질 Json데이터 메소드
 	public JsonArray getLectureJson(List<Lectures> lectures) {
-		System.out.println(lectures.get(0).getCategoryLecture().get(0).getCategory().getCateName());
+		
 		JsonObject lectureJson = null;
 		JsonArray lecturesJson = new JsonArray();
+		
 		for (int i = 0; i < lectures.size(); i++) {
+			
 			ArrayList<String> category = new ArrayList<>();
 			//해당 강의 번호로 카테고리 조회. member.getName, category.getateName, 
 			//강사번호로 강사 조회
@@ -157,15 +180,20 @@ public class LecturesService {
 			lectureJson.addProperty("info", lectures.get(i).getInfo());
 			lectureJson.addProperty("applyCnt", lectures.get(i).getApplyCnt());
 			lectureJson.addProperty("teacher", lectures.get(i).getTeachers().getApplyTeacher().getMembers().getName());
+			
 			//카테고리 배열 담아주기
 			for(int j = 0; j < lectures.get(i).getCategoryLecture().size(); j++) {
+				
 				category.add(lectures.get(i).getCategoryLecture().get(j).getCategory().getCateName());
 			}
+			
 			lectureJson.addProperty("category", new Gson().toJson(category));
 			// 후에 JSONArray에 담아서 json 배열로 만들기
 			lecturesJson.add(lectureJson);
 		}
+		
 		return lecturesJson;
 	}
+
 
 }

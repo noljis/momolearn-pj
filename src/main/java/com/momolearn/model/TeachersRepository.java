@@ -14,7 +14,7 @@ import com.momolearn.model.entity.Teachers;
 public interface TeachersRepository extends JpaRepository<Teachers, Integer>{
 
 	// 회원id와 승인여부(ApproveIsTrue)로 강사내역 조회
-	@Query("select t from Teachers t join t.applyTeacher.members m where m.memId = :id and t.applyTeacher.approve = 'true'")
+	@Query("select t from Teachers t join fetch t.applyTeacher at join fetch at.members m where m.memId = :id and at.approve = 'true'")
 	Optional<Teachers> findByMemIdAndApprove(@Param("id") String id);
 	
 	// 강사 신청서 정보를 강사 테이블에 저장

@@ -68,7 +68,12 @@ tr:nth-child(odd) {
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12">
-						<h3 class="mb-4">강좌 리스트</h3>
+						<h3 class="mb-4">강좌 리스트
+						<c:if test="${members.memId eq lecture.teachersApplyTeacherMembers.memId}">
+							<button class="btn btn-secondary mr-2" onclick="location.href='${pageContext.request.contextPath}/lectures/course-form/${lecture.title}/${lecture.id}'">강의 추가하기</button>
+						</c:if>
+						</h3>
+						
 						<div style="max-width: 800px; margin: 0;">
 							<table class="table table-striped table-hover"
 								style="background-color: #dcdcdc;">
@@ -92,7 +97,7 @@ tr:nth-child(odd) {
 		<!-- 결제 박스 / 이미 수강중인 경우 : 수강중인 강좌입니다.(이전 컨트롤러에서 mylecture 조회)-->
 		<div class="position-fixed top-50 end-0">
 			<div class="card mb-3 text-center"
-				style="width: 300px; height: 250px; border-radius: 20px; right: 50px;">
+				style="width: 300px; height: 100%; border-radius: 20px; right: 50px;">
 				<form method="POST" action="/payment">
 					<div class="card-body mb-3">
 						<h4 class="card-title spoqa-han-sans">${lecture.title}</h4>

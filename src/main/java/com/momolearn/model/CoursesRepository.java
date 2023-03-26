@@ -11,5 +11,4 @@ import com.momolearn.model.entity.Courses;
 public interface CoursesRepository extends JpaRepository<Courses, Integer>{
 
 	List<Courses> findAllByLectureId(int lectureId);
-
 }
