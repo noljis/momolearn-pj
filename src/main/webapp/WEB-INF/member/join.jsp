@@ -1,26 +1,28 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ page import="com.momolearn.model.entity.Members"%>
-<%@ page import="com.momolearn.model.MembersRepository"%>
-<%@ page import="com.momolearn.controller.MemberSignUpController"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-    <meta charset="utf-8">
-    <title>회원가입 페이지</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta content="" name="keywords">
+<meta content="" name="description">
+<title>로그인 페이지</title>
+
+	<script src="https://kit.fontawesome.com/f51a30e87b.js" crossorigin="anonymous"></script>
 
    <jsp:include page="/separate/head.jsp"></jsp:include>
-    <link href="${pageContext.request.contextPath}/css/join.css" rel="stylesheet">
+   
+   <link href="${pageContext.request.contextPath}/css/join.css" rel="stylesheet">
 
-	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="https://kit.fontawesome.com/f51a30e87b.js" crossorigin="anonymous"></script>
+
 </head>
 <body>
+
     <jsp:include page="/separate/header3.jsp"></jsp:include>
+
 	<div class="wrap">
 		
 			<div class="join">
@@ -85,6 +87,7 @@
 			</div>
 		
 	</div>
+	
 	<!-- Back to Top -->
 	<jsp:include page="/separate/script.jsp"></jsp:include>
 	<jsp:include page="/separate/footer.jsp"></jsp:include>
@@ -170,6 +173,7 @@
 		f.submit();
 		
 	}
-</script>
+	</script>
+
 </body>
 </html>

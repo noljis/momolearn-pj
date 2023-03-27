@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class CategoryDTO  {
 	
-	private int cateLecId;	//카테고리Id
+	private int cateId;	//카테고리Id
 	private String cateName; //카테고리명
 
 }

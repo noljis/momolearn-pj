@@ -13,16 +13,16 @@
 <title>로그인 페이지</title>
 
     <jsp:include page="/separate/head.jsp"></jsp:include>
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/login.css">
 
-	<!-- <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap"
-	rel="stylesheet">   -->
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/login.css">
 
 	<script src="https://kit.fontawesome.com/f51a30e87b.js" crossorigin="anonymous"></script>
 
 </head>
 <body>
+
 	<jsp:include page="/separate/header3.jsp"></jsp:include>
+
 
 	<div class="wrap">
 		<div class="login">
@@ -39,9 +39,9 @@
 				<div class="login_etc">
 					<div class="checkbox">
 						<input type="checkbox"> 아이디 저장<br>
-						<a id="a" href="member/findIdForm">아이디 찾기</a>
+						<a id="a" href="${pageContext.request.contextPath}/member/findIdView">아이디 찾기</a>
 						&nbsp; <a>|</a> &nbsp;
-						<a id="a" href="member/findPwdForm">비밀번호 찾기</a>
+						<a id="a" href="${pageContext.request.contextPath}/member/findPwdView">비밀번호 찾기</a>
 					</div>
 				</div>
 				<div class="submit">
@@ -55,7 +55,7 @@
 					<li><a id="a" href=""><i class="fa-solid fa-comment"></i></a></li>
 				</div>
 				<div class="text">
-					아직 회원이 아니신가요? &nbsp; <a href="./join.jsp"> 회원가입 하러가기</a>
+					아직 회원이 아니신가요? &nbsp; <a href="${pageContext.request.contextPath}/member/joinView"> 회원가입 하러가기</a>
 				</div>
 			</form>
 		</div>

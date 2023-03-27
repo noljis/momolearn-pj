@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -42,6 +43,14 @@ public class Courses  {
 	public void setLecture(Lectures lecture) {
 		this.lecture = lecture;
 	}
+	
+	@Builder
+    public Courses(Lectures lecture, String title, String time, String url) {
+        this.lecture = lecture;
+        this.title = title;
+        this.time = time;
+        this.url = url;
+    }
 	
 
 }

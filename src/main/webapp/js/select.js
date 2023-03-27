@@ -27,7 +27,7 @@ function drawTable(list) {
 		card.style.backgroundColor = "#E8F5FF";
 
 		const thumbnailLink = document.createElement("a");
-		thumbnailLink.href = `/lecture/detail/${lecture.id}`;
+		thumbnailLink.href = `/../../momolearn/lectures/detail/${lecture.id}`;
 
 		const thumbnail = document.createElement("img");
 		thumbnail.src = `/../../momolearn/img/lecture/${lecture.image}`;
@@ -42,6 +42,9 @@ function drawTable(list) {
 
 		const name = document.createElement("h5");
 		name.textContent = lecture.title;
+		name.style.cursor = "pointer";
+		name.setAttribute('onclick', `location.href="/../../momolearn/lectures/detail/${lecture.id}"`);
+
 
 		const description = document.createElement("p");
 		description.textContent = lecture.info;
@@ -133,7 +136,7 @@ function dataReceive(title) {
 			drawTable(lecture);
 		}
 	}).catch(function() {
-		alert("실행중 문제 발생 : " + "값을 입력해주세요.");
+		alert("실행중 문제 발생 : " + "검색된 강의가 없습니다.");
 	});
 }
 //id=btn인 버튼을 클릭시 발생

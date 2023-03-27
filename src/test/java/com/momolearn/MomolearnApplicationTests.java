@@ -1,60 +1,45 @@
 package com.momolearn;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.mock.web.MockHttpSession;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
+import org.springframework.test.annotation.Rollback;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.momolearn.model.ApplyTeacherRepository;
-import com.momolearn.model.MembersRepository;
-import com.momolearn.model.dto.ApplyTeacherDTO;
-import com.momolearn.model.dto.BoardSaveDTO;
 import com.momolearn.model.entity.ApplyTeacher;
-import com.momolearn.model.entity.Members;
-import com.momolearn.model.service.MembersService;
-import com.momolearn.model.service.TeachersService;
 
 @SpringBootTest
 class MomolearnApplicationTests {
 	
-	@Autowired MembersRepository membersRepository;
-	@Autowired MembersService membersService;
 
 
-	@Autowired
-	private WebApplicationContext controller;
-	
-	private MockHttpSession session;
-	
-	private MockMvc mock;
-	
-	@BeforeEach
-	public void init() {
-		mock = MockMvcBuilders.webAppContextSetup(controller).build();
-	}
-	
-	@AfterEach
-	public void clear(){
-	    session.clearAttributes();
-	    session = null;
-	}
-
+//	
+//	@Autowired MembersRepository membersRepository;
+//	@Autowired MembersService membersService;
+//
+//
+//	@Autowired
+//	private WebApplicationContext controller;
+//	
+//	private MockHttpSession session;
+//	
+//	private MockMvc mock;
+//	
+//	@BeforeEach
+//	public void init() {
+//		mock = MockMvcBuilders.webAppContextSetup(controller).build();
+//	}
+//	
+//	@AfterEach
+//	public void clear(){
+//	    session.clearAttributes();
+//	    session = null;
+//	}
+//
 //	@Test
 //	@WithMockUser(username="test04", roles={"USER"})
 //	void contextLoads() throws Exception {
@@ -153,8 +138,6 @@ class MomolearnApplicationTests {
 //			.andDo(print());
 //		
 //	}
-	
-	
 	
 
 }

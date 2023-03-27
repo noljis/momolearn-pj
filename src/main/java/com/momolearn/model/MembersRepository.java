@@ -1,6 +1,4 @@
 package com.momolearn.model;
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -8,12 +6,8 @@ import com.momolearn.model.entity.Members;
 
 @Repository
 public interface MembersRepository extends JpaRepository<Members, String>{
-	
-    //모든 회원정보 불러오기
-    List<Members> findAll(); 
-
-    //회원가입
-    Members save(Members members); 
+	// id로 회원 한명 불러오기
+	Members findByMemId(String memId);
     
     //로그인
     Members findByMemIdAndPw(String memId, String pw);
@@ -25,9 +19,11 @@ public interface MembersRepository extends JpaRepository<Members, String>{
     Members findByMemIdAndEmail(String memId, String email);
 
     // 회원 삭제 
-    void deleteByMemId(String memId);
+//    void deleteByMemId(String memId);
+    
+    //모든 회원정보 불러오기
+//  List<Members> findAll(); 
 	
-	Members findByMemId(String memId); // pk를 이용해 회원 한명 불러오기
 
    
 }

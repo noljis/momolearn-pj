@@ -12,6 +12,7 @@
 
 <!-- Navbar Start navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0-->
 <nav class="navbar navbar-expand-lg bg-body-tertiary shadow">
+
     <a href="${pageContext.request.contextPath}/" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
         <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>MOMOLEARN</h2>
     </a>
@@ -31,20 +32,21 @@
         <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
             <img class="profile-image rounded-circle" src="${pageContext.request.contextPath}/img/profile/${sessionScope.members.profile}" style="width: 50px; height: 50px; border: 2px solid #06BBCC;">&nbsp;&nbsp;${sessionScope.members.name}</a>
 	        <div class="dropdown-menu fade-down">
-	            <a href="" class="dropdown-item">내 정보</a>
+	            <a href="${pageContext.request.contextPath}/member/myinfo" class="dropdown-item">내 정보</a>
 	            <a href="" class="dropdown-item">내 강의</a>
 	            <c:choose>
 	            	<c:when test="${sessionScope.members.grade == 'student'}">
-                        <a href="${pageContext.request.contextPath}/teacher/applyform" class="dropdown-item">강사 신청</a>
+                        <a href="${pageContext.request.contextPath}/applyteacher/myapplylist" class="dropdown-item">강사 신청</a>
                     </c:when>
 	                <c:when test="${sessionScope.members.grade == 'admin'}">
 	                    <a href="" class="dropdown-item">관리자메뉴</a>
+                        <a href="${pageContext.request.contextPath}/applyteacher/applylist" class="dropdown-item">강사 신청 목록</a>
 	                </c:when>
 	                <c:when test="${sessionScope.members.grade == 'teacher'}">
 	                    <a href="${pageContext.request.contextPath}/lectures/uploadcheck" class="dropdown-item">강의 등록</a>
 	                </c:when>
 	            </c:choose>
-	            <a href="" class="dropdown-item">로그아웃</a>
+	            <a href="${pageContext.request.contextPath}/member/sessionOut" class="dropdown-item">로그아웃</a>
 	        </div>
         </div>
         </c:if>

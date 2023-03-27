@@ -17,7 +17,6 @@ import com.momolearn.model.entity.Members;
 import lombok.RequiredArgsConstructor;
 
 @Service
-@RequiredArgsConstructor // 생성자 자동 생성
 public class MembersService {
 
 	@Autowired // 의존관계를 자동으로 설정해 준다. (DAO 객체 주입)
@@ -28,6 +27,7 @@ public class MembersService {
 	//회원가입
     @Transactional
     public Members memJoin(Members members) throws SQLException {
+    	
         try {
             Members savedMembers = membersRepository.save(members);
             return savedMembers;
@@ -55,7 +55,7 @@ public class MembersService {
     
 	//로그인
     @Transactional
-    public Members loginMember(String memId, String password) throws SQLException {
+    public MembersDTO loginMember(String memId, String password) throws SQLException {
         
     	try {
         	boolean data = validateUser(memId,password);
@@ -63,7 +63,7 @@ public class MembersService {
         	if(data == true) {
         		Members loginData = membersRepository.findByMemIdAndPw(memId, password);
         		System.out.println(loginData);
-        		return loginData;
+        		return mapper.map(loginData, MembersDTO.class);
         	}
         	
         } catch (Exception e) {
@@ -75,30 +75,46 @@ public class MembersService {
 	 
     //로그인 회원정보 확인
 	public boolean validateUser(String memId, String password) throws Exception {
+	
 		Members member = membersRepository.findByMemId(memId);
-		
-
-		System.out.println("member출력 ===" +member.getPw());
-		System.out.println("member출력 ===" +password);
 		
         if (member != null && member.getPw().equals(password)) {
             return true;
         }
         return false;
 	}
+	
+	//id찾기 (email로 찾기)
+	public MembersDTO findId(String email) throws SQLException{
+		
+		Members member = membersRepository.findByEmail(email);
+		
+        if (member == null) {
+            return null;
+        }
+        return mapper.map(member, MembersDTO.class);
+	}
+	
+	//pw찾기 (id,email로 찾기)
+	public MembersDTO findPw(String memId, String email) throws SQLException{
+		
+		Members member = membersRepository.findByMemIdAndEmail(memId, email);
+        if (member == null) {
+        	return null;
+        }
+        return mapper.map(member, MembersDTO.class);
+	}
     
 	//본인 조회 - jpa
-    public Members getMember (String memId) {
+    public MembersDTO getMember (String memId) {
     	Members member = membersRepository.findByMemId(memId);
         if (member == null) {
             // 회원 정보를 찾을 수 없는 경우 예외 처리
             throw new RuntimeException("해당 회원을 찾을 수 없습니다.");
         }
-        return member;
+        return mapper.map(member, MembersDTO.class);
 	}
     
-   
-
 	//id로 한명의 회원정보 불러오기
 	public MembersDTO getOneMember(String id) throws NotExistException {
 
@@ -108,23 +124,21 @@ public class MembersService {
 	}
     
     //본인 프로필 수정 (미확인)
-//    @Transactional
-//    public Members updateMember(String memId, String email, String name, String pw, String file) {
-//        Members member = membersRepository.findById(memId)
-//                                          .orElseThrow(() -> new RuntimeException("Member not found with memId " + memId));
-//        
-//        Members updatedMember = null;
-//		// update the member fields
-//        member.setMemId(updatedMember.getMemId());
-//        member.setPw(updatedMember.getPw());
-//        member.setName(updatedMember.getName());
-//        member.setEmail(updatedMember.getEmail());
-//        member.setProfile(updatedMember.getProfile());
-//        
-//
-//        return membersRepository.save(member);
-//    }
-
+//  @Transactional
+//  public void deleteMember(String memId) throws SQLException {
+//      try {
+//          Optional<Members> membersOptional = membersRepository.findById(memId);
+//          if (membersOptional.isPresent()) {
+//              Members members = membersOptional.get();
+//              membersRepository.delete(members);
+//          } else {
+//              System.out.println("이미 탈퇴처리가 완료된 회원입니다.");
+//          }
+//      } catch (Exception e) {
+//          e.printStackTrace();
+//          throw new SQLException("Failed to delete member.");
+//      }
+//  }
     
     //회원 한명 삭제  (미확인)
 //    @Transactional
@@ -142,30 +156,6 @@ public class MembersService {
 //            throw new SQLException("Failed to delete member.");
 //        }
 //    }
-
-	
-	
-
-	
-	//id찾기 (email로 찾기)
-//	public String findId(String email) throws SQLException{
-//		Members member = membersRepository.findByEmail(email);
-//        if (member != null) {
-//            return member.getMemId();
-//        }
-//        return null;
-//	}
-	
-	//pw찾기 (id,email로 찾기)
-//	public String findPw(String memId, String email) throws SQLException{
-//		Members member = membersRepository.findByMemIdAndEmail(memId, email);
-//        if (member == null) {
-//            // 비밀번호를 찾을 수 없는 경우 예외 처리
-//            throw new RuntimeException("해당 회원을 찾을 수 없습니다.");
-//        }
-//        return member.getPw();
-//	}
-	
 
 	
 	//관리자 - 모든 회원 검색

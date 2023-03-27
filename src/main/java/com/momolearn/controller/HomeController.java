@@ -17,17 +17,4 @@ public class HomeController {
 		return "main"; // WEB-INF/main.jsp
 	}
 	
-	@GetMapping(value = "/login", produces = "application/json;charset=UTF-8")
-	public String login() {
-		
-		return "member/login"; // WEB-INF/member/login.jsp
-	}
-	
-	@GetMapping(value = "/join", produces = "application/json;charset=UTF-8")
-	public String join() {
-		
-		return "member/join"; // WEB-INF/member/login.jsp
-	}
-	
-
 }

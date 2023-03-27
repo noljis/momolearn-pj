@@ -1,7 +1,7 @@
 package com.momolearn.controller;
 
+
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -10,26 +10,25 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonIOException;
-import com.google.gson.JsonObject;
 import com.momolearn.exception.MessageException;
 import com.momolearn.exception.NotExistException;
 import com.momolearn.model.dto.CategoryDTO;
+import com.momolearn.model.dto.CoursesDTO;
+import com.momolearn.model.dto.CoursesListDTO;
+import com.momolearn.model.dto.LectureCoursesDTO;
 import com.momolearn.model.dto.LecturesDTO;
 import com.momolearn.model.dto.MembersDTO;
-import com.momolearn.model.dto.TeachersDTO;
-import com.momolearn.model.entity.Members;
+import com.momolearn.model.dto.TeacherMemberDTO;
 import com.momolearn.model.service.FileService;
 import com.momolearn.model.service.LecturesService;
-import com.momolearn.model.service.MembersService;
 import com.momolearn.model.service.TeachersService;
 
 import io.swagger.annotations.ApiOperation;
@@ -43,39 +42,33 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class LecturesController {
 	
-	
 	private final LecturesService lecturesService;
 	
 	private final TeachersService teachersService;
-	
-	private final MembersService membersService; 
 	
 	private final FileService fileService;
 
 	// 1. 강의 업로드 클릭시 유효성검사 후 강의 등록 폼으로 이동
 	/*
-	 * 검증 1. 현재 로그인중인지(세션id 존재하는지) 2. 현재 로그인한 유저의 등급이 강사인지 -> TeachersService에서 조회
-	 * 필요한 것 1. 세션id
+	 * 검증 1. 현재 로그인한 유저의 등급이 강사인지 -> TeachersService에서 조회
+	 * 필요한 것 - 세션id
 	 */
 	@ApiOperation(value = "강의 업로드 클릭시 유효성검사 메소드", notes = "유효성검사 후 강의 등록 폼으로 이동")
-	@RequestMapping(value = "/uploadcheck", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
-	public String uploadLectureCheck(Model model, @ModelAttribute("members") Members members) throws NotExistException {
-
+	@GetMapping(value = "/checkupload", produces = "application/json;charset=UTF-8")
+	public String checkUploadLecture(Model model, @ModelAttribute("members") MembersDTO members) throws NotExistException {
+		log.info(members + "로 유효성 검사 컨트롤러");
 		// 강사 찾기 teacher로 찾아야함
-		TeachersDTO teacher = teachersService.getOneTeachers(members.getMemId());
-
-		// 강사가 존재하면 강사의 회원정보 불러오기
-		MembersDTO member = membersService.getOneMember(members.getMemId());
-
-		System.out.println("결과: " + teacher);
-		System.out.println("결과: " + member);
-
-		model.addAttribute("teacher", teacher);
-		model.addAttribute("member", member);
+		TeacherMemberDTO teacher = teachersService.getOneTeachers(members.getMemId());
+		if(teacher != null) {
+		
+			model.addAttribute("teacher", teacher);
+		
+		}
 
 		return "lecture/upload-lecture"; // 강의 업로드 폼으로 이동
 	}
 
+	
 	// 2. 강의 업로드
 	/*
 	 * 1. html에 작성된 속성 강의명(title), 강사번호(teacher_no), 사진(MultipartFile), 가격(price),
@@ -85,33 +78,83 @@ public class LecturesController {
 	 * 카테고리 저장 5. 강의 등록 후 강좌 등록 폼으로 이동
 	 */
 	@ApiOperation(value = "강의 업로드 메소드", notes = "강의 등록 후 강좌 등록 화면으로 이동")
-	@RequestMapping(value = "/uploadlecture", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@PostMapping(value = "/upload-lecture", produces = "application/json;charset=UTF-8")
 	public String uploadLecture(Model model, @ModelAttribute LecturesDTO lectureDTO,
 			@RequestParam("file") MultipartFile file, @RequestParam("category") String category)
 			throws MessageException, IOException {
-		log.info("강의 업로드 컨트롤러: " + lectureDTO.getTitle() + category);
+		
+		log.info("강의 업로드 메소드: " + lectureDTO.getTitle() + category);
 		// 썸네일 먼저 저장 -> 이름.확장자명으로 반환해서 setImage 대입
-
-		lectureDTO.setImage(fileService.getLectureImage(lectureDTO.getTitle(), file));
+		if(file == null) {
+			lectureDTO.setImage("default.jpg");
+		}else {
+			String thumbnail = fileService.getLectureImage(lectureDTO.getTitle(), file);
+			lectureDTO.setImage(thumbnail);
+		}
 
 		// 강의 등록
-		LecturesDTO lecture = lecturesService.uploadlecture(lectureDTO);
+		LecturesDTO lecture = lecturesService.uploadLecture(lectureDTO);
+		System.out.println(lecture.getTitle());	
 
-//		//카테고리, 카테고리-강좌 저장
+		//카테고리, 카테고리-강좌 저장
 		lecturesService.getCategory(category, lecture);
-//		
-//		//강의 model에 저장
+		//강의 model에 저장
 		model.addAttribute("lecture", lecture);
 
-		return "forward: /page/lecture/upload-course.html"; // 강좌 업로드 폼으로 이동
+		return "redirct: /course-form/" + lecture.getTitle() + "/" + lecture.getId(); // 강좌 업로드 폼으로 이동
+	}
+	
+	//강좌 폼으로 이동
+	@GetMapping(value = "/course-form/{title}/{id}", produces = "application/json;charset=UTF-8")
+	public String courseForm(Model model, @PathVariable String title, @PathVariable int id) {
+		log.info("강좌 폼으로 이동: " + title + id);
+		model.addAttribute("title", title);
+		model.addAttribute("id", id);
+		
+		return "lecture/upload-course";
+	}
+
+	
+	//3. 강좌 업로드(작성중)
+	/* 강좌 여러개 다중 저장 saveAll
+	 * */
+	@ApiOperation(value = "강좌 업로드 메소드", notes = "강의에 해당하는 강좌들을 등록")
+	@PostMapping(value = "/upload-course", produces = "application/json;charset=UTF-8")
+	public String uploadCourse(Model model, @RequestBody CoursesListDTO coursesListDTO)throws NotExistException {
+		
+		log.info("강좌 업로드 메소드: " + coursesListDTO.toString());
+		
+		List<CoursesDTO> courses = lecturesService.uploadCourses(coursesListDTO);
+		
+		return "redirect: /detail/" + courses.get(0).getLecturesId(); // 강좌 업로드 완료되면 강의 디테일로 이동
 	}
 	
 	
-	//3. 강좌 업로드
+	//4. 강의 전체 목록 조회
+	@ApiOperation(value = "강의 전체목록 조회 메소드", notes = "전체 강의를 조회")
+	@GetMapping(value = "/lectureList", produces = "application/json;charset=UTF-8")
+	public String getAllLectures(Model model)throws MessageException, IOException {
+		log.info("강의 전체목록 조회 메소드");
+		try {
+			model.addAttribute("data", lecturesService.getAllLectures());
+		} catch (JsonIOException s) {
+			System.out.println("JSONException");
+			model.addAttribute("data", "내부적인 오류로 검색하지 못했습니다.");
+			s.printStackTrace();
+		} 
+		return "data_res"; // WEB-INF/main_res.jsp
+	}
 	
-	//4. 강의 목록 조회
-	
-	//5. 강의 정보페이지 + 강좌 목록
+	//5. 강의 정보페이지 + 강좌 목록 + 강좌 추가 버튼 + 강의바구니 버튼
+	@GetMapping(value = "/detail/{title}", produces = "application/json;charset=UTF-8")
+	public String getLectureDetail(Model model, @PathVariable int title) throws NotExistException {
+		//강의+강좌 정보 조회
+		LectureCoursesDTO lecture = lecturesService.getLectureDetail(title);
+		System.out.println(lecture.getTeachersApplyTeacherMembers().getMemId());
+		model.addAttribute("lecture", lecture);
+		
+		return "lecture/lecture-detail"; //WEB-INF/lecture/lecture-detail.jsp
+	}
 	
 	//6. 강좌 시청
 	
@@ -126,73 +169,61 @@ public class LecturesController {
 	@GetMapping(value = "/searchLecture/{title}", produces = "application/json;charset=UTF-8")
 	public String searchLecture(Model model, @PathVariable String title) {
 		log.info("searchLecture()호출: " + title);
-		List<LecturesDTO> lectures = lecturesService.searchLectures(title);
 		try {
-			// 배열이 비어있으면 String으로 예외던지기
-			System.out.println(lectures);
-			if (lectures.isEmpty()) throw new NullPointerException();
-			
-			JsonObject lectureJson = null;
-			JsonArray lecturesJson = new JsonArray();
-			
-			for (int i = 0; i < lectures.size(); i++) {
-				//해당 강의 번호로 카테고리 조회
-				ArrayList<String> category = lecturesService.getCategory(lectures.get(i).getId());
-				//강사번호로 강사 조회
-				String teacher = teachersService.getOneteacher(lectures.get(i).getTeachersTeacherNo());
-				lectureJson = new JsonObject();
-				lectureJson.addProperty("id", lectures.get(i).getTitle());
-				lectureJson.addProperty("title", lectures.get(i).getTitle());
-				lectureJson.addProperty("image", lectures.get(i).getImage());
-				lectureJson.addProperty("price", lectures.get(i).getPrice());
-				lectureJson.addProperty("cnt", lectures.get(i).getCnt());
-				lectureJson.addProperty("info", lectures.get(i).getInfo());
-				lectureJson.addProperty("applyCnt", lectures.get(i).getApplyCnt());
-				lectureJson.addProperty("teacher", teacher);
-				//카테고리 배열 담아주기
-				lectureJson.addProperty("category", new Gson().toJson(category));
-				// 후에 JSONArray에 담아서 json 배열로 만들기
-				lecturesJson.add(lectureJson);
-			}
 			// 방 리스트를 데이터에 담아줌
-			System.out.println("컨트롤러: " + lecturesJson);
-			model.addAttribute("data", lecturesJson);
+			model.addAttribute("data", lecturesService.searchLectures(title));
 		} catch (JsonIOException s) {
-			System.out.println("JSONException");
+			
 			model.addAttribute("data", "내부적인 오류로 검색하지 못했습니다.");
 			s.printStackTrace();
-		} catch (NullPointerException ne) {
-			System.out.println("NullPointerException");
-			model.addAttribute("data", "검색된 강의가 없습니다.");
-			ne.printStackTrace();
 		}
-
 		return "data_res"; // WEB-INF/main_res.jsp
 	}
 	
 	//9. 전체 카테고리 조회
 	@GetMapping(value = "/categoryall", produces = "application/json;charset=UTF-8")
 	public String getAllCategory(Model model) {
+		
 		List<CategoryDTO> category = lecturesService.getAllCategory();
+		
 		model.addAttribute("category", category);
+		
 		return "lecture/lecture-list"; // WEB-INF/lecture/lecture-list.jsp
 	}
+	
+	//10. 카테고리로 강의 검색
+	@GetMapping(value = "/search-category/{title}", produces = "application/json;charset=UTF-8")
+	public String searchCategory(Model model, @PathVariable int title) {
+		log.info("searchCategory()호출: " + title);
+		
+		try {
+			
+			model.addAttribute("data", lecturesService.searchCategotyLecture(title));
+			
+		} catch (JsonIOException s) {
+			
+			model.addAttribute("data", "내부적인 오류로 검색하지 못했습니다.");
+			s.printStackTrace();
+		} 
+		return "data_res"; // WEB-INF/main_res.jsp
+	}
+	
 	//NotExistException 관련 예외처리
-	@ExceptionHandler
+	@ExceptionHandler(value = NotExistException.class)
 	public String notExistException(NotExistException ne, Model model) {
+		System.out.println(ne.getMessage());
 		ne.printStackTrace();
 		model.addAttribute("errorMsg", ne.getMessage());
-		return "에러화면 이동"; //예: WEB-INF/showError.jsp
+		return "error"; //예: WEB-INF/error.jsp
 	}
 	
 	// MessageException 관련 예외처리
-	@ExceptionHandler
+	@ExceptionHandler(value = MessageException.class)
 	public String messageExceptio(MessageException ne, Model model) {
 		ne.printStackTrace();
 		model.addAttribute("errorMsg", ne.getMessage());
-		return "에러화면 이동"; // 예: WEB-INF/showError.jsp
+		return "error"; // 예: WEB-INF/error.jsp
 	}
 	
-
-
+	
 }
