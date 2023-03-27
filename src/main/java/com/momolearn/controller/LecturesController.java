@@ -2,8 +2,6 @@ package com.momolearn.controller;
 
 
 import java.io.IOException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -20,7 +18,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.JsonIOException;
-import com.google.gson.JsonObject;
 import com.momolearn.exception.MessageException;
 import com.momolearn.exception.NotExistException;
 import com.momolearn.model.dto.CategoryDTO;
@@ -57,7 +54,7 @@ public class LecturesController {
 	 * 필요한 것 - 세션id
 	 */
 	@ApiOperation(value = "강의 업로드 클릭시 유효성검사 메소드", notes = "유효성검사 후 강의 등록 폼으로 이동")
-	@GetMapping(value = "/upload-check", produces = "application/json;charset=UTF-8")
+	@GetMapping(value = "/checkupload", produces = "application/json;charset=UTF-8")
 	public String checkUploadLecture(Model model, @ModelAttribute("members") MembersDTO members) throws NotExistException {
 		log.info(members + "로 유효성 검사 컨트롤러");
 		// 강사 찾기 teacher로 찾아야함
@@ -68,7 +65,7 @@ public class LecturesController {
 		
 		}
 
-		return "lecture/lecture-form"; // 강의 업로드 폼으로 이동
+		return "lecture/upload-lecture"; // 강의 업로드 폼으로 이동
 	}
 
 	
@@ -104,19 +101,19 @@ public class LecturesController {
 		//강의 model에 저장
 		model.addAttribute("lecture", lecture);
 
-		return "redirect:courses-form/" + URLEncoder.encode(lecture.getTitle(), StandardCharsets.UTF_8) + "/" + lecture.getId(); // 강좌 업로드 폼으로 이동
+		return "redirct: /course-form/" + lecture.getTitle() + "/" + lecture.getId(); // 강좌 업로드 폼으로 이동
 	}
 	
 	//강좌 폼으로 이동
-	@GetMapping(value = "/courses-form/{title}/{id}", produces = "application/json;charset=UTF-8")
+	@GetMapping(value = "/course-form/{title}/{id}", produces = "application/json;charset=UTF-8")
 	public String courseForm(Model model, @PathVariable String title, @PathVariable int id) {
 		log.info("강좌 폼으로 이동: " + title + id);
-		model.addAttribute("lectitle", title);
+		model.addAttribute("title", title);
 		model.addAttribute("id", id);
 		
-		return "lecture/course-form";
+		return "lecture/upload-course";
 	}
-	
+
 	
 	//3. 강좌 업로드(작성중)
 	/* 강좌 여러개 다중 저장 saveAll
@@ -129,13 +126,7 @@ public class LecturesController {
 		
 		List<CoursesDTO> courses = lecturesService.uploadCourses(coursesListDTO);
 		
-		JsonObject jsonData = new JsonObject();
-		
-		jsonData.addProperty("id", courses.get(0).getLectureId());
-		
-		model.addAttribute("data", jsonData);
-		
-		return "data_res"; // 강좌 업로드 완료되면 강의 디테일로 이동
+		return "redirect: /detail/" + courses.get(0).getLecturesId(); // 강좌 업로드 완료되면 강의 디테일로 이동
 	}
 	
 	
@@ -151,7 +142,7 @@ public class LecturesController {
 			model.addAttribute("data", "내부적인 오류로 검색하지 못했습니다.");
 			s.printStackTrace();
 		} 
-		return "data_res"; // WEB-INF/data_res.jsp
+		return "data_res"; // WEB-INF/main_res.jsp
 	}
 	
 	//5. 강의 정보페이지 + 강좌 목록 + 강좌 추가 버튼 + 강의바구니 버튼
