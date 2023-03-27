@@ -1,12 +1,12 @@
 package com.momolearn.model.service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +16,7 @@ import com.momolearn.model.ApplyTeacherRepository;
 import com.momolearn.model.MembersRepository;
 import com.momolearn.model.TeachersRepository;
 import com.momolearn.model.dto.ApplyTeacherDTO;
-import com.momolearn.model.dto.BoardSaveDTO;
-import com.momolearn.model.dto.TeachersDTO;
 import com.momolearn.model.entity.ApplyTeacher;
-import com.momolearn.model.entity.Board;
 import com.momolearn.model.entity.Members;
 import com.momolearn.model.entity.Teachers;
 
@@ -37,12 +34,6 @@ public class ApplyTeacherService {
 
 	private ModelMapper mapper = new ModelMapper();
 
-	public List<ApplyTeacherDTO> findAll() {
-		List<ApplyTeacher> applylists = applyTeacherRepository.findAll();
-		return mapper.map(applylists, new TypeToken<List<ApplyTeacherDTO>>() {
-		}.getType());
-	}
-
 	// 강사 신청서 작성
 //	@Transactional
 //	public Integer save(ApplyTeacherDTO applyDto) throws NotExistException{
@@ -53,27 +44,49 @@ public class ApplyTeacherService {
 //		return atEntity.getId();
 //	}
 	
+	//강사 신청서 전체 목록
+	public List<ApplyTeacherDTO> getApplyList() {
+		List<ApplyTeacher> applylists = applyTeacherRepository.findAll();
+		return Arrays.asList(mapper.map(applylists, ApplyTeacherDTO[].class));
+	}
 	
-	// 강사 신청서 상세보기
-//	public ApplyTeacherDTO read(int id) throws NotExistException {
-//		
-//		Optional<ApplyTeacher> applyteacher = applyTeacherRepository.findById(id);
-//		ApplyTeacher aEntity = applyteacher.orElseThrow(() -> new NotExistException("신청서가 존재하지 않습니다."));
-//
-//		return mapper.map(applyTeacherRepository, ApplyTeacherDTO.class);
-//	}
+
+	// 강사 승인 신청서가 있는 회원 목록
+	public List<Members> getApplyMembers() {
+//		List<Members> mem = membersRepository
+		
+		return null;
+	}
+
 	
-	// 강사 신청서 상세 보기 : 선택된 id의 강사 신청서 보기
+	
+	// 강사 신청서 상세 보기 : 선택된 memId의 강사 신청서 보기
 	public ApplyTeacherDTO read(String membersMemId) throws NotExistException {
-		System.out.println("===== read apply form detail =====");
+		System.out.println("===== service read 1 =====");
 
 		Optional<ApplyTeacher> applyteacher = applyTeacherRepository.findByMembersMemId(membersMemId);
-		ApplyTeacher at = applyteacher.orElseThrow(() -> new NotExistException("신청서가 존재하지 않습니다."));
+		ApplyTeacher applyTeacher = applyteacher.orElseThrow(() -> new NotExistException("신청서가 존재하지 않습니다."));
 
-		return mapper.map(at, ApplyTeacherDTO.class);
+		System.out.println("===== service read 2 =====");
+		return mapper.map(applyTeacher, ApplyTeacherDTO.class);
 
 	}
 	
+	// 강사 신청서 수정
+	@Transactional
+	public void update(int id) throws NotExistException {
+		System.out.println("===== service update apply ===== ");
+		ApplyTeacher applyTeacher = applyTeacherRepository.findById(id).orElseThrow(()->new NotExistException("신청서가 존재하지 않습니다."));
+//		applyTeacherRepository.delete(applyTeacher);
+	}
+	
+	// 강사 신청서 삭제
+	@Transactional
+	public void delete(int id) throws NotExistException {
+		System.out.println("===== service delete apply ===== ");
+		ApplyTeacher applyTeacher = applyTeacherRepository.findById(id).orElseThrow(()->new NotExistException("신청서가 존재하지 않습니다."));
+		applyTeacherRepository.delete(applyTeacher);
+	}
 	
 	// 강사 신청 승인하기 : 선택한 id의 approve를 false -> true로 변경 findById?
 	@Modifying
@@ -100,15 +113,6 @@ public class ApplyTeacherService {
 //        return mapper.map(dto, ApplyTeacher.class);
 	}
 
-	// 회원ID로 강사 조회 Teachers -> applyTeacher -> members -> memId
-	public TeachersDTO getOneTeachers(String id) throws NotExistException {
-
-		Teachers teacher = teachersRepository.findByApplyTeacherMembersMemId(id)
-				.orElseThrow(() -> new NotExistException("현재 강사로 등록되어 있지 않습니다."));
-
-		return mapper.map(teacher, TeachersDTO.class);
-
-	}
 
 	// 강사번호로 이름만 반환
 	public String getOneteacher(int id) {
@@ -137,5 +141,7 @@ public class ApplyTeacherService {
 
 		return member.getApplyTeacher();
 	}
+
+
 
 }

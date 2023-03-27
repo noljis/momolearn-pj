@@ -2,15 +2,18 @@ package com.momolearn.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.momolearn.exception.MessageException;
 import com.momolearn.exception.NotExistException;
+import com.momolearn.model.MembersRepository;
 import com.momolearn.model.dto.ApplyTeacherDTO;
 import com.momolearn.model.dto.ApplyTeacherDTOList;
 import com.momolearn.model.dto.MembersDTO;
@@ -19,6 +22,7 @@ import com.momolearn.model.entity.Members;
 import com.momolearn.model.service.ApplyTeacherService;
 import com.momolearn.model.service.MembersService;
 
+import lombok.Delegate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,10 +38,35 @@ public class ApplyTeacherController {
 	private final MembersService membersService;
 
 	/*
-	 * 1. 회원 : 강사 신청 - 회원 로그인 후 드롭다운 메뉴(My Pages) -> 강사 신청 클릭 - [1] 강사 신청페이지 :
-	 * at-form.jsp 1) 초기 상태 : 컨트롤러에서 세션 id로 id, name, email 조회 - 신청 폼에서는 조회한 데이터가
-	 * 입력이 되어있고(ID, 이름, 메일주소) 2) 강사 신청에 필요한 정보 입력 - 입력이 필요한 속성 : 연락처, 포트폴리오url,
-	 * 희망분야(선택), 자기소개 3) 입력 후 제출 버튼 : ApplyTeacher에 제출 정보 저장 - [2] 강사 신청 현황 확인 :
+	 * 
+	 * 가입한다 - join
+	 * 글쓴다 - write
+	 * 조회한다 - get 
+	 * 수정한다 - update
+	 * 삭제한다 - delete
+	 * 화면 - view
+	 * 대조해서 검사한다 - check
+	 * 
+	 * 
+	 * [1] 회원 : 강사 신청
+	 * 	1. /myapplylist : 회원 로그인 후 드롭다운 메뉴 - 강사 신청 클릭 - 강사 신청 목록으로 이동 
+	 * 		- test01 - 강사 신청서가 없으면 게시판 글 안뜨고 신청서 작성 버튼 활성
+	 * 		- test11 - 강사 신청서가 있으면 게시판 글 뜨고 신청서 작성 버튼 비활성
+	 * 	2. /writeform : 강사 신청서 작성 클릭 : 강사 신청서 작성 페이지 이동
+	 * 		- 초기 상태 : 신청 폼에서는 조회한 데이터가 입력이 되어있고(ID, 이름, 메일주소)
+	 * 		- 강사 신청에 필요한 정보 입력 - 연락처, 포트폴리오url, 희망분야(선택), 자기소개
+	 * 	3. /write : 입력 후 제출 버튼 : ApplyTeacher에 제출 정보 저장 
+	 * 		- 강사 신청 목록으로 이동
+	 *  4. /read
+	 *  
+	 *  5. /update
+	 *  
+	 *  6. /delete
+	 *  
+	 *  
+
+	 * 
+	 * - [2] 강사 신청 현황 확인 :
 	 * at-state.jsp - 강사 신청 승인 여부 확인할 수 있음
 	 * 
 	 * 2. 관리자 : 강사 신청 승인 및 강사 등록 - 관리자 로그인 후 강사 신청서 목록 클릭 - [1] 강사 신청서 목록 페이지 :
@@ -49,8 +78,9 @@ public class ApplyTeacherController {
 	 * 
 	 */
 
-	// 회원 - 강사 신청
-	// members id를 조회해서 있으면 게시판 글이 뜨고 없으면 게시판 글 안뜸
+	// 회원
+	// 내 강사 신청서 목록
+
 	@GetMapping(value = "/myapplylist")
 	public String myApplyList(Model model, @ModelAttribute("members") MembersDTO members) throws NotExistException {
 
@@ -58,12 +88,12 @@ public class ApplyTeacherController {
 		
 		if (applyteacher != null) {
 			ApplyTeacherDTO apply = applyTeacherService.read(members.getMemId()); 
-			System.out.println(apply);
+			System.out.println("apply 정보 : "+apply);
 			model.addAttribute("apply", apply);
 		}
 		
-		System.out.println(members);
-		model.addAttribute("member", members);
+//		System.out.println("members 정보 : "+members);
+//		model.addAttribute("member", members);
 
 		return "teachers/at-mylist";
 	}
@@ -71,45 +101,71 @@ public class ApplyTeacherController {
 	// 관리자
 	// 강사 신청 전체 목록
 	@GetMapping(value = "/applylist")
-	public String applyList(Model model, @ModelAttribute("members") Members members, ApplyTeacherDTOList list)
+	public String applyList(Model model)
 			throws NotExistException {
-		MembersDTO member = membersService.getOneMember(members.getMemId());
-		System.out.println(members);
-		System.out.println("신청서리스트" + list);
-		model.addAttribute("member", member);
+		
+//		ApplyTeacher applyteacher = applyTeacherService.getApplyList();
+//		model.addAttribute("memlist", membersService.getAllMembers());
+		
+//		model.addAttribute("memlist", applyTeacherService.getApplyMembers());
+		
+		System.out.println("신청서 전체 리스트");
+		model.addAttribute("list", applyTeacherService.getApplyList());		
 		return "teachers/at-list";
 	}
 
+	// 강사 신청서 작성 페이지로 이동
 	@GetMapping(value = "/writeform")
-	public String writeForm(Model model, @ModelAttribute("members") Members members) throws NotExistException {
+	public String writeForm(Model model, @ModelAttribute("members") MembersDTO members) throws NotExistException {
 		MembersDTO member = membersService.getOneMember(members.getMemId());
 
 		model.addAttribute("member", member);
 		return "teachers/at-form";
 	}
 
-	@GetMapping(value = "/submitform")
-	public String submitForm() throws NotExistException {
-
-		return "teachers/at-list";
-	}
-
-	@GetMapping(value = "/readform/{id}")
-	public String readForm(@PathVariable int id, Model model, @ModelAttribute("members") Members members)
+	// 강사 신청서 상세 조회 @PathVariable int id
+	@GetMapping(value = "/read")
+	public String read(Model model, @ModelAttribute("members") MembersDTO members)
 			throws NotExistException {
 
+		System.out.println("신청서 상세 조회 1");
 		ApplyTeacherDTO apply = applyTeacherService.read(members.getMemId());
 		MembersDTO member = membersService.getOneMember(members.getMemId());
+		System.out.println("신청서 상세 조회 2");
 
 		model.addAttribute("apply", apply);
 		model.addAttribute("member", member);
 		return "teachers/at-readform";
 	}
 
-	@GetMapping(value = "/updateform")
-	public String updateForm() throws NotExistException {
+	// 제출
+	@PostMapping(value = "/write")
+	public String write(Model model, @ModelAttribute("members") MembersDTO members) throws NotExistException {
 
+		System.out.println("신청서 제출");
+
+		return "teachers/at-list";
+	}
+	
+	// 수정
+	@PostMapping(value = "/update")
+	public String update(Model model, @ModelAttribute("members") MembersDTO members) throws NotExistException {
+		
+		System.out.println("신청서 수정");
+		ApplyTeacherDTO apply = applyTeacherService.read(members.getMemId());
+		MembersDTO member = membersService.getOneMember(members.getMemId());
+
+		model.addAttribute("apply", apply);
+		model.addAttribute("member", member);
 		return "teachers/at-updateform";
+	}
+
+	// 삭제
+	@PostMapping(value = "/{id}")
+	public String delete(@PathVariable int id) throws NotExistException {
+		System.out.println("신청서 삭제");
+		applyTeacherService.delete(id);
+		return "teachers/at-mylist";
 	}
 
 	// NotExistException 관련 예외처리
