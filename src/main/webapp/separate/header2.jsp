@@ -22,7 +22,7 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav ms-auto p-4 p-lg-0">
         </div>
-        <a href="${pageContext.request.contextPath}/page/lecture/category-all" class="nav-item nav-link">강의</a> &nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="${pageContext.request.contextPath}/page/lecture/categoryall" class="nav-item nav-link">강의</a> &nbsp;&nbsp;&nbsp;&nbsp;
         <a href="${pageContext.request.contextPath}/board/" class="nav-item nav-link">커뮤니티</a> &nbsp;&nbsp;&nbsp;&nbsp;
         <a href="${pageContext.request.contextPath}/notice/" class="nav-item nav-link">공지사항</a> &nbsp;&nbsp;&nbsp;&nbsp;
         <!-- 세션ID 존재할 경우 나오는 메뉴 Start-->

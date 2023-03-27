@@ -125,7 +125,7 @@ function drawTable(list) {
 function dataReceive(title) {
 	axios({
 		method: "GET",
-		url: "/../../momolearn/lectures/search-lecture/" + title
+		url: "/../../momolearn/lectures/searchLecture/" + title
 	}).then(function(resData) {
 		lecture = resData.data;
 		console.log('넘어온 데이터' + lecture);

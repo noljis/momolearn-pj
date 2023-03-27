@@ -61,10 +61,9 @@ public class LecturesService {
 
 	// 강의명 부분검색
 	public JsonArray searchLectures(String likeTitle) {
-		
 		// likeTitle이 포함된 title 데이터 검색
 		List<Lectures> lectures = lecturesRepository.findByTitleContaining(likeTitle);
-		
+		System.out.println(lectures);
 		return getLectureJson(lectures);
 	}
 
@@ -140,17 +139,10 @@ public class LecturesService {
 		return getLectureJson(lectures);
 	}
 
-	// 카테고리로 강의 조회 cateId: 카테고리 번호
-	public JsonArray searchCategotyLecture(int cateId) {
+	// 카테고리로 강의 조회 title: 카테고리 번호
+	public JsonArray searchCategotyLecture(int title) {
 		
-		List<String> title = lecturesRepository.findByCategoryLectureCategoryCateId(cateId);
-		
-		List<Lectures> lectures = new ArrayList<>();
-		for(String t : title) {
-			
-			lectures.addAll(lecturesRepository.findByTitleContaining(t));
-			
-		}
+		List<Lectures> lectures = lecturesRepository.findByCategoryLectureCategoryCateId(title);
 		
 		return getLectureJson(lectures);
 	}
@@ -199,7 +191,7 @@ public class LecturesService {
 			
 			//카테고리 배열 담아주기
 			for(int j = 0; j < lectures.get(i).getCategoryLecture().size(); j++) {
-				System.out.println(lectures.get(i).getCategoryLecture().get(j).getCategory().getCateName());
+				
 				category.add(lectures.get(i).getCategoryLecture().get(j).getCategory().getCateName());
 			}
 			

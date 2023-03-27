@@ -25,7 +25,7 @@
                         aria-label="Search">
                     <button id="btn" class="btn btn-outline-primary" type="submit">Search</button>
                 </div>
-                <a href="${pageContext.request.contextPath}/lectures/category-all" class="nav-item nav-link">강의</a>
+                <a href="${pageContext.request.contextPath}/lectures/categoryall" class="nav-item nav-link">강의</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <a href="${pageContext.request.contextPath}/board/" class="nav-item nav-link">커뮤니티</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
