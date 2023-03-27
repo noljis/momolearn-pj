@@ -84,6 +84,7 @@ function drawTable2(list) {
 		categoryWrapper.style.marginTop = "10px";
 
 		let categories = JSON.parse(lecture.category);
+		console.log(lecture.category);
 		categories.forEach((category) => {
 			let categoryBtn = document.createElement("a");
 			categoryBtn.className = "btn btn-sm btn-primary px-3 me-2 mb-2";
@@ -231,7 +232,7 @@ function drawTable3(list) {
 window.onload = function() {
 	axios({
 		method: "GET",
-		url: "/../../momolearn/lectures/lectureList"
+		url: "/../../momolearn/lectures/lecture-list"
 	}).then(function(resData) {
 		lecture2 = resData.data;
 		console.log('넘어온 데이터' + lecture2);
@@ -252,13 +253,13 @@ function dataReceive2(title) {
 		method: "GET",
 		url: "/../../momolearn/lectures/search-category/" + title
 	}).then(function(resData) {
-		lecture = resData.data;
+		lecture2 = resData.data;
 		// data타입이 object가 아니면 json이 아닌 예외 메세지가 왔다는 뜻
-		if (typeof (lecture) == "string") {
-			alert("실행중 문제 발생 : " + lecture);
+		if (typeof (lecture2) == "string") {
+			alert("실행중 문제 발생 : " + lecture2);
 			return document.getElementById("lectureList").innerHTML = '';
-		} else if (typeof (lecture) == "object") {
-			drawTable3(lecture);
+		} else if (typeof (lecture2) == "object") {
+			drawTable2(lecture2);
 		}
 	}).catch(function() {
 		alert("실행중 문제 발생 : " + "값을 입력해주세요.");
@@ -280,7 +281,7 @@ document.querySelectorAll('#catebtn').forEach(function(button) {
 document.querySelector('#catebtn2').addEventListener('click', function() {
 	axios({
 		method: "GET",
-		url: "/../../momolearn/lectures/lectureList"
+		url: "/../../momolearn/lectures/lecture-list"
 	}).then(function(resData) {
 		lecture2 = resData.data;
 		//console.log('넘어온 데이터' + lecture2);

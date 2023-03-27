@@ -51,11 +51,7 @@ public class LecturesController {
 	
 	private final FileService fileService;
 
-	// 1. 강의 업로드 클릭시 유효성검사 후 강의 등록 폼으로 이동
-	/*
-	 * 검증 1. 현재 로그인한 유저의 등급이 강사인지 -> TeachersService에서 조회
-	 * 필요한 것 - 세션id
-	 */
+	// 1. 강의 업로드 클릭시 유효성검사 후 강의 등록 폼으로 이동(완료)
 	@ApiOperation(value = "강의 업로드 클릭시 유효성검사 메소드", notes = "유효성검사 후 강의 등록 폼으로 이동")
 	@GetMapping(value = "/upload-check", produces = "application/json;charset=UTF-8")
 	public String checkUploadLecture(Model model, @ModelAttribute("members") MembersDTO members) throws NotExistException {
@@ -72,7 +68,7 @@ public class LecturesController {
 	}
 
 	
-	// 2. 강의 업로드
+	// 2. 강의 업로드(완료)
 	/*
 	 * 1. html에 작성된 속성 강의명(title), 강사번호(teacher_no), 사진(MultipartFile), 가격(price),
 	 * 한줄설명(info), 상세설명(description) 2. id(autoincrement), cnt: default=0(강좌 등록할때마다
@@ -80,7 +76,7 @@ public class LecturesController {
 	 * update) 3. 이미지 저장 후 lectureDTO.setImage에 이름.확장자명으로 set 4. 카테고리, 카테고리-강좌 테이블에
 	 * 카테고리 저장 5. 강의 등록 후 강좌 등록 폼으로 이동
 	 */
-	@ApiOperation(value = "강의 업로드 메소드", notes = "강의 등록 후 강좌 등록 화면으로 이동")
+	@ApiOperation(value = "강의 업로드 메소드", notes = "강의 등록 후 강의에 속하는 강좌 등록 화면으로 이동")
 	@PostMapping(value = "/upload-lecture", produces = "application/json;charset=UTF-8")
 	public String uploadLecture(Model model, @ModelAttribute LecturesDTO lectureDTO,
 			@RequestParam("file") MultipartFile file, @RequestParam("category") String category)
@@ -118,10 +114,9 @@ public class LecturesController {
 	}
 	
 	
-	//3. 강좌 업로드(작성중)
 	/* 강좌 여러개 다중 저장 saveAll
 	 * */
-	@ApiOperation(value = "강좌 업로드 메소드", notes = "강의에 해당하는 강좌들을 등록")
+	@ApiOperation(value = "강좌 업로드 메소드", notes = "특정 강의에 해당하는 강좌들을 등록")
 	@PostMapping(value = "/upload-course", produces = "application/json;charset=UTF-8")
 	public String uploadCourse(Model model, @RequestBody CoursesListDTO coursesListDTO)throws NotExistException {
 		
@@ -141,7 +136,7 @@ public class LecturesController {
 	
 	//4. 강의 전체 목록 조회
 	@ApiOperation(value = "강의 전체목록 조회 메소드", notes = "전체 강의를 조회")
-	@GetMapping(value = "/lectureList", produces = "application/json;charset=UTF-8")
+	@GetMapping(value = "/lecture-list", produces = "application/json;charset=UTF-8")
 	public String getAllLectures(Model model)throws MessageException, IOException {
 		log.info("강의 전체목록 조회 메소드");
 		try {
@@ -155,8 +150,10 @@ public class LecturesController {
 	}
 	
 	//5. 강의 정보페이지 + 강좌 목록 + 강좌 추가 버튼 + 강의바구니 버튼
+	@ApiOperation(value = "강의 하나 정보조회 메소드", notes = "강의 id로 강의 정보를 조회")
 	@GetMapping(value = "/detail/{title}", produces = "application/json;charset=UTF-8")
 	public String getLectureDetail(Model model, @PathVariable int title) throws NotExistException {
+		log.info("강의 하나 정보조회 메소드");
 		//강의+강좌 정보 조회
 		LectureCoursesDTO lecture = lecturesService.getLectureDetail(title);
 		System.out.println(lecture.getTeachersApplyTeacherMembers().getMemId());
@@ -165,9 +162,24 @@ public class LecturesController {
 		return "lecture/lecture-detail"; //WEB-INF/lecture/lecture-detail.jsp
 	}
 	
-	//6. 강좌 시청
+	//6. 강좌 시청 watch-course?
+	/* 1. MyLectures에서 lecture -> id로 조회
+	 * 2. MyLectures에서 lecture -> courses -> courseId로 조회 V
+	 * */
+	@ApiOperation(value = "강의 하나 정보조회 메소드", notes = "강의 id로 강의 정보를 조회")
+	@GetMapping(value = "/watch-course/{title}", produces = "application/json;charset=UTF-8")
+	public String getOneCourse() {
+		
+		return "";
+	}
 	
-	//7. 수강신청
+	//7-1. 내 강의(학생: memId로 조회) - myLectures -> join fetch Members, Lectures 
+	/* 간략하게 강의명(클릭시 디테일로 들어가야 함 -> 강의번호 필요함)과 강사명 목록만 나열하도록 함
+	 * */
+	
+	//7-2. 내 강의(강사: ) - myLectures -> join fetch Lectures join fetch 
+	/* 간략하게 강의명(클릭시 디테일로 들어가야 함 -> 강의번호 필요함)과 강사명 목록만 나열하도록 함
+	 * */
 	
 	//8.강의 제목으로 부분검색
 	//Model에 JSONArray데이터 담은 후 res.jsp로 forward전송
@@ -175,7 +187,7 @@ public class LecturesController {
 	 * 2. 그에 따른 카테고리-강의 테이블 조회
 	 * 3. 넘어가야 할 속성: 강의번호(조회용), 강사명, 강의제목, 이미지, 가격, 강의수, 한줄 설명, 수강학생 수, 카테고리명(배열)
 	 * */
-	@GetMapping(value = "/searchLecture/{title}", produces = "application/json;charset=UTF-8")
+	@GetMapping(value = "/search-lecture/{title}", produces = "application/json;charset=UTF-8")
 	public String searchLecture(Model model, @PathVariable String title) {
 		log.info("searchLecture()호출: " + title);
 		try {
@@ -190,7 +202,7 @@ public class LecturesController {
 	}
 	
 	//9. 전체 카테고리 조회
-	@GetMapping(value = "/categoryall", produces = "application/json;charset=UTF-8")
+	@GetMapping(value = "/category-all", produces = "application/json;charset=UTF-8")
 	public String getAllCategory(Model model) {
 		
 		List<CategoryDTO> category = lecturesService.getAllCategory();
