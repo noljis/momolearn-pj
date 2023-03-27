@@ -1,4 +1,4 @@
---members 
+-- members 
 INSERT INTO members (mem_id, pw, name, email, profile, grade, regdate) VALUES ('admin', 'admin', '관리자', 'admin@gmail.com', 'admin.jpg', 'admin', NOW());
 INSERT INTO members (mem_id, pw, name, email, profile, grade, regdate) VALUES ('test01', '1234', '학생1', 'test01@gmail.com', 'test01.jpg', 'student', NOW());
 INSERT INTO members (mem_id, pw, name, email, profile, grade, regdate) VALUES ('test02', '1234', '학생2', 'test02@gmail.com', 'test02.png', 'student', NOW());
@@ -28,7 +28,7 @@ INSERT INTO apply_teacher (apply_id, phone_num, hope_filed, intro, pf_link, appl
 INSERT INTO apply_teacher (apply_id, phone_num, hope_filed, intro, pf_link, apply_rege, approve) VALUES ('test08', '010-1234-3333', '프론트엔드', '안녕하세요. 니꼴라스입니다.', 'https://www.youtube.com/embed//cNfpkKUYAyo', NOW(), 'true');
 INSERT INTO apply_teacher (apply_id, phone_num, hope_filed, intro, pf_link, apply_rege, approve) VALUES ('test09', '010-1234-4444', 'spring', '안녕하세요. 김영한입니다.', 'https://www.youtube.com/embed//ZgtvcyH58ys', NOW(), 'true');
 INSERT INTO apply_teacher (apply_id, phone_num, hope_filed, intro, pf_link, apply_rege, approve) VALUES ('test10', '010-1234-5555', '프론트엔드, 깃허브', '안녕하세요. 엘리입니다.', 'https://www.youtube.com/embed/X91jsJyZofw', NOW(), 'true');
---teachers
+-- teachers
 -- test07
 INSERT INTO teachers (phone_num, hope, intro, pf_link, apply_id) VALUES ('010-1234-2222', 'java', '안녕하세요. 남궁성입니다.', 'https://www.youtube.com/embed//oJlCC1DutbA', 3);
 -- test08
