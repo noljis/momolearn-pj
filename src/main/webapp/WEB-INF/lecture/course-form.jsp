@@ -43,29 +43,29 @@ label {
 <body>
 	<jsp:include page="/separate/header3.jsp"></jsp:include>
 	<!-- form Start -->
-	<form id="upload-courses" method="post" action="${pageContext.request.contextPath}/lectures/upload-course">
+	<form id="upload" method="post" >
 		<div class="container">
 			<div>
 				<div class="input-form-backgroud row">
 					<div class="input-form col-md-12 mx-auto">
-						<h2 class="mb-2">" ${title} "의 강좌 등록하기</h2>
+						<h2 class="mb-2">" ${lectitle} "의 강좌 등록하기</h2>
 						<div class="row" id="form-container">
 							<div class="mb-3">
-								<input type="hidden" name="lecturesId[]" value="${id}" />
+								<input id="lectureid" type="hidden" name="lectureId" value="${id}" />
 							</div>
 							<div class="row">
 								<div class="col-md-4">
 									<label for="title">강좌명<span class="text-muted">&nbsp;</span></label>
-									<input type="text" class="form-control-plaintext form-control-sm border-bottom" name="title[]" placeholder="예) [1강]기초다지기">
+									<input type="text" class="form-control-plaintext form-control-sm border-bottom" name="title" placeholder="예) [1강]기초다지기">
 								</div>
 								<div class="col-md-5">
 									<label for="time">강좌 URL<span class="text-muted">&nbsp;</span></label>
 									<a href='http://embedresponsively.com/' target="_blank">반응형링크로 변환하기(click!)</a>
-									<input type="text" class="form-control-plaintext form-control-sm border-bottom"	name="url[]" placeholder="반응형 링크로 올려주세요">
+									<input type="text" class="form-control-plaintext form-control-sm border-bottom"	name="url" placeholder="반응형 링크로 올려주세요">
 								</div>
 								<div class="col-md-3">
 									<label for="time">강좌 시간<span class="text-muted">&nbsp;</span></label>
-									<input type="text" class="form-control-plaintext form-control-sm border-bottom"	name="time[]" placeholder="예) 00:12:36">
+									<input type="text" class="form-control-plaintext form-control-sm border-bottom"	name="time" placeholder="예) 00:12:36">
 								</div>
 							</div>
 						</div>
@@ -79,40 +79,51 @@ label {
 		</div>
 	</form>
 	<script>
-       document.getElementById("add-form").addEventListener("click", function() {
+		let formCounter = 1;
+        document.getElementById("add-form").addEventListener("click", function() {
+		   let id = document.getElementById("lectureid").value;
            let formContainer = document.getElementById("form-container");
            let template = formContainer.children[0].cloneNode(true);
            formContainer.appendChild(template);
-           let newForm = `
-	        	<div class="mb-3">
-					<input type="hidden" name="lecturesId[]" value="${id}" />
-				</div>
+           
+           let newForm = 
+        	    `<div class="mb-3">
+        	    </div>
         	    <div class="row">
-					<div class="col-md-4">
-						<label for="title">강좌명<span class="text-muted">&nbsp;</span></label>
-						<input type="text" class="form-control-plaintext form-control-sm border-bottom" name="title[]" placeholder="예) [1강]기초다지기">
-					</div>
-					<div class="col-md-5">
-						<label for="time">강좌 URL<span class="text-muted">&nbsp;</span></label>
-						<a href='http://embedresponsively.com/' target="_blank">반응형링크로 변환하기(click!)</a>
-						<input type="text" class="form-control-plaintext form-control-sm border-bottom"	name="url[]" placeholder="반응형 링크로 올려주세요">
-					</div>
-					<div class="col-md-3">
-						<label for="time">강좌 시간<span class="text-muted">&nbsp;</span></label>
-						<input type="text" class="form-control-plaintext form-control-sm border-bottom"	name="time[]" placeholder="예) 00:12:36">
-					</div>
-				</div>`;
-			template.innerHTML += newForm;
+        	        <div class="col-md-4">
+        	            <label for="title">강좌명<span class="text-muted">&nbsp;</span></label>
+        	            <input type="text" class="form-control-plaintext form-control-sm border-bottom" name="title" placeholder="예) [1강]기초다지기">
+        	        </div>
+        	        <div class="col-md-5">
+        	            <label for="time">강좌 URL<span class="text-muted">&nbsp;</span></label>
+        	            <a href='http://embedresponsively.com/' target="_blank">반응형링크로 변환하기(click!)</a>
+        	            <input type="text" class="form-control-plaintext form-control-sm border-bottom" name="url" placeholder="반응형 링크로 올려주세요">
+        	        </div>
+        	        <div class="col-md-3">
+        	            <label for="time">강좌 시간<span class="text-muted">&nbsp;</span></label>
+        	            <input type="text" class="form-control-plaintext form-control-sm border-bottom" name="time" placeholder="예) 00:12:36">
+        	        </div>
+        	    </div>`;
+        	    
+				template.innerHTML += newForm; //폼 추가
+				 // json 배열을 위한 고유한 name 속성 설정
+			    template.querySelector('[name="lectureId"]').name = `lectureId${formCounter}`;
+			    template.querySelector('[name="title"]').name = `title${formCounter}`;
+			    template.querySelector('[name="url"]').name = `url${formCounter}`;
+			    template.querySelector('[name="time"]').name = `time${formCounter}`;
+			    
+        	    formCounter++; // 카운트 증가
        });
        document.getElementById("delete-form").addEventListener("click", function() {
            let formContainer = document.getElementById("form-container");
            let formCount = formContainer.childElementCount;
            if (formCount > 1) { // 폼이 하나 이상인 경우에만 폼 삭제 가능
                formContainer.removeChild(formContainer.lastElementChild);
+           	   formCounter--; //카운트 감소
            }
        });
-       //json으로 변환해서 전송
-       document.getElementById("upload-courses").addEventListener("submit", function(event) {
+       //버튼 이벤트
+       document.getElementById("upload").addEventListener("submit", function(event) {
     	    event.preventDefault(); // 기본 동작 중단
     	    let form = event.target;
     	    let formData = new FormData(form); // 폼 데이터 가져오기
@@ -121,27 +132,36 @@ label {
     	    console.log(jsonData);
     	    sendJsonData(jsonData); // JSON 데이터를 서버에 보내기
     	});
+      
+		//json으로 변환
+       function formDataToJson(formData) {
+    	    let jsonData = {};
 
-    	function formDataToJson(formData) {
-    	    let object = {};
-    	    formData.forEach(function(value, key) {
-    	        object[key] = value;
-    	    });
-    	    return JSON.stringify(object);
+    	    for (let [key, value] of formData.entries()) {
+    	        if (jsonData.hasOwnProperty(key)) {
+    	            jsonData[key].push(value);
+    	        } else {
+    	            jsonData[key] = [value];
+    	        }
+    	    }
+
+    	    return jsonData;
     	}
-
+		//json으로 변환된 폼 보내기
     	function sendJsonData(jsonData) {
     	    axios({
     	        method: "POST",
-    	        url: "${pageContext.request.contextPath}/lectures/upload-course",
+    	        url: "/momolearn/lectures/upload-course",
     	        data: jsonData,
     	        headers: {
     	            "Content-Type": "application/json" 	//json
     	        }
     	    }).then(function(response) {
-    	        console.log(response.data);
+    	    	 let id = response.data.id; // 서버에서 반환된 ID 값
+    	         let url = "/momolearn/lectures/detail/" + id;
+    	         window.location.href = url;
     	    }).catch(function(error) {
-    	        console.error(error);
+    	    	
     	    });
     	}
    </script>

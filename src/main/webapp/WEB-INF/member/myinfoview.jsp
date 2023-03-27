@@ -1,8 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+    
+<%@ page import="java.io.PrintWriter"%>    
+<%@ page import="com.momolearn.model.entity.Members" %>
+<%@ page import="com.momolearn.model.MembersRepository" %>
+<%@ page import="com.momolearn.controller.MembersSignInController"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<% System.out.println("myinfoview.jsp 파일 "); %>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -13,7 +17,7 @@
 <meta content="" name="keywords">
 <meta content="" name="description">
 
-    <jsp:include page="/separate/head.jsp"></jsp:include>  
+    <jsp:include page="/separate/head.jsp"></jsp:include>
     
 </head>
 <style>
@@ -23,7 +27,7 @@
 </style>
 
 <body>
-<%--   <jsp:include page="/separate/header2.jsp"></jsp:include>  --%>
+    <jsp:include page="/separate/header2.jsp"></jsp:include>
 
     <!-- Header Start -->
     <div class="container-fluid bg-primary py-5 mb-5 page-header">
@@ -44,7 +48,7 @@
 	
 	<!-- Info Start -->
 	    <!-- Form Start -->
- <!--    <form id="sm" name="pej" method="get" action=""> -->
+    <form id="sm" name="pej" method="post" onsubmit="return allCheck()" action="">
         <div align="center">
             <h2>내 정보</h2> <!-- class="nav-item nav-link" -->
 
@@ -93,9 +97,8 @@
                         <tr>
                             <td colspan="2" align="center">
 	                            <input class="btnBox" type="button" value="수정하기" onclick="location.href='${pageContext.request.contextPath}/member/updatepage?memId=${members.memId}'">&nbsp;
-								
 								<c:if test="${members.grade ne 'admin'}">
-									<button class="btnBox" id="delete_btn" onclick='location.href="${pageContext.request.contextPath}/member/delete/${members.memId}"'>  탈퇴하기</button>
+									<button class="btnBox" id="delete_btn" onclick='location.href="${pageContext.request.contextPath}/member/delete/${members.memId}"'> 탈퇴하기</button>
 	                			</c:if>	
                             </td>
                         </tr>
@@ -103,27 +106,13 @@
                 </div>
             </div>
         </div>
-<!-- 	</form> -->
-
-
-
-	
-	<script type="text/javascript">
- 	
-	
-	function confirmDelete(url) {
-		if (confirm('삭제하시겠습니까?')) {
-			location.href = url;
-		}
-		
-	} 
-	</script>
+	</form>
     <!-- Form End -->
 	<!-- Info End -->
 
     <!-- Back to Top -->
-	<jsp:include page="/separate/script.jsp"></jsp:include> 
-	<jsp:include page="/separate/footer.jsp"></jsp:include>  
+	<jsp:include page="/separate/script.jsp"></jsp:include>
+	<jsp:include page="/separate/footer.jsp"></jsp:include>
 </body>
 
 </html>

@@ -70,7 +70,7 @@ tr:nth-child(odd) {
 					<div class="col-md-12">
 						<h3 class="mb-4">강좌 리스트
 						<c:if test="${members.memId eq lecture.teachersApplyTeacherMembers.memId}">
-							<button class="btn btn-secondary mr-2" onclick="location.href='${pageContext.request.contextPath}/lectures/course-form/${lecture.title}/${lecture.id}'">강의 추가하기</button>
+							<button class="btn btn-secondary mr-2" onclick="location.href='${pageContext.request.contextPath}/lectures/courses-form/${lecture.title}/${lecture.id}'">강의 추가하기</button>
 						</c:if>
 						</h3>
 						
