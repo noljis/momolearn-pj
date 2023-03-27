@@ -30,7 +30,6 @@ public class CommentController {
 	private final CommentService commentService;
 	
 	@PostMapping("/board/{comNo}/comment")
-	//https://doublesprogramming.tistory.com/110
 	public int writeComment(@PathVariable int comNo, @ModelAttribute("members") Members members, @RequestBody CommentSaveDTO dto) throws NotExistException {
 		System.out.println("writeComment()-------------");
 		return commentService.writeComment(members.getMemId(), comNo, dto);

@@ -49,7 +49,23 @@
                         <div class="article-content">
                             <p>${dto.comContent}</p>
                         </div>
+                        
+                        <c:choose >
+                        	<c:when test="${check}">
+		                        <div>
+			                    	<button id="btn-like" class="btn btn-primary"><i class='fas fa-heart' style='font-size:15px'> 좋아요 취소</i></button>
+		                        </div>
+                        	</c:when>
+                        	<c:otherwise>
+		                        <div>
+			                    	<button id="btn-like" class="btn btn-primary"><i class='far fa-heart' style='font-size:15px'> 좋아요</i></button>
+		                        </div>
+                        	</c:otherwise>
+                        </c:choose>
+                        
+                        
                     </article>
+                    
                     <div class="contact-form article-comment">
                         
                         <div class="container">
@@ -163,6 +179,7 @@
 	<jsp:include page="/separate/script.jsp"></jsp:include>
 	<jsp:include page="/separate/footer.jsp"></jsp:include>
 	<script src="${pageContext.request.contextPath}/js/comment.js"></script>
+	<script src="${pageContext.request.contextPath}/js/likes.js"></script>
 </body>
 
 </html>

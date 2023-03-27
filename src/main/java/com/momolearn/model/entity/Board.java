@@ -65,6 +65,9 @@ public class Board  {
 	@OrderBy("cmt_no asc")
 	private List<Comment> comments;
 	
+	@OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)
+	private List<Likes> likes;
+	
 	
 	
 	

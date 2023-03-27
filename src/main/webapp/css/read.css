@@ -133,6 +133,13 @@ img {
 	float: right;
 }
 
+#btn-like{
+	background-color: #be98ff;
+	border-color: #be98ff;
+	display: block;
+	margin: auto;
+}
+
 .px-btn {
     padding: 0 50px 0 20px;
     line-height: 60px;

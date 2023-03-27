@@ -1,7 +1,7 @@
 package com.momolearn.controller;
 
 
-import java.io.IOException;
+import java.net.URLDecoder;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 
@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.momolearn.exception.MessageException;
 import com.momolearn.model.dto.MembersDTO;
@@ -139,13 +138,17 @@ public class MembersSignInController {
 	//로그인 (확인)
 	@PostMapping(value = "/login", produces = "application/json; charset=UTF-8")
 	public String login(Model sessionData, @RequestParam("memId") String memId, 
-						@RequestParam("password") String password) throws Exception {
+						@RequestParam("password") String password, @RequestParam String returnUrl) throws Exception {
 		
 		MembersDTO members = membersService.loginMember(memId, password);
 		
 		if (members != null) { // 로그인성공
 			sessionData.addAttribute("members", members); // 세션에 프로필 저장
 
+			//댓글창에서 로그인할경우 로그인완료후 기존페이지로 이동
+			if(returnUrl!=null) {
+				return "redirect:"+URLDecoder.decode(returnUrl,"UTF-8");
+			}
 			return "redirect:/"; // 로그인 후 메인화면
 
 			
