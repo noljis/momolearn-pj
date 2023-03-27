@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
@@ -57,12 +56,12 @@ public class MembersSignInController {
 						@RequestParam("file") MultipartFile file) throws SQLException, IOException, MessageException {
 		
         // profile 파일 저장
-		if(file == null) {
-			members.setProfile("user.jpg");
-		}else {
+		if(file != null && !file.isEmpty()) {
 			String savedFileName = fileService.getProfile(memId, file);
 			members.setProfile(savedFileName);
 			
+		}else {
+			members.setProfile("user.jpg");
 		}
         
 		members.setMemId(memId);
@@ -189,7 +188,7 @@ public class MembersSignInController {
 	//프로필 수정 기능 (미확인)
 //	@PostMapping(value = "/update", produces = "application/json; charset=UTF-8")
 //	public String updatePage( Model sessionData,
-//			Members mem, @RequestParam("password") String password, @RequestParam("originPw") String originPw, 
+//			MembersDTO mem, @RequestParam("password") String password, 
 //			@RequestParam("name") String name, 
 //			@RequestParam("file") MultipartFile file) throws SQLException, IOException {
 //		
@@ -197,9 +196,8 @@ public class MembersSignInController {
 //		
 //		System.out.println( "file" +file);
 //			
-//        // profile 파일 저장
-//		if(file == null) {
-//			mem.setProfile("user.jpg");
+//        // profile 파일 저장 -- 수정
+//		if(file == null || file.isEmpty()) {
 //			mem.setProfile(memId+".jpg");
 //		}else {
 //			String savedFileName = fileService.getProfile(memId, file);
@@ -209,17 +207,15 @@ public class MembersSignInController {
 //		
 //		mem.setName(name);
 //		
-//		System.out.println("originPw = " +originPw);
-//		
 //		System.out.println( "password = " + password);
 //		
-//		if( password != null) {
+//		if(password==null) {
+//			mem.setPw(mem.getPw());
+//
+//		}else {
 //			mem.setPw(password);
-//			
-//		} else if(originPw.equals(originPw)) {
-//			mem.setPw(originPw);
-//			
 //		}
+//			
 //		
 //		membersService.updateMember(mem);
 //		
@@ -247,23 +243,8 @@ public class MembersSignInController {
 		 return "redirect:/";
 	}
 
-//	//관리자 화면으로 이동
-//	@RequestMapping(value="/adPage", method = RequestMethod.GET)
-//	public String adMain() {
-//		return "member/adPage";
-//	}
-	
-	//관리자 - 전체회원조회
-//	@RequestMapping(value="/adAllView", method = RequestMethod.GET)
-//	public ModelAndView getMembers() throws SQLException {
-//		
-//		ModelAndView mv = new ModelAndView();
-//			
-////		mv.addObject("allData", memdao.getMembers());
-//		mv.setViewName("member/adAllView");
-//		
-//		return mv;
-//	}
+	//전체회원조회
+
 	
 	// 예외 처리에 대한 중복 코드를 분리해서 예외처리 전담 메소드
 	//http://localhost/team2_studyroom/WEB-INF/auth/error.jsp
