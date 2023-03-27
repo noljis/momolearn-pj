@@ -1,6 +1,7 @@
 package com.momolearn.controller;
 
 
+import java.io.IOException;
 import java.net.URLDecoder;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -19,10 +20,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.momolearn.exception.MessageException;
 import com.momolearn.model.dto.MembersDTO;
-import com.momolearn.model.entity.Members;
 import com.momolearn.model.service.FileService;
 import com.momolearn.model.service.MembersService;
 
