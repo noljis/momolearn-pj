@@ -49,7 +49,7 @@
                                     <a href="${pageContext.request.contextPath}/applyteacher/applylist" class="dropdown-item">강사 신청 목록</a>
                                 </c:when>
                                 <c:when test="${sessionScope.members.grade == 'teacher'}">
-                                    <a href="${pageContext.request.contextPath}/lectures/uploadcheck"
+                                    <a href="${pageContext.request.contextPath}/lectures/upload-check"
                                         class="dropdown-item">강의 등록</a>
                                 </c:when>
                                 <c:when test="${sessionScope.members.grade == 'student'}">
