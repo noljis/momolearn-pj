@@ -137,12 +137,12 @@ public class MembersService {
     
     //본인 프로필 수정 (미확인)
 //    @Transactional
-//    public MembersDTO updateMember (Members members) throws SQLException {
+//    public void updateMember (MembersDTO members) throws SQLException {
 //    	
 //        try {
+//        	Members mem = mapper.map(members, Members.class); //엔티티로
 //        	
-//            Members updateMember = membersRepository.save(members);
-//            return mapper.map(updateMember, MembersDTO.class);
+//            membersRepository.save(mem);
 //            
 //        } catch (Exception e) {
 //        	
@@ -150,8 +150,6 @@ public class MembersService {
 //            throw new SQLException("Failed to update member.");
 //        }
 //    }
-//	
-
     
     //회원 한명 삭제  (확인)
     @Transactional
@@ -169,18 +167,7 @@ public class MembersService {
             throw new SQLException("Failed to delete member.");
         }
     }
-
 	
-	//관리자 - 모든 회원 검색
-//	public List<Members> getAllMembers() {
-//		return membersRepository.findAll();
-//	}
-	
-	//관리자 프로필 수정 -- 회원정보 수정이랑 같이 쓸지?!
-//    public boolean adminUpdate() throws SQLException {
-//		return false ;
-//		
-//	}
-    
+	//모든 회원 검색
 
 }

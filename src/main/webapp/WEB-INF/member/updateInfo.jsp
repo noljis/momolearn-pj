@@ -59,35 +59,16 @@
                         
                         <tr>
                             <!-- 2 -->
-                            <td>기존 비밀번호</td>
+                            <td>비밀번호</td>
                             <td>
-                            	<input class="updateInfo" type="password" id="originPw" name="originPw" oninput="passConfirm()" required>
+                          		<div style="display: none;" id="newPw">
+                            		<input class="updateInfo" type="password" id="password" name="password" value="" oninput="passConfirm()">
+                            	</div>
                             	<span id="passResult"></span>
                             	<input type="button"  onclick="onUpdate()" value="수정">
                             	<input type="button"  onclick="onCancle()" value="취소">
                             </td>
                         </tr>
-                       	<tr>
-                            <!-- 3 -->
-                            <td>새 비밀번호</td>
-    						<td>
-	    						<div style="display: none;" id="newPw1">
-	    							<input class="updateInfo" type="password" id="password" name="password" oninput="checkPassword1()" >
-	    							<span id="checkResult1"></span>
-	    						</div>
-    						</td>
-                        </tr>
-                        
-                        <tr>
-                            <!-- 4 -->
-                            <td>새 비밀번호 확인</td>
-                            <td>
-	                            <div style="display: none;" id="newPw2">
-	                            	<input class="updateInfo" type="password" id="password2" name="password2" oninput="checkPassword2()" >
-	                            	<span id="checkResult2"></span>
-	                            </div>
-                            </td>
-                        </tr>                      
                         <tr>
                             <!-- 5 -->
                             <td>이름</td>
@@ -110,7 +91,7 @@
                             <td>프로필사진</td>
                             <td>						
                             	<div class="mb-3">
-									<input class="form-control" type="file" id="profile" name="file">
+									<input class="form-control" type="file" id="profile" name="file" value="">
 								</div>
 							</td>
                         </tr>                        
@@ -136,24 +117,27 @@
 	<jsp:include page="/separate/footer.jsp"></jsp:include>
 	
 	<script>
-	const savedPw = "${members.pw}";
-	var check1 = false; 
-	var check2 = false;
-	var check3 = false;
+	const savedPw = "${members.pw}"; //db저장된 기존 비번
+	var check1 ; 
+	
+	var passwordInput = document.getElementById("password"); //input에 입력될 비번
+	passwordInput.value = null; // 값이 null로 설정됩니다.
+
 	
 	function passConfirm() {
 		
-		const inputPw = document.getElementById("originPw").value;
+		const inputPw = document.getElementById("password").value;
 		
 		if (inputPw === "") {
 		 	document.getElementById("passResult").innerHTML = "";
 		
 	 	} else if (inputPw === savedPw) {
-			document.getElementById("passResult").innerHTML = "비밀번호가 일치합니다.";
-			check1 = true;
+			document.getElementById("passResult").innerHTML = "동일한 비밀번호로 변경 할 수 없습니다.";
+			check1 = false;
 			
 		} else {
-			document.getElementById("passResult").innerHTML = "비밀번호가 일치하지 않습니다.";
+			document.getElementById("passResult").innerHTML = "사용가능";
+			check1 = true;
 		}
 		
 		checkAllTrue();
@@ -161,57 +145,22 @@
 	}
 	
 	function onUpdate() {
-		
-	    document.getElementById("newPw1").style.display = "";
-	    document.getElementById("newPw2").style.display = "";
-		
+
+	    document.getElementById("newPw").style.display = "";
 	}
 	
 	function onCancle() {
-		
-	    document.getElementById("newPw1").style.display = "none";
-	    document.getElementById("newPw2").style.display = "none";
-		
+	    document.getElementById("newPw").style.display = "none"; 
+		/* history.back(); */
 	}
 	
- 	function checkPassword1() {
- 		
-		const password = document.getElementById("password").value;
-		const password2 = document.getElementById("password2").value;
-		
-		if (password === savedPw) {
-			document.getElementById("checkResult1").innerHTML = "기존 비밀번호와 일치합니다. 다시 입력해주세요.";
-			
-		}else {
-			document.getElementById("checkResult1").innerHTML = "사용가능한 비밀번호입니다.";
-			check2 = true;
-		}
-		checkAllTrue();
-	}
-	
- 	function checkPassword2() {
-	
-		const password = document.getElementById("password").value;
-		const password2 = document.getElementById("password2").value;
-		
-		if (password !== password2){
-			document.getElementById("checkResult2").innerHTML = "비밀번호가 일치하지 않습니다.";
-			
-		} else {
-			document.getElementById("checkResult2").innerHTML = "비밀번호가 일치합니다.";
-			check3 = true;
-		}
-		checkAllTrue();
-	}	 
+ 
  	
 	function checkAllTrue() {
 		if (check1) {
 			document.getElementById("f").submit();
 		}
 		
-		else if (check1 && check2 && check3) {
-			document.getElementById("f").submit();
-		}
 	}
 	
 	</script>

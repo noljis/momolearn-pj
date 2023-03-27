@@ -98,7 +98,10 @@
                             <td colspan="2" align="center">
 	                            <input class="btnBox" type="button" value="수정하기" onclick="location.href='${pageContext.request.contextPath}/member/updatepage?memId=${members.memId}'">&nbsp;
 								<c:if test="${members.grade ne 'admin'}">
-									<button class="btnBox" id="delete_btn" onclick='location.href="${pageContext.request.contextPath}/member/delete/${members.memId}"'> 탈퇴하기</button>
+
+									<%-- <button class="btnBox" id="delete_btn" onclick='location.href="${pageContext.request.contextPath}/member/delete/${members.memId}"'>  탈퇴하기</button> --%>
+	                				<button class="btnBox" id="delete_btn" onclick='confirmDelete("${pageContext.request.contextPath}/member/delete/${members.memId}")'> 탈퇴하기</button>
+
 	                			</c:if>	
                             </td>
                         </tr>
