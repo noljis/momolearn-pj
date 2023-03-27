@@ -1,84 +1,74 @@
 package com.momolearn;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.time.LocalDateTime;
-
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.mock.web.MockHttpSession;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.momolearn.model.CommentRepository;
-import com.momolearn.model.MembersRepository;
-import com.momolearn.model.entity.Board;
-import com.momolearn.model.entity.Comment;
-import com.momolearn.model.entity.Members;
-import com.momolearn.model.service.CommentService;
-import com.momolearn.model.service.MembersService;
-
-@ExtendWith(SpringExtension.class)
 @SpringBootTest
+@AutoConfigureMockMvc
 class MomolearnApplicationTests {
 	
-	@Autowired MembersRepository membersRepository;
-	@Autowired MembersService membersService;
-	@Autowired CommentRepository commentRepository;
-	@Autowired CommentService commentService;
 
 
+//	
+//	@Autowired MembersRepository membersRepository;
+//	@Autowired MembersService membersService;
+//
+//
 	@Autowired
 	private WebApplicationContext controller;
-	
-	private MockHttpSession session;
-	
+//	
+//	private MockHttpSession session;
+//	
 	private MockMvc mock;
+	
+//	@MockBean
+//	private LecturesRepository lecturesRepository;
+//	@MockBean
+//	private CoursesRepository coursesRepository;
+//	@MockBean
+//	private CategoryRepository categoryRepository;
+//	@MockBean
+//	private CategoryLectureRepository categoryLectureRepository;
+//	@MockBean
+//	private LecturesService lecturesService;
+//	@MockBean
+//	private TeachersService teachersService;
+//	@MockBean
+//	private FileService fileService;
 	
 	@BeforeEach
 	public void init() {
 		mock = MockMvcBuilders.webAppContextSetup(controller).build();
 	}
 	
-	@AfterEach
-	public void clear(){
-	    session.clearAttributes();
-	    session = null;
-	}
-	
-	
 //	@Test
-//	@WithMockUser(username="test03", roles={"USER"})
-//	public void 댓글등록() throws Exception {
+//	void uploadCoursesTest() throws Exception {
 //		
-//		session = new MockHttpSession();
-//		session.setAttribute("id", "test03");
-//		
-//		mock.perform(post("/board/1/comment").param("cmtContent", "댓내용").param("id", "test03").param("password", "1234")
-//				.session(session))
-//		.andExpect(status().isOk())
-//		.andDo(print());
-//		
+//		mock.perform(post("/lectures/upload-course")
+//				.param("lectureId", "1", "1", "1")
+//			    .param("title", "Title1", "Title2", "Title3")
+//			    .param("time", "12:34", "13:45", "14:56")
+//			    .param("url", "https://example.com/1", "https://example.com/2", "https://example.com/3"))
+//				.andExpect(status().isOk())
+//			    .andDo(print())
+//		        .andExpect(result -> {
+//		            if(result.getResolvedException() instanceof NotExistException){
+//		                throw result.getResolvedException();
+//		            }
+//        });
 //	}
-	@WithMockUser(username="test04", roles={"USER"})
-	@Test
-	public void 조회() throws Exception{
-		Members member = new Members();
-		member.setMemId("test04");
-		Board board = new Board("community","글제목","모집","글내용",member,0);
-		Comment cmt = new Comment(1,board,member,"내용입니다",LocalDateTime.now());
-		mock.perform(get("/board/2/comment")).andExpect(status().isOk()).andDo(print());
-	}
-
+//	
+//	@AfterEach
+//	public void clear(){
+//	    session.clearAttributes();
+//	    session = null;
+//	}
+//
 //	@Test
 //	@WithMockUser(username="test04", roles={"USER"})
 //	void contextLoads() throws Exception {
@@ -144,17 +134,6 @@ class MomolearnApplicationTests {
 //	
 //	private MockMvc mock;
 //	
-//	@BeforeEach
-//	public void init() {
-//		mock = MockMvcBuilders.webAppContextSetup(controller).build();
-//	}
-//	
-//	@AfterEach
-//	public void clear(){
-//	    session.clearAttributes();
-//	    session = null;
-//	}
-//
 //	@Test
 //	@WithMockUser(username="test04", roles={"USER"})
 //	void contextLoads() throws Exception {
@@ -177,8 +156,6 @@ class MomolearnApplicationTests {
 //			.andDo(print());
 //		
 //	}
-	
-	
 	
 
 }
