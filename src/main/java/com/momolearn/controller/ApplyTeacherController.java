@@ -14,6 +14,7 @@ import com.momolearn.exception.NotExistException;
 import com.momolearn.model.dto.ApplyTeacherDTO;
 import com.momolearn.model.dto.ApplyTeacherDTOList;
 import com.momolearn.model.dto.MembersDTO;
+import com.momolearn.model.entity.ApplyTeacher;
 import com.momolearn.model.entity.Members;
 import com.momolearn.model.service.ApplyTeacherService;
 import com.momolearn.model.service.MembersService;
@@ -51,18 +52,18 @@ public class ApplyTeacherController {
 	// 회원 - 강사 신청
 	// members id를 조회해서 있으면 게시판 글이 뜨고 없으면 게시판 글 안뜸
 	@GetMapping(value = "/myapplylist")
-	public String myApplyList(Model model, @ModelAttribute("members") Members members) throws NotExistException {
+	public String myApplyList(Model model, @ModelAttribute("members") MembersDTO members) throws NotExistException {
 
-		MembersDTO member = membersService.getOneMember(members.getMemId());
-
-		if (members.getApplyTeacher() != null) {
+		ApplyTeacher applyteacher = applyTeacherService.getOneApply(members.getMemId());
+		
+		if (applyteacher != null) {
 			ApplyTeacherDTO apply = applyTeacherService.read(members.getMemId()); 
 			System.out.println(apply);
 			model.addAttribute("apply", apply);
 		}
 		
 		System.out.println(members);
-		model.addAttribute("member", member);
+		model.addAttribute("member", members);
 
 		return "teachers/at-mylist";
 	}

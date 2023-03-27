@@ -1,18 +1,15 @@
 package com.momolearn;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.List;
-
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
-
-import com.momolearn.model.ApplyTeacherRepository;
-import com.momolearn.model.entity.ApplyTeacher;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 @SpringBootTest
+@AutoConfigureMockMvc
 class MomolearnApplicationTests {
 	
 
@@ -22,16 +19,48 @@ class MomolearnApplicationTests {
 //	@Autowired MembersService membersService;
 //
 //
-//	@Autowired
-//	private WebApplicationContext controller;
+	@Autowired
+	private WebApplicationContext controller;
 //	
 //	private MockHttpSession session;
 //	
-//	private MockMvc mock;
-//	
-//	@BeforeEach
-//	public void init() {
-//		mock = MockMvcBuilders.webAppContextSetup(controller).build();
+	private MockMvc mock;
+	
+//	@MockBean
+//	private LecturesRepository lecturesRepository;
+//	@MockBean
+//	private CoursesRepository coursesRepository;
+//	@MockBean
+//	private CategoryRepository categoryRepository;
+//	@MockBean
+//	private CategoryLectureRepository categoryLectureRepository;
+//	@MockBean
+//	private LecturesService lecturesService;
+//	@MockBean
+//	private TeachersService teachersService;
+//	@MockBean
+//	private FileService fileService;
+	
+	@BeforeEach
+	public void init() {
+		mock = MockMvcBuilders.webAppContextSetup(controller).build();
+	}
+	
+//	@Test
+//	void uploadCoursesTest() throws Exception {
+//		
+//		mock.perform(post("/lectures/upload-course")
+//				.param("lectureId", "1", "1", "1")
+//			    .param("title", "Title1", "Title2", "Title3")
+//			    .param("time", "12:34", "13:45", "14:56")
+//			    .param("url", "https://example.com/1", "https://example.com/2", "https://example.com/3"))
+//				.andExpect(status().isOk())
+//			    .andDo(print())
+//		        .andExpect(result -> {
+//		            if(result.getResolvedException() instanceof NotExistException){
+//		                throw result.getResolvedException();
+//		            }
+//        });
 //	}
 //	
 //	@AfterEach
@@ -105,17 +134,6 @@ class MomolearnApplicationTests {
 //	
 //	private MockMvc mock;
 //	
-//	@BeforeEach
-//	public void init() {
-//		mock = MockMvcBuilders.webAppContextSetup(controller).build();
-//	}
-//	
-//	@AfterEach
-//	public void clear(){
-//	    session.clearAttributes();
-//	    session = null;
-//	}
-//
 //	@Test
 //	@WithMockUser(username="test04", roles={"USER"})
 //	void contextLoads() throws Exception {

@@ -129,5 +129,13 @@ public class ApplyTeacherService {
 		return mapper.map(applyTeacher, ApplyTeacherDTO.class);
 
 	}
+	
+	//id로 강사승인신청 엔티티 불러오기
+	public ApplyTeacher getOneApply(String id) throws NotExistException {
+
+		Members member = membersRepository.findById(id).orElseThrow(() -> new NotExistException("해당 회원을 찾을 수 없습니다."));
+
+		return member.getApplyTeacher();
+	}
 
 }
