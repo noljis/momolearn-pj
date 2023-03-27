@@ -16,7 +16,6 @@
     <jsp:include page="/separate/head.jsp"></jsp:include>
 	<link href="${pageContext.request.contextPath}/css/write.css" rel="stylesheet">
 </head>
-
 <body>
 
 	<jsp:include page="/separate/header2.jsp"></jsp:include>
@@ -89,7 +88,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputdMembersMemId">작성자</label>
-                                    <input class="form-control" id="membersMemId" name="membersMemId" type="text" value="test01" readonly>
+                                    <input class="form-control" id="membersMemId" name="membersMemId" type="text" value="${members.memId}" readonly>
                                 </div>
                             </div>
                             <!-- Form Row        -->

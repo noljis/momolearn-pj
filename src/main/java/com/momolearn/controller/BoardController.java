@@ -25,7 +25,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.momolearn.exception.NotExistException;
 import com.momolearn.model.dto.BoardDTO;
 import com.momolearn.model.dto.BoardSaveDTO;
+import com.momolearn.model.dto.CommentDTO;
 import com.momolearn.model.service.BoardService;
+import com.momolearn.model.service.CommentService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,6 +39,7 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardController {
 	
 	private final BoardService boardService;
+	private final CommentService commentService;
 	
 	
 	//모든 게시글 목록
@@ -93,17 +96,20 @@ public class BoardController {
 		System.out.println("read()------------");
 		//조회
 		BoardDTO dto = boardService.read(comNo);
+		//댓글조회
+		List<CommentDTO> cmtList = commentService.readComment(comNo);
 		//조회수증가
 		boardService.increaseViewCount(comNo);
 		
 		model.addAttribute("dto", dto);
+		model.addAttribute("cmtList", cmtList);
 		model.addAttribute("localDateTimeFormat", new SimpleDateFormat("yyyy-MM-dd hh:mm"));
 		return "board/read";
 	}
 	
 	//게시글 수정화면으로 이동
 	@GetMapping("/updateForm/{comNo}")
-	public String updateForm(@PathVariable int comNo, Model model) throws NotExistException{
+	public String updateForm(@PathVariable int comNo,  Model model) throws NotExistException{
 		System.out.println("updateForm()----------------");
 		model.addAttribute("dto", boardService.read(comNo));
 		return "board/updateForm";
@@ -111,15 +117,17 @@ public class BoardController {
 	
 	//게시글 수정
 	@PutMapping("/{comNo}")
-	public String update(@PathVariable int comNo, @Valid @ModelAttribute BoardSaveDTO dto, BindingResult bindingResult) throws NotExistException{
+	public String update(@PathVariable int comNo, @Valid BoardSaveDTO dto, BindingResult bindingResult) throws NotExistException{
 		System.out.println("update()------------------");
 		
-		//유효성 검증(입력 NotNull)
+		//유효성 검증
 		if(bindingResult.hasErrors()) {
 			//에러를 list에 저장
 			List<ObjectError> errorList = bindingResult.getAllErrors();
-			errorList.forEach(e -> System.out.print(e));
-			return "board/updateForm";
+			for(ObjectError error : errorList) {
+				log.info("수정 실패: "+error.getDefaultMessage());
+				throw new NotExistException(error.getDefaultMessage());
+			}
 		}
 		
 		boardService.update(comNo, dto);
@@ -129,7 +137,7 @@ public class BoardController {
 	
 	//게시글 삭제
 	@DeleteMapping("/{comNo}")
-	public String delete(@PathVariable int comNo) {
+	public String delete(@PathVariable int comNo) throws NotExistException {
 		System.out.println("delete() ---------");
 		boardService.delete(comNo);
 		return "redirect:/board";
@@ -138,8 +146,10 @@ public class BoardController {
 	
 	
 	@ExceptionHandler
-	public String exHandler(NotExistException e) {
+	public String exHandler(NotExistException e, Model model) {
 		e.printStackTrace();
-		return "redirect:404.html"; //임시
+		model.addAttribute("errorMsg", e.getMessage());
+		return "error";
 	}
+	
 }

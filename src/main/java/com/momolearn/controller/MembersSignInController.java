@@ -1,6 +1,7 @@
 package com.momolearn.controller;
 
 
+import java.net.URLDecoder;
 import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -46,7 +47,7 @@ public class MembersSignInController {
 	//로그인 (확인)
 	@PostMapping(value = "/login", produces = "application/json;charset=UTF-8")
 	public String login(Model sessionData, @RequestParam("memId") String memId, 
-						@RequestParam("password") String password) throws Exception {
+						@RequestParam("password") String password, @RequestParam String returnUrl) throws Exception {
 		
 		Members members = membersService.loginMember(memId, password);
 		System.out.println("----" + members);
@@ -54,8 +55,11 @@ public class MembersSignInController {
 		if (members != null) { // 로그인성공
 			System.out.println("id확인 " + memId);
 			sessionData.addAttribute("members", members); // 세션에 프로필 저장
-
-			return "redirect:/"; // 로그인 후 메인화면
+			
+			if(returnUrl!=null) {
+				return "redirect:"+URLDecoder.decode(returnUrl,"UTF-8");
+			}
+			return "redirect:/";
 			
 		} else {
 			
