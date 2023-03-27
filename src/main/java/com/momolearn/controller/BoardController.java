@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -26,41 +25,35 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.momolearn.exception.NotExistException;
 import com.momolearn.model.dto.BoardDTO;
 import com.momolearn.model.dto.BoardSaveDTO;
-import com.momolearn.model.entity.Board;
 import com.momolearn.model.service.BoardService;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("board")
 public class BoardController {
 	
-	@Autowired
-	private BoardService boardService;
+	private final BoardService boardService;
+	
 	
 	//모든 게시글 목록
-//	@GetMapping("/")
-//	public String list(Model model, @PageableDefault(sort = "comNo", direction = Sort.Direction.DESC) Pageable pageable) {
-//		System.out.println("list()---------------");
-//		model.addAttribute("list", boardService.findAll());
-//		boardService.findAll().forEach(e->System.out.print(e));
-//		return "forward:/page/board/list.jsp";
-//	}
-	
-	//모든 게시글 목록+페이징
-	//https://dev-coco.tistory.com/114
 	@GetMapping("/")
 	public String list(Model model, @PageableDefault(sort = "comNo", direction = Sort.Direction.DESC) Pageable pageable) {
 		System.out.println("list()---------------");
 		
-		Page<Board> listPage = boardService.paging(pageable);
+		Page<BoardDTO> listPage = boardService.paging(pageable);
+		int nowPage = listPage.getPageable().getPageNumber()+1; //pagable은 0부터 시작
+		int startPage = Math.max(1, listPage.getPageable().getPageNumber() -2);
+		int endPage = Math.min(listPage.getPageable().getPageNumber() +2, listPage.getTotalPages());
 		
 		model.addAttribute("list", listPage.getContent());
-		model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
-		model.addAttribute("next", pageable.next().getPageNumber());
-		model.addAttribute("hasNext", listPage.hasNext());
-		model.addAttribute("hasPrev", listPage.hasPrevious());
+		model.addAttribute("listPage", listPage);
+		model.addAttribute("nowPage", nowPage);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("endPage", endPage);
 		
 		return "board/list";  
 	}
@@ -71,7 +64,8 @@ public class BoardController {
 		return "forward:/page/board/writeForm.jsp";
 	}
 	
-	//게시글 작성 produces = "application/json;charset=utf-8"
+	//게시글 작성
+	//https://velog.io/@serendipity-dev/%EC%8A%A4%ED%94%84%EB%A7%81-%EB%B6%80%ED%8A%B8-%EA%B2%8C%EC%8B%9C%ED%8C%90-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-9-%EC%9B%B9-%EA%B3%84%EC%B8%B5-%EA%B0%9C%EB%B0%9C-4
 	@PostMapping
 	public String write(@Valid BoardSaveDTO dto, BindingResult bindingResult) throws NotExistException{
 		System.out.println("write()---------------");
@@ -84,14 +78,14 @@ public class BoardController {
 			for(ObjectError error : errorList) {
 				log.info("등록 실패: "+error.getDefaultMessage());
 			}
-			errorList.forEach(e -> System.out.print(e));
 			
-			return "forward:/board/";
+			return "forward:/page/board/writeForm.jsp";
 		}
 		
 		int comNo = boardService.save(dto); //->해당 게시글로 가게할지?고민중
 		return "redirect:/board/";
 	}
+	
 	
 	//게시글 보기 + 조회수증가
 	@GetMapping("/{comNo}")
