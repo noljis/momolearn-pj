@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<% System.out.println("main.jsp =========================="); %>
 
 <!DOCTYPE html>
 <html>
@@ -14,11 +15,12 @@
 </head>
 <body>
 
-	<jsp:include page="/separate/head.jsp"></jsp:include> 
+test
+	<%-- <jsp:include page="/separate/head.jsp"></jsp:include> --%>
 	
 	 <jsp:include page="/separate/header.jsp"></jsp:include>
 
- 
+  <%--
 	<!-- searchList: 스터디 검색시 비동기로 출력-->
 	<div id="searchList">
 		<!-- Carousel Start -->
@@ -87,6 +89,6 @@
 	<!-- Back to Top -->
 	<jsp:include page="/separate/script.jsp"></jsp:include>
 	<jsp:include page="/separate/footer.jsp"></jsp:include> 
-	
+--%>
 </body>
 </html>

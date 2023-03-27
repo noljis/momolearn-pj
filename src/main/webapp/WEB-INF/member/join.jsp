@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta content="" name="keywords">
 <meta content="" name="description">
-<title>로그인 페이지</title>
+<title>회원가입 페이지</title>
 
 	<script src="https://kit.fontawesome.com/f51a30e87b.js" crossorigin="anonymous"></script>
 
@@ -21,7 +21,7 @@
 </head>
 <body>
 
-    <jsp:include page="/separate/header3.jsp"></jsp:include>
+    <jsp:include page="/separate/header4.jsp"></jsp:include>
 
 	<div class="wrap">
 		
@@ -94,7 +94,7 @@
     
     <script>
     
-    var check ; // 중복 체크 여부 확인 
+    var check = false; // 중복 체크 여부 확인 
     
 	//id 중복체크
 	function dedupId() {
@@ -109,6 +109,7 @@
 			 validate(resData['data']);
 		 })
 	}
+    
 	//사용여부
 	function validate(val) {
 		const memId = document.getElementById("memId").value;
@@ -123,9 +124,7 @@
 				return;
 				
 			}else if(val == true) {
-				alert('사용가능한 아이디 입니다.')
-				document.getElementById("submit").disabled=false;
-				document.getElementById("memId").readOnly=true;
+				alert('사용가능한 아이디 입니다.');
 				check = true;
 				
 			}else {
@@ -166,11 +165,13 @@
 		}
 		
 		//중복 체크 확인
-		if(check ==false){
+		if(check == false){
 			alert("아이디 중복확인 해주세요.");
 		}
 		
-		f.submit();
+		if(check == true){
+			f.submit();
+		}
 		
 	}
 	</script>

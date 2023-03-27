@@ -3,18 +3,18 @@ package com.momolearn.model.service;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.momolearn.exception.MessageException;
 import com.momolearn.exception.NotExistException;
 import com.momolearn.model.MembersRepository;
 import com.momolearn.model.dto.MembersDTO;
 import com.momolearn.model.entity.Members;
-
-import lombok.RequiredArgsConstructor;
 
 @Service
 public class MembersService {
@@ -26,15 +26,27 @@ public class MembersService {
 
 	//회원가입
     @Transactional
-    public Members memJoin(Members members) throws SQLException {
+    public void memJoin(MembersDTO members) throws SQLException, MessageException {
     	
-        try {
-            Members savedMembers = membersRepository.save(members);
-            return savedMembers;
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new SQLException("Failed to join member.");
-        }
+    	
+		try {
+			
+			Members mem = mapper.map(members, Members.class);
+			Optional<Members> memId = membersRepository.findById(mem.getMemId());
+			
+			if(memId.isPresent()) {
+				throw new MessageException("이미 존재하는 아이디입니다.");
+			}else {
+				membersRepository.save(mem);
+			}
+	        
+			//findById로 찾으면 이미 있는 Id니까 예외 발생/ 없으면 save
+//			Members savedMembers = membersRepository.save(mem);
+			
+		 } catch (Exception e) {
+			e.printStackTrace();
+			throw new SQLException("Failed to join member.");
+		}
     }
     
     //id중복체크
@@ -124,38 +136,39 @@ public class MembersService {
 	}
     
     //본인 프로필 수정 (미확인)
-//  @Transactional
-//  public void deleteMember(String memId) throws SQLException {
-//      try {
-//          Optional<Members> membersOptional = membersRepository.findById(memId);
-//          if (membersOptional.isPresent()) {
-//              Members members = membersOptional.get();
-//              membersRepository.delete(members);
-//          } else {
-//              System.out.println("이미 탈퇴처리가 완료된 회원입니다.");
-//          }
-//      } catch (Exception e) {
-//          e.printStackTrace();
-//          throw new SQLException("Failed to delete member.");
-//      }
-//  }
+    @Transactional
+    public MembersDTO updateMember (Members members) throws SQLException {
+    	
+        try {
+        	
+            Members updateMember = membersRepository.save(members);
+            return mapper.map(updateMember, MembersDTO.class);
+            
+        } catch (Exception e) {
+        	
+            e.printStackTrace();
+            throw new SQLException("Failed to update member.");
+        }
+    }
+	
+
     
     //회원 한명 삭제  (미확인)
-//    @Transactional
-//    public void deleteMember(String memId) throws SQLException {
-//        try {
-//            Optional<Members> membersOptional = membersRepository.findById(memId);
-//            if (membersOptional.isPresent()) {
-//                Members members = membersOptional.get();
-//                membersRepository.delete(members);
-//            } else {
-//                System.out.println("이미 탈퇴처리가 완료된 회원입니다.");
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            throw new SQLException("Failed to delete member.");
-//        }
-//    }
+    @Transactional
+    public void deleteMember(String memId) throws SQLException {
+        try {
+            Optional<Members> member = membersRepository.findById(memId);
+            if (member.isPresent()) { //null이 아니면
+            	Members members = member.get();
+                membersRepository.delete(members);
+            } else {
+                System.out.println("이미 탈퇴처리가 완료된 회원입니다.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new SQLException("Failed to delete member.");
+        }
+    }
 
 	
 	//관리자 - 모든 회원 검색

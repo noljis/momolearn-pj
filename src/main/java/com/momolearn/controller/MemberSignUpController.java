@@ -30,36 +30,36 @@ public class MemberSignUpController {
 	@Autowired
 	private FileService fileService;
     
-	// 회원가입 후 정보 보기 
-	@PostMapping(value = "member/join", produces = "application/json; charset=UTF-8")
-	public String memInsert(Model sessionData, Members members, @RequestParam("memId") String memId
-						,@RequestParam("password") String pw, @RequestParam("name") String name, 
-						@RequestParam("email") String email,
-						@RequestParam("file") MultipartFile file) throws SQLException, IOException {
-		
-        // profile 파일 저장
-		if(file == null) {
-			members.setProfile("user.jpg");
-		}else {
-			String savedFileName = fileService.getProfile(memId, file);
-			members.setProfile(savedFileName);
-			
-		}
-        
-		members.setMemId(memId);
-		members.setEmail(email);
-		members.setGrade("student");
-		members.setName(name);
-		members.setPw(pw);
-        members.setRegdate(LocalDateTime.now());
-		
-		Members newmem = membersService.memJoin(members);
-		
-		sessionData.addAttribute("members", members); // 회원가입 정보를 모델에 담아서 리턴
-
-		return "member/joinInfo";
-	}
-	
+//	// 회원가입 후 정보 보기 
+//	@PostMapping(value = "member/join", produces = "application/json; charset=UTF-8")
+//	public String memInsert(Model sessionData, Members members, @RequestParam("memId") String memId
+//						,@RequestParam("password") String pw, @RequestParam("name") String name, 
+//						@RequestParam("email") String email,
+//						@RequestParam("file") MultipartFile file) throws SQLException, IOException {
+//		
+//        // profile 파일 저장
+//		if(file == null) {
+//			members.setProfile("user.jpg");
+//		}else {
+//			String savedFileName = fileService.getProfile(memId, file);
+//			members.setProfile(savedFileName);
+//			
+//		}
+//        
+//		members.setMemId(memId);
+//		members.setEmail(email);
+//		members.setGrade("student");
+//		members.setName(name);
+//		members.setPw(pw);
+//        members.setRegdate(LocalDateTime.now());
+//		
+//		membersService.memJoin(members);
+//		
+//		sessionData.addAttribute("members", members); // 회원가입 정보를 모델에 담아서 리턴
+//
+//		return "member/joinInfo"; //String으로 처리돼서 화면이 넘어감...
+//	}
+//	
 	//아이디 중복 체크 (성공)
 	@PostMapping("member/checkOk")
 	public boolean dedupId( String memId) throws Exception {
