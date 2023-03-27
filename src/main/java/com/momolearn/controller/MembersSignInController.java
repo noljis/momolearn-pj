@@ -1,11 +1,10 @@
 package com.momolearn.controller;
 
 
-import java.io.IOException;
+import java.net.URLDecoder;
 import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.momolearn.model.dto.MembersDTO;
 import com.momolearn.model.entity.Members;
@@ -106,16 +104,20 @@ public class MembersSignInController {
 	}
     
 	//로그인 (확인)
-	@PostMapping(value = "/login", produces = "application/json;charset=UTF-8")
+	@PostMapping(value = "/login", produces = "application/json; charset=UTF-8")
 	public String login(Model sessionData, @RequestParam("memId") String memId, 
-						@RequestParam("password") String password) throws Exception {
+						@RequestParam("password") String password, @RequestParam String returnUrl) throws Exception {
 		
 		MembersDTO members = membersService.loginMember(memId, password);
 		
 		if (members != null) { // 로그인성공
 			sessionData.addAttribute("members", members); // 세션에 프로필 저장
 
-			return "forward:/WEB-INF/main.jsp"; // 로그인 후 메인화면
+			//댓글창에서 로그인할경우 로그인완료후 기존페이지로 이동
+			if(returnUrl!=null) {
+				return "redirect:"+URLDecoder.decode(returnUrl,"UTF-8");
+			}
+			return "redirect:/"; // 로그인 후 메인화면
 
 			
 		} else {

@@ -1,12 +1,27 @@
 package com.momolearn;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.time.LocalDateTime;
+
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mock.web.MockHttpSession;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import com.momolearn.model.LikesRepository;
+import com.momolearn.model.MembersRepository;
+import com.momolearn.model.entity.Board;
+import com.momolearn.model.entity.Members;
+import com.momolearn.model.service.LikesService;
+import com.momolearn.model.service.MembersService;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -14,15 +29,17 @@ class MomolearnApplicationTests {
 	
 
 
-//	
-//	@Autowired MembersRepository membersRepository;
-//	@Autowired MembersService membersService;
-//
-//
+	
+	@Autowired MembersRepository membersRepository;
+	@Autowired MembersService membersService;
+	@Autowired LikesRepository likesRepository;
+	@Autowired LikesService likesService;
+
+
 	@Autowired
 	private WebApplicationContext controller;
 //	
-//	private MockHttpSession session;
+	private MockHttpSession session;
 //	
 	private MockMvc mock;
 	
@@ -45,6 +62,7 @@ class MomolearnApplicationTests {
 	public void init() {
 		mock = MockMvcBuilders.webAppContextSetup(controller).build();
 	}
+	
 	
 //	@Test
 //	void uploadCoursesTest() throws Exception {

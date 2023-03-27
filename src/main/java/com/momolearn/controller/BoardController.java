@@ -21,18 +21,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.momolearn.exception.NotExistException;
 import com.momolearn.model.dto.BoardDTO;
 import com.momolearn.model.dto.BoardSaveDTO;
 import com.momolearn.model.dto.CommentDTO;
+import com.momolearn.model.entity.Members;
 import com.momolearn.model.service.BoardService;
 import com.momolearn.model.service.CommentService;
+import com.momolearn.model.service.LikesService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@SessionAttributes({"members"})
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("board")
@@ -40,7 +44,7 @@ public class BoardController {
 	
 	private final BoardService boardService;
 	private final CommentService commentService;
-	
+	private final LikesService likesService;
 	
 	//모든 게시글 목록
 	@GetMapping
@@ -90,9 +94,9 @@ public class BoardController {
 	
 	
 	
-	//게시글 보기 + 조회수증가
+	//게시글 보기 + 조회수증가 + 좋아요기능
 	@GetMapping("/{comNo}")
-	public String read(@PathVariable int comNo, Model model) throws NotExistException{
+	public String read(@PathVariable int comNo, Model model, @ModelAttribute("members") Members members) throws NotExistException{
 		System.out.println("read()------------");
 		//조회
 		BoardDTO dto = boardService.read(comNo);
@@ -100,9 +104,13 @@ public class BoardController {
 		List<CommentDTO> cmtList = commentService.readComment(comNo);
 		//조회수증가
 		boardService.increaseViewCount(comNo);
+		//좋아요기능
+		boolean check = likesService.checkLike(comNo, members.getMemId());
+		
 		
 		model.addAttribute("dto", dto);
 		model.addAttribute("cmtList", cmtList);
+		model.addAttribute("check", check);
 		model.addAttribute("localDateTimeFormat", new SimpleDateFormat("yyyy-MM-dd hh:mm"));
 		return "board/read";
 	}
