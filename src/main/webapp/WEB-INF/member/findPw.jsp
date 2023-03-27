@@ -40,7 +40,7 @@
 							onclick="blank()"> <input type="button" value="뒤로가기"
 							onclick="history.back()"> <input type="button"
 							value="메인화면으로"
-							onclick="location.href='${pageContext.request.contextPath}/index.html'">
+							onclick="location.href='${pageContext.request.contextPath}/'">
 					</p>
 				</div>
 			</form>

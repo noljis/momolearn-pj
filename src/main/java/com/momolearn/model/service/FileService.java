@@ -22,10 +22,10 @@ public class FileService {
 		String fileName = file.getOriginalFilename();
 		
 		//fileExtension: 확장자명
-	    String fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1);
+	    //String fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1);
 	    
 	    //savedFileName: 디렉토리에 저장될 파일명[유저id.확장자]
-	    String savedFileName = memId + "." + fileExtension;
+	    String savedFileName = memId + ".jpg" ;// + fileExtension;
 	    
 	    try {
 	        //프로필 사진 저장할 경로

@@ -49,44 +49,44 @@
                         <tr>
                             <!-- 1 -->
                             <td>아이디</td>
-                            <td>${members.memId }</td>
+                            <td>${member.memId }</td>
 
                         </tr>
                         
                         <tr>
                             <!-- 2 -->
                             <td>비밀번호</td>
-                            <td>${members.pw}</td>
+                            <td>${member.pw}</td>
 
                         </tr>
                         
                         <tr>
                             <!-- 3 -->
                             <td>이름</td>
-                            <td>${members.name }</td>
+                            <td>${member.name }</td>
                         </tr>
                         <tr>
                             <!-- 4 -->
                             <td>이메일</td>
-                            <td>${members.email }</td>
+                            <td>${member.email }</td>
                         </tr>
                         
                        <tr>
                        		<!-- 5 -->
                             <td>등급</td>
-                            <td>${members.grade }</td>
+                            <td>${member.grade }</td>
                         </tr>
                         
                        <tr>
                        		<!-- 5 -->
                             <td>프로필사진</td>
-                            <td>${members.profile }</td>
+                            <td>${member.profile }</td>
                         </tr>                        
 
 
                         <tr>
                             <td colspan="2" align="center">
-                                <a href="login.jsp">로그인 하러가기</a>
+                                <a href="${pageContext.request.contextPath}/member/loginView">로그인 하러가기</a>
                             </td>
                         </tr>
                     </table>

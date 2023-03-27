@@ -19,7 +19,7 @@
 	<jsp:include page="/separate/head.jsp"></jsp:include>
 </head>
 <body>
-	<jsp:include page="../../separate/header4.jsp"></jsp:include>
+	<jsp:include page="/separate/header4.jsp"></jsp:include>
 
 	<div class="wrap">
 		<div class="find">
@@ -37,7 +37,7 @@
 						<input type="submit" value="아이디찾기" id=findIdBtn onclick="blank()">
 						<input type="button" value="뒤로가기" onclick="history.back()">
 						<input type="button" value="메인화면"
-							onclick="location.href='${pageContext.request.contextPath}/page/index.html'">
+							onclick="location.href='${pageContext.request.contextPath}/'">
 					</p>
 				</div>
 			</form>

@@ -120,7 +120,7 @@
                             <td colspan="2" align="center">
 	                            <input class="btnBox" type="submit" value="수정하기" >&nbsp;
 				
-								<button class="btnBox" id="delete_btn" onclick='location.href="${pageContext.request.contextPath}/member/delete?id=${members.memId}"'> 탈퇴하기</button>
+								<button class="btnBox" type="reset" id="cancle" > 취소하기</button>
                             </td>
                         </tr>
                     </table>
