@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="tf" tagdir="/WEB-INF/tags"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -13,6 +14,7 @@
     <meta content="" name="description">
 
     <jsp:include page="/separate/head.jsp"></jsp:include>
+    <link href="${pageContext.request.contextPath}/css/read.css" rel="stylesheet">
 </head>
 
 <body>
@@ -38,7 +40,7 @@
                                 </div>
                                 <div class="detail">
                                     <span>작성일 <tf:formatDateTime value="${dto.comRegdate}" pattern="yyyy-MM-dd HH:mm" /></span>
-                                    <span style="float: right;">댓글 0</span>
+                                    <span style="float: right;">댓글 ${fn:length(cmtList)}</span>
                                     <span style="float: right;">추천 0</span>
                                     <span style="float: right;">조회 ${dto.comViewCount }</span>
                                 </div>
@@ -51,104 +53,104 @@
                     <div class="contact-form article-comment">
                         
                         <div class="container">
-                            <div class="be-comment-block">
-                                <h1 class="comments-title">댓글 (3)</h1>
-                                <div class="be-comment">
-                                    <div class="be-img-comment">	
-                                        <a href="blog-detail-2.html">
-                                            <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="be-ava-comment">
-                                        </a>
-                                    </div>
-                                    <div class="be-comment-content">
-                                        
-                                            <span class="be-comment-name">
-                                                <a href="blog-detail-2.html">Ravi Sah</a>
-                                                </span>
-                                            <span class="be-comment-time">
-                                                <i class="fa fa-clock-o"></i>
-                                                May 27, 2015 at 3:14am
-                                            </span>
-                            
-                                        <p class="be-comment-text">
-                                            Pellentesque gravida tristique ultrices. 
-                                            Sed blandit varius mauris, vel volutpat urna hendrerit id. 
-                                            Curabitur rutrum dolor gravida turpis tristique efficitur.
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="be-comment">
-                                    <div class="be-img-comment">	
-                                        <a href="blog-detail-2.html">
-                                            <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="" class="be-ava-comment">
-                                        </a>
-                                    </div>
-                                    <div class="be-comment-content">
-                                        <span class="be-comment-name">
-                                            <a href="blog-detail-2.html">Phoenix, the Creative Studio</a>
-                                        </span>
-                                        <span class="be-comment-time">
-                                            <i class="fa fa-clock-o"></i>
-                                            May 27, 2015 at 3:14am
-                                        </span>
-                                        <p class="be-comment-text">
-                                            Nunc ornare sed dolor sed mattis. In scelerisque dui a arcu mattis, at maximus eros commodo. Cras magna nunc, cursus lobortis luctus at, sollicitudin vel neque. Duis eleifend lorem non ant. Proin ut ornare lectus, vel eleifend est. Fusce hendrerit dui in turpis tristique blandit.
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="be-comment">
-                                    <div class="be-img-comment">	
-                                        <a href="blog-detail-2.html">
-                                            <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="" class="be-ava-comment">
-                                        </a>
-                                    </div>
-                                    <div class="be-comment-content">
-                                        <span class="be-comment-name">
-                                            <a href="blog-detail-2.html">Cüneyt ŞEN</a>
-                                        </span>
-                                        <span class="be-comment-time">
-                                            <i class="fa fa-clock-o"></i>
-                                            May 27, 2015 at 3:14am
-                                        </span>
-                                        <p class="be-comment-text">
-                                            Cras magna nunc, cursus lobortis luctus at, sollicitudin vel neque. Duis eleifend lorem non ant
-                                        </p>
-                                    </div>
-                                </div>
-                                <form class="form-block">
-                                    <div class="row">
-                                        <div class="col-xs-12 col-sm-6">
-                                            <div class="form-group fl_icon">
-                                                <div class="icon"><i class="fa fa-user"></i></div>
-                                                <input class="form-input" type="text" placeholder="Your name">
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-6 fl_icon">
-                                            <div class="form-group fl_icon">
-                                                <div class="icon"><i class="fa fa-envelope-o"></i></div>
-                                                <input class="form-input" type="text" placeholder="Your email">
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-12">									
-                                            <div class="form-group">
-                                                <textarea class="form-input" required="" placeholder="내용 입력"></textarea>
-                                            </div>
-                                        </div>
-                                        <a class="btn btn-primary pull-right">댓글 등록</a>
-                                    </div>
-                                </form>
+                            <div class="be-comment-block" >
+                                <h1 class="comments-title">댓글 ${fn:length(cmtList)}개</h1>
+                                <c:choose>
+	                                <c:when test="${empty cmtList}">
+		                                <p class="be-comment-text">
+			                                 등록된 댓글이 없습니다.
+			                            </p>
+	                                </c:when>
+	                                <c:otherwise>
+		                                <c:forEach items="${cmtList}" var="c">
+			                                <div class="be-comment" id="comment-block">
+			                                    <div class="be-img-comment">
+			                                        <a href="blog-detail-2.html">
+			                                            <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="be-ava-comment">
+			                                        </a>
+			                                    </div>
+			                                    <div class="be-comment-content">
+			                                        
+			                                            <span class="be-comment-name">
+			                                                <a href="blog-detail-2.html">${c.membersMemId}</a>
+			                                                </span>
+			                                            <span class="be-comment-time">
+			                                                <i class="fa fa-clock-o"></i>
+			                                                <tf:formatDateTime value="${c.cmtRegdate}" pattern="yyyy-MM-dd HH:mm" />
+			                                            </span>
+			                            
+			                                        <p class="be-comment-text">
+			                                            ${c.cmtContent}
+			                                        </p>
+			                                        <form class="collapse" id="text-updateCmt-${c.cmtNo}" name="updateForm" >
+														<input type="hidden" id="cmtNo" value="${c.cmtNo}" name="cmtNo">
+														<input type="hidden" id="comNo" value="${dto.comNo}" name="comNo">
+														<div class="form-group">
+														  <textarea class="form-input2" name="cmtContent" required>${c.cmtContent}</textarea> 
+														</div>
+														<button id="btn-updateCmt" class="btn btn-primary">수정하기</button>
+													</form>
+			                                    </div>
+			                                    <c:if test="${sessionScope.members.memId == c.membersMemId }">
+				                                    <div id="btn-putdelete" class="list-unstyled list-inline media-detail pull-right">
+							                            <a data-bs-toggle="collapse" href="#text-updateCmt-${c.cmtNo}" role="button" aria-expanded="false" aria-controls="text-updateCmt-${c.cmtNo}">수정</a>
+							                            <a id="btn-deleteCmt" type="button" style="color: red" onclick="deleteComment(${dto.comNo},${c.cmtNo})">삭제</a>
+							                        </div>
+						                        </c:if>
+			                                </div>
+			                                <br><hr>
+			                            </c:forEach>    
+	                                </c:otherwise>
+                                </c:choose>
+                                <c:choose>
+                                	<c:when test="${empty members}">
+                                		<form class="form-block">
+		                                    <div class="row">
+		                                        <div class="col-xs-12">									
+		                                            <div class="form-group">
+		                                                <textarea id="loginPlz" class="form-input" style="color: blue" readonly>댓글을 작성하려면 로그인 해주세요.(클릭시 로그인창으로 이동)</textarea>
+		                                            </div>
+		                                        </div>
+		                                    </div>
+		                                </form>
+                                	</c:when>
+                                	<c:otherwise>
+		                                <form class="form-block" >
+                                            <input id="boardComNo" type="hidden" value="${dto.comNo}">
+                                            <h1 class="comments-title">댓글 작성</h1>
+		                                    <div class="row">
+		                                        <div class="col-xs-12 col-sm-6">
+		                                            <div class="form-group fl_icon">
+		                                                <input class="form-input" id="membersMemId" type="text" value="${members.memId}" readonly>
+		                                            </div>
+		                                        </div>
+		                                        <div class="col-xs-12">									
+		                                            <div class="form-group">
+		                                                <textarea class="form-input" id="cmtContent" placeholder="내용 입력" required></textarea>
+		                                            </div>
+		                                        </div>
+		                                        <div>
+		                                        	<button id="btn-comment" type="button" class="btn btn-primary pull-right" >댓글 등록</button>
+		                                        	<!-- <button id="btn-refresh" type="button" style="float: right" class="btn btn-primary pull-right" ><i class='fas fa-sync'></i> 댓글</button> -->
+		                                        	
+		                                        </div>
+		                                    </div>
+		                                </form>
+	                                </c:otherwise>
+                                </c:choose>
                             </div>
                             </div>
                     </div>
 
-                    <button type="button" class="btn btn-primary" style="margin-top: 15px;" onclick="location.href='../board/'">목록</button>
+                    <button type="button" class="btn btn-primary" style="margin-top: 15px;" onclick="location.href='../board'">목록</button>
                     <div class="text-right mt-3" style="float: right;">
+                    <c:if test="${members.memId == dto.membersMemId}">
                         <button type="button" class="btn btn-primary" onclick="location.href='../board/updateForm/${dto.comNo}'">수정</button>&nbsp;
-                        <!-- <button id="btn-delete" class="btn btn-danger" >삭제</button>&nbsp; -->
                         <form id="delete_form" action="../board/${dto.comNo}" method="post"  style="float:left;margin:0;">
 					    <input type="hidden" name="_method" value="delete"/>
 					    <a onclick="if (confirm('정말로 삭제하시겠습니까?')) document.getElementById('delete_form').submit();" class="btn btn-danger">삭제</a>&nbsp;
 						</form>
-                        <!-- <button type="button" class="btn btn-default">Cancel</button>&nbsp; -->
+					</c:if>
                     </div>
                 </div>
             </div>
@@ -160,6 +162,7 @@
     <!-- Back to Top -->
 	<jsp:include page="/separate/script.jsp"></jsp:include>
 	<jsp:include page="/separate/footer.jsp"></jsp:include>
+	<script src="${pageContext.request.contextPath}/js/comment.js"></script>
 </body>
 
 </html>

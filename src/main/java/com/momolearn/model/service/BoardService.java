@@ -56,9 +56,10 @@ public class BoardService {
 	
 	//게시글 삭제
 	@Transactional
-	public void delete(int comNo) {
+	public void delete(int comNo) throws NotExistException {
 		System.out.println("delete() service --------------");
-		boardRepository.deleteById(comNo);
+		Board board = boardRepository.findById(comNo).orElseThrow(()->new NotExistException("해당 게시글은 존재하지 않습니다."));
+		boardRepository.delete(board);
 	}
 
 	//게시글 수정

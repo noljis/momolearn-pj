@@ -129,6 +129,10 @@ img {
 .contact-form .send {
     margin-top: 20px;
 }
+#submitComment {
+	float: right;
+}
+
 .px-btn {
     padding: 0 50px 0 20px;
     line-height: 60px;
@@ -311,5 +315,40 @@ img {
 
 .form-group textarea.form-input {
   height: 150px;
+}
+
+.form-input2 {
+  height: 100px;
+  width: 100%;
+  font-size: 13px;
+  color: gray;
+  font-weight: 400;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
+  border: 1px solid #edeff2;
+  border-radius: 3px;
+}
+
+#btn-putdelete {
+	color:#AAAAAA;
+	font-size:12px;
+	padding-right: 10px;
+	font-weight:600;
+	float: right;
+}
+
+#btn-putdelete a:hover {
+	text-decoration:underline;
+}
+
+#btn-putdelete li:last-child {
+	padding-right:0;
+}
+
+#btn-putdelete li i {
+	color:#666666;
+	font-size:15px;
+	margin-right:10px;
 }
 
