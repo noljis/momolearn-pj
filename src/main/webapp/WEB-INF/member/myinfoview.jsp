@@ -47,71 +47,65 @@
     <!-- Header End -->
 	
 	<!-- Info Start -->
-	    <!-- Form Start -->
-    <form id="sm" name="pej" method="post" onsubmit="return allCheck()" action="">
-        <div align="center">
-            <h2>내 정보</h2> <!-- class="nav-item nav-link" -->
+    <div align="center">
+        <h2>내 정보</h2> <!-- class="nav-item nav-link" -->
 
-            <div>
-                <div class="col-sm-5">
-                    <table class="table table-bordered">
+        <div>
+            <div class="col-sm-5">
+                <table class="table table-bordered">
 
-                        <tr>
-                            <!-- 1 -->
-                            <td>아이디</td>
-                            <td>${members.memId}</td>
+                    <tr>
+                        <!-- 1 -->
+                        <td>아이디</td>
+                        <td>${members.memId}</td>
 
-                        </tr>
-                        
-                        <tr>
-                            <!-- 2 -->
-                            <td>비밀번호</td>
-                            <td>${members.pw}</td>
-
-                        </tr>
-                        
-                        <tr>
-                            <!-- 3 -->
-                            <td>이름</td>
-                            <td>${members.name }</td>
-                        </tr>
-                        <tr>
-                            <!-- 4 -->
-                            <td>이메일</td>
-                            <td>${members.email }</td>
-                        </tr>
-                        
-                       <tr>
-                       		<!-- 5 -->
-                            <td>등급</td>
-                            <td>${members.grade }</td>
-                        </tr>
-                        
-                       <tr>
-                       		<!-- 5 -->
-                            <td>프로필사진</td>
-                            <td>${members.profile }</td>
-                        </tr>                        
+                    </tr>
+                    <tr>
+                        <!-- 3 -->
+                        <td>이름</td>
+                        <td>${members.name }</td>
+                    </tr>
+                    <tr>
+                        <!-- 4 -->
+                        <td>이메일</td>
+                        <td>${members.email }</td>
+                    </tr>
+                    
+                   <tr>
+                   		<!-- 5 -->
+                        <td>등급</td>
+                        <td>${members.grade }</td>
+                    </tr>
+                    
+                   <tr>
+                   		<!-- 5 -->
+                        <td>프로필사진</td>
+                        <td>${members.profile }</td>
+                    </tr>                        
 
 
-                        <tr>
-                            <td colspan="2" align="center">
-	                            <input class="btnBox" type="button" value="수정하기" onclick="location.href='${pageContext.request.contextPath}/member/updatepage?memId=${members.memId}'">&nbsp;
-								<c:if test="${members.grade ne 'admin'}">
-
-									<%-- <button class="btnBox" id="delete_btn" onclick='location.href="${pageContext.request.contextPath}/member/delete/${members.memId}"'>  탈퇴하기</button> --%>
-	                				<button class="btnBox" id="delete_btn" onclick='confirmDelete("${pageContext.request.contextPath}/member/delete/${members.memId}")'> 탈퇴하기</button>
-
-	                			</c:if>	
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+                    <tr>
+                        <td colspan="2" align="center">
+                         <input class="btnBox" type="button" value="수정하기" onclick="location.href='${pageContext.request.contextPath}/member/updatepage?memId=${members.memId}'">&nbsp;
+				<c:if test="${members.grade ne 'admin'}">
+             				<button class="btnBox" id="delete_btn" onclick='confirmDelete("${pageContext.request.contextPath}/member/delete/${members.memId}")'> 탈퇴하기</button>
+             			</c:if>	
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
-	</form>
-    <!-- Form End -->
+    </div>
 	<!-- Info End -->
+	
+	<script type="text/javascript">
+	function confirmDelete(url) {
+		if (confirm('삭제하시겠습니까?')) {
+			location.href = url;
+		}
+		
+	} 
+	</script>
 
     <!-- Back to Top -->
 	<jsp:include page="/separate/script.jsp"></jsp:include>
