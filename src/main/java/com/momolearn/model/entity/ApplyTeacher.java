@@ -63,7 +63,7 @@ public class ApplyTeacher  {	//강사신청 테이블. 회원한명당 하나의
     //승인여부 - true/false 이므로 boolean으로 반환해서 받아오면..
     //적용방법을 좀 더 공부해서 boolean으로 할지 정하기
     @Column(length = 15)
-    @ColumnDefault("false")	//기본값 false, 관리자가 승인시 true로 변경
+    @ColumnDefault("'false'")	//기본값 false, 관리자가 승인시 true로 변경
     private String approve; 
     
     //Teachers 테이블과 1:1양방향. 주테이블
