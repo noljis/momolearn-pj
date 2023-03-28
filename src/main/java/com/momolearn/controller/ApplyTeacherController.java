@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 @RequestMapping("applyteacher")
-@SessionAttributes({ "members" })
+@SessionAttributes({ "members", "id" })
 @RequiredArgsConstructor
 public class ApplyTeacherController {
 
@@ -91,7 +91,7 @@ public class ApplyTeacherController {
 		return "teachers/at-form";
 	}
 
-	// X 작성
+	// O 작성
 	@PostMapping(value = "/write")
 	public String write(Model model, @ModelAttribute("members") MembersDTO members, ApplyTeacherDTO applyDTO) throws MessageException, NotExistException {
 
@@ -109,7 +109,7 @@ public class ApplyTeacherController {
 		
 		System.out.println("신청서 제출 정보 : " + apply);
 		
-		return "teachers/at-list";
+		return "teachers/at-mylist";
 	}
 	
 	
@@ -182,12 +182,19 @@ public class ApplyTeacherController {
 
 	// X 수정
 	@PostMapping(value = "/update")
-	public String update(Model model, @ModelAttribute("members") MembersDTO members) throws NotExistException {
+	public String update(Model model, @ModelAttribute("members") MembersDTO members, ApplyTeacherDTO applyDTO) throws NotExistException {
 
 		System.out.println("신청서 수정");
-		ApplyTeacherDTO apply = applyTeacherService.read(members.getMemId());
-		MembersDTO member = membersService.getOneMember(members.getMemId());
+//		ApplyTeacherDTO apply = applyTeacherService.read(members.getMemId());
+//		MembersDTO member = membersService.getOneMember(members.getMemId());
 		//수정된 내용 저장 save
+		
+		
+		ApplyTeacherDTO apply = applyTeacherService.getOneApplyTeacher(applyDTO.getId());
+		
+		System.out.println(apply);
+		applyTeacherService.update(apply.getId(), apply);
+		MembersDTO member = membersService.getOneMember(apply.getMembersMemId());
 
 		model.addAttribute("apply", apply);
 		model.addAttribute("member", member);
@@ -195,22 +202,25 @@ public class ApplyTeacherController {
 		return "teachers/at-readform";
 	}
 
-	// X 삭제
-	@PostMapping(value = "/delete")
+	// O 삭제
+	@PostMapping(value = "/delete/{id}")
 	public String delete(@PathVariable int id) throws NotExistException {
 		System.out.println("신청서 삭제");
+		//ApplyTeacherDTO apply = applyTeacherService.getOneApplyTeacher(id);
 		applyTeacherService.delete(id);
 		return "teachers/at-mylist";
 	}
 	
-	// X 승인
+	// O 승인
 	@PostMapping(value = "/approve/{id}")
 	public String approve(Model model, @PathVariable int id) throws NotExistException {
 
 		System.out.println("신청서 승인");
 		
 		ApplyTeacherDTO apply = applyTeacherService.getOneApplyTeacher(id);
-		applyTeacherService.approve(id, apply);
+		
+		System.out.println(apply);
+		applyTeacherService.approve(id);
 		MembersDTO member = membersService.getOneMember(apply.getMembersMemId());
 
 //		ApplyTeacherDTO apply = applyTeacherService.read(members.getMemId());

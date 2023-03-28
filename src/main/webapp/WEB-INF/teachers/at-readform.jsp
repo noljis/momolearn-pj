@@ -38,12 +38,12 @@
             <!-- Header End -->
 
             <!-- Form Start -->
-            <form id="sm" name="ta" method="post" action="${pageContext.request.contextPath}/applyteacher/updateform">
-                <div align="center">
-                    <h2>강사 등록 신청서</h2>
-<!-- ${apply.id} -->
-                    <div>
-                        <div class="col-sm-5">
+            <div align="center">
+                <h2>강사 등록 신청서</h2>
+                <!-- ${apply.id} -->
+                <div>
+                    <div class="col-sm-5">
+
                             <table class="table table-bordered">
 
                                 <tr class="tr">
@@ -62,6 +62,14 @@
                                     <td><input type="text" id="email" name="email" size="30" disabled
                                             value="${member.email}"></td>
                                 </tr>
+                                <tr>
+                                    <td>승인상태:</td>
+                                    <td>
+                                        <input type="text" id="approve" name="approve" size="30" disabled
+                                            value="${apply.approve == 'true' ? '승인완료' : '대기중'}">
+                                    </td>
+                                </tr>
+
                                 <tr class="tr">
                                     <td class="td" align="center" colspan="2">추가 입력 정보</td>
                                 </tr>
@@ -91,27 +99,32 @@
                                 <tr>
                                     <td colspan="2" align="center">
                                         <c:choose>
-                                            <c:when test="${sessionScope.members.grade == 'admin' && !apply.approve}">
-                                                <form action="${pageContext.request.contextPath}/applyteacher/approve/${apply.id}" method="post">
-                                                    <input class="btn btn-primary" value="승인">
-                                                  </form>
-                                                <input class="btn btn-primary" type="submit" value="수정">
-                                                <input class="btn btn-primary" type="button" value="삭제"
-                                                    onclick="location.href='${pageContext.request.contextPath}/applyteacher/delete'">
+                                            <c:when test="${sessionScope.members.grade == 'admin'}">
+                                                <form id="sm" name="ta" method="post"
+                                                action="${pageContext.request.contextPath}/applyteacher/approve/${apply.id}">
+                                                <input class="btn btn-primary" type="submit" value="승인"
+                                                onclick="return confirm('강사신청서를 승인하시겠습니까?');">
+                                            </form>
                                             </c:when>
-                                            <c:otherwise>
-                                                <input class="btn btn-primary" type="submit" value="수정">
-                                                <input class="btn btn-primary" type="button" value="삭제"
-                                                    onclick="location.href='${pageContext.request.contextPath}/applyteacher/delete'">
-                                            </c:otherwise>
+                                            <c:when test="${sessionScope.members.grade == 'student'}">
+                                                <form id="sm" name="ta" method="post"
+                                                    action="${pageContext.request.contextPath}/applyteacher/update">
+                                                    <input class="btn btn-primary" type="submit" value="수정"
+                                                        onclick="alert('강사신청서가 수정되었습니다');">
+                                                </form>
+                                                <form id="sm" name="ta" method="post"
+                                                    action="${pageContext.request.contextPath}/applyteacher/delete/${apply.id}">
+                                                    <input class="btn btn-primary" type="submit" value="삭제"
+                                                        onclick="return confirm('강사신청서를 삭제하시겠습니까?');">
+                                                </form>
+                                            </c:when>
                                         </c:choose>
                                     </td>
                                 </tr>
                             </table>
-                        </div>
                     </div>
                 </div>
-            </form>
+            </div>
             <!-- Form End -->
 
             <!-- Back to Top -->

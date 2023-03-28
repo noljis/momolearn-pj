@@ -57,10 +57,10 @@
                                     <td>
                                         <c:choose>
                                             <c:when test="${apply.approve}">
-                                                <span class="text-success">승인</span>
+                                                <span class="text-success">승인완료</span>
                                             </c:when>
                                             <c:otherwise>
-                                                <span class="text-danger">미승인</span>
+                                                <span class="text-danger">대기중</span>
                                             </c:otherwise>
                                         </c:choose>
 

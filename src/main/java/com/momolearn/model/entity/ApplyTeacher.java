@@ -29,7 +29,6 @@ import lombok.ToString;
 @Getter
 @DynamicInsert
 @DynamicUpdate
-@ToString
 
 @Builder
 
@@ -73,6 +72,26 @@ public class ApplyTeacher  {	//강사신청 테이블. 회원한명당 하나의
     public void setApprove(String approve) {
         this.approve = approve;
     }
+
+	public void setPhoneNum(String phoneNum) {
+		this.phoneNum = phoneNum;
+	}
+
+	public void setHopeField(String hopeField) {
+		this.hopeField = hopeField;
+	}
+
+	public void setIntro(String intro) {
+		this.intro = intro;
+	}
+
+	public void setPfLink(String pfLink) {
+		this.pfLink = pfLink;
+	}
+    
+//    public void setApplyForm(String phoneNum, hope_field, pfLink, intro)
+    
+    
 }
 
 
