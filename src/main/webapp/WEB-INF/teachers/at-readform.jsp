@@ -79,7 +79,7 @@
                                     <td>희망분야:</td>
                                     <td>
                                         <input type="text" id="hope" name="hope" size="30" disabled
-                                            value="${apply.hopeFiled}">
+                                            value="${apply.hopeField}">
                                     </td>
                                 </tr>
                                 <tr>
@@ -93,15 +93,15 @@
                                         <c:choose>
                                             <c:when test="${sessionScope.members.grade == 'admin' && !apply.approve}">
                                                 <form action="${pageContext.request.contextPath}/applyteacher/approve/${apply.id}" method="post">
-                                                    <input class="button" type="button" value="승인">
+                                                    <input class="btn btn-primary" value="승인">
                                                   </form>
-                                                <input class="button" type="submit" value="수정">
-                                                <input class="button" type="button" value="삭제"
+                                                <input class="btn btn-primary" type="submit" value="수정">
+                                                <input class="btn btn-primary" type="button" value="삭제"
                                                     onclick="location.href='${pageContext.request.contextPath}/applyteacher/delete'">
                                             </c:when>
                                             <c:otherwise>
-                                                <input class="button" type="submit" value="수정">
-                                                <input class="button" type="button" value="삭제"
+                                                <input class="btn btn-primary" type="submit" value="수정">
+                                                <input class="btn btn-primary" type="button" value="삭제"
                                                     onclick="location.href='${pageContext.request.contextPath}/applyteacher/delete'">
                                             </c:otherwise>
                                         </c:choose>

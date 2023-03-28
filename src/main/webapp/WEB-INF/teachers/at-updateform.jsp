@@ -73,7 +73,7 @@
                                 </tr>
                                 <tr>
                                     <td>희망분야</td>
-                                    <td><input type="text" id="hope" name="hope" size="30" value="${apply.hopeFiled}"></td>
+                                    <td><input type="text" id="hope" name="hope" size="30" value="${apply.hopeField}"></td>
                                 </tr>
                                 <tr>
                                     <td>자기소개</td>
@@ -81,8 +81,8 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2" align="center">
-                                        <input class="button" class="btn btn-primary" type="submit" value="수정하기" onclick="alert('신청서 수정이 완료 되었습니다')">
-                                        <input class="button" class="btn btn-primary" type="reset" value="다시입력" onclick="clear()">
+                                        <input class="button btn btn-primary" type="submit" value="수정하기" onclick="alert('신청서 수정이 완료 되었습니다')">
+                                        <input class="button btn btn-primary" type="reset" value="다시입력" onclick="clear()">
                                     </td>
                                 </tr>
                             </table>
