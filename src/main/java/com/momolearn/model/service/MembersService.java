@@ -169,5 +169,15 @@ public class MembersService {
     }
 	
 	//모든 회원 검색
-
+	//관리자 - 모든 회원 검색 : ApplyTeacher 에서 사용
+	public List<Members> getAllMembers() {
+		return membersRepository.findAll();
+	}
+	
+	//관리자 프로필 수정 -- 회원정보 수정이랑 같이 쓸지?!
+//    public boolean adminUpdate() throws SQLException {
+//		return false ;
+//		
+//	}
+    
 }

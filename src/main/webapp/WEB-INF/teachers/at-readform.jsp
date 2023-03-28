@@ -38,48 +38,48 @@
             <!-- Header End -->
 
             <!-- Form Start -->
-            <form id="sm" name="ta" method="post" action="${pageContext.request.contextPath}/applyteacher/update">
+            <form id="sm" name="ta" method="post" action="${pageContext.request.contextPath}/applyteacher/updateform">
                 <div align="center">
                     <h2>강사 등록 신청서</h2>
-
+<!-- ${apply.id} -->
                     <div>
                         <div class="col-sm-5">
                             <table class="table table-bordered">
 
                                 <tr class="tr">
-                                    <!-- 첫줄 -->
                                     <td class="td" align="center" colspan="2">회원 기본 정보</td>
                                 </tr>
                                 <tr>
-                                    <!-- 2 -->
-                                    <td>내아이디:</td>
+                                    <td>아이디:</td>
                                     <td><input type="text" id="id" name="id" disabled value="${member.memId}"></td>
                                 </tr>
                                 <tr>
-                                    <!-- 6 -->
                                     <td>이름:</td>
                                     <td><input type="text" id="name" name="name" disabled value="${member.name}"></td>
                                 </tr>
                                 <tr>
-                                    <!-- 5 -->
                                     <td>메일주소:</td>
-                                    <td><input type="text" id="email" name="email" size="30" disabled value="${member.email}"></td>
+                                    <td><input type="text" id="email" name="email" size="30" disabled
+                                            value="${member.email}"></td>
                                 </tr>
                                 <tr class="tr">
                                     <td class="td" align="center" colspan="2">추가 입력 정보</td>
                                 </tr>
                                 <tr>
                                     <td>연락처:</td>
-                                    <td><input type="text" id="phonenum" name="phonenum" size="30" disabled value="${apply.phoneNum}"></td>
+                                    <td><input type="text" id="phonenum" name="phonenum" size="30" disabled
+                                            value="${apply.phoneNum}"></td>
                                 </tr>
                                 <tr>
                                     <td>포트폴리오 url:</td>
-                                    <td><input type="text" id="url" name="url" size="30" disabled value="${apply.pfLink}"></td>
+                                    <td><input type="text" id="url" name="url" size="30" disabled
+                                            value="${apply.pfLink}"></td>
                                 </tr>
                                 <tr>
                                     <td>희망분야:</td>
                                     <td>
-                                        <input type="text" id="hope" name="hope" size="30" disabled value="${apply.hopeFiled}">
+                                        <input type="text" id="hope" name="hope" size="30" disabled
+                                            value="${apply.hopeFiled}">
                                     </td>
                                 </tr>
                                 <tr>
@@ -91,14 +91,20 @@
                                 <tr>
                                     <td colspan="2" align="center">
                                         <c:choose>
-                                            <c:when test="${sessionScope.members.grade == 'admin'}">
-                                                <input class="button" type="submit" value="승인" onclick=""
-                                                    onclick="alert('강사신청이 승인 되었습니다')">
+                                            <c:when test="${sessionScope.members.grade == 'admin' && !apply.approve}">
+                                                <form action="${pageContext.request.contextPath}/applyteacher/approve/${apply.id}" method="post">
+                                                    <input class="button" type="button" value="승인">
+                                                  </form>
+                                                <input class="button" type="submit" value="수정">
+                                                <input class="button" type="button" value="삭제"
+                                                    onclick="location.href='${pageContext.request.contextPath}/applyteacher/delete'">
                                             </c:when>
+                                            <c:otherwise>
+                                                <input class="button" type="submit" value="수정">
+                                                <input class="button" type="button" value="삭제"
+                                                    onclick="location.href='${pageContext.request.contextPath}/applyteacher/delete'">
+                                            </c:otherwise>
                                         </c:choose>
-                                        <input class="button" type="submit" value="수정" onclick="location.href='${pageContext.request.contextPath}/applyteacher/update'" onclick="alert('강사신청서가 수정되었습니다')">
-                                        <input class="button" type="reset" value="삭제" onclick="location.href='${pageContext.request.contextPath}/applyteacher/delete'"
-                                            onclick="alert('강사신청서가 삭제되었습니다')">
                                     </td>
                                 </tr>
                             </table>

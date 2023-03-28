@@ -35,11 +35,8 @@
                 </div>
             </div>
             <!-- Header End -->
-            <!-- 강사 신청 리스트 Start -->
-            <!-- ${list[0]}
-            ${list[1]} -->
-            <!-- ${memlist} -->
 
+            <!-- 강사 신청 전체 리스트 Start -->
             <div class="container">
                 <form method="get">
                     <div class="form-group">

@@ -15,6 +15,7 @@ import javax.persistence.OneToOne;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import lombok.AllArgsConstructor;
@@ -26,6 +27,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 @DynamicInsert
+@DynamicUpdate
 
 @Builder
 
@@ -65,6 +67,10 @@ public class ApplyTeacher  {	//강사신청 테이블. 회원한명당 하나의
     //Teachers 테이블과 1:1양방향. 주테이블
     @OneToOne(mappedBy = "applyTeacher")
     public Teachers teacher;
+    
+    public void setApprove(String approve) {
+        this.approve = approve;
+    }
 }
 
 
