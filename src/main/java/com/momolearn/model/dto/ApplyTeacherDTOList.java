@@ -10,10 +10,6 @@ import lombok.Data;
 @Data
 public class ApplyTeacherDTOList {
 
-	private List<ApplyTeacherDTO> list;
+	private List<ApplyTeacherDTO> list = new ArrayList<>();
 	
-	public ApplyTeacherDTOList() {
-		list = new ArrayList<>();
-	}
-
 }

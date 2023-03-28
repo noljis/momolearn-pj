@@ -90,15 +90,17 @@ public class LecturesService {
 	}
 
 	// 강좌 등록 CoursesListDTO: 속성 타입들이 List
+	// 강좌 추가된만큼 lecture cnt ++
 	public List<CoursesDTO> uploadCourses(CoursesListDTO coursesList) throws NotExistException{
 		System.out.println("강좌등록 서비스 메소드");
 		List<Courses> courses = new ArrayList<>();
-		
+		Lectures lecture = null;
 		if(coursesList != null) {
 			//반복문으로 배열에 담아주기
-			for(int i = 0; i < coursesList.getLectureId().size(); i++) {
+			System.out.println(coursesList.getLectureId().size());
+			for(int i = 0; i < (coursesList.getLectureId().size()); i++) {
 				
-				Lectures lecture = lecturesRepository.findById(coursesList.getLectureId().get(i)).orElseThrow(() -> new NotExistException("강의가 존재하지 않습니다."));
+				lecture = lecturesRepository.findById(coursesList.getLectureId().get(i)).orElseThrow(() -> new NotExistException("강의가 존재하지 않습니다."));
 				System.out.println(lecture);
 				//builder로 저장
 				Courses course = Courses.builder()
@@ -111,6 +113,12 @@ public class LecturesService {
 				courses.add(course);
 			}
 		}
+		//강의의 강좌수 업데이트
+		int addCnt = courses.size();
+		
+		lecture.setCnt(lecture.getCnt() + addCnt);
+		
+		lecturesRepository.save(lecture);
 		
 		return Arrays.asList(mapper.map(coursesRepository.saveAll(courses), CoursesDTO[].class));
 	}

@@ -38,7 +38,7 @@
             <!-- Header End -->
 
             <!-- Form Start -->
-            <form id="sm" name="ta" method="post" action="${pageContext.request.contextPath}/applyteacher/updateform">
+            <form id="sm" name="ta" method="post" action="${pageContext.request.contextPath}/applyteacher/update">
                 <div align="center">
                     <h2>강사 등록 신청서</h2>
 
@@ -58,20 +58,16 @@
                                 <tr>
                                     <!-- 6 -->
                                     <td>이름:</td>
-                                    <td><input type="text" id="name" name="name" disabled value="${member.memId}"></td>
+                                    <td><input type="text" id="name" name="name" disabled value="${member.name}"></td>
                                 </tr>
                                 <tr>
                                     <!-- 5 -->
                                     <td>메일주소:</td>
-                                    <td><input type="text" id="email" name="email" size="30" disabled value="${member.memId}"></td>
+                                    <td><input type="text" id="email" name="email" size="30" disabled value="${member.email}"></td>
                                 </tr>
-
-
                                 <tr class="tr">
-                                    <!-- 첫줄 -->
                                     <td class="td" align="center" colspan="2">추가 입력 정보</td>
                                 </tr>
-
                                 <tr>
                                     <td>연락처:</td>
                                     <td><input type="text" id="phonenum" name="phonenum" size="30" disabled value="${apply.phoneNum}"></td>
@@ -81,20 +77,17 @@
                                     <td><input type="text" id="url" name="url" size="30" disabled value="${apply.pfLink}"></td>
                                 </tr>
                                 <tr>
-                                    <!-- 9 -->
                                     <td>희망분야:</td>
                                     <td>
                                         <input type="text" id="hope" name="hope" size="30" disabled value="${apply.hopeFiled}">
                                     </td>
-
                                 </tr>
                                 <tr>
-                                    <!-- 9 -->
                                     <td>자기소개:</td>
-                                    <td><textarea id="my_intro" name="intro" cols="55" rows="5" maxlength="700"
-                                            disabled value="${apply.intro}"></textarea></td>
+                                    <td><textarea id="intro" name="intro" cols="55" rows="5" maxlength="700"
+                                            disabled>${apply.intro}</textarea>
+                                    </td>
                                 </tr>
-
                                 <tr>
                                     <td colspan="2" align="center">
                                         <c:choose>
@@ -103,8 +96,8 @@
                                                     onclick="alert('강사신청이 승인 되었습니다')">
                                             </c:when>
                                         </c:choose>
-                                        <input class="button" type="submit" value="수정" onclick="location.href='${pageContext.request.contextPath}/applyteacher/updateform'">
-                                        <input class="button" type="reset" value="삭제" onclick=""
+                                        <input class="button" type="submit" value="수정" onclick="location.href='${pageContext.request.contextPath}/applyteacher/update'" onclick="alert('강사신청서가 수정되었습니다')">
+                                        <input class="button" type="reset" value="삭제" onclick="location.href='${pageContext.request.contextPath}/applyteacher/delete'"
                                             onclick="alert('강사신청서가 삭제되었습니다')">
                                     </td>
                                 </tr>

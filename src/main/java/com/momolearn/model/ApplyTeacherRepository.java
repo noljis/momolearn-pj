@@ -21,7 +21,7 @@ public interface ApplyTeacherRepository extends JpaRepository<ApplyTeacher, Inte
     void approve(@Param("id") String id);
     
 	//강의
-	// 회원id로 강사 1명 내역 조회
+	// 회원id로 강사신청서 1명 내역 조회
 	public Optional<ApplyTeacher> findByMembersMemId(String id);
 
 	// 회원id와 승인여부(ApproveIsTrue)로 강사내역 조회
