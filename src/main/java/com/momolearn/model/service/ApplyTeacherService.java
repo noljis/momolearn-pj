@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
@@ -48,11 +49,9 @@ public class ApplyTeacherService {
 		return null;
 	}
 
-	// X 강사 신청서 작성
+	// O 강사 신청서 작성
 	public ApplyTeacherDTO write(ApplyTeacherDTO applyDTO) throws MessageException{
 		System.out.println("ApplyTecacherService.write() : 강사 신청서 작성");
-		
-//		ApplyTeacher applyTeachers = mapper.map(applyDTO, ApplyTeacher.class);  //????
 		
 		System.out.println("+++1 +++ : " + applyDTO);
 		
@@ -60,15 +59,10 @@ public class ApplyTeacherService {
 		
 		System.out.println("+++2 +++ : " + applyTeachers);
 		
-		
-		
-		
 		System.out.println(applyTeachers);
 		try {
-			
 			ApplyTeacher applyTeacher = applyTeacherRepository.save(applyTeachers);
-			
-			
+
 			System.out.println(applyTeachers);
 			return mapper.map(applyTeacher, ApplyTeacherDTO.class);
 			
@@ -98,13 +92,21 @@ public class ApplyTeacherService {
 	
 	// X 수정
 	@Transactional
-	public void update(int id) throws NotExistException {
-		System.out.println("===== service update apply ===== ");
+	public void update(int id, ApplyTeacherDTO applyDTO) throws NotExistException {
+		System.out.println("===== service update apply 11111===== ");
+		
 		ApplyTeacher applyTeacher = applyTeacherRepository.findById(id).orElseThrow(()->new NotExistException("신청서가 존재하지 않습니다."));
-//		applyTeacherRepository.delete(applyTeacher);
+		applyTeacher.setPhoneNum(applyDTO.getPhoneNum());
+		applyTeacher.setHopeField(applyDTO.getHopeField());
+		applyTeacher.setPfLink(applyDTO.getPfLink());
+		applyTeacher.setIntro(applyDTO.getIntro());
+		applyTeacherRepository.save(applyTeacher);
+		System.out.println("===== service update apply 22222 ===== ");
+		System.out.println(applyTeacherRepository.save(applyTeacher));
+
 	}
 	
-	// X 삭제
+	// O 삭제
 	@Transactional
 	public void delete(int id) throws NotExistException {
 		System.out.println("===== service delete apply ===== ");
@@ -114,36 +116,23 @@ public class ApplyTeacherService {
 	
 	// O 승인
 	@Transactional
-	public void approve(int id, ApplyTeacherDTO applyDTO) {
-//		Optional<ApplyTeacher> applyTeacher = applyTeacherRepository.findById(id);
-		applyDTO.setApprove("true");
+	public void approve(int id) throws NotExistException {
+		ApplyTeacher applyTeacher = applyTeacherRepository.findById(id).orElseThrow(()->new NotExistException("신청서가 존재하지 않습니다."));
+		
+		applyTeacher.setApprove("true");
+		applyTeacherRepository.save(applyTeacher);
+	    
 	}
 
-//	@Transactional
-//	public void approve(String id) {
-//		ApplyTeacher apply = applyTeacherRepository.findByMembersMemId(id).orElseThrow();
-//		apply.setApprove("true");
-//	}
-
-	// 강사 신청이 승인된 applyTeacher 정보를 Teacher에 등록
+	// X 강사 신청이 승인된 applyTeacher 정보를 Teacher에 등록
 	public Teachers applyToBeTeacher(ApplyTeacher applyTeacher) {
 		Teachers newTeacher = mapper.map(applyTeacher, Teachers.class);
 		return teachersRepository.save(newTeacher);
 	}
 
-	// dto->entity 변환
-	public ApplyTeacher convertDtoToEntity(ApplyTeacherDTO applyDTO) {
-		return ApplyTeacher.builder().id(applyDTO.getId()).phoneNum(applyDTO.getPhoneNum()).hopeField(applyDTO.getHopeField())
-				.intro(applyDTO.getIntro()).pfLink(applyDTO.getPfLink()).approve(applyDTO.getApprove())
-				.members(new Members(applyDTO.getMembersMemId())).build();
-
-		// members 타입이 mapping이 안되고있음 -> builder패턴으로 하나하나 만들어서 반환
-//        return mapper.map(dto, ApplyTeacher.class);
-	}
-
 	// 신청서 번호로 1명 조회하기
 	public ApplyTeacherDTO getOneApplyTeacher(int id) throws NotExistException {
-		System.out.println("service.read() : 신청 번호로 1명 조회" );
+		System.out.println("service.getOneApplyTeacher() : 신청 번호로 1명 조회" );
 		ApplyTeacher applyteacher = applyTeacherRepository.findById(id)
 				.orElseThrow(() -> new NotExistException("현재 등록된 신청서가 없습니다."));
 		return mapper.map(applyteacher, ApplyTeacherDTO.class);

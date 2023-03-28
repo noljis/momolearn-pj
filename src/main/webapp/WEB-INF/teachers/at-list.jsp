@@ -43,8 +43,8 @@
                         <label>승인 상태 선택</label>
                         <select name="approve">
                             <option value="">전체</option>
-                            <option value="true">승인</option>
-                            <option value="false">미승인</option>
+                            <option value="true">승인완료</option>
+                            <option value="false">대기중</option>
                         </select>
                         <button type="submit" class="btn btn-primary">검색</button>
                     </div>
@@ -71,10 +71,10 @@
                                             <td>
                                                 <c:choose>
                                                     <c:when test="${list.approve}">
-                                                        <span class="text-success">승인</span>
+                                                        <span class="text-success">승인완료</span>
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <span class="text-danger">미승인</span>
+                                                        <span class="text-danger">대기중</span>
                                                     </c:otherwise>
                                                 </c:choose>
                                             </td>

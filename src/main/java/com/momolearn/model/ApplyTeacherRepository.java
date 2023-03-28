@@ -12,13 +12,6 @@ import com.momolearn.model.entity.ApplyTeacher;
 @Repository
 public interface ApplyTeacherRepository extends JpaRepository<ApplyTeacher, Integer> {
 
-//	//관리자
-//	//강사 신청 승인하기 : approve를 false -> true로 변경
-//	//이거 필요없다고... 자동 업데이트 된다고.. setapprove("true") 이렇게 하는거랬나 => 찾아보기
-//    @Modifying
-//    @Query("UPDATE ApplyTeacher t SET t.approve = 'true' WHERE t.members.memId = :id")
-//    void approve(@Param("id") String id);
-
 	//강의
 	// 회원id로 강사신청서 1명 내역 조회
 	Optional<ApplyTeacher> findByMembersMemId(String id);
