@@ -65,10 +65,12 @@ public class LecturesService {
 	}
 
 	// 강의명 부분검색
-	public JsonArray searchLectures(String likeTitle) {
+	public JsonArray searchLectures(String likeTitle) throws NullPointerException{
 		
 		// likeTitle이 포함된 title 데이터 검색
 		List<Lectures> lectures = lecturesRepository.findByTitleContaining(likeTitle);
+		
+		if (lectures.isEmpty()) throw new NullPointerException();
 		
 		return getLectureJson(lectures);
 	}
@@ -146,6 +148,8 @@ public class LecturesService {
 	public JsonArray searchCategotyLecture(int cateId) {
 		
 		List<String> title = lecturesRepository.findByCategoryLectureCategoryCateId(cateId);
+		
+		if (title.isEmpty()) throw new NullPointerException();
 		
 		List<Lectures> lectures = new ArrayList<>();
 		

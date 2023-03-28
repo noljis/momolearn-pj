@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonObject;
 import com.momolearn.exception.MessageException;
@@ -209,7 +210,7 @@ public class LecturesController {
 	/* 간략하게 강의명(클릭시 디테일로 들어가야 함 -> 강의번호 필요함)과 강사명 목록만 나열하도록 함
 	 * */
 	
-	//7-2. 내 강의(강사: ) - myLectures -> join fetch Lectures join fetch 
+	//7-2. 내 강의(강사: )  
 	/* 간략하게 강의명(클릭시 디테일로 들어가야 함 -> 강의번호 필요함)과 강사명 목록만 나열하도록 함
 	 * */
 	
@@ -225,10 +226,15 @@ public class LecturesController {
 		try {
 			// 방 리스트를 데이터에 담아줌
 			model.addAttribute("data", lecturesService.searchLectures(title));
+			
 		} catch (JsonIOException s) {
 			
 			model.addAttribute("data", "내부적인 오류로 검색하지 못했습니다.");
 			s.printStackTrace();
+		} catch (NullPointerException ne) {
+			System.out.println("NullPointerException");
+			model.addAttribute("data", "해당 검색어가 포함된 강의가 없습니다.");
+			ne.printStackTrace();
 		}
 		return "data_res"; // WEB-INF/main_res.jsp
 	}
@@ -257,7 +263,11 @@ public class LecturesController {
 			
 			model.addAttribute("data", "내부적인 오류로 검색하지 못했습니다.");
 			s.printStackTrace();
-		} 
+		} catch (NullPointerException ne) {
+			
+			model.addAttribute("data", "해당 카테고리에 존재하는 강의가 없습니다.");
+			ne.printStackTrace();
+		}
 		return "data_res"; // WEB-INF/main_res.jsp
 	}
 	

@@ -18,7 +18,7 @@ public class CartController {
 	@Autowired
 	private CartService cartService;
 	
-	
+	//페이지 이동
 	@PostMapping("/payment")
 	public String handlePayment(@RequestParam String pay, @RequestParam String cart) {
 	    if (pay != null) {
