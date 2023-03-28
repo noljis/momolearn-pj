@@ -46,11 +46,12 @@
                     <div>
                         <div class="col-sm-5">
                             <table class="table table-bordered">
+
                                 <tr class="tr">
                                     <td class="td" align="center" colspan="2">회원 기본 정보</td>
                                 </tr>
                                 <tr>
-                                    <td>내아이디</td>
+                                    <td>아이디</td>
                                     <td><input type="text" id="id" name="id" disabled value="${member.memId}"></td>
                                 </tr>
                                 <tr>
@@ -59,18 +60,21 @@
                                 </tr>
                                 <tr>
                                     <td>메일주소</td>
-                                    <td><input type="text" id="email" name="email" size="30" disabled value="${member.email}"></td>
+                                    <td><input type="text" id="email" name="email" size="30" disabled
+                                            value="${member.email}"></td>
                                 </tr>
                                 <tr class="tr">
                                     <td class="td" align="center" colspan="2">추가 입력 정보</td>
                                 </tr>
                                 <tr>
                                     <td>연락처</td>
-                                    <td><input type="text" id="phonenum" name="phonenum" size="30" placeholder="연락처를 입력해주세요."></td>
+                                    <td><input type="text" id="phonenum" name="phonenum" size="30"
+                                            placeholder="연락처를 입력해주세요."></td>
                                 </tr>
                                 <tr>
                                     <td>포트폴리오 url</td>
-                                    <td><input type="text" id="url" name="url" size="30" placeholder="포트폴리오url을 입력해주세요."></td>
+                                    <td><input type="text" id="url" name="url" size="30"
+                                            placeholder="포트폴리오url을 입력해주세요."></td>
                                 </tr>
                                 <tr>
                                     <td>희망분야</td>
@@ -80,14 +84,15 @@
                                 </tr>
                                 <tr>
                                     <td>자기소개</td>
-                                    <td><textarea id="intro" name="intro" cols="55" rows="5"
-                                            maxlength="700" placeholder="자기소개를 입력해주세요."></textarea></td>
+                                    <td><textarea id="intro" name="intro" cols="55" rows="5" maxlength="700"
+                                            placeholder="자기소개를 입력해주세요."></textarea></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2" align="center">
-                                        <input class="button" class="btn btn-primary" type="submit" value="신청하기" onclick="location.href='${pageContext.request.contextPath}/applyteacher/write'"
-                                            onclick="alert('강사신청이 완료 되었습니다')">
-                                        <input class="button" class="btn btn-primary" type="reset" value="다시입력" onclick="clear()">
+                                        <input class="button" class="btn btn-primary" type="submit" value="신청하기"
+                                            onclick="" onclick="alert('강사신청이 완료 되었습니다')">
+                                        <input class="button" class="btn btn-primary" type="reset" value="다시입력"
+                                            onclick="clear()">
                                     </td>
                                 </tr>
                             </table>
@@ -95,6 +100,37 @@
                     </div>
                 </div>
             </form>
+
+            <script>
+                function allCheck() {
+                    const phonenum = document.getElementById("phonenum").value;
+                    const url = document.getElementById("url").value;
+                    const hope = document.getElementById("hope").value;
+                    const intro = document.getElementById("intro").value;
+
+                    if (phonenum === "") {
+                        alert("연락처를 입력해주세요.");
+                        return false;
+                    }
+                    if (url === "") {
+                        alert("포트폴리오 url을 입력해주세요.");
+                        return false;
+                    }
+                    if (hope === "") {
+                        alert("희망분야를 입력해주세요.");
+                        return false;
+                    }
+                    if (intro === "") {
+                        alert("자기소개를 입력해주세요.");
+                        return false;
+                    }
+                    return true;
+                }
+
+                function clear() {
+                    document.getElementById("sm").reset();
+                }
+            </script>
             <!-- Form End -->
 
             <!-- Back to Top -->
