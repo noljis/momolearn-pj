@@ -39,7 +39,7 @@
 
             <!-- Form Start -->
             <form id="sm" name="ta" method="post" onsubmit="return allCheck()"
-                action="${pageContext.request.contextPath}/applyteacher/writeform">
+                action="${pageContext.request.contextPath}/applyteacher/write">
                 <div align="center">
                     <h2>강사 등록 신청서</h2>
 
@@ -63,23 +63,25 @@
                                     <td><input type="text" id="email" name="email" size="30" disabled
                                             value="${member.email}"></td>
                                 </tr>
+
+
                                 <tr class="tr">
                                     <td class="td" align="center" colspan="2">추가 입력 정보</td>
                                 </tr>
                                 <tr>
                                     <td>연락처</td>
-                                    <td><input type="text" id="phonenum" name="phonenum" size="30"
+                                    <td><input type="text" id="phonenum" name="phoneNum" size="30"
                                             placeholder="연락처를 입력해주세요."></td>
                                 </tr>
                                 <tr>
                                     <td>포트폴리오 url</td>
-                                    <td><input type="text" id="url" name="url" size="30"
+                                    <td><input type="text" id="url" name="pfLink" size="30"
                                             placeholder="포트폴리오url을 입력해주세요."></td>
                                 </tr>
                                 <tr>
                                     <td>희망분야</td>
                                     <td>
-                                        <input type="text" id="hope" name="hope" size="30" placeholder="희망분야를 입력해주세요.">
+                                        <input type="text" id="hope" name="hopeField" size="30" placeholder="희망분야를 입력해주세요.">
                                     </td>
                                 </tr>
                                 <tr>
@@ -89,10 +91,8 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2" align="center">
-                                        <input class="button" class="btn btn-primary" type="submit" value="신청하기"
-                                            onclick="" onclick="alert('강사신청이 완료 되었습니다')">
-                                        <input class="button" class="btn btn-primary" type="reset" value="다시입력"
-                                            onclick="clear()">
+                                        <input class="btn btn-primary" type="submit" value="신청하기">
+                                        <input class="btn btn-primary" type="reset" value="다시입력" onclick="clear()">
                                     </td>
                                 </tr>
                             </table>

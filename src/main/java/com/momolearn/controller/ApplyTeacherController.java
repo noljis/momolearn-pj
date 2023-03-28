@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.momolearn.exception.MessageException;
 import com.momolearn.exception.NotExistException;
 import com.momolearn.model.dto.ApplyTeacherDTO;
 import com.momolearn.model.dto.MembersDTO;
@@ -92,11 +93,23 @@ public class ApplyTeacherController {
 
 	// X 작성
 	@PostMapping(value = "/write")
-	public String write(Model model, ApplyTeacherDTO apply) throws NotExistException {
+	public String write(Model model, @ModelAttribute("members") MembersDTO members, ApplyTeacherDTO applyDTO) throws MessageException, NotExistException {
 
 		System.out.println("신청서 제출");
+		System.out.println("-------------11 " + members.getMemId());
 
-		return applyTeacherService.save(apply) + "teachers/at-list";
+//		MembersDTO member = membersService.getOneMember(members.getMemId());
+//		model.addAttribute("member", member);
+		
+		applyDTO.setMembersMemId(members.getMemId());
+		ApplyTeacherDTO apply = applyTeacherService.write(applyDTO);
+		System.out.println("---------------------------22");
+		
+		model.addAttribute("apply", apply);
+		
+		System.out.println("신청서 제출 정보 : " + apply);
+		
+		return "teachers/at-list";
 	}
 	
 	

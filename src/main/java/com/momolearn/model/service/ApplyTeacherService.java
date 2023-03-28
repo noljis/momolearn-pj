@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import com.momolearn.exception.MessageException;
 import com.momolearn.exception.NotExistException;
 import com.momolearn.model.ApplyTeacherRepository;
 import com.momolearn.model.MembersRepository;
@@ -48,16 +49,41 @@ public class ApplyTeacherService {
 	}
 
 	// X 강사 신청서 작성
-	@Transactional
-	public Integer save(ApplyTeacherDTO applyteacher) throws NotExistException{
-		System.out.println("ApplyTecacherService.save() : 강사 신청서 작성");
-		Members members = membersRepository.findById(applyteacher.getMembersMemId()).orElseThrow(()->new NotExistException("존재하지 않는 회원"));
-		ApplyTeacher applyTeacher = applyTeacherRepository.findAll().get(0); //임의 작성 유효한코드X
-				//ApplyTeacherRepository.save(applyteacher.getMembersMemId());
-				//.toEntity(members));
-		System.out.println(applyTeacher.toString());
-		return applyTeacher.getId();
-	}
+	public ApplyTeacherDTO write(ApplyTeacherDTO applyDTO) throws MessageException{
+		System.out.println("ApplyTecacherService.write() : 강사 신청서 작성");
+		
+//		ApplyTeacher applyTeachers = mapper.map(applyDTO, ApplyTeacher.class);  //????
+		
+		System.out.println("+++1 +++ : " + applyDTO);
+		
+		ApplyTeacher applyTeachers = applyDTO.toEntity(applyDTO);
+		
+		System.out.println("+++2 +++ : " + applyTeachers);
+		
+		
+		
+		
+		System.out.println(applyTeachers);
+		try {
+			
+			ApplyTeacher applyTeacher = applyTeacherRepository.save(applyTeachers);
+			
+			
+			System.out.println(applyTeachers);
+			return mapper.map(applyTeacher, ApplyTeacherDTO.class);
+			
+		} catch (Exception e) {
+			throw new MessageException("신청서 등록에 실패했습니다.");
+		}
+	}	
+		
+		//		Members members = membersRepository.findById(applyteacher.getMembersMemId()).orElseThrow(()->new NotExistException("존재하지 않는 회원"));
+//		ApplyTeacher applyTeacher = applyTeacherRepository.findAll().get(0); //임의 작성 유효한코드X
+//				//ApplyTeacherRepository.save(applyteacher.getMembersMemId());
+//				//.toEntity(members));
+//		System.out.println(applyTeacher.toString());
+//		return applyTeacher.getId();
+//	}
 	
 	// O 강사 신청서 상세 보기 : 선택된 memId의 강사 신청서 보기
 	public ApplyTeacherDTO read(String membersMemId) throws NotExistException {
@@ -88,9 +114,9 @@ public class ApplyTeacherService {
 	
 	// O 승인
 	@Transactional
-	public void approve(int id, ApplyTeacherDTO apply) {
+	public void approve(int id, ApplyTeacherDTO applyDTO) {
 //		Optional<ApplyTeacher> applyTeacher = applyTeacherRepository.findById(id);
-		apply.setApprove("true");
+		applyDTO.setApprove("true");
 	}
 
 //	@Transactional
@@ -106,10 +132,10 @@ public class ApplyTeacherService {
 	}
 
 	// dto->entity 변환
-	public ApplyTeacher convertDtoToEntity(ApplyTeacherDTO dto) {
-		return ApplyTeacher.builder().id(dto.getId()).phoneNum(dto.getPhoneNum()).hopeFiled(dto.getHopeFiled())
-				.intro(dto.getIntro()).pfLink(dto.getPfLink()).approve(dto.getApprove())
-				.members(new Members(dto.getMembersMemId())).build();
+	public ApplyTeacher convertDtoToEntity(ApplyTeacherDTO applyDTO) {
+		return ApplyTeacher.builder().id(applyDTO.getId()).phoneNum(applyDTO.getPhoneNum()).hopeField(applyDTO.getHopeField())
+				.intro(applyDTO.getIntro()).pfLink(applyDTO.getPfLink()).approve(applyDTO.getApprove())
+				.members(new Members(applyDTO.getMembersMemId())).build();
 
 		// members 타입이 mapping이 안되고있음 -> builder패턴으로 하나하나 만들어서 반환
 //        return mapper.map(dto, ApplyTeacher.class);
