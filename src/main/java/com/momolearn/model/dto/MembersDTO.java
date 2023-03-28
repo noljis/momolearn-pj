@@ -2,8 +2,6 @@ package com.momolearn.model.dto;
 
 import java.time.LocalDateTime;
 
-import com.momolearn.model.entity.Members;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

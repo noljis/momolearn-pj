@@ -16,6 +16,7 @@ import com.momolearn.model.CategoryLectureRepository;
 import com.momolearn.model.CategoryRepository;
 import com.momolearn.model.CoursesRepository;
 import com.momolearn.model.LecturesRepository;
+import com.momolearn.model.MyLecturesRepository;
 import com.momolearn.model.dto.CategoryDTO;
 import com.momolearn.model.dto.CoursesDTO;
 import com.momolearn.model.dto.CoursesListDTO;
@@ -25,6 +26,7 @@ import com.momolearn.model.entity.Category;
 import com.momolearn.model.entity.CategoryLecture;
 import com.momolearn.model.entity.Courses;
 import com.momolearn.model.entity.Lectures;
+import com.momolearn.model.entity.MyLectures;
 
 import lombok.RequiredArgsConstructor;
 
@@ -39,6 +41,8 @@ public class LecturesService {
 	private final CategoryRepository categoryRepository;
 
 	private final CategoryLectureRepository categoryLectureRepository;
+	
+	private final MyLecturesRepository myLecturesRepository;
 
 	private ModelMapper mapper = new ModelMapper();
 
@@ -146,6 +150,7 @@ public class LecturesService {
 		List<String> title = lecturesRepository.findByCategoryLectureCategoryCateId(cateId);
 		
 		List<Lectures> lectures = new ArrayList<>();
+		
 		for(String t : title) {
 			
 			lectures.addAll(lecturesRepository.findByTitleContaining(t));
@@ -209,6 +214,36 @@ public class LecturesService {
 		}
 		
 		return lecturesJson;
+	}
+
+	//수강중인 강좌 조회. 강좌 id로 조회
+	/* MyLectures -> lecture -> courses
+	 * 조회 후 memId와 비교해서 일치하는게 있으면 true 없으면 예외 발생
+	 * */
+	public void checkMyLecture(int title, String memId) throws NotExistException{
+		boolean result = false;
+		List<MyLectures> myLecture = myLecturesRepository.findByLectureCoursesCourseId(title);
+		
+		for(int i = 0; i < myLecture.size(); i++) {
+			
+			if(myLecture.get(i).getMember().getMemId().equals(memId)) {
+				
+				result = true;
+				break;
+			}
+		}
+		if(result == false) {
+
+			throw new NotExistException("현재 수강중인 강의가 아닙니다. 수강신청 후 이용해주세요.");
+		
+		}
+	}
+	
+	//강좌 하나 조회: findById
+	public CoursesDTO getOneCourse(int title) {
+		
+		
+		return null;
 	}
 
 

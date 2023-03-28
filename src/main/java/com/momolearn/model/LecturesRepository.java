@@ -20,12 +20,10 @@ public interface LecturesRepository extends JpaRepository<Lectures, Integer>{
 	@EntityGraph(attributePaths = {"teachers.applyTeacher.members", "categoryLecture.category"})
 	List<Lectures> findAll();
 	
-	//@EntityGraph(attributePaths = {"teachers.applyTeacher.members", "categoryLecture", "categoryLecture.category"})
 	@Query("SELECT l.title FROM Lectures l JOIN l.categoryLecture cl JOIN cl.category c WHERE c.cateId = :categoryId")
 	List<String> findByCategoryLectureCategoryCateId(@Param("categoryId") int categoryId);
 	
 	//강의+강의에 종속된 강좌 조회
-//	@EntityGraph(attributePaths = {"courses", "teachers.applyTeacher.members"})
 	@Query("SELECT l from Lectures l join fetch l.teachers t join fetch t.applyTeacher at join fetch at.members m WHERE l.id=:id")
 	Lectures findById(@Param("id") int id);
 

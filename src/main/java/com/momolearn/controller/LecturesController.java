@@ -162,15 +162,34 @@ public class LecturesController {
 		return "lecture/lecture-detail"; //WEB-INF/lecture/lecture-detail.jsp
 	}
 	
-	//6. 강좌 시청 watch-course?
-	/* 1. MyLectures에서 lecture -> id로 조회
-	 * 2. MyLectures에서 lecture -> courses -> courseId로 조회 V
+	//6-1. 강좌 수강 여부 검증 MyLectures에서 lecture -> courses -> courseId로 조회 V
+	/* 1. 세션Id와 일치하면 watch-course로 이동
 	 * */
-	@ApiOperation(value = "강의 하나 정보조회 메소드", notes = "강의 id로 강의 정보를 조회")
-	@GetMapping(value = "/watch-course/{title}", produces = "application/json;charset=UTF-8")
-	public String getOneCourse() {
+	@ApiOperation(value = "강좌 수강 여부 검증", notes = "강좌 id로 강좌 하나 정보 조회")
+	@GetMapping(value="/check-mylecture/{title}", produces = "application/json;charset=UTF-8")
+	public String checkMyLecture(@PathVariable int title, @ModelAttribute("members") MembersDTO member) throws NotExistException {
+		log.info("강좌 수강 여부 검증 : " + title + member.getMemId());
 		
-		return "";
+		lecturesService.checkMyLecture(title, member.getMemId());
+		
+		return "redirect:watch-course/" + title;
+	}
+	
+	
+	//6-2. 강좌 시청 watch-course?
+	/* 1. 
+	 * 2. 
+	 * 3. 사이드바에 강좌 목록 -> LectureCoursesDTO lecture = lecturesService.getLectureDetail(title); 활용
+	 * */
+	@ApiOperation(value = "강좌 시청 메소드", notes = "강의 id로 강좌 하나 정보 조회")
+	@GetMapping(value = "/watch-course/{title}", produces = "application/json;charset=UTF-8")
+	public String getOneCourse(Model model, @PathVariable int title) {
+		
+		log.info("강좌 시청 메소드 강의id: " + title);
+		
+		CoursesDTO course =  lecturesService.getOneCourse(title);
+		
+		return "lecture/courses-view"; //WEB-INF/lecture/courses-view.jsp
 	}
 	
 	//7-1. 내 강의(학생: memId로 조회) - myLectures -> join fetch Members, Lectures 
