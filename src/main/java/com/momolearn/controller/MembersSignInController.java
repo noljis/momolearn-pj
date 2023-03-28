@@ -146,13 +146,8 @@ public class MembersSignInController {
 		if (members != null) { // 로그인성공
 			sessionData.addAttribute("members", members); // 세션에 프로필 저장
 
-			//댓글창에서 로그인할경우 로그인완료후 기존페이지로 이동
-			if(returnUrl!=null) {
-				return "redirect:"+URLDecoder.decode(returnUrl,"UTF-8");
-			}
 			return "redirect:/"; // 로그인 후 메인화면
 
-			
 		} else {
 			
 			return "loginError"; // 에러메시지 창 띄우는걸로 수정하기
