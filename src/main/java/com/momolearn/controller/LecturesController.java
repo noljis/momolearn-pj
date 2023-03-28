@@ -31,6 +31,7 @@ import com.momolearn.model.dto.LecturesDTO;
 import com.momolearn.model.dto.MembersDTO;
 import com.momolearn.model.dto.MyLecturesDTO;
 import com.momolearn.model.dto.TeacherMemberDTO;
+import com.momolearn.model.entity.Courses;
 import com.momolearn.model.service.FileService;
 import com.momolearn.model.service.LecturesService;
 import com.momolearn.model.service.TeachersService;
@@ -154,10 +155,8 @@ public class LecturesController {
 	@GetMapping(value = "/detail/{title}", produces = "application/json;charset=UTF-8")
 	public String getLectureDetail(Model model, @PathVariable("title") int title, @ModelAttribute("members") MembersDTO member) throws NotExistException {
 		log.info("강의 하나 정보조회 메소드");
-		//강의+강좌 정보 조회
+		//강의번호로 강의+강좌 정보 조회
 		LectureCoursesDTO lecture = lecturesService.getLectureDetail(title);
-		
-		System.out.println(lecture.getTeachersApplyTeacherMembers().getMemId());
 		
 		//수강중인 강의여부 확인
 		MyLecturesDTO myLecture = lecturesService.checkMyLectureByLecId(title, member.getMemId());
@@ -178,22 +177,29 @@ public class LecturesController {
 		
 		lecturesService.checkMyLecture(title, member.getMemId());
 		
-		return "redirect:watch-course/" + title;
+		return "redirect:/lectures/watch-course/" + title;
 	}
 	
 	
 	//6-2. 강좌 시청 watch-course?
-	/* 1. 
-	 * 2. 
-	 * 3. 사이드바에 강좌 목록 -> LectureCoursesDTO lecture = lecturesService.getLectureDetail(title); 활용
+	/* 1. 사이드바에 강좌 목록 -> LectureCoursesDTO lecture = lecturesService.getLectureDetail(title); 활용
+	 * 2. jsp에서 조건문으로 title과 lecture.get(i).getCourses().get(j).getCourseId와 비교해서 일치하면 해당 강좌 불러오기
 	 * */
-	@ApiOperation(value = "강좌 시청 메소드", notes = "강의 id로 강좌 하나 정보 조회")
+	@ApiOperation(value = "강좌 시청 메소드", notes = "강좌 id로 강좌 하나 정보 조회")
 	@GetMapping(value = "/watch-course/{title}", produces = "application/json;charset=UTF-8")
-	public String getOneCourse(Model model, @PathVariable int title) {
+	public String getOneCourse(Model model, @PathVariable int title) throws NotExistException {
 		
-		log.info("강좌 시청 메소드 강의id: " + title);
+		log.info("강좌 시청 메소드 강좌id: " + title);
 		
-		CoursesDTO course =  lecturesService.getOneCourse(title);
+		//강좌 하나 조회
+		CoursesDTO course = lecturesService.getOneCourse(title);
+		
+		//강의번호로 강의 + 강좌 목록 전부 조회
+		LectureCoursesDTO lecture = lecturesService.getLectureDetail(course.getLectureId());
+		
+		
+		model.addAttribute("lecture", lecture);
+		model.addAttribute("course", course);
 		
 		return "lecture/courses-view"; //WEB-INF/lecture/courses-view.jsp
 	}

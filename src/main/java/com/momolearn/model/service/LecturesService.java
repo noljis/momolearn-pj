@@ -102,7 +102,6 @@ public class LecturesService {
 		Lectures lecture = null;
 		if(coursesList != null) {
 			//반복문으로 배열에 담아주기
-			System.out.println(coursesList.getLectureId().size());
 			for(int i = 0; i < (coursesList.getLectureId().size()); i++) {
 				
 				lecture = lecturesRepository.findById(coursesList.getLectureId().get(i)).orElseThrow(() -> new NotExistException("강의가 존재하지 않습니다."));
@@ -159,17 +158,25 @@ public class LecturesService {
 		return getLectureJson(lectures);
 	}
 
-	//강의번호로 강의 하나 조회
+	//강의번호로 강의-강좌 하나 조회
 	public LectureCoursesDTO getLectureDetail(int title) throws NotExistException {
 		
 		Lectures lecture = lecturesRepository.findById(title);
 		
 		if(lecture == null) {
-			System.out.println(lecture.getTeachers().getApplyTeacher().getMembers());
+			
 			new NotExistException("해당 강의가 존재하지 않습니다.");
 		}
 		
 		return mapper.map(lecture, LectureCoursesDTO.class);
+	}
+	
+	//강좌번호로 강좌 하나 조회
+	public CoursesDTO getOneCourse(int title) throws NotExistException{
+		
+		Courses courses = coursesRepository.findById(title).orElseThrow(() -> new NotExistException("해당 강좌 정보가 존재하지 않습니다."));
+		
+		return mapper.map(courses, CoursesDTO.class);
 	}
 
 	//강의 번호에 속한 강좌들 조회
@@ -203,7 +210,7 @@ public class LecturesService {
 			
 			//카테고리 배열 담아주기
 			for(int j = 0; j < lectures.get(i).getCategoryLecture().size(); j++) {
-				System.out.println(lectures.get(i).getCategoryLecture().get(j).getCategory().getCateName());
+				
 				category.add(lectures.get(i).getCategoryLecture().get(j).getCategory().getCateName());
 			}
 			
@@ -254,12 +261,6 @@ public class LecturesService {
 		return mapper.map(myLecture, MyLecturesDTO.class);
 	}
 	
-	//강좌 하나 조회: findById
-	public CoursesDTO getOneCourse(int title) {
-		
-		
-		return null;
-	}
-
-
+	
+	
 }

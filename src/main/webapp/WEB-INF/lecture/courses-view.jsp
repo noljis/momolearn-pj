@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,12 +19,11 @@
 	<jsp:include page="/separate/header.jsp"></jsp:include>
 	<!-- searchList: 스터디 검색시 비동기로 출력-->
 	<div id="searchList">
-
 		<div class="container-fluid">
 		<br>
 			<div class="row">
 				<div class="col-12">
-					<h3 class="text-center">강의명: 강좌명</h3>
+					<h3 class="">🖥️ ${lecture.title} 🪄 ${course.title}</h3>
 				</div>
 			</div>
 			<div class="row d-flex">
@@ -32,7 +31,7 @@
 				<div class="col-12 col-md-9 flex-grow-1">
 					<div class="embed-responsive embed-responsive-16by9">
 						<iframe class="embed-responsive-item"
-							src="https://www.youtube.com/embed//Eb_-b2QKPBw" allowfullscreen
+							src="${course.url}" allowfullscreen
 							style="width: 1015px; height: 600px;"></iframe>
 					</div>
 				</div>
@@ -51,9 +50,16 @@
 								aria-labelledby="headingOne" data-parent="#accordion">
 								<div class="card-body">
 									<ul class="list-group list-group-flush">
-										<li class="list-group-item"><a href="#">강좌 1</a></li>
-										<li class="list-group-item"><a href="#">강좌 2</a></li>
-										<li class="list-group-item"><a href="#">강좌 3</a></li>
+										<c:forEach var="courses" items="${lecture.courses}">
+											<c:choose>
+												<c:when test="${courses.courseId eq course.courseId}">
+													<li class="list-group-item" style="font-weight: bold; background-color: #f2f2f2;">${courses.title}</li>
+												</c:when>
+												<c:otherwise>
+													<li class="list-group-item"><a href="${pageContext.request.contextPath}/lectures/check-mylecture/${courses.courseId}">${courses.title}</a></li>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
 									</ul>
 								</div>
 							</div>
@@ -62,7 +68,7 @@
 				</div>
 			</div>
 		</div>
-
+	
 	</div>
 
 

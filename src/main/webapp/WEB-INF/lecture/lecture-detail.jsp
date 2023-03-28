@@ -79,7 +79,7 @@ tr:nth-child(odd) {
 								style="background-color: #dcdcdc;">
 								<tbody>
 									<c:forEach var="course" items="${lecture.courses}">
-										<tr onclick="location.href='${pageContext.request.contextPath}/lectures/check-mylecture/${course.courseId}';">
+										<tr onclick="location.href='${pageContext.request.contextPath}/lectures/check-mylecture/${course.courseId}'">
 											<td style="background-color: #dcdcdc;">${course.title}</td>
 											<td style="background-color: #dcdcdc; text-align: right;">${course.time}</td>
 										</tr>
