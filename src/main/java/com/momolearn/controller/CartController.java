@@ -29,5 +29,14 @@ public class CartController {
 	    }
 	    return "";
 	}
+	
+	//1. 장바구니
+	/* 1. 필요한 속성
+	 * 2. 동일 과목을 담으면 이미 담겨있다는 알람창
+	 * */
+	
+	//2. 결제
+	
+	//3. 결제 후 MyLectures에 데이터 추가
 
 }

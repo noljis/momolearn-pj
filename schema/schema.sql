@@ -21,13 +21,13 @@ INSERT INTO members (mem_id, pw, name, email, profile, grade, regdate) VALUES ('
 INSERT INTO members (mem_id, pw, name, email, profile, grade, regdate) VALUES ('test19', '1234', '학생13', 'test19@gmail.com', 'test19.png', 'student', NOW());
 INSERT INTO members (mem_id, pw, name, email, profile, grade, regdate) VALUES ('test20', '1234', '학생14', 'test20@gmail.com', 'test20.png', 'student', NOW());
 -- test06, test07: 강사 신청폼만 낸 상태 Teachers데이터X
-INSERT INTO apply_teacher (apply_id, phone_num, hope_filed, intro, pf_link, apply_rege, approve) VALUES ('test11', '010-1234-1234', '컴퓨터과학 기초', '안녕하세요. 컴퓨터 과학을 전공하고 있는 대학원생입니다.', 'https://github.com/', NOW(), 'false');
-INSERT INTO apply_teacher (apply_id, phone_num, hope_filed, intro, pf_link, apply_rege, approve) VALUES ('test12', '010-1234-1111', 'python', '안녕하십니까. 파이썬을 보다 쉽게 배우는 법을 공유하고 싶어 지원합니다.', 'https://github.com/', NOW(), 'false');
+INSERT INTO apply_teacher (apply_id, phone_num, hope_field, intro, pf_link, apply_rege, approve) VALUES ('test11', '010-1234-1234', '컴퓨터과학 기초', '안녕하세요. 컴퓨터 과학을 전공하고 있는 대학원생입니다.', 'https://github.com/', NOW(), 'false');
+INSERT INTO apply_teacher (apply_id, phone_num, hope_field, intro, pf_link, apply_rege, approve) VALUES ('test12', '010-1234-1111', 'python', '안녕하십니까. 파이썬을 보다 쉽게 배우는 법을 공유하고 싶어 지원합니다.', 'https://github.com/', NOW(), 'false');
 -- apply_teacher test04, test05: 강사, teachers 데이터O
-INSERT INTO apply_teacher (apply_id, phone_num, hope_filed, intro, pf_link, apply_rege, approve) VALUES ('test07', '010-1234-2222', 'java', '안녕하세요. 남궁성입니다.', 'https://www.youtube.com/embed//oJlCC1DutbA', NOW(), 'true');
-INSERT INTO apply_teacher (apply_id, phone_num, hope_filed, intro, pf_link, apply_rege, approve) VALUES ('test08', '010-1234-3333', '프론트엔드', '안녕하세요. 니꼴라스입니다.', 'https://www.youtube.com/embed//cNfpkKUYAyo', NOW(), 'true');
-INSERT INTO apply_teacher (apply_id, phone_num, hope_filed, intro, pf_link, apply_rege, approve) VALUES ('test09', '010-1234-4444', 'spring', '안녕하세요. 김영한입니다.', 'https://www.youtube.com/embed//ZgtvcyH58ys', NOW(), 'true');
-INSERT INTO apply_teacher (apply_id, phone_num, hope_filed, intro, pf_link, apply_rege, approve) VALUES ('test10', '010-1234-5555', '프론트엔드, 깃허브', '안녕하세요. 엘리입니다.', 'https://www.youtube.com/embed/X91jsJyZofw', NOW(), 'true');
+INSERT INTO apply_teacher (apply_id, phone_num, hope_field, intro, pf_link, apply_rege, approve) VALUES ('test07', '010-1234-2222', 'java', '안녕하세요. 남궁성입니다.', 'https://www.youtube.com/embed//oJlCC1DutbA', NOW(), 'true');
+INSERT INTO apply_teacher (apply_id, phone_num, hope_field, intro, pf_link, apply_rege, approve) VALUES ('test08', '010-1234-3333', '프론트엔드', '안녕하세요. 니꼴라스입니다.', 'https://www.youtube.com/embed//cNfpkKUYAyo', NOW(), 'true');
+INSERT INTO apply_teacher (apply_id, phone_num, hope_field, intro, pf_link, apply_rege, approve) VALUES ('test09', '010-1234-4444', 'spring', '안녕하세요. 김영한입니다.', 'https://www.youtube.com/embed//ZgtvcyH58ys', NOW(), 'true');
+INSERT INTO apply_teacher (apply_id, phone_num, hope_field, intro, pf_link, apply_rege, approve) VALUES ('test10', '010-1234-5555', '프론트엔드, 깃허브', '안녕하세요. 엘리입니다.', 'https://www.youtube.com/embed/X91jsJyZofw', NOW(), 'true');
 -- teachers
 -- test07
 INSERT INTO teachers (phone_num, hope, intro, pf_link, apply_id) VALUES ('010-1234-2222', 'java', '안녕하세요. 남궁성입니다.', 'https://www.youtube.com/embed//oJlCC1DutbA', 3);

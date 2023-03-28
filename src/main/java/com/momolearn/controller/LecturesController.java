@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.HttpSessionRequiredException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -31,7 +32,6 @@ import com.momolearn.model.dto.LecturesDTO;
 import com.momolearn.model.dto.MembersDTO;
 import com.momolearn.model.dto.MyLecturesDTO;
 import com.momolearn.model.dto.TeacherMemberDTO;
-import com.momolearn.model.entity.Courses;
 import com.momolearn.model.service.FileService;
 import com.momolearn.model.service.LecturesService;
 import com.momolearn.model.service.TeachersService;
@@ -155,6 +155,7 @@ public class LecturesController {
 	@GetMapping(value = "/detail/{title}", produces = "application/json;charset=UTF-8")
 	public String getLectureDetail(Model model, @PathVariable("title") int title, @ModelAttribute("members") MembersDTO member) throws NotExistException {
 		log.info("강의 하나 정보조회 메소드");
+		
 		//강의번호로 강의+강좌 정보 조회
 		LectureCoursesDTO lecture = lecturesService.getLectureDetail(title);
 		
@@ -260,6 +261,10 @@ public class LecturesController {
 		return "data_res"; // WEB-INF/main_res.jsp
 	}
 	
+	//11. 강의 수정
+	
+	//12. 강의 삭제
+	
 	//NotExistException 관련 예외처리
 	@ExceptionHandler(value = NotExistException.class)
 	public String notExistException(NotExistException ne, Model model) {
@@ -277,5 +282,13 @@ public class LecturesController {
 		return "error"; // 예: WEB-INF/error.jsp
 	}
 	
+	//비로그인시 HttpSessionRequiredException 예외처리
+	@ExceptionHandler(HttpSessionRequiredException.class)
+    public String handleSessionRequiredException(HttpSessionRequiredException e, Model model) {
+		
+		model.addAttribute("errorMsg", "로그인 후 이용해주시기 바랍니다.");
+		
+        return "error";
+    }
 	
 }
