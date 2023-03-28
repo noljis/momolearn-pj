@@ -52,7 +52,22 @@ INSERT INTO lectures (teacher_no, title, image, price, cnt, regdate, info, descr
 INSERT INTO lectures (teacher_no, title, image, price, cnt, regdate, info, description, apply_cnt) VALUES (3, '스프링 입문강의', '스프링 입문강의.png', 6000, 11, NOW(), '스프링 입문을 보다 쉽게', '스프링 입문자 분들을 위해 모모런에서 진행하는 저렴한 스프링 강의 입니다.', 3);
 -- 강사4의 강의(엘리)
 INSERT INTO lectures (teacher_no, title, image, price, cnt, regdate, info, description, apply_cnt) VALUES (4, '깃허브 입문하기', '깃허브 입문하기.png', 2000, 4, NOW(), '깃허브의 기본을 알려드립니다.', '요즘 현업에서 필수인 깃과 깃허브 개념을 속성으로 정리해드립니다. ', 4);
-
+-- 커뮤니티 댓글
+INSERT INTO comment (com_no, mem_id, cmt_content) VALUES (1, 'test02', '1등');
+INSERT INTO comment (com_no, mem_id, cmt_content) VALUES (1, 'test03', '허허');
+INSERT INTO comment (com_no, mem_id, cmt_content) VALUES (1, 'test05', '가입축하합니다ㅎㅎ');
+INSERT INTO comment (com_no, mem_id, cmt_content) VALUES (2, 'test01', '예 감사합니다');
+INSERT INTO comment (com_no, mem_id, cmt_content) VALUES (2, 'test04', '친하게 지내요~');
+INSERT INTO comment (com_no, mem_id, cmt_content) VALUES (2, 'test07', '같이 공부해요!');
+INSERT INTO comment (com_no, mem_id, cmt_content) VALUES (2, 'test02', '많은관심 감사합니다');
+-- 좋아요
+INSERT INTO likes (com_no, mem_id) VALUES (1, 'test02');
+INSERT INTO likes (com_no, mem_id) VALUES (1, 'test03');
+INSERT INTO likes (com_no, mem_id) VALUES (1, 'test04');
+INSERT INTO likes (com_no, mem_id) VALUES (1, 'test05');
+INSERT INTO likes (com_no, mem_id) VALUES (1, 'test06');
+INSERT INTO likes (com_no, mem_id) VALUES (2, 'test03');
+INSERT INTO likes (com_no, mem_id) VALUES (2, 'test07');
 -- category
 INSERT INTO category (cate_name) VALUES ('JAVA');
 INSERT INTO category (cate_name) VALUES ('HTML');
@@ -89,7 +104,7 @@ INSERT INTO courses (lecture_id, title, time, url) VALUES (1, '10강.변수란? 
 -- 강의2의 강좌 2개
 INSERT INTO courses (lecture_id, title, time, url) VALUES (2, '1강.HTML 로 코딩하기', '00:03:36', 'https://www.youtube.com/embed//cNfpkKUYAyo');
 INSERT INTO courses (lecture_id, title, time, url) VALUES (2, '2강.개발자 99%가 모르는 신박한 HTML 태그 5개', '00:08:21', 'https://www.youtube.com/embed//EMOlLLTAZMs');
--- 강의3의 강좌 28개
+-- 강의3의 강좌 11개
 INSERT INTO courses (lecture_id, title, time, url) VALUES (3, '0강.강의 소개', '00:05:01', 'https://www.youtube.com/embed//qyGjLVQ0Hog');
 INSERT INTO courses (lecture_id, title, time, url) VALUES (3, '1강.프로젝트 생성', '00:16:29', 'https://www.youtube.com/embed//NNClHeXzIBA');
 INSERT INTO courses (lecture_id, title, time, url) VALUES (3, '2강.라이브러리 살펴보기', '00:12:51', 'https://www.youtube.com/embed//ymmGSVUwTDM');
