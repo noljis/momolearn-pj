@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>강의 상세보기 뷰</title>
+<title>강좌 시청 뷰</title>
 <meta content="" name="keywords">
 <meta content="" name="description">
 <style>
