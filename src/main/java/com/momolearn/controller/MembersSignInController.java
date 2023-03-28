@@ -23,7 +23,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.momolearn.exception.MessageException;
 import com.momolearn.model.dto.MembersDTO;
-import com.momolearn.model.entity.Members;
 import com.momolearn.model.service.FileService;
 import com.momolearn.model.service.MembersService;
 
@@ -174,7 +173,7 @@ public class MembersSignInController {
 	//로그인 후 정보조회 (확인)
 	@GetMapping(value = "/myinfo", produces = "application/json; charset=UTF-8")
 	public String viewOne(Model sessionData, @ModelAttribute("members") MembersDTO mem) throws SQLException {
-//		return "member/myinfo";
+ 
 		return "member/myinfoview";
 	}
 	
