@@ -29,6 +29,7 @@ import com.momolearn.model.dto.CoursesListDTO;
 import com.momolearn.model.dto.LectureCoursesDTO;
 import com.momolearn.model.dto.LecturesDTO;
 import com.momolearn.model.dto.MembersDTO;
+import com.momolearn.model.dto.MyLecturesDTO;
 import com.momolearn.model.dto.TeacherMemberDTO;
 import com.momolearn.model.service.FileService;
 import com.momolearn.model.service.LecturesService;
@@ -93,7 +94,6 @@ public class LecturesController {
 
 		// 강의 등록
 		LecturesDTO lecture = lecturesService.uploadLecture(lectureDTO);
-		System.out.println(lecture.getTitle());	
 
 		//카테고리, 카테고리-강좌 저장
 		lecturesService.getCategory(category, lecture);
@@ -149,15 +149,21 @@ public class LecturesController {
 		return "data_res"; // WEB-INF/data_res.jsp
 	}
 	
-	//5. 강의 정보페이지 + 강좌 목록 + 강좌 추가 버튼 + 강의바구니 버튼
+	//5. 강의 정보페이지 + 강좌 목록 + 강좌 추가 버튼 + 강의바구니 버튼 // 수강중인 강의 검증..Mylectures
 	@ApiOperation(value = "강의 하나 정보조회 메소드", notes = "강의 id로 강의 정보를 조회")
 	@GetMapping(value = "/detail/{title}", produces = "application/json;charset=UTF-8")
-	public String getLectureDetail(Model model, @PathVariable int title) throws NotExistException {
+	public String getLectureDetail(Model model, @PathVariable("title") int title, @ModelAttribute("members") MembersDTO member) throws NotExistException {
 		log.info("강의 하나 정보조회 메소드");
 		//강의+강좌 정보 조회
 		LectureCoursesDTO lecture = lecturesService.getLectureDetail(title);
+		
 		System.out.println(lecture.getTeachersApplyTeacherMembers().getMemId());
+		
+		//수강중인 강의여부 확인
+		MyLecturesDTO myLecture = lecturesService.checkMyLectureByLecId(title, member.getMemId());
+		
 		model.addAttribute("lecture", lecture);
+		model.addAttribute("myLecture", myLecture);
 		
 		return "lecture/lecture-detail"; //WEB-INF/lecture/lecture-detail.jsp
 	}

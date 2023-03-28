@@ -14,4 +14,7 @@ public interface MyLecturesRepository extends JpaRepository<MyLectures, Integer>
 	@EntityGraph(attributePaths = {"member", "lecture.courses"})
 	List<MyLectures> findByLectureCoursesCourseId(int courseId);
 
+	@EntityGraph(attributePaths = {"lecture", "member"})
+	MyLectures findByLectureIdAndMemberMemId(int lectureId, String memId);
+
 }

@@ -22,6 +22,7 @@ import com.momolearn.model.dto.CoursesDTO;
 import com.momolearn.model.dto.CoursesListDTO;
 import com.momolearn.model.dto.LectureCoursesDTO;
 import com.momolearn.model.dto.LecturesDTO;
+import com.momolearn.model.dto.MyLecturesDTO;
 import com.momolearn.model.entity.Category;
 import com.momolearn.model.entity.CategoryLecture;
 import com.momolearn.model.entity.Courses;
@@ -79,7 +80,6 @@ public class LecturesService {
 	public void getCategory(String category, LecturesDTO lectures) {
 		// 엔티티로 변환
 		Lectures lecture = mapper.map(lectures, Lectures.class);
-		System.out.println(lecture.getId());
 		// 1. 카테고리 ,으로 split
 		String[] categories = category.split(",");
 
@@ -106,7 +106,6 @@ public class LecturesService {
 			for(int i = 0; i < (coursesList.getLectureId().size()); i++) {
 				
 				lecture = lecturesRepository.findById(coursesList.getLectureId().get(i)).orElseThrow(() -> new NotExistException("강의가 존재하지 않습니다."));
-				System.out.println(lecture);
 				//builder로 저장
 				Courses course = Courses.builder()
 						.lecture(lecture)
@@ -237,6 +236,22 @@ public class LecturesService {
 			throw new NotExistException("현재 수강중인 강의가 아닙니다. 수강신청 후 이용해주세요.");
 		
 		}
+	}
+	
+	//수강중인 강의 조회. 강의id로 조회 : 
+	/* MyLectures -> lecture(id)
+	 * not empty조건만 만족하면 되니까 MyLecturesDTO 반환
+	 * */
+	public MyLecturesDTO checkMyLectureByLecId(int lectureId, String memId) {
+		
+		MyLectures myLecture = myLecturesRepository.findByLectureIdAndMemberMemId(lectureId, memId);
+		
+		if(myLecture == null) {
+			
+			return null;
+		}
+		
+		return mapper.map(myLecture, MyLecturesDTO.class);
 	}
 	
 	//강좌 하나 조회: findById

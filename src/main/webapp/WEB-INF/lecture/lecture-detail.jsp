@@ -103,21 +103,25 @@ tr:nth-child(odd) {
 						<h4 class="card-title spoqa-han-sans">${lecture.title}</h4>
 						<p class="card-text mb-3">${lecture.info}</p>
 						<br>
-						<h4 class="card-title text-primary">${lecture.price}￦</h4>
-						<div class="d-grid gap-2">
-							<button type="submit" name="pay" class="btn btn-primary">결제하기</button>
-							<button type="submit" name="cart" class="btn btn-secondary mr-2">장바구니</button>
-							<%-- <input type="hidden" name="memId" value="${members.memId}"/> --%>
-						</div>
+						<c:choose>
+							<c:when test="${empty myLecture}">
+								<h4 class="card-title text-primary">${lecture.price}￦</h4>
+								<div class="d-grid gap-2">
+									<button type="submit" name="pay" class="btn btn-primary">결제하기</button>
+									<button type="submit" name="cart" class="btn btn-secondary mr-2">장바구니</button>
+									<%-- <input type="hidden" name="memId" value="${members.memId}"/> --%>
+								</div>
+							</c:when>
+							<c:otherwise>
+								<h3 class="card-title text-primary">수강중😊</h3>
+							</c:otherwise>
+						</c:choose>
 					</div>
 				</form>
 			</div>
 		</div>
 		<!-- 결제 박스 -->
 	</div>
-
-
-
 
 	<!-- Back to Top -->
 	<jsp:include page="/separate/script.jsp"></jsp:include>
