@@ -130,6 +130,7 @@ public class MembersSignInController {
         if (member == null) {
             model.addAttribute("msg", "일치하는 회원 정보가 없습니다.");
             
+            
         } else {
             model.addAttribute("member", member);
             
@@ -153,7 +154,7 @@ public class MembersSignInController {
 
 		} else {
 			
-			return "loginError"; // 에러메시지 창 띄우는걸로 수정하기
+			return "loginError"; 
 		}
 		
 	}
@@ -207,7 +208,7 @@ public class MembersSignInController {
 		mem.setName(name);
 		
 		if(newpw==null  || newpw.isEmpty()) {
-			mem.setPw(password);
+			mem.setPw(mem.getPw());
 			
 		}else {
 			mem.setPw(newpw);

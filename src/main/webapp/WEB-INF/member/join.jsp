@@ -46,18 +46,6 @@
 						<input type="text" name="email" placeholder="이메일을 입력해주세요."
 							maxlength="100">
 					</div>
-					<!-- <div class="join_grade">
-						<h4>등급</h4>
-						<label>
-							<input type="radio" name="grade" value="student" checked>학생 &nbsp;&nbsp;
-						</label> 
-						<label>
-							<input type="radio" name="grade" value="teacher">강사 &nbsp;&nbsp;
-						</label>
-						<label>
-							<input type="radio" name="grade" value="amdin">관리자 
-						</label>
-					</div> -->
 					<div class="join_a">
 						<h4>*이름</h4>
 						<input type="text" name="name" placeholder="이름을 입력해주세요."
@@ -66,21 +54,13 @@
 					<!--사진 업로드: https://getbootstrap.com/docs/5.3/forms/form-control/?#file-input-->
 					<br>
 					<div class="">
-						<h4>*프로필사진</h4>
+						<h4>프로필사진</h4>
 						<div class="mb-3">
 							<input class="form-control" type="file" id="profile" name="file">
 						</div>
 					</div>
 					<div class="submit">
 						<input type="button" style="background-color: #78d5e7;" value="회원가입" onclick="blank()">
-					</div>
-
-					<div class="text">
-						<p id="p">sns계정으로 시작하기</p>
-					</div>
-					<div class="join_sns">
-						<li><a href="" id="a"><i class="fa-sharp fa-solid fa-n"></i></a></li>
-						<li><a href="" id="a"><i class="fa-solid fa-comment"></i></a></li>
 					</div>
 
 				</form>
