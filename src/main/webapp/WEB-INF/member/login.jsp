@@ -51,8 +51,7 @@
 					<p id="p">sns계정으로 시작하기</p>
 				</div>
 				<div class="login_sns">
-					<li><a id="a" href=""><i class="fa-sharp fa-solid fa-n"></i></a></li>
-					<li><a id="a" href=""><i class="fa-solid fa-comment"></i></a></li>
+					<li><a id="a2" href=""><i class="fa-solid fa-comment"></i> 카카오로 로그인</a></li>
 				</div>
 				<div class="text">
 					아직 회원이 아니신가요? &nbsp; <a href="${pageContext.request.contextPath}/member/joinView"> 회원가입 하러가기</a>
