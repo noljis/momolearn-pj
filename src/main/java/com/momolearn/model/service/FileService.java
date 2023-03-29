@@ -19,7 +19,7 @@ public class FileService {
 	//필요한 정보: 사진 파일, 유저Id(저장할이름)
 	public String getProfile(String memId, MultipartFile file) throws IOException {
 		//fileName: 원래 파일명
-		String fileName = file.getOriginalFilename();
+//		String fileName = file.getOriginalFilename();
 		
 		//fileExtension: 확장자명
 	    //String fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1);

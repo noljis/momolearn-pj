@@ -68,7 +68,7 @@
 					<div class="">
 						<h4>*프로필사진</h4>
 						<div class="mb-3">
-							<input class="form-control" type="file" id="profile" name="file">
+							<input class="form-control" type="file" id="profile" name="file" required>
 						</div>
 					</div>
 					<div class="submit">
