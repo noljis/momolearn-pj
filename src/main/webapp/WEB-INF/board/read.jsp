@@ -33,11 +33,12 @@
                             <span id="id" style="display: none">${dto.comNo}</span>
                             <h2>${dto.comTitle }</h2>
                             <div class="media">
-                                <div class="avatar">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" title="" alt="">
+                                <div>
+                                    <img class="profile-image rounded-circle" src="${pageContext.request.contextPath}/img/profile/${dto.member.profile}"
+                                		style="width: 50px; height: 50px; border: 2px solid #06BBCC;">
                                 </div>
                                 <div class="media-body">
-                                    <label>${dto.membersMemId}</label>
+                                    <label>${dto.member.memId}</label>
                                 </div>
                                 <div class="detail">
                                     <span>작성일 <fmt:parseDate value="${dto.comRegdate}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="lastupdate" type="both" />
@@ -97,13 +98,14 @@
 			                                <div class="be-comment" id="comment-block">
 			                                    <div class="be-img-comment">
 			                                        <a href="blog-detail-2.html">
-			                                            <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="be-ava-comment">
+			                                            <img class="profile-image rounded-circle" src="${pageContext.request.contextPath}/img/profile/${c.member.profile}"
+                                							style="width: 50px; height: 50px; border: 2px solid #06BBCC;">
 			                                        </a>
 			                                    </div>
 			                                    <div class="be-comment-content">
 			                                        
 			                                            <span class="be-comment-name">
-			                                                <a href="blog-detail-2.html">${c.membersMemId}</a>
+			                                                <a href="blog-detail-2.html">${c.member.memId}</a>
 			                                                </span>
 			                                            <span class="be-comment-time">
 			                                                <i class="fa fa-clock-o"></i>
@@ -123,7 +125,7 @@
 														<button id="btn-updateCmt" class="btn btn-primary">수정하기</button>
 													</form>
 			                                    </div>
-			                                    <c:if test="${sessionScope.members.memId == c.membersMemId }">
+			                                    <c:if test="${sessionScope.members.memId == c.member.memId }">
 				                                    <div id="btn-putdelete" class="list-unstyled list-inline media-detail pull-right">
 							                            <a data-bs-toggle="collapse" href="#text-updateCmt-${c.cmtNo}" role="button" aria-expanded="false" aria-controls="text-updateCmt-${c.cmtNo}">수정</a>
 							                            <a id="btn-deleteCmt" type="button" style="color: red" onclick="deleteComment(${dto.comNo},${c.cmtNo})">삭제</a>
@@ -153,7 +155,9 @@
 		                                    <div class="row">
 		                                        <div class="col-xs-12 col-sm-6">
 		                                            <div class="form-group fl_icon">
-		                                                <input class="form-input" id="membersMemId" type="text" value="${members.memId}" readonly>
+		                                                <img class="profile-image rounded-circle" src="${pageContext.request.contextPath}/img/profile/${members.profile}"
+                                							style="width: 50px; height: 50px; border: 2px solid #06BBCC;">
+		                                                <input class="form-input3" id="membersMemId" type="text" value="${members.memId}" readonly>
 		                                            </div>
 		                                        </div>
 		                                        <div class="col-xs-12">									
@@ -176,7 +180,7 @@
 
                     <button type="button" class="btn btn-primary" style="margin-top: 15px;" onclick="location.href='../board'">목록</button>
                     <div class="text-right mt-3" style="float: right;">
-                    <c:if test="${members.memId == dto.membersMemId}">
+                    <c:if test="${members.memId == dto.member.memId}">
                         <button type="button" class="btn btn-primary" onclick="location.href='../board/updateForm/${dto.comNo}'">수정</button>&nbsp;
                         <form id="delete_form" action="../board/${dto.comNo}" method="post"  style="float:left;margin:0;">
 					    <input type="hidden" name="_method" value="delete"/>

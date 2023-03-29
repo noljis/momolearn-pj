@@ -142,8 +142,8 @@
                                         <td><tf:formatDateTime value="${c.comRegdate}" pattern="yyyy.MM.dd / HH:mm" /></td>
                                         <td>
                                             <div class="team">
-                                                <a href="javascript: void(0);" class="team-member" data-toggle="tooltip" data-placement="top" title="" data-original-title="Roger Drake">
-                                                    <img src="https://bootdey.com/img/Content/avatar/avatar6.png" class="rounded-circle avatar-xs" alt="" />${c.membersMemId}
+                                                <a href="javascript: void(0);" class="team-member" data-toggle="tooltip" data-placement="top">
+                                                    <img src="${pageContext.request.contextPath}/img/profile/${c.member.profile}" class="profile-image rounded-circle" style="width: 30px; height: 30px; border: 1px solid #06BBCC;" />&nbsp;${c.member.memId}
                                                 </a>
                                             </div>
                                         </td>
