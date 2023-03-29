@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
@@ -34,8 +33,6 @@ public class ApplyTeacherService {
 
 	private ModelMapper mapper = new ModelMapper();
 
-
-	
 	// 강사 신청서 전체 목록
 	public List<ApplyTeacherDTO> getApplyList() {
 		List<ApplyTeacher> applylists = applyTeacherRepository.findAll();
@@ -43,7 +40,7 @@ public class ApplyTeacherService {
 	}
 	
 	// X 강사 승인 신청서가 있는 회원 목록
-	public List<Members> getApplyMembers() {
+	public List<Members> getApplyApproveMembers() {
 //		List<Members> mem = membersRepository
 		
 		return null;
@@ -70,14 +67,6 @@ public class ApplyTeacherService {
 			throw new MessageException("신청서 등록에 실패했습니다.");
 		}
 	}	
-		
-		//		Members members = membersRepository.findById(applyteacher.getMembersMemId()).orElseThrow(()->new NotExistException("존재하지 않는 회원"));
-//		ApplyTeacher applyTeacher = applyTeacherRepository.findAll().get(0); //임의 작성 유효한코드X
-//				//ApplyTeacherRepository.save(applyteacher.getMembersMemId());
-//				//.toEntity(members));
-//		System.out.println(applyTeacher.toString());
-//		return applyTeacher.getId();
-//	}
 	
 	// O 강사 신청서 상세 보기 : 선택된 memId의 강사 신청서 보기
 	public ApplyTeacherDTO read(String membersMemId) throws NotExistException {
@@ -109,7 +98,7 @@ public class ApplyTeacherService {
 	// O 삭제
 	@Transactional
 	public void delete(int id) throws NotExistException {
-		System.out.println("===== service delete apply ===== ");
+		System.out.println("service.delete() : 신청서 삭제 ");
 		ApplyTeacher applyTeacher = applyTeacherRepository.findById(id).orElseThrow(()->new NotExistException("신청서가 존재하지 않습니다."));
 		applyTeacherRepository.delete(applyTeacher);
 	}

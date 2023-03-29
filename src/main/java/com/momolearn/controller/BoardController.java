@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.momolearn.exception.NotExistException;
 import com.momolearn.model.dto.BoardDTO;
+import com.momolearn.model.dto.BoardListDTO;
 import com.momolearn.model.dto.BoardSaveDTO;
 import com.momolearn.model.dto.CommentDTO;
 import com.momolearn.model.dto.LikesDTO;
@@ -52,7 +53,7 @@ public class BoardController {
 	public String list(Model model, @PageableDefault(sort = "comNo", direction = Sort.Direction.DESC) Pageable pageable) {
 		System.out.println("list()---------------");
 		
-		Page<BoardDTO> listPage = boardService.paging(pageable);
+		Page<BoardListDTO> listPage = boardService.paging(pageable);
 		int nowPage = listPage.getPageable().getPageNumber()+1; //pagable은 0부터 시작
 		int startPage = Math.max(1, listPage.getPageable().getPageNumber() -2);
 		int endPage = Math.min(listPage.getPageable().getPageNumber() +2, listPage.getTotalPages());
@@ -159,7 +160,7 @@ public class BoardController {
 	public String searchPost(@RequestParam String searchType, @RequestParam String searchText, Model model, @PageableDefault(sort = "comNo", direction = Sort.Direction.DESC) Pageable pageable) {
 		System.out.println("searchPost()--------------");
 		
-		Page<BoardDTO> listPage = boardService.searchPost(searchType, searchText, pageable);
+		Page<BoardListDTO> listPage = boardService.searchPost(searchType, searchText, pageable);
 		int nowPage = listPage.getPageable().getPageNumber()+1;
 		int startPage = Math.max(1, listPage.getPageable().getPageNumber() -2);
 		int endPage = Math.min(listPage.getPageable().getPageNumber() +2, listPage.getTotalPages());
