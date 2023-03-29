@@ -189,10 +189,4 @@ public class MembersService {
 		membersRepository.save(member);	
 	}
 	
-	//관리자 프로필 수정 -- 회원정보 수정이랑 같이 쓸지?!
-//    public boolean adminUpdate() throws SQLException {
-//		return false ;
-//		
-//	}
-    
 }

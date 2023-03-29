@@ -5,8 +5,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.momolearn.model.MembersRepository;
-import com.momolearn.model.service.FileService;
 import com.momolearn.model.service.MembersService;
 
 @RestController
@@ -15,13 +13,6 @@ public class MemberSignUpController {
 	
 	@Autowired
 	private MembersService membersService;
-	
-	@Autowired
-	private MembersRepository membersRepository;
-	
-	@Autowired
-	private FileService fileService;
-    
 
 	//아이디 중복 체크 (성공)
 	@PostMapping("member/checkOk")
