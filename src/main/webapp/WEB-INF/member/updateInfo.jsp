@@ -117,7 +117,7 @@
 	
 											<tr>
 												<td colspan="2" align="center">
-												<input class="btn btn-primary" type="submit" value="수정하기">&nbsp;
+												<input class="btn btn-primary" id="submitBtn" type="submit" value="수정하기">&nbsp;
 												<button class="btn btn-danger" type="reset" id="cancle">취소하기</button></td>
 											</tr>
 										</table>
@@ -138,8 +138,8 @@
 	
 	<script>
 	const savedPw = "${members.pw}"; //db저장된 기존 비번
-	var check1 ; 
-	var check2 ; 
+	var check1 = false; 
+	var check2 = false; 
 	
 	var passwordInput = document.getElementById("newpw"); //input에 입력될 비번
 	passwordInput.value = null; // 값이 null로 설정됩니다.
@@ -155,10 +155,12 @@
 	 	} else if (inputPw === savedPw) {
 			document.getElementById("passResult1").innerHTML = "비밀번호 일치";
 			check1 = true;
+			document.getElementById("submitBtn").disabled = false;
 			
 		} else {
-			document.getElementById("passResul1").innerHTML = "비밀번호 불일치";
+			document.getElementById("passResult1").innerHTML = "비밀번호 불일치";
 			check1 = false;
+			document.getElementById("submitBtn").disabled = true; // 수정하기 버튼 비활성화
 		}
 		
 		checkAllTrue();
@@ -175,10 +177,12 @@
 	 	} else if (inputPw === savedPw) {
 			document.getElementById("passResult2").innerHTML = "기존 비밀번호와 일치하여 변경 불가";
 			check2 = false;
+			document.getElementById("submitBtn").disabled = true;
 			
 		} else {
 			document.getElementById("passResult2").innerHTML = "변경 가능";
 			check2 = true;
+			document.getElementById("submitBtn").disabled = false;
 		}
 		
 		checkAllTrue();
@@ -198,11 +202,14 @@
  
  	
 	function checkAllTrue() {
-		if (check1) {
+		if (check1 === true) {
 			document.getElementById("f").submit();
 		}
-		else if ( check1 && check2) {
+		else if ( check1 == true && check2 == true ) {
 			document.getElementById("f").submit();
+		}
+		else{
+			
 		}
 		
 	}

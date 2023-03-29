@@ -39,7 +39,6 @@
 				</div>
 				<div class="login_etc">
 					<div class="checkbox">
-						<input type="checkbox"> 아이디 저장<br>
 						<a id="a" href="${pageContext.request.contextPath}/member/findIdView">아이디 찾기</a>
 						&nbsp; <a>|</a> &nbsp;
 						<a id="a" href="${pageContext.request.contextPath}/member/findPwdView">비밀번호 찾기</a>
