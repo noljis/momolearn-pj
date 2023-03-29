@@ -42,10 +42,26 @@ tr:nth-child(odd) {
 	<jsp:include page="/separate/header.jsp"></jsp:include>
 	<!-- searchList: 스터디 검색시 비동기로 출력-->
 	<div id="searchList">
+	
+		<!-- Header Start -->
+	    <div class="container-fluid bg-primary py-5 mb-5 page-header">
+	        <div class="container py-5">
+	            <div class="row justify-content-center">
+	                <div class="col-lg-10 text-center">
+	                    <h1 class="display-4 text-white animated slideInDown">강의 상세보기</h1>
+	                    <nav aria-label="breadcrumb">
+	                        <ol class="breadcrumb justify-content-center">
+	                            <li class="breadcrumb-item text-white active" aria-current="page"></li>
+	                        </ol>
+	                    </nav>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	    <!-- Header End -->
 
 		<!-- 강의정보 단락 -->
-		<div
-			class="container-fluid bg-secondary py-5 d-flex justify-content-center align-items-center">
+		<div class="container-fluid bg-secondary py-5 d-flex justify-content-center align-items-center">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-5">
@@ -96,28 +112,25 @@ tr:nth-child(odd) {
 
 		<!-- 결제 박스 / 이미 수강중인 경우 : 수강중인 강좌입니다.(이전 컨트롤러에서 mylecture 조회)-->
 		<div class="position-fixed top-50 end-0">
-			<div class="card mb-3 text-center"
-				style="width: 300px; height: 100%; border-radius: 20px; right: 50px;">
-				<form method="POST" action="/payment">
-					<div class="card-body mb-3">
-						<h4 class="card-title spoqa-han-sans">${lecture.title}</h4>
-						<p class="card-text mb-3">${lecture.info}</p>
-						<br>
-						<c:choose>
-							<c:when test="${empty myLecture}">
-								<h4 class="card-title text-primary">${lecture.price}￦</h4>
-								<div class="d-grid gap-2">
-									<button type="submit" name="pay" class="btn btn-primary">결제하기</button>
-									<button type="submit" name="cart" class="btn btn-secondary mr-2">장바구니</button>
-									<%-- <input type="hidden" name="memId" value="${members.memId}"/> --%>
-								</div>
-							</c:when>
-							<c:otherwise>
-								<h3 class="card-title text-primary">수강중😊</h3>
-							</c:otherwise>
-						</c:choose>
-					</div>
-				</form>
+			<div class="card mb-3 text-center" style="width: 300px; height: 100%; border-radius: 20px; right: 50px;">
+				<div class="card-body mb-3">
+					<h4 class="card-title spoqa-han-sans">${lecture.title}</h4>
+					<p class="card-text mb-3">${lecture.info}</p>
+					<br>
+					<c:choose>
+						<c:when test="${empty myLecture}">
+							<h4 class="card-title text-primary">${lecture.price}￦</h4>
+							<div class="d-grid gap-2">
+								<button type="submit" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/cart/pay-lecture/${lecture.id}'">결제하기💳</button>
+								<button type="submit" class="btn btn-secondary mr-2" onclick="location.href='${pageContext.request.contextPath}/cart/check-cart/${lecture.id}'">수강바구니🧺</button>
+								<input type="hidden" name="lecId" value="${lecture.id}"/>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<h3 class="card-title text-primary">수강중😊</h3>
+						</c:otherwise>
+					</c:choose>
+				</div>
 			</div>
 		</div>
 		<!-- 결제 박스 -->

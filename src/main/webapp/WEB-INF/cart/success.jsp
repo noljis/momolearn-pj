@@ -6,12 +6,16 @@
 <meta charset="UTF-8">
 <title>성공뷰</title>
 </head>
-<body onload='succ("${errorMsg}")'>
+<body onload='succ("${msg}")'>
 
 	<script type="text/javascript">
-		function error(msg) {
-			alert(msg);
-			history.back();
+		function succ(msg) {
+			let result = confirm(msg);
+			  if (result == true) {
+			    window.location.href="/momolearn/cart/get-cart"
+			  } else {
+			    window.history.back();
+			  }
 		}
 	</script>
 </body>

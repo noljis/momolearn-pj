@@ -33,7 +33,7 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <!-- 세션ID 존재할 경우 나오는 메뉴 Start-->
                 <c:if test="${not empty sessionScope.members.memId}">
-                    <a href="" class="nav-item nav-link"><i class="fa fa-shopping-cart"
+                    <a href="${pageContext.request.contextPath}/cart/get-cart" class="nav-item nav-link"><i class="fa fa-shopping-cart"
                             style="font-size:24px;color:#06BBCC"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
                     <div class="nav-item dropdown">
                         <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">

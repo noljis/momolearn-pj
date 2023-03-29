@@ -157,6 +157,7 @@ label {
     	            "Content-Type": "application/json" 	//json
     	        }
     	    }).then(function(response) {
+    	    	 alert("성공적으로 등록되었습니다! 강의 페이지로 이동합니다.");
     	    	 let id = response.data.id; // 서버에서 반환된 ID 값
     	         let url = "/momolearn/lectures/detail/" + id;
     	         window.location.href = url;

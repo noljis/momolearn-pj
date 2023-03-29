@@ -50,7 +50,7 @@ function drawTable(list) {
 		description.textContent = lecture.info;
 
 		const teacher = document.createElement("p");
-		teacher.textContent = `강사명: ${lecture.teacher}`;
+		teacher.textContent = `👩‍🏫 ${lecture.teacher}`;
 		teacher.style.fontWeight = "bold";
 		teacher.style.borderRadius = "5px";
 
@@ -62,7 +62,10 @@ function drawTable(list) {
 		const totalAndStudents = document.createElement("div");
 		totalAndStudents.style.display = "flex";
 		totalAndStudents.style.justifyContent = "center";
-		totalAndStudents.style.border = "1px solid black";
+		totalAndStudents.style.border = "2px solid #ddd";
+		totalAndStudents.style.backgroundColor = "#EBF5FF";
+		totalAndStudents.style.borderRadius = "10px";
+		totalAndStudents.style.padding = "5px 10px";
 
 		const totalWrapper = document.createElement("div");
 		totalWrapper.style.width = "50%";
@@ -71,7 +74,9 @@ function drawTable(list) {
 		total.style.display = "inline-block";
 		total.style.margin = 0;
 		total.style.fontSize = "smaller";
-		total.textContent = `강좌 수: ${lecture.cnt}개`;
+		total.style.fontWeight = "bold";
+		total.style.color = "#666";
+		total.textContent = `📚강좌 수: ${lecture.cnt}개`;
 		totalWrapper.appendChild(total);
 
 		const studentsWrapper = document.createElement("div");
@@ -81,7 +86,9 @@ function drawTable(list) {
 		students.style.display = "inline-block";
 		students.style.margin = 0;
 		students.style.fontSize = "smaller";
-		students.textContent = `수강 학생 수: ${lecture.applyCnt}명`;
+		students.style.fontWeight = "bold";
+		students.style.color = "#666";
+		students.textContent = `🧑‍💻수강생: ${lecture.applyCnt}명`;
 		studentsWrapper.appendChild(students);
 
 
@@ -131,12 +138,12 @@ function dataReceive(title) {
 		console.log('넘어온 데이터' + lecture);
 		// data타입이 object가 아니면 json이 아닌 예외 메세지가 왔다는 뜻
 		if (typeof (lecture) == "string") {
-			alert("실행중 문제 발생 : " + lecture);
+			alert("🥲검색어 : " + title + lecture);
 		} else if (typeof (lecture) == "object") {
 			drawTable(lecture);
 		}
 	}).catch(function() {
-		alert("실행중 문제 발생 : " + "검색된 강의가 없습니다.");
+		alert("검색어를 입력하여 주십시오.");
 	});
 }
 //id=btn인 버튼을 클릭시 발생
