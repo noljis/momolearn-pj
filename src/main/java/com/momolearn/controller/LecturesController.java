@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonObject;
 import com.momolearn.exception.MessageException;
@@ -86,6 +85,7 @@ public class LecturesController {
 			throws MessageException, IOException {
 		
 		log.info("강의 업로드 메소드: " + lectureDTO.getTitle() + category);
+		
 		// 썸네일 먼저 저장 -> 이름.확장자명으로 반환해서 setImage 대입
 		if(file == null) {
 			lectureDTO.setImage("default.jpg");

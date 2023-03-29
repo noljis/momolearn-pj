@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -35,5 +36,12 @@ public class Cart  {
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lecture_id")
 	private Lectures lecture; //강의id
+	
+	
+	@Builder
+	public Cart(Members member, Lectures lecture) {
+		this.member = member;
+		this.lecture = lecture;
+	}
 	
 }
