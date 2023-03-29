@@ -1,6 +1,8 @@
 package com.momolearn.model.service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -74,6 +76,23 @@ public class BoardService {
 	//목록보기+페이징
 	public Page<BoardDTO> paging(Pageable pageable){
 		Page<Board> entityPage = boardRepository.findAll(pageable);
+		Page<BoardDTO> dtoPage = new BoardDTO().toDtoPage(entityPage);
+		return dtoPage;
+	}
+	
+	//검색+페이징
+	public Page<BoardDTO> searchPost(String searchType, String searchText, Pageable pageable){
+		System.out.println("searchPost() service-----------------");
+		Page<Board> entityPage = null;
+		
+		if("title".equals(searchType)){
+			entityPage = boardRepository.findByComTitleContaining(searchText, pageable);
+		}else if("content".equals(searchType)) {
+			entityPage = boardRepository.findByComContentContaining(searchText, pageable);
+		}else {
+			entityPage = boardRepository.findByMembers_MemIdContaining(searchText, pageable);
+		}
+		
 		Page<BoardDTO> dtoPage = new BoardDTO().toDtoPage(entityPage);
 		return dtoPage;
 	}

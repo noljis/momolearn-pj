@@ -53,7 +53,7 @@ $(document).ready(function(){
         console.log(currentPageUrl);
         let result = confirm('로그인 하시겠습니까?');
         if(result){
-            location.href="http://localhost/momolearn/login?returnUrl="+encodeURIComponent(currentPageUrl);
+            location.href="http://localhost/momolearn/member/loginView?returnUrl="+encodeURIComponent(currentPageUrl);
         }else{
 
         }
@@ -154,7 +154,7 @@ function deleteComment(comNo, cmtNo){
 			url: '../board/'+comNo+'/comment/'+cmtNo,
 			dataType: 'JSON',
 			success:function(response){
-				alert("댓글 삭제 성공");
+				//alert("댓글 삭제 성공");
 				window.location.reload();
 			},
 			error:function(response){

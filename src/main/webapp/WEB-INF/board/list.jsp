@@ -88,17 +88,24 @@
             <div class="col-xl-3 col-md-6">
                 <div class="card">
                     <div class="card-body">
-                        <form>
+                    <!-- 검색 폼 -->
+                        <form method="get" name="search" action="${pageContext.request.contextPath}/board/search">
                             <div class="form-group mb-0">
                                 <label>Search</label>
                                 <div class="input-group mb-0">
-                                    <input type="text" class="form-control" placeholder="Search..." aria-describedby="project-search-addon" />
+	                                	<select name="searchType" style="border-color: #ced4da; color: #52565b">
+											<option value="title" selected="selected">제목</option>
+											<option value="content">내용</option>
+											<option value="writer">글쓴이</option>
+										</select>
+                                    <input name="searchText" type="text" class="form-control" placeholder="Search..." aria-describedby="project-search-addon" />
                                     <div class="input-group-append">
-                                        <button class="btn btn-danger" type="button" id="project-search-addon"><i class="fa fa-search search-icon font-12"></i></button>
+                                        <button class="btn btn-danger" type="submit" id="project-search-addon"><i class="fa fa-search search-icon font-12"></i></button>
                                     </div>
                                 </div>
                             </div>
                         </form>
+                      <!-- 검색 폼 끝 -->
                     </div>
                 </div>
             </div>
@@ -119,7 +126,7 @@
                                         <th scope="col">작성일</th>
                                         <th scope="col">글쓴이</th>
                                         <th scope="col">조회</th>
-                                        <th scope="col">추천</th>
+                                        <th scope="col">좋아요</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -131,7 +138,7 @@
                                             <span class="text-success font-12"><i class="mdi mdi-checkbox-blank-circle mr-1"></i>${c.subject}</span>
                                         </td>
                                         <td><a href="${pageContext.request.contextPath}/board/${c.comNo}" id="title">${c.comTitle}</a></td>
-                                        <td><tf:formatDateTime value="${c.comRegdate}" pattern="yyyy-MM-dd HH:mm" /></td>
+                                        <td><tf:formatDateTime value="${c.comRegdate}" pattern="yyyy.MM.dd / HH:mm" /></td>
                                         <td>
                                             <div class="team">
                                                 <a href="javascript: void(0);" class="team-member" data-toggle="tooltip" data-placement="top" title="" data-original-title="Roger Drake">
@@ -144,7 +151,7 @@
                                         </td>
 
                                         <td>
-                                            <p class="mb-0">2</p>
+                                            <p class="mb-0">${likesCount}</p>
                                         </td>
                                     </tr>
                                 </c:forEach>

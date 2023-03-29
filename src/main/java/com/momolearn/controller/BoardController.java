@@ -21,13 +21,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.momolearn.exception.NotExistException;
 import com.momolearn.model.dto.BoardDTO;
 import com.momolearn.model.dto.BoardSaveDTO;
 import com.momolearn.model.dto.CommentDTO;
-import com.momolearn.model.entity.Members;
+import com.momolearn.model.dto.LikesDTO;
 import com.momolearn.model.service.BoardService;
 import com.momolearn.model.service.CommentService;
 import com.momolearn.model.service.LikesService;
@@ -94,9 +95,9 @@ public class BoardController {
 	
 	
 	
-	//게시글 보기 + 조회수증가 + 좋아요기능
+	//게시글 보기 + 조회수증가 + 좋아요개수 + 좋아요여부(?)
 	@GetMapping("/{comNo}")
-	public String read(@PathVariable int comNo, Model model, @ModelAttribute("members") Members members) throws NotExistException{
+	public String read(@PathVariable int comNo, Model model) throws NotExistException{
 		System.out.println("read()------------");
 		//조회
 		BoardDTO dto = boardService.read(comNo);
@@ -104,20 +105,23 @@ public class BoardController {
 		List<CommentDTO> cmtList = commentService.readComment(comNo);
 		//조회수증가
 		boardService.increaseViewCount(comNo);
-		//좋아요기능
-		boolean check = likesService.checkLike(comNo, members.getMemId());
-		
+		//좋아요개수
+		long likesCount = likesService.countLike(comNo);
+		//좋아요여부 List
+		List<LikesDTO> likesList = likesService.getLikesList(comNo);
+		System.out.println(likesList);
 		
 		model.addAttribute("dto", dto);
 		model.addAttribute("cmtList", cmtList);
-		model.addAttribute("check", check);
+		model.addAttribute("likesCount", likesCount);
+		model.addAttribute("likesList", likesList);
 		model.addAttribute("localDateTimeFormat", new SimpleDateFormat("yyyy-MM-dd hh:mm"));
 		return "board/read";
 	}
 	
 	//게시글 수정화면으로 이동
 	@GetMapping("/updateForm/{comNo}")
-	public String updateForm(@PathVariable int comNo,  Model model) throws NotExistException{
+	public String updateForm(@PathVariable int comNo, Model model) throws NotExistException{
 		System.out.println("updateForm()----------------");
 		model.addAttribute("dto", boardService.read(comNo));
 		return "board/updateForm";
@@ -149,6 +153,24 @@ public class BoardController {
 		System.out.println("delete() ---------");
 		boardService.delete(comNo);
 		return "redirect:/board";
+	}
+	//검색+페이징
+	@GetMapping("/search")
+	public String searchPost(@RequestParam String searchType, @RequestParam String searchText, Model model, @PageableDefault(sort = "comNo", direction = Sort.Direction.DESC) Pageable pageable) {
+		System.out.println("searchPost()--------------");
+		
+		Page<BoardDTO> listPage = boardService.searchPost(searchType, searchText, pageable);
+		int nowPage = listPage.getPageable().getPageNumber()+1;
+		int startPage = Math.max(1, listPage.getPageable().getPageNumber() -2);
+		int endPage = Math.min(listPage.getPageable().getPageNumber() +2, listPage.getTotalPages());
+		
+		model.addAttribute("list", listPage.getContent());
+		model.addAttribute("listPage", listPage);
+		model.addAttribute("nowPage", nowPage);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("endPage", endPage);
+		
+		return "board/list";
 	}
 	
 	

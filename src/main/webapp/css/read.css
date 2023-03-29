@@ -140,6 +140,20 @@ img {
 	margin: auto;
 }
 
+#btn-cancel{
+	background-color: #be98ff;
+	border-color: #be98ff;
+	display: block;
+	margin: auto;
+}
+
+#btn-likeLogin{
+	background-color: #9f9aa9;
+	border-color: #9f9aa9;
+	display: block;
+	margin: auto;
+}
+
 .px-btn {
     padding: 0 50px 0 20px;
     line-height: 60px;
@@ -211,6 +225,11 @@ img {
     padding-left: 8px;
 }
 
+.border-separator {
+  padding-right: 1.0em;
+  border-right: 1px solid #8000ff;
+  margin-right: 1.0em;
+}
 
 
 .be-comment-block {

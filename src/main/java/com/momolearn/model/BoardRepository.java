@@ -1,5 +1,7 @@
 package com.momolearn.model;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -15,4 +17,8 @@ public interface BoardRepository extends JpaRepository<Board, Integer>{
 	@Modifying
 	@Query("update Board b set b.comViewCount = b.comViewCount+1 where b.comNo=:comNo")
 	int increaseCountByComNo(@Param("comNo") int comNo);
+
+	Page<Board> findByComTitleContaining(String searchText, Pageable pageable);
+	Page<Board> findByComContentContaining(String searchText, Pageable pageable);
+	Page<Board> findByMembers_MemIdContaining(String searchText, Pageable pageable);
 }

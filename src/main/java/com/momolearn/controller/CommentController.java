@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.momolearn.exception.NotExistException;
 import com.momolearn.model.dto.CommentDTO;
 import com.momolearn.model.dto.CommentSaveDTO;
-import com.momolearn.model.entity.Members;
+import com.momolearn.model.dto.MembersDTO;
 import com.momolearn.model.service.CommentService;
 
 import lombok.RequiredArgsConstructor;
@@ -30,7 +30,7 @@ public class CommentController {
 	private final CommentService commentService;
 	
 	@PostMapping("/board/{comNo}/comment")
-	public int writeComment(@PathVariable int comNo, @ModelAttribute("members") Members members, @RequestBody CommentSaveDTO dto) throws NotExistException {
+	public int writeComment(@PathVariable int comNo, @ModelAttribute("members") MembersDTO members, @RequestBody CommentSaveDTO dto) throws NotExistException {
 		System.out.println("writeComment()-------------");
 		return commentService.writeComment(members.getMemId(), comNo, dto);
 	}

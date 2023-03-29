@@ -25,7 +25,5 @@ public class CommentDTO {
 		this.membersMemId = comment.getMembers().getMemId();
 		this.cmtContent = comment.getCmtContent();
 		this.cmtRegdate = comment.getCmtRegdate();
-		
 	}
-	
 }

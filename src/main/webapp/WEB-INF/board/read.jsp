@@ -1,8 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="tf" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.momolearn.model.entity.Members" %>
+
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -39,31 +43,45 @@
                                     <label>${dto.membersMemId}</label>
                                 </div>
                                 <div class="detail">
-                                    <span>작성일 <tf:formatDateTime value="${dto.comRegdate}" pattern="yyyy-MM-dd HH:mm" /></span>
+                                    <span>작성일 <fmt:parseDate value="${dto.comRegdate}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="lastupdate" type="both" />
+												<fmt:formatDate pattern="yyyy.MM.dd / HH시 mm분" value="${lastupdate}" /></span>
                                     <span style="float: right;">댓글 ${fn:length(cmtList)}</span>
-                                    <span style="float: right;">추천 0</span>
-                                    <span style="float: right;">조회 ${dto.comViewCount }</span>
+                                    <span class="border-separator" style="float: right;" id="likesCount">좋아요 ${likesCount}</span>
+                                    <span class="border-separator"style="float: right;">조회 ${dto.comViewCount }</span>
                                 </div>
                             </div>
                         </div>
                         <div class="article-content">
                             <p>${dto.comContent}</p>
                         </div>
-                        
-                        <c:choose >
-                        	<c:when test="${check}">
-		                        <div>
-			                    	<button id="btn-like" class="btn btn-primary"><i class='fas fa-heart' style='font-size:15px'> 좋아요 취소</i></button>
+                        <c:choose>
+                        	<c:when test="${empty members}">
+                        		<div>
+			                    	<button id="btn-likeLogin" class="btn btn-primary"><i class='far fa-heart' style='font-size:15px'> 좋아요</i><br>
+			                    	<p style="font-size: 10px; color: blue; margin: auto;" >(클릭시 로그인창으로 이동)</p></button>
 		                        </div>
                         	</c:when>
                         	<c:otherwise>
-		                        <div>
-			                    	<button id="btn-like" class="btn btn-primary"><i class='far fa-heart' style='font-size:15px'> 좋아요</i></button>
-		                        </div>
+								<c:set var="isLiked" value="false" />
+								<c:forEach items="${likesList}" var="like">
+								    <c:if test="${like.membersMemId == members.memId}">
+								        <div>
+								          <button id="btn-cancel" class="btn btn-primary">
+								            <i class='fas fa-heart' style='font-size:15px'> 좋아요 취소</i>
+								          </button>
+								        </div>
+								        <c:set var="isLiked" value="true" />
+								    </c:if>
+								</c:forEach>
+								<c:if test="${not isLiked}">
+								    <div>
+								        <button id="btn-like" class="btn btn-primary">
+								          <i class='far fa-heart' style='font-size:15px'> 좋아요</i>
+								        </button>
+						      		</div>
+								</c:if>
                         	</c:otherwise>
                         </c:choose>
-                        
-                        
                     </article>
                     
                     <div class="contact-form article-comment">
@@ -92,7 +110,8 @@
 			                                                </span>
 			                                            <span class="be-comment-time">
 			                                                <i class="fa fa-clock-o"></i>
-			                                                <tf:formatDateTime value="${c.cmtRegdate}" pattern="yyyy-MM-dd HH:mm" />
+			                                                <fmt:parseDate value="${c.cmtRegdate}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="lastupdate" type="both" />
+															<fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${lastupdate}" />
 			                                            </span>
 			                            
 			                                        <p class="be-comment-text">
