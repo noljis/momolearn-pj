@@ -23,7 +23,6 @@ public class ApplyTeacherDTO {
     private LocalDateTime applyRege;
     private String approve;
     
-    
     public ApplyTeacher toEntity(ApplyTeacherDTO applyDTO) {
     	return ApplyTeacher.builder()
     			.id(applyDTO.getId())
@@ -36,21 +35,5 @@ public class ApplyTeacherDTO {
     			.members(new Members(applyDTO.getMembersMemId()))
     			.build();
     }
-    
-    
-    
-    
-    public ApplyTeacher toEntity(Members members) {
-    	return ApplyTeacher.builder()
-    			//.members(members)
-    			.phoneNum(phoneNum)
-    			.hopeField(hopeField)
-    			.pfLink(pfLink)
-    			.intro(intro)
-    			.approve(approve)
-    			.build();
-    }
-    
-    
 
 }

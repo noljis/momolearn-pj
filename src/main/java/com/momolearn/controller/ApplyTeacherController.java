@@ -33,18 +33,41 @@ public class ApplyTeacherController {
 
 	/*
 	 * 
-	 * 글쓴다 - write 조회한다 - get 수정한다 - update 삭제한다 - delete 화면 - view 대조해서 검사한다 -
-	 * check
+	 * 글쓴다 - write 
+	 * 조회한다 - get 
+	 * 수정한다 - update 
+	 * 삭제한다 - delete 
+	 * 화면 - view 
+	 * 대조해서 검사한다 - check
 	 * 
 	 * 
-	 * - [2] 강사 신청 현황 확인 : at-state.jsp - 강사 신청 승인 여부 확인할 수 있음
+	 * 1. 회원 : 강사 신청서를 작성, 수정, 삭제할 수 있다
+	 * 			강사 신청서는 1명당 1개만 작성할 수 있다.
+	 * 			강사 신청서가 승인되면 수정과 삭제를 할 수 없다. => 어차피 teacher로 등급 바뀌면 메뉴가 보이지 않기때문에 등급 변경 기능이 우선
+	 * - 신청서 작성
+	 * - [0] 회원 로그인 후 드롭다운 메뉴에서 강사 신청 클릭 -> 내 강사 신청서 목록 페이지 : at-mylist.jsp
+	 * - [1] 강사 신청서가 없는 경우 강사 신청서 작성 버튼 활성화가 되어있다. 강사 신청서 작성 버튼 클릭
+	 * - [2] 신청에 필요한 정보를 기입한 수 제출한다.
 	 * 
-	 * 2. 관리자 : 강사 신청 승인 및 강사 등록 - 관리자 로그인 후 강사 신청서 목록 클릭 - [1] 강사 신청서 목록 페이지 :
-	 * at-list.jsp - [2] 이름 클릭시 강사 신청서 상세 보기 페이지 : at-readform.jsp 1) 강사 신청 승인 :관리자가
-	 * 강사 신청서를 확인하고 승인 버튼 클릭<button id="#"> - ApplyTeacher의 approve값이 false -> true로
-	 * 변경 2) 회원 등급 변경 : Members에 매핑된 해당 회원의 등급이 student -> teacher로 변경 3) 강사 정보 등록 :
-	 * Teachers에 ApplyTeacher 정보 이관 (강사테이블 => 신청테이블에서 정보가 이관) 4) 강사 신청 승인이 완료된 신청서
-	 * 삭제 => approve=true 인 경우 삭제? => 기능 보류
+	 * - 신청서 승인 상태에서는 불가능
+	 * - 신청서 수정
+	 * - [0] 내 강사 신청서에서 -> 수정 버튼 클릭
+	 * - [1] 수정할 정보를 기입한 수 수정하여 제출한다.
+	 * 
+	 * - 신청서 삭제
+	 * - [0] 내 강사 신청서에서 -> 삭제 버튼 클릭
+	 * 
+	 * 2. 관리자 : 강사 신청서를 읽고 승인을 할 수 있다.
+	 * 			 강사 신청서 승인 버튼을 누르면 등급이 강사로 변경되고 강사로 등록이 된다.
+	 * 
+	 * - 신청서 승인 + 등급 변경 + 강사 등록
+	 * - [0] 관리자 로그인 후 드롭다운 메뉴에서 강사 신청서 목록 클릭 -> 강사 신청서 목록 페이지 : at-list.jsp 
+	 * - [1] 이름 클릭시 강사 신청서 상세 보기 페이지 : at-readform.jsp 
+	 * - [2] 강사 신청 승인 :관리자가 강사 신청서를 확인하고 승인 버튼 클릭
+	 * 		- 1) ApplyTeacher의 approve값이 false -> true로 변경 
+	 * 		- 2) 회원 등급 변경 : Members에 매핑된 해당 회원의 등급이 student -> teacher로 변경
+	 * 		- 3) 강사 정보 등록 : Teachers에 ApplyTeacher 정보 이관 (강사테이블 => 신청테이블에서 정보가 이관)
+	 * 		- 4) 강사 신청 승인이 완료된 신청서 삭제 => approve=true 인 경우 삭제? => 기능 보류
 	 * 
 	 */
 
@@ -112,30 +135,6 @@ public class ApplyTeacherController {
 		return "teachers/at-mylist";
 	}
 	
-	
-	// 강사 신청서를 applyTeacher에 저장
-//	@PostMapping(value = "/write")
-//	public String write(ApplyTeacherDTO applyTeacherDto) {
-//	    Members members = MembersRepository.findByMemId(applyTeacherDto.getApplyId())
-//	                                        .orElseThrow(() -> new NotExistException("존재하지 않는 아이디입니다."));
-//	    ModelMapper modelMapper = new ModelMapper();
-//	    ApplyTeacher applyTeacher = modelMapper.map(applyTeacherDto, ApplyTeacher.class);
-//	    applyTeacher.setMembers(members);
-//	    applyTeacherRepository.save(applyTeacher);
-//	    return "redirect:/teachers/at-list";
-//	}
-	
-	
-//	@PostMapping(value = "/write")
-//	public String write(Model model, @ModelAttribute("members") MembersDTO members, ApplyTeacherDTO apply) throws NotExistException {
-//		
-//		ApplyTeacherDTO apply = applyTeacherService.save(members.getMemId());
-//		
-//		System.out.println("신청서 제출");
-//		
-//		return "teachers/at-list";
-//	}
-	
 	// O 회원 - 내 신청서 상세 조회
 	@GetMapping(value = "/read")
 	public String read(Model model, @ModelAttribute("members") MembersDTO members) throws NotExistException {
@@ -202,7 +201,7 @@ public class ApplyTeacherController {
 		return "teachers/at-readform";
 	}
 
-	// O 삭제
+	// O 삭제 - (approve == false) 일때만 가능하도록 수정하기 true이면 승인된 신청서이므로 삭제 불가
 	@PostMapping(value = "/delete/{id}")
 	public String delete(@PathVariable int id) throws NotExistException {
 		System.out.println("신청서 삭제");
@@ -211,7 +210,7 @@ public class ApplyTeacherController {
 		return "teachers/at-mylist";
 	}
 	
-	// O 승인
+	// O 승인 -> 추가가 필요한 기능 - 승인 후 grade == teacher 로 변경(완) & Teacher 테이블에 데이터 저장(ing)
 	@PostMapping(value = "/approve/{id}")
 	public String approve(Model model, @PathVariable int id) throws NotExistException {
 
@@ -221,12 +220,16 @@ public class ApplyTeacherController {
 		
 		System.out.println(apply);
 		applyTeacherService.approve(id);
-		MembersDTO member = membersService.getOneMember(apply.getMembersMemId());
 
 //		ApplyTeacherDTO apply = applyTeacherService.read(members.getMemId());
 //		MembersDTO member = membersService.getOneMember(members.getMemId());
 
 		model.addAttribute("apply", apply);
+		
+		MembersDTO member = membersService.getOneMember(apply.getMembersMemId());
+		
+		membersService.updateGrade(apply.getMembersMemId());
+		
 		model.addAttribute("member", member);
 
 		return "teachers/at-readform";

@@ -173,6 +173,13 @@ public class MembersService {
 	public List<Members> getAllMembers() {
 		return membersRepository.findAll();
 	}
+
+	// 회원 등급 변경 : ApplyTeacher에서 사용
+	public void updateGrade(String membersMemId) throws NotExistException{
+		Members member = membersRepository.findById(membersMemId).orElseThrow(()->new NotExistException("회원정보가 존재하지 않습니다."));
+		member.setGrade("teacher");
+		membersRepository.save(member);	
+	}
 	
 	//관리자 프로필 수정 -- 회원정보 수정이랑 같이 쓸지?!
 //    public boolean adminUpdate() throws SQLException {
