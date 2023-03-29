@@ -1,11 +1,15 @@
 package com.momolearn.model.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 
 import com.momolearn.exception.NotExistException;
 import com.momolearn.model.BoardRepository;
 import com.momolearn.model.LikesRepository;
 import com.momolearn.model.MembersRepository;
+import com.momolearn.model.dto.LikesDTO;
 import com.momolearn.model.entity.Board;
 import com.momolearn.model.entity.Likes;
 import com.momolearn.model.entity.Members;
@@ -45,6 +49,20 @@ public class LikesService {
 		Board board = boardRepository.findById(comNo).orElseThrow(()->new NotExistException("해당 게시글이 존재하지 않습니다."));
 		boolean check = likesRepository.findByMembersAndBoard(member, board).isPresent();
 		return check;
-		
 	}
+
+	public long countLike(int comNo) throws NotExistException {
+		System.out.println("countLike() service------------------");
+		long likesCount = likesRepository.countByComNo(comNo);
+		return likesCount;
+	}
+
+	public List<LikesDTO> getLikesList(int comNo) throws NotExistException {
+		System.out.println("getLikesList() service-----------");
+		Board board = boardRepository.findById(comNo).orElseThrow(()->new NotExistException("해당 게시글이 존재하지 않습니다."));
+		List<Likes> entityList = likesRepository.findAllByBoard(board);
+		List<LikesDTO> likesList = entityList.stream().map(LikesDTO::new).collect(Collectors.toList());
+		return likesList;
+	}
+	
 }
