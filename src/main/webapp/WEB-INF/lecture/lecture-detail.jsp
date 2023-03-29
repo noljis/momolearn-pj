@@ -86,7 +86,7 @@ tr:nth-child(odd) {
 					<div class="col-md-12">
 						<h3 class="mb-4">강좌 리스트
 						<c:if test="${members.memId eq lecture.teachersApplyTeacherMembers.memId}">
-							<button class="btn btn-secondary mr-2" onclick="location.href='${pageContext.request.contextPath}/lectures/courses-form/${lecture.title}/${lecture.id}'">강의 추가하기</button>
+							<button class="btn btn-secondary mr-2" onclick="location.href='${pageContext.request.contextPath}/lectures/courses-form/${lecture.title}/${lecture.id}'">강좌 추가하기</button>
 						</c:if>
 						</h3>
 						
@@ -118,6 +118,9 @@ tr:nth-child(odd) {
 					<p class="card-text mb-3">${lecture.info}</p>
 					<br>
 					<c:choose>
+						<c:when test="${members.memId eq lecture.teachersApplyTeacherMembers.memId}">
+							<h5 class="card-title text-primary">어서오세요 강사님😊</h5>
+						</c:when>
 						<c:when test="${empty myLecture}">
 							<h4 class="card-title text-primary">${lecture.price}￦</h4>
 							<div class="d-grid gap-2">

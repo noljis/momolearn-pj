@@ -16,6 +16,7 @@ import com.momolearn.model.CategoryLectureRepository;
 import com.momolearn.model.CategoryRepository;
 import com.momolearn.model.CoursesRepository;
 import com.momolearn.model.LecturesRepository;
+import com.momolearn.model.MembersRepository;
 import com.momolearn.model.MyLecturesRepository;
 import com.momolearn.model.dto.CategoryDTO;
 import com.momolearn.model.dto.CoursesDTO;
@@ -27,6 +28,7 @@ import com.momolearn.model.entity.Category;
 import com.momolearn.model.entity.CategoryLecture;
 import com.momolearn.model.entity.Courses;
 import com.momolearn.model.entity.Lectures;
+import com.momolearn.model.entity.Members;
 import com.momolearn.model.entity.MyLectures;
 
 import lombok.RequiredArgsConstructor;
@@ -229,19 +231,30 @@ public class LecturesService {
 	//수강중인 강좌 조회. 강좌 id로 조회
 	/* MyLectures -> lecture -> courses
 	 * 조회 후 memId와 비교해서 일치하는게 있으면 true 없으면 예외 발생
+	 * 강사의 경우 -> 해당 강좌 id로 members 조회 후 일치하면 true
 	 * */
 	public void checkMyLecture(int title, String memId) throws NotExistException{
 		boolean result = false;
+		//1. 회원일 경우 검증
 		List<MyLectures> myLecture = myLecturesRepository.findByLectureCoursesCourseId(title);
+		//2. 강사본인일 경우 검증
+		Lectures lecture = lecturesRepository.findByCoursesCourseId(title);
+		
+		if(lecture.getTeachers().getApplyTeacher().getMembers().getMemId().equals(memId)) {
+			
+			result = true;
+		}
 		
 		for(int i = 0; i < myLecture.size(); i++) {
-			
+			//로그인 회원이 강의를 올린 강사면 조회 가능
 			if(myLecture.get(i).getMember().getMemId().equals(memId)) {
 				
 				result = true;
 				break;
 			}
 		}
+		
+		
 		if(result == false) {
 
 			throw new NotExistException("현재 수강중인 강의가 아닙니다. 수강신청 후 이용해주세요.");

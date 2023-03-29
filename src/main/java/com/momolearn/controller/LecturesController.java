@@ -155,7 +155,7 @@ public class LecturesController {
 	@ApiOperation(value = "강의 하나 정보조회 메소드", notes = "강의 id로 강의 정보를 조회")
 	@GetMapping(value = "/detail/{title}", produces = "application/json;charset=UTF-8")
 	public String getLectureDetail(Model model, @PathVariable("title") int title, @ModelAttribute("members") MembersDTO member) throws NotExistException {
-		log.info("강의 하나 정보조회 메소드");
+		log.info("강의 하나 정보조회 메소드: " + title);
 		
 		//강의번호로 강의+강좌 정보 조회
 		LectureCoursesDTO lecture = lecturesService.getLectureDetail(title);
