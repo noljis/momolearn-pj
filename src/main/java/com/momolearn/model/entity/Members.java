@@ -25,7 +25,6 @@ import lombok.ToString;
 @Getter
 @Setter
 @DynamicInsert
-
 @ToString
 @Entity
 public class Members  {

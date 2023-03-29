@@ -44,6 +44,22 @@ INSERT INTO board (mem_id, type, com_title, subject, com_regdate, com_content, c
 -- 커뮤니티 게시글
 INSERT INTO board (mem_id, type, com_title, subject, com_regdate, com_content, com_view_count) VALUES ('test01', 'community', 'test01의 커뮤니티 글입니다.', '자유', NOW(), '커뮤니티 게시글 내용입니다.', 0);
 INSERT INTO board (mem_id, type, com_title, subject, com_regdate, com_content, com_view_count) VALUES ('test02', 'community', 'test02의 커뮤니티글입니다. ', '질문', NOW(), '멋진 개발자가 될 수 있을까요?', 0);
+-- 커뮤니티 댓글
+INSERT INTO comment (com_no, mem_id, cmt_content) VALUES (1, 'test02', '1등');
+INSERT INTO comment (com_no, mem_id, cmt_content) VALUES (1, 'test03', '허허');
+INSERT INTO comment (com_no, mem_id, cmt_content) VALUES (1, 'test05', '가입축하합니다ㅎㅎ');
+INSERT INTO comment (com_no, mem_id, cmt_content) VALUES (2, 'test01', '예 감사합니다');
+INSERT INTO comment (com_no, mem_id, cmt_content) VALUES (2, 'test04', '친하게 지내요~');
+INSERT INTO comment (com_no, mem_id, cmt_content) VALUES (2, 'test07', '같이 공부해요!');
+INSERT INTO comment (com_no, mem_id, cmt_content) VALUES (2, 'test02', '많은관심 감사합니다');
+-- 좋아요
+INSERT INTO likes (com_no, mem_id) VALUES (1, 'test02');
+INSERT INTO likes (com_no, mem_id) VALUES (1, 'test03');
+INSERT INTO likes (com_no, mem_id) VALUES (1, 'test04');
+INSERT INTO likes (com_no, mem_id) VALUES (1, 'test05');
+INSERT INTO likes (com_no, mem_id) VALUES (1, 'test06');
+INSERT INTO likes (com_no, mem_id) VALUES (2, 'test03');
+INSERT INTO likes (com_no, mem_id) VALUES (2, 'test07');
 -- 강사1의 강의(남궁성)
 INSERT INTO lectures (teacher_no, title, image, price, cnt, regdate, info, description, apply_cnt) VALUES (1, '자바의 정석', '자바의 정석.jpg', 5000, 10, NOW(), '자바의 정석입니다.', '자바의 역사부터 기본문법, 객체지개념까지 다룹니다.', 2);
 -- 강사2의 강의(니꼴라스)

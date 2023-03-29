@@ -18,8 +18,8 @@ import com.momolearn.model.entity.Members;
 
 @Service
 public class MembersService {
-
-	@Autowired // 의존관계를 자동으로 설정해 준다. (DAO 객체 주입)
+	
+	@Autowired 
 	private MembersRepository membersRepository;
 
 	private ModelMapper mapper = new ModelMapper();
@@ -40,9 +40,6 @@ public class MembersService {
 				membersRepository.save(mem);
 			}
 	        
-			//findById로 찾으면 이미 있는 Id니까 예외 발생/ 없으면 save
-//			Members savedMembers = membersRepository.save(mem);
-			
 		 } catch (Exception e) {
 			e.printStackTrace();
 			throw new SQLException("Failed to join member.");
@@ -119,11 +116,14 @@ public class MembersService {
     
 	//본인 조회 - jpa
     public MembersDTO getMember (String memId) {
+    	
     	Members member = membersRepository.findByMemId(memId);
+    	
         if (member == null) {
-            // 회원 정보를 찾을 수 없는 경우 예외 처리
+        	
             throw new RuntimeException("해당 회원을 찾을 수 없습니다.");
         }
+        
         return mapper.map(member, MembersDTO.class);
 	}
     
@@ -135,34 +135,42 @@ public class MembersService {
 		return mapper.map(member, MembersDTO.class);
 	}
     
-    //본인 프로필 수정 (미확인)
-//    @Transactional
-//    public void updateMember (MembersDTO members) throws SQLException {
-//    	
-//        try {
-//        	Members mem = mapper.map(members, Members.class); //엔티티로
-//        	
-//            membersRepository.save(mem);
-//            
-//        } catch (Exception e) {
-//        	
-//            e.printStackTrace();
-//            throw new SQLException("Failed to update member.");
-//        }
-//    }
+    //본인 프로필 수정 
+    @Transactional
+    public void updateMember (MembersDTO members) throws SQLException {
+  	
+    try {
+    	
+		Members mem = mapper.map(members, Members.class); //엔티티로
+		membersRepository.save(mem);
+		
+    } catch (Exception e) {
+  	
+	    e.printStackTrace();
+	    throw new SQLException("Failed to update member.");
+	    }
+    }
     
-    //회원 한명 삭제  (확인)
+    //회원 한명 삭제
     @Transactional
     public void deleteMember(String memId) throws SQLException {
+    	
         try {
+        	
             Optional<Members> member = membersRepository.findById(memId);
-            if (member.isPresent()) { //null이 아니면
+            
+            if (member.isPresent()) { 
+            	
             	Members members = member.get();
                 membersRepository.delete(members);
+                
             } else {
-                System.out.println("이미 탈퇴처리가 완료된 회원입니다.");
+            	
+                System.out.println("이미 탈퇴처리가 완료된 회원입니다."); 
+                
             }
         } catch (Exception e) {
+        	
             e.printStackTrace();
             throw new SQLException("Failed to delete member.");
         }
