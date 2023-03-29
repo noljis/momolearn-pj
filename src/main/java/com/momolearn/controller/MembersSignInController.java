@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -49,17 +50,19 @@ public class MembersSignInController {
     
 	// 회원가입 후 정보 보기 
 	@PostMapping(value = "/join", produces = "application/json; charset=UTF-8")
-	public String memInsert(Model sessionData, MembersDTO members, @RequestParam("memId") String memId
+	public String memInsert(Model model, MembersDTO members, @RequestParam("memId") String memId
 						,@RequestParam("password") String pw, @RequestParam("name") String name, 
 						@RequestParam("email") String email,
 						@RequestParam("file") MultipartFile file) throws SQLException, IOException, MessageException {
 		
         // profile 파일 저장
 		if(file != null && !file.isEmpty()) {
+			
 			String savedFileName = fileService.getProfile(memId, file);
 			members.setProfile(savedFileName);
 			
 		}else {
+			
 			members.setProfile("user.jpg");
 		}
         
@@ -72,7 +75,7 @@ public class MembersSignInController {
 		
 		membersService.memJoin(members); //수정중...
 		
-		sessionData.addAttribute("member", members); // 회원가입 정보를 모델에 담아서 리턴
+		model.addAttribute("member", members); // 회원가입 정보를 모델에 담아서 리턴
 
 		return "member/joinInfo"; 
 	}
@@ -137,13 +140,13 @@ public class MembersSignInController {
     
 	//로그인 (확인)
 	@PostMapping(value = "/login", produces = "application/json; charset=UTF-8")
-	public String login(Model sessionData, @RequestParam("memId") String memId, 
+	public String login(Model model, @RequestParam("memId") String memId, 
 						@RequestParam("password") String password) throws Exception {
 		
 		MembersDTO members = membersService.loginMember(memId, password);
 		
 		if (members != null) { // 로그인성공
-			sessionData.addAttribute("members", members); // 세션에 프로필 저장
+			model.addAttribute("members", members); // 세션에 프로필 저장
 
 			return "redirect:/"; // 로그인 후 메인화면
 
@@ -152,7 +155,6 @@ public class MembersSignInController {
 			
 			return "loginError"; // 에러메시지 창 띄우는걸로 수정하기
 		}
-		
 		
 	}
 	
@@ -166,76 +168,72 @@ public class MembersSignInController {
 		return "redirect:/";
 	}
 	
-	
     /**
      * 멤버 정보 관리 기능 
      */
 	//로그인 후 정보조회 (확인)
 	@GetMapping(value = "/myinfo", produces = "application/json; charset=UTF-8")
-	public String viewOne(Model sessionData, @ModelAttribute("members") MembersDTO mem) throws SQLException {
+	public String viewOne(Model model, @ModelAttribute("members") MembersDTO mem) throws SQLException {
  
 		return "member/myinfoview";
 	}
 	
 	//프로필 수정 페이지 이동 (확인)
 	@GetMapping(value = "/updatepage", produces = "application/json; charset=UTF-8")
-	public String updatePage(Model sessionData, @ModelAttribute("members") MembersDTO mem) throws SQLException {
+	public String updatePage(Model model, @ModelAttribute("members") MembersDTO mem) throws SQLException {
 
 		return "member/updateInfo";
 	}
 		
-	//프로필 수정 기능 (미확인)
-//	@PostMapping(value = "/update", produces = "application/json; charset=UTF-8")
-//	public String updatePage( Model sessionData,
-//			MembersDTO mem, @RequestParam("password") String password, 
-//			@RequestParam("name") String name, 
-//			@RequestParam("file") MultipartFile file) throws SQLException, IOException {
-//		
-//		String memId = mem.getMemId(); // 세션에서 아이디 불러오기
-//		
-//		System.out.println( "file" +file);
-//			
-//        // profile 파일 저장 -- 수정
-//		if(file == null || file.isEmpty()) {
-//			mem.setProfile(memId+".jpg");
-//		}else {
-//			String savedFileName = fileService.getProfile(memId, file);
-//			mem.setProfile(savedFileName);
-//			
-//		}
-//		
-//		mem.setName(name);
-//		
-//		System.out.println( "password = " + password);
-//		
-//		if(password==null) {
-//			mem.setPw(mem.getPw());
-//
-//		}else {
-//			mem.setPw(password);
-//		}
-//			
-//		
-//		membersService.updateMember(mem);
-//		
-//		sessionData.addAttribute("members", mem); // 수정 정보를 모델에 담아서 리턴
-//		
-//		return "member/myinfo"; 
-//		
-//	}
+	//프로필 수정 기능 (확인)
+	@PostMapping(value = "/update", produces = "application/json; charset=UTF-8")
+	public String updatePage( Model model, HttpSession session, @ModelAttribute("members") MembersDTO mem,
+			@RequestParam("newpw") String newpw, @RequestParam("password") String password, 
+			@RequestParam("name") String name, 
+			@RequestParam("file") MultipartFile file) throws SQLException, IOException {
+		
+		// 세션에서 아이디 불러오기
+		String memId = mem.getMemId(); // 세션에서 아이디 불러오기
+		
+		// profile 파일 저장 -- 수정
+		if(file == null || file.isEmpty()) {
+			mem.setProfile(memId+".jpg");
+			
+		}else {
+			String savedFileName = fileService.getProfile(memId, file);
+			mem.setProfile(savedFileName);
+		}
+		
+		mem.setName(name);
+		
+		if(newpw==null  || newpw.isEmpty()) {
+			mem.setPw(password);
+			
+		}else {
+			mem.setPw(newpw);
+			
+		}
+		
+		membersService.updateMember(mem);
+		
+		model.addAttribute("members", mem); // 수정 정보를 모델에 담아서 리턴
+		
+		return "member/myinfoview"; 
+		
+	}
 	
 	//회원 삭제 (확인)
 	@GetMapping(value = "/delete/{memId}", produces = "application/json; charset=UTF-8")
-	public String delete(Model sessionData, @PathVariable String memId, SessionStatus status){
+	public String delete(Model model, @PathVariable String memId, SessionStatus status){
 		 try {
 		        membersService.deleteMember(memId);
 				status.setComplete();
 				status = null;
-		        sessionData.addAttribute("message", "회원 탈퇴가 완료되었습니다.");
+		        model.addAttribute("message", "회원 탈퇴가 완료되었습니다.");
 		        
 		    } catch (Exception e) {
 		        e.printStackTrace();
-		        sessionData.addAttribute("message", "회원 탈퇴에 실패했습니다.");
+		        model.addAttribute("message", "회원 탈퇴에 실패했습니다.");
 		        return "member/myinfoview";
 		    }
 		 
