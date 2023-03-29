@@ -38,9 +38,9 @@
 						<input type="text" id="email" name="email" placeholder="이메일을 입력해주세요."  required >
 					</p>
 					<p class="w3-center">
-						<input type="submit" value="아이디찾기" id=findIdBtn onclick="blank()">
-						<input type="button" value="뒤로가기" onclick="history.back()">
-						<input type="button" value="메인화면"
+						<input class="btn btn-primary" type="submit" value="아이디찾기" id=findIdBtn onclick="blank()">
+						<input class="btn btn-primary" type="button" value="뒤로가기" onclick="history.back()">
+						<input class="btn btn-primary" type="button" value="메인화면"
 							onclick="location.href='${pageContext.request.contextPath}/'">
 					</p>
 				</div>
@@ -52,16 +52,5 @@
 	<jsp:include page="/separate/script.jsp"></jsp:include>
 	<jsp:include page="/separate/footer.jsp"></jsp:include>
 	
-<script>
-	function blank() {
-		//빈칸입력시 경고
-		if (f.email.value == "") {
-			alert("이메일을 입력하세요.");
-			f.email.focus();
-			return false;
-		}
-		f.submit();
-	}
-</script>
 </body>
 </html>

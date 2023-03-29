@@ -34,8 +34,8 @@
 				</c:when>
 			</c:choose>
 			<div class="box" >
-				<input type="button" value="뒤로가기" onclick="history.back()">
-				<input type="button" value="메인화면" onclick="location.href='${pageContext.request.contextPath}/'">
+				<input class="btn btn-primary" type="button" value="뒤로가기" onclick="history.back()">
+				<input class="btn btn-primary" type="button" value="메인화면" onclick="location.href='${pageContext.request.contextPath}/'">
 			</div>
 		</div>
 	</div>

@@ -37,11 +37,9 @@
 						<input type="text" id="email" name="email" placeholder="이메일을 입력해주세요." required>
 					</p>
 					<p class="w3-center">
-						<input type="submit" value="비밀번호찾기" id=findPwdBtn
-							onclick="blank()"> <input type="button" value="뒤로가기"
-							onclick="history.back()"> <input type="button"
-							value="메인화면으로"
-							onclick="location.href='${pageContext.request.contextPath}/'">
+						<input class="btn btn-primary" type="submit" value="비밀번호찾기" id=findPwdBtn onclick="blank()"> 
+						<input class="btn btn-primary" type="button" value="뒤로가기" onclick="history.back()"> 
+						<input class="btn btn-primary" type="button" value="메인화면으로" onclick="location.href='${pageContext.request.contextPath}/'">
 					</p>
 				</div>
 			</form>
@@ -52,21 +50,5 @@
 	<jsp:include page="/separate/script.jsp"></jsp:include>
 	<jsp:include page="/separate/footer.jsp"></jsp:include>
 	
-	<script>
-		function blank() {
-			//빈칸입력시 경고
-			if (f.id.value == "") {
-				alert("아이디를 입력하세요.");
-				f.id.focus();
-				return false;
-			}
-			if (f.email.value == "") {
-				alert("이메일을 입력하세요.");
-				f.email.focus();
-				return false;
-			}
-			f.submit();
-		}
-	</script>
 </body>
 </html>
