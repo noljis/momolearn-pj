@@ -1,8 +1,6 @@
 package com.momolearn.model.service;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -14,6 +12,7 @@ import com.momolearn.exception.NotExistException;
 import com.momolearn.model.BoardRepository;
 import com.momolearn.model.MembersRepository;
 import com.momolearn.model.dto.BoardDTO;
+import com.momolearn.model.dto.BoardListDTO;
 import com.momolearn.model.dto.BoardSaveDTO;
 import com.momolearn.model.entity.Board;
 import com.momolearn.model.entity.Members;
@@ -74,14 +73,14 @@ public class BoardService {
 	}
 	
 	//목록보기+페이징
-	public Page<BoardDTO> paging(Pageable pageable){
+	public Page<BoardListDTO> paging(Pageable pageable){
 		Page<Board> entityPage = boardRepository.findAll(pageable);
-		Page<BoardDTO> dtoPage = new BoardDTO().toDtoPage(entityPage);
+		Page<BoardListDTO> dtoPage = entityPage.map(e->new BoardListDTO(e));
 		return dtoPage;
 	}
 	
 	//검색+페이징
-	public Page<BoardDTO> searchPost(String searchType, String searchText, Pageable pageable){
+	public Page<BoardListDTO> searchPost(String searchType, String searchText, Pageable pageable){
 		System.out.println("searchPost() service-----------------");
 		Page<Board> entityPage = null;
 		
@@ -93,7 +92,7 @@ public class BoardService {
 			entityPage = boardRepository.findByMembers_MemIdContaining(searchText, pageable);
 		}
 		
-		Page<BoardDTO> dtoPage = new BoardDTO().toDtoPage(entityPage);
+		Page<BoardListDTO> dtoPage = entityPage.map(e->new BoardListDTO(e));
 		return dtoPage;
 	}
 
