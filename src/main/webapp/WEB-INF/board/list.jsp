@@ -138,7 +138,7 @@
                                         <td>
                                             <span class="text-success font-12"><i class="mdi mdi-checkbox-blank-circle mr-1"></i>${c.subject}</span>
                                         </td>
-                                        <td><a href="${pageContext.request.contextPath}/board/${c.comNo}" id="title">${c.comTitle}&nbsp;[${fn:length(c.likes)}]</a></td>
+                                        <td><a href="${pageContext.request.contextPath}/board/${c.comNo}" id="title">${c.comTitle}&nbsp;[${fn:length(c.comments)}]</a></td>
                                         <td><tf:formatDateTime value="${c.comRegdate}" pattern="yyyy.MM.dd / HH:mm" /></td>
                                         <td>
                                             <div class="team">
