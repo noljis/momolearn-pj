@@ -5,18 +5,18 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta content="" name="keywords">
-<meta content="" name="description">
-<title>회원가입 페이지</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta content="" name="keywords">
+	<meta content="" name="description">
+	
+	<title>회원가입 페이지</title>
 
 	<script src="https://kit.fontawesome.com/f51a30e87b.js" crossorigin="anonymous"></script>
-
-   <jsp:include page="/separate/head.jsp"></jsp:include>
    
-   <link href="${pageContext.request.contextPath}/css/join.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/css/join.css" rel="stylesheet">
 
+	<jsp:include page="/separate/head.jsp"></jsp:include>
 
 </head>
 <body>

@@ -6,18 +6,18 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta content="" name="keywords">
-<meta content="" name="description">
-<title>로그인 페이지</title>
-
-    <jsp:include page="/separate/head.jsp"></jsp:include>
-
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/login.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta content="" name="keywords">
+	<meta content="" name="description">
+	
+	<title>로그인 페이지</title>
 
 	<script src="https://kit.fontawesome.com/f51a30e87b.js" crossorigin="anonymous"></script>
 
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/login.css">
+
+    <jsp:include page="/separate/head.jsp"></jsp:include>
 </head>
 <body>
 

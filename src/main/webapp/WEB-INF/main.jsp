@@ -6,18 +6,17 @@
 
 <head>
     <meta charset="utf-8">
-    <title>MOMOLEARN</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
 
+    <title>MOMOLEARN</title>
+    
+	<jsp:include page="/separate/head.jsp"></jsp:include> 
 </head>
 <body>
 
-	<jsp:include page="/separate/head.jsp"></jsp:include> 
-	
-	 <jsp:include page="/separate/header.jsp"></jsp:include>
-
+	<jsp:include page="/separate/header.jsp"></jsp:include>
  
 	<!-- searchList: 스터디 검색시 비동기로 출력-->
 	<div id="searchList">

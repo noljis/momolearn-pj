@@ -6,11 +6,14 @@
 <html lang="ko">
 
 <head>
-<meta charset="utf-8">
-<title>MOMOLEARN</title>
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
-<meta content="" name="keywords">
-<meta content="" name="description">
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+	<meta content="" name="keywords">
+	<meta content="" name="description">
+	
+	<title>프로필 수정</title>
+	
+	<jsp:include page="/separate/head.jsp"></jsp:include>
 </head>
 
 <style>
@@ -23,8 +26,6 @@
 </style>
 
 <body>
-
-	<jsp:include page="/separate/head.jsp"></jsp:include>
 	<jsp:include page="/separate/header2.jsp"></jsp:include>
 
 	<!-- Header Start -->

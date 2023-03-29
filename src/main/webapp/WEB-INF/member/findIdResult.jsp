@@ -6,18 +6,19 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta content="" name="keywords">
-<meta content="" name="description">
-<title>아이디 찾기</title>
-
-    <jsp:include page="/separate/head.jsp"></jsp:include>
-    
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta content="" name="keywords">
+	<meta content="" name="description">
+	
+	<title>아이디 찾기</title>
+	    
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/find.css">
 
 	<script src="https://kit.fontawesome.com/f51a30e87b.js" crossorigin="anonymous"></script>
 
+    <jsp:include page="/separate/head.jsp"></jsp:include>
+    
 </head>
 <body>
 	<jsp:include page="/separate/header4.jsp"></jsp:include>

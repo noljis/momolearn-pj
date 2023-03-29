@@ -7,12 +7,14 @@
 <html lang="ko">
 
 <head>
-<meta charset="utf-8">
-<title>MOMOLEARN</title>
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
-<meta content="" name="keywords">
-<meta content="" name="description">
-
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+	<meta content="" name="keywords">
+	<meta content="" name="description">
+	
+	<title>프로필 정보</title>
+	
+	<jsp:include page="/separate/head.jsp"></jsp:include>
 </head>
 
 <style>
@@ -26,7 +28,6 @@
 </style>
 
 <body>
-	<jsp:include page="/separate/head.jsp"></jsp:include>
 	<jsp:include page="/separate/header2.jsp"></jsp:include>
 
 	<!-- Header Start -->
@@ -47,7 +48,6 @@
 	<!-- Header End -->
 
 	<!-- Info Start -->
-<<<<<<< HEAD
 	<div class="container">
 		<div class="row justify-content-center">
 			<div class="col-md-8">
@@ -102,57 +102,6 @@
 		</div>
 	</div>
 
-=======
-    <div align="center">
-        <h2>내 정보</h2> <!-- class="nav-item nav-link" -->
-
-        <div>
-            <div class="col-sm-5">
-                <table class="table table-bordered">
-
-                    <tr>
-                        <!-- 1 -->
-                        <td>아이디</td>
-                        <td>${members.memId}</td>
-
-                    </tr>
-                    <tr>
-                        <!-- 3 -->
-                        <td>이름</td>
-                        <td>${members.name }</td>
-                    </tr>
-                    <tr>
-                        <!-- 4 -->
-                        <td>이메일</td>
-                        <td>${members.email }</td>
-                    </tr>
-                    
-                   <tr>
-                   		<!-- 5 -->
-                        <td>등급</td>
-                        <td>${members.grade }</td>
-                    </tr>
-                    
-                   <tr>
-                   		<!-- 5 -->
-                        <td>프로필사진</td>
-                        <td>${members.profile }</td>
-                    </tr>                        
-
-
-                    <tr>
-                        <td colspan="2" align="center">
-                         <input class="btnBox" type="button" value="수정하기" onclick="location.href='${pageContext.request.contextPath}/member/updatepage?memId=${members.memId}'">&nbsp;
-				<c:if test="${members.grade ne 'admin'}">
-             				<button class="btnBox" id="delete_btn" onclick='confirmDelete("${pageContext.request.contextPath}/member/delete/${members.memId}")'> 탈퇴하기</button>
-             			</c:if>	
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-    </div>
->>>>>>> 62011029f13c998a3b833c47c63212e44c69d901
 	<!-- Info End -->
 	
 	<script type="text/javascript">

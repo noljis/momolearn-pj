@@ -6,14 +6,14 @@
 <html lang="ko">
 <head>
     <meta charset="utf-8">
-    <title>MOMOLEARN</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
+    
+    <title>회원가입 정보</title>
 
     <jsp:include page="/separate/head.jsp"></jsp:include>
 
-    <!-- Template Stylesheet -->
     <link href="${pageContext.request.contextPath}/css/teacherForm.css" rel="stylesheet">
 </head>
 <body>
