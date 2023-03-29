@@ -18,11 +18,6 @@ public class FileService {
 	//유저 프로필 파일 저장
 	//필요한 정보: 사진 파일, 유저Id(저장할이름)
 	public String getProfile(String memId, MultipartFile file) throws IOException {
-		//fileName: 원래 파일명
-//		String fileName = file.getOriginalFilename();
-		
-		//fileExtension: 확장자명
-	    //String fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1);
 	    
 	    //savedFileName: 디렉토리에 저장될 파일명[유저id.확장자]
 	    String savedFileName = memId + ".jpg" ;// + fileExtension;
