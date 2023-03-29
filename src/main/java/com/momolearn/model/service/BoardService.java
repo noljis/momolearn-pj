@@ -43,9 +43,9 @@ public class BoardService {
 	//게시글 보기
 	public BoardDTO read(int comNo) throws NotExistException{
 		System.out.println("read() service----------");
-		Optional<Board> board = boardRepository.findById(comNo);
-		Board entity = board.orElseThrow(()->new NotExistException("해당 게시글은 존재하지 않습니다."));
-		return mapper.map(entity, BoardDTO.class);
+		Board entity = boardRepository.findById(comNo).orElseThrow(()->new NotExistException("해당 게시글은 존재하지 않습니다."));
+		BoardDTO dto = new BoardDTO(entity);
+		return dto;
 	}
 	
 	//게시글 보기 - 조회수+1

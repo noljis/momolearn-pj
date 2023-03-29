@@ -335,6 +335,19 @@ img {
   border-radius: 3px;
 }
 
+.form-input3{
+  font-size: 13px;
+  line-height: 50px;
+  font-weight: 400;
+  color: #b4b7c1;
+  height: 50px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border: 1px solid #edeff2;
+  border-radius: 3px;
+	
+}
+
 .form-group.fl_icon .form-input {
   padding-left: 30px;
 }
