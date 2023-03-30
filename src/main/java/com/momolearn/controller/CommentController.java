@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -42,7 +43,7 @@ public class CommentController {
 	}
 	
 	@PutMapping("/board/{comNo}/comment/{cmtNo}")
-	public int updateComment(@PathVariable int comNo, @PathVariable int cmtNo, CommentSaveDTO dto) throws NotExistException {
+	public int updateComment(@PathVariable int comNo, @PathVariable int cmtNo, @RequestBody CommentDTO dto) throws NotExistException {
 		System.out.println("updateComment()------------");
 		System.out.println(comNo+"ㅇ"+cmtNo+"ㅇ"+dto.getCmtContent());
 		commentService.updateComment(cmtNo, dto);
