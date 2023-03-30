@@ -63,6 +63,7 @@
               </div>
               <div class="mb-3">
                 <label for="image">강의 썸네일</label>
+                <h6 class="text-danger">*최대 1MB의 jpg, png 파일만 가능합니다.</h6>
                 <div class="mb-3">
                   <input class="form-control" name="file" type="file">
                 </div>
