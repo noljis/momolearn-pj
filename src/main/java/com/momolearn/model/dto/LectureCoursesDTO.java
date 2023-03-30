@@ -15,7 +15,7 @@ import lombok.Setter;
 public class LectureCoursesDTO {
 
     private int id;
-    private int teachersTeacherNo; //매핑컬럼
+    private int teachersTeacherNo;
     private String title;
     private String image;
     private int price;

@@ -24,19 +24,15 @@ public class Cart  {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "cart_id")
-	private Integer cartId;	//수강바구니 id
+	private Integer cartId;	
 	
-	//Members 테이블과 다대일 단방향
-	//바구니정보 조회시 Member조회 단방향
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
 	private Members member; //학생id
 	
-	//Lectures 테이블과 다대일 단방향
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lecture_id")
 	private Lectures lecture; //강의id
-	
 	
 	@Builder
 	public Cart(Members member, Lectures lecture) {

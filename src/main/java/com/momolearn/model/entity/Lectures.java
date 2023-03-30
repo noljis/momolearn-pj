@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -36,45 +37,49 @@ import lombok.Setter;
 public class Lectures  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id; //강의id
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teacher_no")
-    private Teachers teachers; //강사id <- teachers
+    private Teachers teachers;
 
     @Column(length = 50, nullable = false)
-    private String title; //강의제목
-
+    private String title;
+    
     @Column(length = 255, nullable = false)
     @ColumnDefault("'default.jpg'")
-    private String image; //강의썸네일 default null not null 차이점
+    private String image; 
 
     @Column(length = 6, nullable = false)
-    private Integer price; //강의가격
+    private Integer price;
 
     @Column(length = 6, nullable = false)
     @ColumnDefault("0")
-    private Integer cnt; //강좌수
+    private Integer cnt;
 
     @Column
     @CreatedDate
-    private LocalDateTime regdate; //강의등록일
+    private LocalDateTime regdate;
 
     @Column(length = 255, nullable = false)
-    private String info; //강의한줄설명
+    private String info;
 
     @Column(columnDefinition = "TEXT", nullable = false)
-    private String description; //강의상세설명
+    private String description;
 
     @Column(length = 6, nullable = false)
-    private Integer applyCnt; //수강학생수
+    private Integer applyCnt;
     
-    //강의 조회시 강좌도 조회 양방향 주테이블
-    @OneToMany(mappedBy = "lecture")
+    @OneToMany(mappedBy = "lecture", cascade = CascadeType.REMOVE)
     private List<Courses> courses = new ArrayList<>(); //강의 -> 강좌
     
-    //강의 조회시 카테고리도 조회 양방향 주테이블
-    @OneToMany(mappedBy = "lecture")
+    @OneToMany(mappedBy = "lecture", cascade = CascadeType.REMOVE)
+    private List<MyLectures> mylectures = new ArrayList<>(); //강의 -> 강좌
+    
+    @OneToMany(mappedBy = "lecture", cascade = CascadeType.REMOVE)
+    private List<Cart> cart = new ArrayList<>(); //강의 -> 강좌
+    
+    @OneToMany(mappedBy = "lecture", cascade = CascadeType.REMOVE)
     private List<CategoryLecture> categoryLecture = new ArrayList<>();
     
 }

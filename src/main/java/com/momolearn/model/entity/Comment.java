@@ -31,21 +31,21 @@ import lombok.ToString;
 public class Comment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer cmtNo; //댓글 번호
+	private Integer cmtNo;
 	
 	@ManyToOne
 	@JoinColumn(name = "com_no")
-	private Board board; //게시글번호
+	private Board board;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "mem_id")
-	private Members members; //회원id
+	private Members members;
 	
 	@Column(length = 500, nullable = false)
-	private String cmtContent; //댓글 내용
+	private String cmtContent;
 	
 	@CreatedDate
-	private LocalDateTime cmtRegdate; //작성시간
+	private LocalDateTime cmtRegdate;
 
 	public void update(String cmtContent) {
 		this.cmtContent = cmtContent;

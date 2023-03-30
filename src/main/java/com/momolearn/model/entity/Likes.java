@@ -18,15 +18,15 @@ import lombok.NoArgsConstructor;
 public class Likes {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer likeNo; //좋아요 번호
+	private Integer likeNo;
 	
 	@ManyToOne
 	@JoinColumn(name = "com_no")
-	private Board board; //게시글 번호
+	private Board board;
 	
 	@ManyToOne
 	@JoinColumn(name = "mem_id")
-	private Members members; //회원id
+	private Members members;
 	
 	public Likes(Board board, Members members) {
 		this.board = board;

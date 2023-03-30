@@ -19,7 +19,6 @@ public class CommentDTO {
 	private String cmtContent;
 	private LocalDateTime cmtRegdate;
 	
-	//entity -> DTO
 	public CommentDTO(Comment comment) {
 		this.cmtNo = comment.getCmtNo();
 		this.boardComNo = comment.getBoard().getComNo();

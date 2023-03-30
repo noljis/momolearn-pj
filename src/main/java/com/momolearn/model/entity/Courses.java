@@ -23,23 +23,21 @@ public class Courses  {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "course_id")
-	private Integer courseId;	//강좌id
+	private Integer courseId;
 	
-	//Lectures테이블 양방향연관관계 주인
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lecture_id")
-	private Lectures lecture; //강의id <- lectures
+	private Lectures lecture;
 	
 	@Column(length = 50, nullable = false)
-	private String title; //강좌명
+	private String title;
 
 	@Column(length = 12, nullable = false)
-	private String time; //강좌 시간
+	private String time;
 	
 	@Column(length = 255, nullable = false)
-	private String url; //유튜브url
+	private String url;
 	
-	//양방향 setter 지정
 	public void setLecture(Lectures lecture) {
 		this.lecture = lecture;
 	}
@@ -52,5 +50,4 @@ public class Courses  {
         this.url = url;
     }
 	
-
 }

@@ -26,7 +26,6 @@ public class BoardDTO  {
 	private int comViewCount;
 	
 	
-	//entity -> DTO
 	public BoardDTO(Board board) {
 		this.comNo = board.getComNo();
 		this.member = board.getMembers();

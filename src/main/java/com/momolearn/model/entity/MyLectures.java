@@ -31,27 +31,19 @@ public class MyLectures  {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer mylecId;	//수강id
+	private Integer mylecId;
 	
-	//Members 객체와 다대일 단방향. 양방향이 될 경우 연관관계의 주인이 됨
-	//수강중인 강의를 불러올때 회원객체 정보 가져옴: 단방향
-	//회원을 불러올때 수강중인 강의 정보 가져옴: 양방향
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-	private Members member; //학생id
+	private Members member;
 	
-	//Lectures 객체와 다대일 단방향. 양방향이 될 경우 연관관계의 주인이 됨
-	//수강중인 강의를 불러올때 강의 정보까지 한꺼번에 불러오기: 단방향
-	//강의를 불러올때 해당강의를 수강중인 학생 정보까지 한꺼번에 조회: 양방향.. 좀 더 생각해보기
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lecture_id")
-	private Lectures lecture; //강의id
+	private Lectures lecture;
 	
 	@CreatedDate
-	private LocalDateTime lecRege; //수강신청일
+	private LocalDateTime lecRege;
 	
-	//양방향일 경우 setter작성
-	//member와 양방향
 	public void setMember(Members member) {
 		this.member = member;
 	}
@@ -65,7 +57,5 @@ public class MyLectures  {
 		this.member = member;
 		this.lecture = lecture;
 	}
-	
-
 
 }

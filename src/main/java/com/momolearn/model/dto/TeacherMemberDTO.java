@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class TeacherMemberDTO {
 	
-	private String name; //회원이름
-	private int teacherNo; //강사 번호
+	private String name;
+	private int teacherNo;
 	
 }

@@ -23,7 +23,6 @@ public class BoardSaveDTO {
 	@NotBlank(message = "카테고리를 선택하세요.")
 	private String subject;
 	
-	//@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime comRegdate;
 	@NotBlank(message = "내용을 입력하세요.")
 	private String comContent;

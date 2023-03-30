@@ -27,7 +27,6 @@ public class BoardListDTO {
 	private List<Comment> comments;
 	private List<Likes> likes;
 	
-	//entity -> DTO
 	public BoardListDTO(Board board) {
 		this.comNo = board.getComNo();
 		this.member = board.getMembers();

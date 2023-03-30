@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -25,41 +26,50 @@ import lombok.ToString;
 @Getter
 @Setter
 @DynamicInsert
-@ToString
 @Entity
 public class Members  {
 	@Id
 	@Column(length = 20, name = "mem_id")
-	private String memId ; //회원id
+	private String memId ;
 
 	@Column(length = 20, nullable = false)
-	private String pw; //회원비밀번호
+	private String pw;
 	
 	@Column(length = 10, nullable = false)
-	private String name; //회원이름
+	private String name;
 	
 	@Column(length = 100, nullable = false)
-	private String email; //이메일
+	private String email;
 	
 	@Column(length = 255, nullable = false)
 	@ColumnDefault("'user.jpg'")
-	private String profile; //default : /img/profile/user.jpg
+	private String profile;
 	
 	@Column(length = 20, nullable = false)
 	@ColumnDefault("'student'")
-	private String grade; //default : student
+	private String grade;
 	
 	@Column(length = 6, nullable = false)
 	@CreatedDate
-	private LocalDateTime regdate;	//가입일
+	private LocalDateTime regdate;
 	
-	//MyLectures과 다대일 양방향 주테이블
-	@OneToMany(mappedBy = "member")
+	@OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
 	public List<MyLectures> myLectures = new ArrayList<>();
 	
-	//ApplyTeacher과 1:1 양방향. 주테이블
-	@OneToOne(mappedBy = "members")
+	@OneToOne(mappedBy = "members", cascade = CascadeType.REMOVE)
 	public ApplyTeacher applyTeacher;
+	
+	@OneToMany(mappedBy = "members" , cascade = CascadeType.REMOVE)
+	public List<Board> board = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "members" , cascade = CascadeType.REMOVE)
+	public List<Comment> comment = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "members" , cascade = CascadeType.REMOVE)
+	public List<Likes> like = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "member" , cascade = CascadeType.REMOVE)
+	public List<Cart> cart = new ArrayList<>();
 	
 	public Members(String memId) {
 		this.memId = memId;		
