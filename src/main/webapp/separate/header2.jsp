@@ -27,7 +27,7 @@
         <a href="${pageContext.request.contextPath}/notice/" class="nav-item nav-link">공지사항</a> &nbsp;&nbsp;&nbsp;&nbsp;
         <!-- 세션ID 존재할 경우 나오는 메뉴 Start-->
        <c:if test="${not empty sessionScope.members.memId}">
-        <a href="" class="nav-item nav-link"><i class="fa fa-shopping-cart" style="font-size:24px;color:#06BBCC"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="${pageContext.request.contextPath}/cart/get-cart" class="nav-item nav-link"><i class="fa fa-shopping-cart" style="font-size:24px;color:#06BBCC"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
         <div class="nav-item dropdown">
         <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
             <img class="profile-image rounded-circle" src="${pageContext.request.contextPath}/img/profile/${sessionScope.members.profile}" style="width: 50px; height: 50px; border: 2px solid #06BBCC;">&nbsp;&nbsp;${sessionScope.members.name}</a>
