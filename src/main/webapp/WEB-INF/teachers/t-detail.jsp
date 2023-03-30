@@ -24,7 +24,7 @@
         <div class="container py-5">
             <div class="row justify-content-center">
                 <div class="col-lg-10 text-center">
-                    <h1 class="display-3 text-white animated slideInDown">강사진</h1>
+                    <h1 class="display-3 text-white animated slideInDown">강사 프로필</h1>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb justify-content-center">
                             <li class="breadcrumb-item"><a class="text-white" href="#">모모런과 함께 해주시는 분들</a></li>

@@ -78,7 +78,7 @@ public class ApplyTeacherController {
 
 	// O 회원 - 내 강사 신청서 목록
 	@GetMapping(value = "/myapplylist")
-	public String myApplyList(Model model, @ModelAttribute("members") MembersDTO members) throws NotExistException {
+	public String getMyApplyList(Model model, @ModelAttribute("members") MembersDTO members) throws NotExistException {
 
 		System.out.println("회원 : 내 신청서 목록");
 		
@@ -97,7 +97,7 @@ public class ApplyTeacherController {
 
 	// O 관리자 - 강사 신청서 전체 목록
 	@GetMapping(value = "/applylist")
-	public String applyList(Model model) throws NotExistException {
+	public String getApplyList(Model model) throws NotExistException {
 
 		System.out.println("관리자 : 신청서 전체 리스트");
 		
@@ -121,7 +121,7 @@ public class ApplyTeacherController {
 
 	// O 작성
 	@PostMapping(value = "/write")
-	public String write(Model model, @ModelAttribute("members") MembersDTO members, ApplyTeacherDTO apply) throws MessageException, NotExistException {
+	public String writeApplyForm(Model model, @ModelAttribute("members") MembersDTO members, ApplyTeacherDTO apply) throws MessageException, NotExistException {
 
 		System.out.println("신청서 제출");
 		System.out.println("-------------11 " + members.getMemId());
@@ -188,13 +188,13 @@ public class ApplyTeacherController {
 	// X 수정
 	// 오류 - 수정기능이 아니라 새로 저장되는중 & memid는 null로 들어감
 	@PostMapping(value = "/update")
-	public String update(Model model, @ModelAttribute("members") MembersDTO members, ApplyTeacherDTO apply) throws NotExistException, MessageException {
+	public String update(Model model, @ModelAttribute("members") MembersDTO members, ApplyTeacherDTO applyDTO) throws NotExistException, MessageException {
 
 		System.out.println("신청서 수정");
-		ApplyTeacherDTO applyDTO = applyTeacherService.read(members.getMemId());
+		ApplyTeacherDTO applyTeacher = applyTeacherService.read(members.getMemId());
 		MembersDTO member = membersService.getOneMember(members.getMemId());
 		//수정된 내용 저장 save
-		System.out.println("-------------11 " + applyDTO);
+//		System.out.println("-------------11 " + apply);
 //		
 //		ApplyTeacher applyTeacher = applyTeacherService.getOneApply(apply.getMembersMemId());
 //		
@@ -202,9 +202,9 @@ public class ApplyTeacherController {
 //		ApplyTeacherDTO applyteacher = applyTeacherService.update(apply.getId(), apply);
 //		MembersDTO member = membersService.getOneMember(newApply.getMembersMemId());
 //
-//		ApplyTeacherDTO applyDTOs = applyTeacherService.update(applyDTO.getId(), applyDTO);
+//		ApplyTeacherDTO apply = applyTeacherService.update(apply.getId(), apply);
 		
-//		model.addAttribute("apply", applyDTOs);
+//		model.addAttribute("apply", apply);
 		model.addAttribute("member", member);
 		
 //		System.out.println("신청서 수정 정보 : "+ applyDTOs);
@@ -241,11 +241,11 @@ public class ApplyTeacherController {
 		
 		TeachersDTO teacher = teachersService.saveOneTeacher(apply);
 		
-		System.out.println("teacher 저장" + teacher);
+		System.out.println("teacher 저장 : " + teacher);
 		
 		model.addAttribute("apply", apply);
 		model.addAttribute("member", member);
-		model.addAttribute("teacher", teacher);
+		//model.addAttribute("teacher", teacher);
 
 		return "teachers/at-readform";
 	}

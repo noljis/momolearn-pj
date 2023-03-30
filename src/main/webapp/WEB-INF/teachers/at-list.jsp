@@ -92,12 +92,6 @@
                 </table>
             </div>
             <!--강사 신청 리스트 End -->
-            <!-- Form Start -->
-            <!-- 관리자 계정으로 로그인시 나오는 메뉴 id값 -> js에서 ElementById -->
-            <!-- <button id="#apply" type="button" class="btn btn-primary">강사 신청서 확인</button>
-<button id="#mem" type="button" class="btn btn-primary">회원 관리</button>
-<button id="#lec" type="button" class="btn btn-primary">강의 관리</button> -->
-            <!-- Form End -->
 
             <!-- Back to Top -->
             <jsp:include page="/separate/script.jsp"></jsp:include>
