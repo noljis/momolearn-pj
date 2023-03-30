@@ -51,7 +51,7 @@ public class CommentService {
 	}
 
 	@Transactional
-	public void updateComment(int cmtNo, CommentSaveDTO dto) throws NotExistException {
+	public void updateComment(int cmtNo, CommentDTO dto) throws NotExistException {
 		System.out.println("updateComment() service----------");
 		Comment comment = commentRepository.findById(cmtNo).orElseThrow(()->new NotExistException("해당 댓글이 존재하지 않습니다."));
 		System.out.println(comment.toString());

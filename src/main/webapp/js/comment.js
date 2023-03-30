@@ -1,51 +1,3 @@
-const main = {
-	init : function(){
-		const _this = this;
-		document.querySelectorAll('#btn-updateCmt').forEach(function (item) {
-	       item.addEventListener('click', function () { // 버튼 클릭 이벤트 발생시
-	       const form = this.closest('form'); // btn의 가장 가까운 조상의 Element(form)를 반환 (closest)
-	       _this.updateComment(form); // 해당 form으로 업데이트 수행
-	       });
-	    });
-	},
-	
-	
-	
-	updateComment: function(form){
-	const data = {
-		cmtNo: form.querySelector('#cmtNo').value,
-		comNo: form.querySelector('#comNo').value,
-		cmtContent: form.querySelector('#cmtContent').value
-	}
-	alert("뭐냐고");
-	alert(data);
-	console.log(data);
-	if(!data.cmtContent || data.cmtContent.trim() == ''){
-		alert("댓글 내용을 입력해주세요.");
-		return false;
-	}
-	$.ajax({
-		type: 'PUT',
-		url: '../board/'+data.comNo+'/comment/'+data.cmtNo,
-		data: JSON.stringify(data),
-		dataType: 'JSON',
-		success:function(response){
-			alert("댓글 수정 성공");
-			window.location.reload();
-		},
-		error:function(response){
-			alert('세션아웃 : 댓글 수정 실패. 새로고침 해주세요');
-		}
-	});
-}
-
-	
-	
-	
-	
-	
-};
-
 $(document).ready(function(){
 	let _this = this;
     $("#loginPlz").click(function(){
@@ -59,19 +11,30 @@ $(document).ready(function(){
         }
     });
     
-    //readComment();
 	
-	$("#btn-comment").click(function(){
-		writeComment();
+	$(document).on('click', '#btn-updateCmt', function() {
+	  const data = {
+		comNo : $('#input-comNo').val(),
+	    cmtNo : $(this).closest('form').find('#input-cmtNo').val(),
+	    cmtContent : $(this).closest('form').find('#input-cmtContent').val()
+	  }
+	  $.ajax({
+	    type: 'PUT',
+	    url: '../board/'+data.comNo+'/comment/'+data.cmtNo,
+	    data: JSON.stringify(data),
+	    dataType: 'JSON',
+	    contentType: 'application/json; charset=utf-8',
+	    success:function(response){
+	      alert("댓글 수정 성공");
+	      window.location.reload();
+	    },
+	    error:function(error){
+	      alert('댓글 수정 실패. 다시 시도해주세요');
+	      alert(JSON.stringify(error));
+	    }
+	  });
 	});
-	
-/*	$('#btn-updateCmt').each(function(){
-		$(this).click(function(){
-		const form = $(this).closest('form');
-		_this.updateComment(form);
-		});
-	});*/
-	
+		
 	
 });
 
@@ -114,37 +77,13 @@ function writeComment(){
 			window.location.reload();
 		},
 		error:function(response){
-			alert('세션아웃 : 댓글 등록 실패. 새로고침 해주세요');
+			alert('세션아웃 : 댓글 등록 실패. 다시 시도해주세요');
 			alert(JSON.stringify(response));
 		}
     });
 }
 
-function updateComment(form){
-	const data = {
-		cmtNo: form.querySelector('#cmtNo').value,
-		comNo: form.querySelector('#comNo').value,
-		cmtContent: form.querySelector('#cmtContent').value
-	}
-	console.log(data);
-	if(!data.cmtContent || data.cmtContent.trim() == ''){
-		alert("댓글 내용을 입력해주세요.");
-		return false;
-	}
-	$.ajax({
-		type: 'PUT',
-		url: '../board/'+data.comNo+'/comment/'+data.cmtNo,
-		data: JSON.stringify(data),
-		dataType: 'JSON',
-		success:function(response){
-			alert("댓글 수정 성공");
-			window.location.reload();
-		},
-		error:function(response){
-			alert('세션아웃 : 댓글 수정 실패. 새로고침 해주세요');
-		}
-	});
-}
+
 
 function deleteComment(comNo, cmtNo){
 	const check = confirm("댓글을 삭제하시겠습니까?");
@@ -158,7 +97,7 @@ function deleteComment(comNo, cmtNo){
 				window.location.reload();
 			},
 			error:function(response){
-				alert('세션아웃 : 댓글 삭제 실패. 새로고침 해주세요');
+				alert('댓글 삭제 실패. 다시 시도해주세요');
 			}
 		});
 	}

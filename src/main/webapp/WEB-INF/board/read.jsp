@@ -117,17 +117,19 @@
 			                                            ${c.cmtContent}
 			                                        </p>
 			                                        <form class="collapse" id="text-updateCmt-${c.cmtNo}" name="updateForm" >
-														<input type="hidden" id="cmtNo" value="${c.cmtNo}" name="cmtNo">
-														<input type="hidden" id="comNo" value="${dto.comNo}" name="comNo">
+														<input type="hidden" id="input-cmtNo" value="${c.cmtNo}" name="cmtNo">
+														<input type="hidden" id="input-comNo" value="${dto.comNo}" name="comNo">
 														<div class="form-group">
-														  <textarea class="form-input2" name="cmtContent" required>${c.cmtContent}</textarea> 
+														  <textarea class="form-input2" id="input-cmtContent" name="cmtContent" required>${c.cmtContent}</textarea> 
 														</div>
 														<button id="btn-updateCmt" class="btn btn-primary">수정하기</button>
 													</form>
 			                                    </div>
+			                                    
+			                                    
 			                                    <c:if test="${sessionScope.members.memId == c.member.memId }">
 				                                    <div id="btn-putdelete" class="list-unstyled list-inline media-detail pull-right">
-							                            <a data-bs-toggle="collapse" href="#text-updateCmt-${c.cmtNo}" role="button" aria-expanded="false" aria-controls="text-updateCmt-${c.cmtNo}">수정</a>
+							        		          <a data-bs-toggle="collapse" href="#text-updateCmt-${c.cmtNo}" role="button" aria-expanded="false" aria-controls="text-updateCmt-${c.cmtNo}">수정</a>
 							                            <a id="btn-deleteCmt" type="button" style="color: red" onclick="deleteComment(${dto.comNo},${c.cmtNo})">삭제</a>
 							                        </div>
 						                        </c:if>
@@ -200,6 +202,7 @@
 	<jsp:include page="/separate/footer.jsp"></jsp:include>
 	<script src="${pageContext.request.contextPath}/js/comment.js"></script>
 	<script src="${pageContext.request.contextPath}/js/likes.js"></script>
+	
 </body>
 
 </html>

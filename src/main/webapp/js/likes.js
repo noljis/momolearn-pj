@@ -10,29 +10,6 @@ $(document).ready(function(){
         }
     });
     
-    //실험
-    const comNo = form.querySelector('#comNo').value;
-    const memId= form.querySelector('#membersMemId').value;
-		/*comNo: form.querySelector('#comNo').value,
-		memId: form.querySelector('#membersMemId').value*/
-    $.ajax({
-		type: 'GET',
-		url: '../likes/'+comNo,
-		dataType: 'JSON',
-        contentType: 'application/json; charset=utf-8',
-		data: {
-			"comNo": comNo,
-			"memId": memId
-			},
-		success:function(response){
-			alert("로딩완료");
-			alert(response);
-		},
-		error:function(error){
-			alert("로딩실패");
-		}
-	});
-    
     
     
     
@@ -49,7 +26,7 @@ $(document).ready(function(){
 		contentType: 'application/json; charset=utf-8',
 		success: function(response){
 			$('#likesCount').html('좋아요 '+response);
-			alert("좋아요를 눌렀습니다.");
+			//alert("좋아요를 눌렀습니다.");
 		},
 		error:function(error){
 			alert("실패. 새로고침 해주세요");
@@ -68,7 +45,7 @@ $(document).ready(function(){
 		contentType: 'application/json; charset=utf-8',
 		success: function(response){
 			$('#likesCount').html('좋아요 '+response);
-			alert("좋아요를 취소했습니다.");
+			//alert("좋아요를 취소했습니다.");
 		},
 		error:function(error){
 			alert("실패. 새로고침 해주세요");
