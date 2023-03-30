@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -16,6 +18,7 @@ import com.momolearn.exception.MessageException;
 import com.momolearn.exception.NotExistException;
 import com.momolearn.model.dto.CartDTO;
 import com.momolearn.model.dto.MembersDTO;
+import com.momolearn.model.dto.PaymentRequestDTO;
 import com.momolearn.model.service.CartService;
 
 import io.swagger.annotations.ApiOperation;
@@ -78,8 +81,6 @@ public class CartController {
 	}
 	
 	//3. 장바구니 조회
-	/* 1. 세션 id로 조회
-	 * */
 	@ApiOperation(value = "수강바구니 담기", notes = "해당 강의 수강바구니에 담기")
 	@GetMapping(value = "/get-cart", produces = "application/json;charset=UTF-8")
 	public String getCart(Model model, @ModelAttribute("members") MembersDTO member) throws NotExistException {
@@ -92,21 +93,15 @@ public class CartController {
 		return "cart/cart-view";
 	}
 	
-	//4. 장바구니 삭제
-	
-	//5. 결제 폼 이동
-	@ApiOperation(value = "결제 폼 이동", notes = "결제하기와 수강바구니 판별 후 해당 url로 이동")
-	@GetMapping(value = "/payment-form/{lecId}", produces = "application/json;charset=UTF-8")
-	public String movePaymentForm() {
+	//5. 결제 API 사용 - 다건 결제성공시 mylecture에 추가, 장바구니 데이터 삭제 -> 내 강의로 이동
+	@ApiOperation(value = "결제 성공", notes = "결제 후 수강바구니 삭제 및 MyLectures 추가")
+	@PostMapping(value = "/success", produces = "application/json;charset=UTF-8")
+	public void movePaymentForm(@RequestBody PaymentRequestDTO request) throws NotExistException {
+		log.info("결제 성공시 나오는 로직" + request.getCheckedTitles().get(0));
 		
-		return "";
+		cartService.getMyLectures(request);
+		
 	}
-	
-	//6. 결제 API 사용하기 import
-	
-	//6. 결제 후 MyLectures에 데이터 추가 + 장바구니 데이터 삭제
-	
-	
 	
 	//NotExistException 관련 예외처리
 	@ExceptionHandler(value = NotExistException.class)
@@ -131,7 +126,7 @@ public class CartController {
 		
 		model.addAttribute("errorMsg", "로그인 후 이용해주시기 바랍니다.");
 		
-        return "error";
+        return "cart/error";
     }
 
 }

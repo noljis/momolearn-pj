@@ -34,6 +34,10 @@ spring:
     # LocalDateTime 타입의 값을 JSON 형식으로 직렬화할 때, 다음과 같은 형식으로 변환 
     date-time-format: yyyy-MM-dd'T'HH:mm
     
+iamport:
+ apiKey: 5152205600233867
+ apiSecret: OsLhXqsOGXne0bgJ1qsRu9FAUU2FnBpmBVsGV0aJEcFPeDhj88mqvxYaLhUPL0X4s0xj2DU8rjtgpq21
+    
 #logging:
 #  level:
 #    org:
