@@ -81,7 +81,7 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2" align="center">
-                                        <input class="button btn btn-primary" type="submit" value="수정하기" onclick="alert('신청서 수정이 완료 되었습니다')">
+                                        <input class="button btn btn-primary" type="submit" value="수정하기" onclick="return confirm('강사신청서를 수정하시겠습니까?');">
                                         <input class="button btn btn-primary" type="reset" value="다시입력" onclick="clear()">
                                     </td>
                                 </tr>

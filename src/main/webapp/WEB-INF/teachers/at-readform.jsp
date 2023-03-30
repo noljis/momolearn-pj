@@ -107,21 +107,16 @@
                                             </form>
                                         </c:when>
                                         <c:when test="${sessionScope.members.grade == 'student'}">
-                                            <div class="d-flex justify-content-between text-center">
-                                                <form id="sm" name="ta" method="post"
-                                                    action="${pageContext.request.contextPath}/applyteacher/update">
-                                                    <input class="btn btn-primary" type="submit" value="수정"
-                                                        onclick="alert('강사신청서가 수정되었습니다');">
-                                                </form>
-                                                <form id="sm" name="ta" method="post"
-                                                    action="${pageContext.request.contextPath}/applyteacher/delete/${apply.id}">
-                                                    <input class="btn btn-primary" type="submit" value="삭제"
-                                                        onclick="return confirm('강사신청서를 삭제하시겠습니까?');">
-                                                </form>
-                                            </div>
+                                            <form id="sm" name="ta" method="get"
+                                                action="${pageContext.request.contextPath}/applyteacher/updateform">
+                                                <input class="btn btn-primary" type="submit" value="수정">
+                                            </form>
+                                            <form id="sm" name="ta" method="post"
+                                                action="${pageContext.request.contextPath}/applyteacher/delete/${apply.id}">
+                                                <input class="btn btn-primary" type="submit" value="삭제"
+                                                    onclick="return confirm('강사신청서를 삭제하시겠습니까?');">
+                                            </form>
                                         </c:when>
-
-
                                     </c:choose>
                                 </td>
                             </tr>

@@ -6,6 +6,7 @@ import java.util.List;
 import com.momolearn.model.entity.Board;
 import com.momolearn.model.entity.Comment;
 import com.momolearn.model.entity.Likes;
+import com.momolearn.model.entity.Members;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class BoardListDTO {
 	private int comNo;
-	private String membersMemId;
+	private Members member;
 	private String type;
 	private String comTitle;
 	private String subject;
@@ -29,7 +30,7 @@ public class BoardListDTO {
 	//entity -> DTO
 	public BoardListDTO(Board board) {
 		this.comNo = board.getComNo();
-		this.membersMemId = board.getMembers().getMemId();
+		this.member = board.getMembers();
 		this.type = board.getType();
 		this.comTitle = board.getComTitle();
 		this.subject = board.getSubject();
