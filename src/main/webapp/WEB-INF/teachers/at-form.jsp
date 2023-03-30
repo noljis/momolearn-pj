@@ -43,6 +43,10 @@
                 <div align="center">
                     <h2>강사 등록 신청서</h2>
 
+                    <div style="color: red; size: 12px;">
+                        * 강사 신청 후 강사 등록 승인은 한번만 가능합니다.
+                    </div>
+
                     <div>
                         <div class="col-sm-5">
                             <table class="table table-bordered">
@@ -81,13 +85,24 @@
                                 <tr>
                                     <td>희망분야</td>
                                     <td>
-                                        <input type="text" id="hope" name="hopeField" size="30" placeholder="희망분야를 입력해주세요.">
+                                        <input type="text" id="hope" name="hopeField" size="30"
+                                            placeholder="희망분야를 입력해주세요.">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>자기소개</td>
                                     <td><textarea id="intro" name="intro" cols="55" rows="5" maxlength="700"
                                             placeholder="자기소개를 입력해주세요."></textarea></td>
+                                </tr>
+                                <tr>
+                                    <td align="center" colspan="2">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="aggrement" required>
+                                            <label class="custom-control-label" for="aggrement">개인정보 수집 및 이용에
+                                                동의합니다.</label><br>
+                                        </div>
+
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td colspan="2" align="center">

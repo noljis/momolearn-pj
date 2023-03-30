@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import com.momolearn.model.entity.ApplyTeacher;
 import com.momolearn.model.entity.Members;
+import com.momolearn.model.entity.Teachers;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
