@@ -1,13 +1,13 @@
 package com.momolearn.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.momolearn.model.service.MembersService;
 
-@RestController
+@Controller
 @SessionAttributes({"members"})
 public class MemberSignUpController {
 	

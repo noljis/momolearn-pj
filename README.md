@@ -1,4 +1,5 @@
 # ✏️ MOMOLEARN(모모런) 
+![user](https://user-images.githubusercontent.com/85906821/228460846-a4f4cc2d-63e0-4e99-967d-c3a5bc87dea9.jpg)
 
 ## 💡 프로젝트 소개
 ⚡ 온라인 강의 플랫폼 MOMOLEARN 입니다. <br>
@@ -11,22 +12,23 @@
 
 ## 💻 기능 설명
 1. 회원가입/로그인
-2. 회원/강사 프로필관리
-3. 관리자 정보관리
-4. 강사 강의/강좌관리
-5. 장바구니
-6. 강의 수강
-7. 공지사항 게시판
-8. 커뮤니티 게시판
-9. 강사 신청
+2. id/pw 찾기
+3. 회원 프로필관리
+4. 관리자 정보관리
+5. 강사 강의/강좌관리
+6. 장바구니
+7. 강의 수강
+8. 공지사항 게시판
+9. 커뮤니티 게시판
+10. 강사 신청
 
 
 ## ⚒️ 기술 스택 (Technique Used)
 
 <p>
-<img src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=Spring&logoColor=green">
-<img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=black"> 
-<img src="https://img.shields.io/badge/VisualStudioCode-00A6CC?style=for-the-badge&logo=visualstudiocode&logoColor=blue"> <br>
+<img src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=Spring&logoColor=white">
+<img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"> 
+<img src="https://img.shields.io/badge/VisualStudioCode-00A6CC?style=for-the-badge&logo=visualstudiocode&logoColor=white"> <br>
 <img src="https://img.shields.io/badge/java-0F2B77?style=for-the-badge&logo=java&logoColor=white"> 
 <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> 
 <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> 
