@@ -22,13 +22,13 @@
 	        </div>
 	   <!-- 세션ID 존재할 경우 나오는 메뉴 Start-->
        <c:if test="${not empty sessionScope.members.memId}">
-        <a href="" class="nav-item nav-link"><i class="fa fa-shopping-cart" style="font-size:24px;color:#06BBCC"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="${pageContext.request.contextPath}/cart/get-cart" class="nav-item nav-link"><i class="fa fa-shopping-cart" style="font-size:24px;color:#06BBCC"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
         <div class="nav-item dropdown">
         <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
             <img class="profile-image rounded-circle" src="${pageContext.request.contextPath}/img/profile/${sessionScope.members.profile}" style="width: 50px; height: 50px; border: 2px solid #06BBCC;">&nbsp;&nbsp;${sessionScope.members.name}</a>
 	        <div class="dropdown-menu fade-down">
 	            <a href="${pageContext.request.contextPath}/member/myinfo" class="dropdown-item">내 정보</a>
-	            <a href="" class="dropdown-item">내 강의</a>
+	            <a href="${pageContext.request.contextPath}/lectures/my-lecture" class="dropdown-item">내 강의</a>
 	            <c:choose>
 	          	 	<c:when test="${sessionScope.members.grade == 'student'}">
                         <a href="${pageContext.request.contextPath}/applyteacher/myapplylist" class="dropdown-item">강사 신청</a>

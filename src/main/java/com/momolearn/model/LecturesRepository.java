@@ -27,4 +27,8 @@ public interface LecturesRepository extends JpaRepository<Lectures, Integer>{
 	@EntityGraph(attributePaths = {"teachers.applyTeacher.members"})
 	Lectures findById(@Param("id") int id);
 	
+	//강좌번호에 해당하는 강사명
+	@EntityGraph(attributePaths = {"teachers.applyTeacher.members"})
+	Lectures findByCoursesCourseId(@Param("courseId") int coursesId);
+	
 }
