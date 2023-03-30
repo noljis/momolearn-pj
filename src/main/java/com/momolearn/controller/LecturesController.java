@@ -209,10 +209,15 @@ public class LecturesController {
 	//7-1. 내 강의(학생: memId로 조회) - myLectures -> join fetch Members, Lectures 
 	/* 간략하게 강의명(클릭시 디테일로 들어가야 함 -> 강의번호 필요함)과 강사명 목록만 나열하도록 함
 	 * */
+	@ApiOperation(value = "수강중인 강의 페이지", notes = "세션 id로 수강중인 강의 조회")
+	@GetMapping(value = "/my-lecture", produces = "application/json;charset=UTF-8")
+	public String myLecture(Model model, @ModelAttribute("members") MembersDTO member) {
+		log.info("myLecture 메소드");
+		
+		return "lecture/my-lecture";
+	}
 	
-	//7-2. 내 강의(강사: )  
-	/* 간략하게 강의명(클릭시 디테일로 들어가야 함 -> 강의번호 필요함)과 강사명 목록만 나열하도록 함
-	 * */
+	
 	
 	//8.강의 제목으로 부분검색
 	//Model에 JSONArray데이터 담은 후 res.jsp로 forward전송
@@ -298,7 +303,7 @@ public class LecturesController {
 		
 		model.addAttribute("errorMsg", "로그인 후 이용해주시기 바랍니다.");
 		
-        return "error";
+        return "cart/error";
     }
 	
 }

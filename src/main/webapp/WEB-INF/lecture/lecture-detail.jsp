@@ -7,6 +7,10 @@
 <title>강의 상세보기 뷰</title>
 <meta content="" name="keywords">
 <meta content="" name="description">
+ <!-- jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+ <!-- iamport.payment.js -->
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 <style>
 table {
 	width: 100%;
@@ -61,7 +65,7 @@ tr:nth-child(odd) {
 	    <!-- Header End -->
 
 		<!-- 강의정보 단락 -->
-		<div class="container-fluid bg-secondary py-5 d-flex justify-content-center align-items-center">
+		<div class="container-fluid bg-dark py-5 d-flex justify-content-center align-items-center">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-5">
@@ -71,7 +75,7 @@ tr:nth-child(odd) {
 						</div>
 					</div>
 					<div class="col-md-6">
-						<h2 class="spoqa-han-sans text-white">🖥️ ${lecture.title}</h2><br>
+						<h2 class="spoqa-han-sans text-white" id="checkedTitles">🖥️ ${lecture.title}</h2><br>
 						<h4 class="spoqa-han-sans text-warning"> ${lecture.info}</h4>
 						<p class="spoqa-han-sans text-light"> ${lecture.description}</p>
 					</div>
@@ -86,18 +90,17 @@ tr:nth-child(odd) {
 					<div class="col-md-12">
 						<h3 class="mb-4">강좌 리스트
 						<c:if test="${members.memId eq lecture.teachersApplyTeacherMembers.memId}">
-							<button class="btn btn-secondary mr-2" onclick="location.href='${pageContext.request.contextPath}/lectures/courses-form/${lecture.title}/${lecture.id}'">강좌 추가하기</button>
+							<button class="btn btn-primary mr-2" onclick="location.href='${pageContext.request.contextPath}/lectures/courses-form/${lecture.title}/${lecture.id}'">강좌 추가하기</button>
 						</c:if>
 						</h3>
 						
 						<div style="max-width: 800px; margin: 0;">
-							<table class="table table-striped table-hover"
-								style="background-color: #dcdcdc;">
+							<table class="table table-striped table-hover" style="background-color: #E0EBFF;">
 								<tbody>
 									<c:forEach var="course" items="${lecture.courses}">
 										<tr onclick="location.href='${pageContext.request.contextPath}/lectures/check-mylecture/${course.courseId}'">
-											<td style="background-color: #dcdcdc;">${course.title}</td>
-											<td style="background-color: #dcdcdc; text-align: right;">${course.time}</td>
+											<td style="background-color: #E0EBFF;cursor: pointer;">${course.title}</td>
+											<td style="background-color: #E0EBFF;cursor: pointer;text-align: right;">${course.time}</td>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -122,10 +125,9 @@ tr:nth-child(odd) {
 							<h5 class="card-title text-primary">어서오세요 강사님😊</h5>
 						</c:when>
 						<c:when test="${empty myLecture}">
-							<h4 class="card-title text-primary">${lecture.price}￦</h4>
+							<h4 class="card-title text-primary" id="totalPrice">${lecture.price}￦</h4>
 							<div class="d-grid gap-2">
-								<button type="submit" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/cart/pay-lecture/${lecture.id}'">결제하기💳</button>
-								<button type="submit" class="btn btn-secondary mr-2" onclick="location.href='${pageContext.request.contextPath}/cart/check-cart/${lecture.id}'">수강바구니🧺</button>
+								<button type="submit" class="btn btn-secondary mr-2" onclick="location.href='${pageContext.request.contextPath}/cart/check-cart/${lecture.id}'">수강바구니에 담기🧺</button>
 								<input type="hidden" name="lecId" value="${lecture.id}"/>
 							</div>
 						</c:when>
@@ -137,6 +139,9 @@ tr:nth-child(odd) {
 			</div>
 		</div>
 		<!-- 결제 박스 -->
+		<!-- 구매자 정보 hidden -->
+		<input type="hidden" id="id" value="${members.memId}">
+		<input type="hidden" id="name" value="${members.name}">
 	</div>
 
 	<!-- Back to Top -->
