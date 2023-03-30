@@ -4,6 +4,7 @@ package com.momolearn.controller;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.momolearn.exception.MessageException;
 import com.momolearn.model.dto.MembersDTO;
@@ -40,6 +42,45 @@ public class MembersSignInController {
 	
 	@Autowired
 	private FileService fileService;
+	
+	//카카오 로그인
+	KakaoAPI kakaoApi = new KakaoAPI();
+	
+	@RequestMapping(value = "/kakaoLogin")
+	public ModelAndView kakaoLogin(@RequestParam("code") String code, HttpSession session) {
+		
+		ModelAndView mv = new ModelAndView();
+		
+		// 인증코드 요청 전달
+		String access_token = kakaoApi.getAccessToken(code);
+		
+		// 인증코드 토큰 전달
+		HashMap<String, Object> userInfo = kakaoApi.getUserInfo(access_token);
+		
+		if(userInfo.get("email") != null) {
+			session.setAttribute("userId", userInfo.get("email"));
+			session.setAttribute("access_token", access_token);
+		}
+		
+		mv.addObject("userId", userInfo.get("email"));
+		mv.setViewName("main");
+		
+		return mv;
+	}
+	
+	//카카오 로그아웃
+//	@RequestMapping(value = "/kakaoLogout")
+//	public ModelAndView kakaoLogout(@RequestParam("code") String code, HttpSession session) {
+//		
+//		ModelAndView mv = new ModelAndView();
+//		
+//		kakaoApi.kakaoLogout((String) session.getAttribute("access_token"));
+//		session.removeAttribute("access_token");
+//		session.removeAttribute("userId");
+//		mv.setViewName("member/kakaoLogin");
+//		
+//		return mv;
+//	}
 	
 	//회원가입 입력폼
     @GetMapping(value = "/joinView", produces = "application/json; charset=UTF-8")
