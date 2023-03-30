@@ -40,7 +40,6 @@
             <!-- Form Start -->
             <div align="center">
                 <h2>강사 등록 신청서</h2>
-                <!-- ${apply.id} -->
                 <div>
                     <div class="col-sm-5">
 
@@ -99,17 +98,17 @@
                             <tr>
                                 <td colspan="2" align="center">
                                     <c:choose>
-                                        <c:when test="${sessionScope.member.grade != 'student' && apply.approve == 'false'}">
+                                        <c:when test="${members.grade == 'admin' && apply.approve == 'false'}">
                                             <form id="sm" name="ta" method="post" action="${pageContext.request.contextPath}/applyteacher/approve/${apply.id}">
                                                 <input class="btn btn-primary" type="submit" value="승인" id="approveButton" onclick="return confirm('강사신청서를 승인하시겠습니까?');">
                                             </form>
                                         </c:when>
-                                        <c:when test="${sessionScope.member.grade != 'student' && apply.approve == 'true'}">
+                                        <c:when test="${members.grade == 'admin' && apply.approve == 'true'}">
                                             <form id="sm" name="ta" method="post" action="${pageContext.request.contextPath}/applyteacher/approve/${apply.id}">
                                                 <input class="btn btn-secondary" type="submit" value="승인" disabled>
                                             </form>
                                         </c:when>
-                                        <c:when test="${sessionScope.member.grade == 'student'}">
+                                        <c:when test="${members.grade == 'student'}">
                                             <form id="sm" name="ta" method="get" action="${pageContext.request.contextPath}/applyteacher/updateform">
                                                 <input class="btn btn-primary" type="submit" value="수정">
                                             </form>
