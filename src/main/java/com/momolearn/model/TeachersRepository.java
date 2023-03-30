@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.momolearn.model.dto.TeachersDTO;
 import com.momolearn.model.entity.Teachers;
 
 @Repository
@@ -24,4 +25,8 @@ public interface TeachersRepository extends JpaRepository<Teachers, Integer>{
 	List<Teachers> findAll();
 	
 	Optional<Teachers> findByApplyTeacherMembersMemId(String memId);
+
+	Optional<Teachers> findByApplyTeacherId(int id);
+
+	//Teachers save(TeachersDTO newTeacher);
 }

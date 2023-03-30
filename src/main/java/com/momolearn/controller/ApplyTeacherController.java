@@ -13,9 +13,12 @@ import com.momolearn.exception.MessageException;
 import com.momolearn.exception.NotExistException;
 import com.momolearn.model.dto.ApplyTeacherDTO;
 import com.momolearn.model.dto.MembersDTO;
+import com.momolearn.model.dto.TeachersDTO;
 import com.momolearn.model.entity.ApplyTeacher;
+import com.momolearn.model.entity.Members;
 import com.momolearn.model.service.ApplyTeacherService;
 import com.momolearn.model.service.MembersService;
+import com.momolearn.model.service.TeachersService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +33,8 @@ public class ApplyTeacherController {
 	private final ApplyTeacherService applyTeacherService;
 
 	private final MembersService membersService;
+	
+	private final TeachersService teachersService;
 
 	/*
 	 * 
@@ -77,9 +82,9 @@ public class ApplyTeacherController {
 
 		System.out.println("회원 : 내 신청서 목록");
 		
-		ApplyTeacher applyteacher = applyTeacherService.getOneApply(members.getMemId());
+		ApplyTeacher applyTeacher = applyTeacherService.getOneApply(members.getMemId());
 
-		if (applyteacher != null) {
+		if (applyTeacher != null) {
 			ApplyTeacherDTO apply = applyTeacherService.read(members.getMemId());
 			model.addAttribute("apply", apply);
 		}
@@ -116,7 +121,7 @@ public class ApplyTeacherController {
 
 	// O 작성
 	@PostMapping(value = "/write")
-	public String write(Model model, @ModelAttribute("members") MembersDTO members, ApplyTeacherDTO applyDTO) throws MessageException, NotExistException {
+	public String write(Model model, @ModelAttribute("members") MembersDTO members, ApplyTeacherDTO apply) throws MessageException, NotExistException {
 
 		System.out.println("신청서 제출");
 		System.out.println("-------------11 " + members.getMemId());
@@ -124,13 +129,13 @@ public class ApplyTeacherController {
 //		MembersDTO member = membersService.getOneMember(members.getMemId());
 //		model.addAttribute("member", member);
 		
-		applyDTO.setMembersMemId(members.getMemId());
-		ApplyTeacherDTO apply = applyTeacherService.write(applyDTO);
+		apply.setMembersMemId(members.getMemId());
+		ApplyTeacherDTO newApply = applyTeacherService.write(apply);
 		System.out.println("---------------------------22");
 		
-		model.addAttribute("apply", apply);
+		model.addAttribute("apply", newApply);
 		
-		System.out.println("신청서 제출 정보 : " + apply);
+		System.out.println("신청서 제출 정보 : " + newApply); // approve = null
 		
 		return "teachers/at-mylist";
 	}
@@ -147,10 +152,11 @@ public class ApplyTeacherController {
 		model.addAttribute("apply", apply);
 		model.addAttribute("member", member);
 		
+		System.out.println("신청서 조회 정보 : " + apply);
 		return "teachers/at-readform";
 	}
 
-	// O 관리자 - 신청서 번호(id)로 상세 조회
+	// O 관리자 - 신청서 번호(id)로 상세 조회 -> 관리자만 가능하도록 수정하기
 	@GetMapping(value = "/read/{id}")
 	public String read(Model model, @PathVariable int id) throws NotExistException {
 
@@ -180,23 +186,28 @@ public class ApplyTeacherController {
 	}
 
 	// X 수정
+	// 오류 - 수정기능이 아니라 새로 저장되는중 & memid는 null로 들어감
 	@PostMapping(value = "/update")
-	public String update(Model model, @ModelAttribute("members") MembersDTO members, ApplyTeacherDTO applyDTO) throws NotExistException {
+	public String update(Model model, @ModelAttribute("members") MembersDTO members, ApplyTeacherDTO apply) throws NotExistException, MessageException {
 
 		System.out.println("신청서 수정");
-//		ApplyTeacherDTO apply = applyTeacherService.read(members.getMemId());
-//		MembersDTO member = membersService.getOneMember(members.getMemId());
+		ApplyTeacherDTO applyDTO = applyTeacherService.read(members.getMemId());
+		MembersDTO member = membersService.getOneMember(members.getMemId());
 		//수정된 내용 저장 save
+		System.out.println("-------------11 " + applyDTO);
+//		
+//		ApplyTeacher applyTeacher = applyTeacherService.getOneApply(apply.getMembersMemId());
+//		
+//		System.out.println(applyTeacher);
+//		ApplyTeacherDTO applyteacher = applyTeacherService.update(apply.getId(), apply);
+//		MembersDTO member = membersService.getOneMember(newApply.getMembersMemId());
+//
+//		ApplyTeacherDTO applyDTOs = applyTeacherService.update(applyDTO.getId(), applyDTO);
 		
-		
-		ApplyTeacherDTO apply = applyTeacherService.getOneApplyTeacher(applyDTO.getId());
-		
-		System.out.println(apply);
-		applyTeacherService.update(apply.getId(), apply);
-		MembersDTO member = membersService.getOneMember(apply.getMembersMemId());
-
-		model.addAttribute("apply", apply);
+//		model.addAttribute("apply", applyDTOs);
 		model.addAttribute("member", member);
+		
+//		System.out.println("신청서 수정 정보 : "+ applyDTOs);
 
 		return "teachers/at-readform";
 	}
@@ -210,27 +221,31 @@ public class ApplyTeacherController {
 		return "teachers/at-mylist";
 	}
 	
-	// O 승인 -> 추가가 필요한 기능 - 승인 후 grade == teacher 로 변경(완) & Teacher 테이블에 데이터 저장(ing)
+	// O 승인
 	@PostMapping(value = "/approve/{id}")
-	public String approve(Model model, @PathVariable int id) throws NotExistException {
+	public String approve(Model model, @PathVariable int id) throws NotExistException, MessageException {
 
 		System.out.println("신청서 승인");
+		applyTeacherService.approve(id);
 		
 		ApplyTeacherDTO apply = applyTeacherService.getOneApplyTeacher(id);
+		System.out.println("승인 후 신청서 정보"+ apply);
 		
-		System.out.println(apply);
-		applyTeacherService.approve(id);
-
-//		ApplyTeacherDTO apply = applyTeacherService.read(members.getMemId());
-//		MembersDTO member = membersService.getOneMember(members.getMemId());
-
+		//MembersDTO member = membersService.getOneMember(apply.getMembersMemId());
+		
+		Members member = membersService.updateGrade(apply.getMembersMemId());
+		
+		System.out.println("등급 변경 후 회원 정보"+ member);
+		
+		System.out.println("apply 정보 : "+apply);
+		
+		TeachersDTO teacher = teachersService.saveOneTeacher(apply);
+		
+		System.out.println("teacher 저장" + teacher);
+		
 		model.addAttribute("apply", apply);
-		
-		MembersDTO member = membersService.getOneMember(apply.getMembersMemId());
-		
-		membersService.updateGrade(apply.getMembersMemId());
-		
 		model.addAttribute("member", member);
+		model.addAttribute("teacher", teacher);
 
 		return "teachers/at-readform";
 	}

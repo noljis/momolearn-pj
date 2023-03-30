@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,6 +19,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
+
+@Builder
 
 @Entity
 //ApplyTeacher를 참조하고 있는데 연락처, 희망분야, 자기소개 ,포폴링크 속성이 필요할까?

@@ -72,25 +72,33 @@ public class ApplyTeacher  {	//강사신청 테이블. 회원한명당 하나의
         this.approve = approve;
     }
 
-	public void setPhoneNum(String phoneNum) {
-		this.phoneNum = phoneNum;
-	}
-
-	public void setHopeField(String hopeField) {
+    public void setApplyForm(String phoneNum, String hopeField, String pfLink, String intro) {
+    	this.phoneNum = phoneNum;
 		this.hopeField = hopeField;
-	}
-
-	public void setIntro(String intro) {
 		this.intro = intro;
-	}
-
-	public void setPfLink(String pfLink) {
 		this.pfLink = pfLink;
+    }
+
+	public ApplyTeacher(int id) {
+		this.id = id;
 	}
     
-//    public void setApplyForm(String phoneNum, hope_field, pfLink, intro)
-    
-    
+//	public void setPhoneNum(String phoneNum) {
+//		this.phoneNum = phoneNum;
+//	}
+//
+//	public void setHopeField(String hopeField) {
+//		this.hopeField = hopeField;
+//	}
+//
+//	public void setIntro(String intro) {
+//		this.intro = intro;
+//	}
+//
+//	public void setPfLink(String pfLink) {
+//		this.pfLink = pfLink;
+//	}
+
 }
 
 
