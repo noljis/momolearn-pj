@@ -98,10 +98,15 @@ tr:nth-child(odd) {
 							<table class="table table-striped table-hover" style="background-color: #E0EBFF;">
 								<tbody>
 									<c:forEach var="course" items="${lecture.courses}">
-										<tr onclick="location.href='${pageContext.request.contextPath}/lectures/check-mylecture/${course.courseId}'">
-											<td style="background-color: #E0EBFF;cursor: pointer;">${course.title}</td>
-											<td style="background-color: #E0EBFF;cursor: pointer;text-align: right;">${course.time}</td>
+										<tr>
+											<td style="background-color: #E0EBFF;cursor: pointer;" onclick="location.href='${pageContext.request.contextPath}/lectures/check-mylecture/${course.courseId}'">${course.title}</td>
+											<td style="background-color: #E0EBFF;cursor: pointer;text-align: right;">${course.time} &nbsp;
+												<c:if test="${members.memId eq lecture.teachersApplyTeacherMembers.memId}">
+													<button class="btn btn-primary mr-2" onclick="location.href='${pageContext.request.contextPath}/lectures/courses-update-form/${course.courseId}'">강좌 수정</button>
+												</c:if>
+											</td>
 										</tr>
+										
 									</c:forEach>
 								</tbody>
 							</table>
