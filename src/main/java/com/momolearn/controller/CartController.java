@@ -93,7 +93,7 @@ public class CartController {
 		return "cart/cart-view";
 	}
 	
-	//5. 결제 API 사용 - 다건 결제성공시 mylecture에 추가, 장바구니 데이터 삭제 -> 내 강의로 이동
+	//5. 결제 API 사용 - 결제성공시 mylecture에 추가, 장바구니 데이터 삭제 -> 내 강의로 이동, 강의 학생수 1 증가
 	@ApiOperation(value = "결제 성공", notes = "결제 후 수강바구니 삭제 및 MyLectures 추가")
 	@PostMapping(value = "/success", produces = "application/json;charset=UTF-8")
 	public void movePaymentForm(@RequestBody PaymentRequestDTO request) throws NotExistException {

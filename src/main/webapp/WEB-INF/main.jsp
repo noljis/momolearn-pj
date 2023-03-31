@@ -30,10 +30,9 @@
 	                        <div class="row justify-content-start">
 	                            <div class="col-sm-10 col-lg-8">
 	                                <h5 class="text-primary text-uppercase mb-3 animated slideInDown">왜 모모런인가?</h5>
-	                                <p class="display-5 text-white animated slideInDown" style="font-size: 50px">오직 모모런에서만</p>
-	                                <p class="display-5 text-white animated slideInDown" style="font-size: 50px">만날 수 있는 강의!</p>
+	                                <p class="display-5 text-white animated slideInDown" style="font-size: 50px">💰부담없이 듣는 강의💰</p>
 	                                <p class="fs-5 text-white mb-4 pb-2">모두에게 배움의 기회를!</p>
-	                                <a href="about.html" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">모모런 알아보기</a>
+	                                <a href="${pageContext.request.contextPath}/about" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">모모런 알아보기</a>
 	                                <c:if test="${empty members}">
 	                                	<a href="${pageContext.request.contextPath}/member/joinView" class="btn btn-light py-md-3 px-md-5 animated slideInRight">Join Now</a>
 	                                </c:if>

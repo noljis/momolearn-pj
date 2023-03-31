@@ -219,6 +219,7 @@ public class LecturesController {
 		List<MyLecturesTeacherDTO> lecture = lecturesService.getMyLectures(member);
 
 		if(member.getGrade().equals("teacher")) {
+			
 			List<LectureCoursesDTO> teacherLecture = lecturesService.getTeacherLectures(member);
 			model.addAttribute("teacherLec", teacherLecture);
 		}
