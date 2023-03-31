@@ -28,7 +28,7 @@
 				<div class="container">
 					<div class="row justify-content-start">
 						<div class="page_message" style="position: absolute; top: 20%; left: 50%; transform: translate(-50%, -50%);">
-							<h1 style="color: #50B4FF;" align="center">
+							<h1 style="color: #0D235E;" align="center">
 								우리는 성장기회의 평등을 추구합니다.
 							</h1>
 						</div>
@@ -41,7 +41,7 @@
 			<div class="container">
 				<div class="columns">
 					<div class="column is-4">
-						<h2 style="color: #46BEFF;">
+						<h2 style="color: #03B1BD;">
 							<img class="img-fluid" src="img/logo2.png" alt="" style="width: 50px; height: 50px;"/>우리는 때로 무언가를 배워야만 합니다.
 						</h2>
 					</div>
@@ -59,7 +59,7 @@
 			<div class="container">
 				<div class="columns">
 					<div class="column is-4">
-						<h2 style="color: #46BEFF;">
+						<h2 style="color: #03B1BD;">
 							<br><img class="img-fluid" src="img/logo.png" alt="" style="width: 50px; height: 50px;"/>모모런의 약속
 						</h2>
 					</div>
@@ -96,7 +96,7 @@
 			<div class="container">
 				<div class="columns">
 					<div class="column is-4">
-						<h2 style="color: #46BEFF;"> 💌 팀장의 편지 </h2>
+						<h2 style="color: #03B1BD;"> 💌 팀장의 편지 </h2>
 						(그냥 인프런에 있길래 가져와서 바꿔봤어요 ㅎ 나중에 지워야 할 수도?)
 					</div>
 					<div class="column">
