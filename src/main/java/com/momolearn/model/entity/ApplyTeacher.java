@@ -80,22 +80,6 @@ public class ApplyTeacher  {
 		this.id = id;
 	}
     
-//	public void setPhoneNum(String phoneNum) {
-//		this.phoneNum = phoneNum;
-//	}
-//
-//	public void setHopeField(String hopeField) {
-//		this.hopeField = hopeField;
-//	}
-//
-//	public void setIntro(String intro) {
-//		this.intro = intro;
-//	}
-//
-//	public void setPfLink(String pfLink) {
-//		this.pfLink = pfLink;
-//	}
-
 }
 
 

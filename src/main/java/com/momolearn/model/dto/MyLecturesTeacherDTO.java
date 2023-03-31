@@ -7,9 +7,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class CartDTO  {
+public class MyLecturesTeacherDTO  {
 	
-	private int cartId;
+	private Integer mylecId;
 	private MembersDTO member;
 	private LecturesDTO lecture;
+	private TeachersDTO teachers; 
+	private MembersDTO lectureTeachersApplyTeacherMembers;
+
 }
