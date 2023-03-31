@@ -33,10 +33,6 @@ spring:
   jackson:
     # LocalDateTime 타입의 값을 JSON 형식으로 직렬화할 때, 다음과 같은 형식으로 변환 
     date-time-format: yyyy-MM-dd'T'HH:mm
-  thymeleaf:    prefix: /WEB-INF/
-    check-template-location: true
-    suffix: .jsp
-    cache: false
     
     
 #logging:

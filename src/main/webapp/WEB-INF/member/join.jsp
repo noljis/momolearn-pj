@@ -34,7 +34,7 @@
 						<h4>*아이디</h4>
 						<input type="text" name="memId" id="memId" placeholder="아이디를 입력해주세요."
 							minlength="5" maxlength="20" onsubmit="return checkId(this)">
-						<input type="button" style="background-color: #78d5e7; color: white; font-weight: bolder;" value="ID중복확인" onclick="dedupId()" >
+						<input type="button" style="background-color: #36cedb; color: white; font-weight: bolder;" value="ID중복확인" onclick="dedupId()" >
 					</div>
 					<div class="join_a">
 						<h4>*비밀번호</h4>
@@ -60,7 +60,7 @@
 						</div>
 					</div>
 					<div class="submit">
-						<input type="button" style="background-color: #78d5e7;" value="회원가입" onclick="blank()">
+						<input type="button" style="background-color: #36cedb;" value="회원가입" onclick="blank()">
 					</div>
 
 				</form>

@@ -27,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.momolearn.exception.MessageException;
 import com.momolearn.model.dto.MembersDTO;
 import com.momolearn.model.service.FileService;
+import com.momolearn.model.service.KakaoService;
 import com.momolearn.model.service.MembersService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -43,23 +44,27 @@ public class MembersSignInController {
 	@Autowired
 	private FileService fileService;
 	
-	//카카오 로그인
-	KakaoAPI kakaoApi = new KakaoAPI();
+	@Autowired
+	private KakaoService kakaoService;
+	
 	
 	@RequestMapping(value = "/kakaoLogin")
 	public ModelAndView kakaoLogin(@RequestParam("code") String code, HttpSession session) {
-		
+
 		ModelAndView mv = new ModelAndView();
-		
+		System.out.println(1);
 		// 인증코드 요청 전달
-		String access_token = kakaoApi.getAccessToken(code);
-		
+		String access_token = kakaoService.getAccessToken(code); 
+		System.out.println(2);
 		// 인증코드 토큰 전달
-		HashMap<String, Object> userInfo = kakaoApi.getUserInfo(access_token);
-		
+		HashMap<String, Object> userInfo = kakaoService.getUserInfo(access_token); //여기 메소드에서 에러남
+		System.out.println(3);
 		if(userInfo.get("email") != null) {
+			System.out.println(4);
 			session.setAttribute("userId", userInfo.get("email"));
+			System.out.println(5);
 			session.setAttribute("access_token", access_token);
+			System.out.println(6);
 		}
 		
 		mv.addObject("userId", userInfo.get("email"));
@@ -74,7 +79,7 @@ public class MembersSignInController {
 //		
 //		ModelAndView mv = new ModelAndView();
 //		
-//		kakaoApi.kakaoLogout((String) session.getAttribute("access_token"));
+//		kakaoService.kakaoLogout((String) session.getAttribute("access_token"));
 //		session.removeAttribute("access_token");
 //		session.removeAttribute("userId");
 //		mv.setViewName("member/kakaoLogin");
@@ -114,9 +119,9 @@ public class MembersSignInController {
 		members.setPw(pw);
         members.setRegdate(LocalDateTime.now());
 		
-		membersService.memJoin(members); //수정중...
+		membersService.memJoin(members); 
 		
-		model.addAttribute("member", members); // 회원가입 정보를 모델에 담아서 리턴
+		model.addAttribute("member", members); 
 
 		return "member/joinInfo"; 
 	}
