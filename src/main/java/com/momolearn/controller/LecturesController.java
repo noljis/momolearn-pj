@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -301,7 +302,7 @@ public class LecturesController {
 	
 	
 	//12. 강좌 수정 + 강의id로 강의 디테일 페이지로 이동
-	@PostMapping(value = "/update-course", produces = "application/json;charset=UTF-8")
+	@PutMapping(value = "/update-course", produces = "application/json;charset=UTF-8")
 	public String updateCourse(Model model, @ModelAttribute CoursesDTO course) throws NotExistException {
 		
 		CoursesDTO courseUpdate =  lecturesService.updateCourse(course);

@@ -132,8 +132,9 @@ tr:nth-child(odd) {
 						<c:when test="${empty myLecture}">
 							<h4 class="card-title text-primary" id="totalPrice">${lecture.price}￦</h4>
 							<div class="d-grid gap-2">
-								<button type="submit" class="btn btn-secondary mr-2" onclick="location.href='${pageContext.request.contextPath}/cart/check-cart/${lecture.id}'">수강바구니에 담기🧺</button>
-								<input type="hidden" name="lecId" value="${lecture.id}"/>
+								<form action="${pageContext.request.contextPath}/cart/add-cart/${lecture.id}" method="post">
+								    <button type="submit" class="btn btn-secondary mr-2">수강바구니에 담기🧺</button>
+								</form>
 							</div>
 						</c:when>
 						<c:otherwise>
