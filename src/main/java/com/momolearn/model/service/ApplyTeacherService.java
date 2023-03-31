@@ -46,12 +46,12 @@ public class ApplyTeacherService {
 	}
 
 	// O 강사 신청서 작성
-	public ApplyTeacherDTO write(ApplyTeacherDTO applyDTO) throws MessageException{
+	public ApplyTeacherDTO write(ApplyTeacherDTO apply) throws MessageException{
 		System.out.println("ApplyTecacherService.write() : 강사 신청서 작성");
 		
-		System.out.println("+++ 1 +++ : " + applyDTO); //입력한 정보 받아옴 id, applyRege, approve null값
+		System.out.println("+++ 1 +++ : " + apply); //입력한 정보 받아옴 id, applyRege, approve null값
 		
-		ApplyTeacher applyTeachers = applyDTO.toEntity(applyDTO);
+		ApplyTeacher applyTeachers = apply.toEntity(apply);
 		
 		System.out.println("+++ 2 +++ : " + applyTeachers);
 		
@@ -84,10 +84,12 @@ public class ApplyTeacherService {
 	
 	// X 수정
 	@Transactional
-	public void update(int id, ApplyTeacherDTO applyDTO) {
-		
+	public void update(int id, ApplyTeacherDTO applyDTO) throws NotExistException {
+		ApplyTeacher applyTeacher = applyTeacherRepository.findById(id).orElseThrow(()->new NotExistException("신청서가 존재하지 않습니다."));
 		System.out.println("-------- service.update 111111");
-		ApplyTeacher applyTeacher = mapper.map(applyDTO, ApplyTeacher.class);
+//		applyTeacher.setApplyForm(applyTeacher.getPhoneNum(), applyTeacher.getHopeField(), applyTeacher.getPfLink(), applyTeacher.getIntro());
+		
+//		ApplyTeacher applyTeachers = mapper.map(apply, ApplyTeacher.class);
 		applyTeacherRepository.save(applyTeacher);
 	}
 	
