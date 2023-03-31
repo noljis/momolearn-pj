@@ -93,6 +93,13 @@ public class ApplyTeacher  {
     	this.pfLink = pfLink;
     	this.intro = intro;
     }
+    
+    public void setApplyForm4(String phoneNum, String hopeField, String pfLink, String intro) {
+    	this.phoneNum = phoneNum;
+    	this.hopeField = hopeField;
+    	this.pfLink = pfLink;
+    	this.intro = intro;
+    }
 
     public void setApplyForm2(Members membersApplyId, String phoneNum, String hopeField, String pfLink, String intro) {
     	this.members = membersApplyId;
@@ -101,24 +108,6 @@ public class ApplyTeacher  {
     	this.pfLink = pfLink;
     	this.intro = intro;
     }
-
-
-//	public void setPhoneNum(String phoneNum) {
-//		this.phoneNum = phoneNum;
-//	}
-//
-//	public void setHopeField(String hopeField) {
-//		this.hopeField = hopeField;
-//	}
-//
-//	public void setIntro(String intro) {
-//		this.intro = intro;
-//	}
-//
-//	public void setPfLink(String pfLink) {
-//		this.pfLink = pfLink;
-//	}
-
 }
 
 

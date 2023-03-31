@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.aspectj.weaver.NewFieldTypeMunger;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -85,12 +86,14 @@ public class ApplyTeacherService {
 	// X 수정
 	@Transactional
 	public void update(int id, ApplyTeacherDTO applyDTO) throws NotExistException {
-		ApplyTeacher applyTeacher = applyTeacherRepository.findById(id).orElseThrow(()->new NotExistException("신청서가 존재하지 않습니다."));
 		System.out.println("-------- service.update 111111");
-//		applyTeacher.setApplyForm(applyTeacher.getPhoneNum(), applyTeacher.getHopeField(), applyTeacher.getPfLink(), applyTeacher.getIntro());
+		Optional<ApplyTeacher> applyTeacher = applyTeacherRepository.findById(id);
+		ApplyTeacher applyTeachers = applyTeacher.orElseThrow(()->new NotExistException("신청서가 존재하지 않습니다."));
 		
-//		ApplyTeacher applyTeachers = mapper.map(apply, ApplyTeacher.class);
-		applyTeacherRepository.save(applyTeacher);
+		applyTeachers.setApplyForm4(applyDTO.getPhoneNum(), applyDTO.getHopeField(), applyDTO.getPfLink(), applyDTO.getIntro());
+		
+		System.out.println(applyDTO.getHopeField() + applyDTO.getIntro() + applyDTO.getPfLink() + applyDTO.getPhoneNum());
+		System.out.println("-------- service.update 22222 " + applyTeacher);
 	}
 	
 	// O 삭제
