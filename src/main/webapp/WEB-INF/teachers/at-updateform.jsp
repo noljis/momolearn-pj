@@ -17,7 +17,7 @@
         </head>
 
         <body>
-            <jsp:include page="/separate/header3.jsp"></jsp:include>
+            <jsp:include page="/separate/header2.jsp"></jsp:include>
 
 
             <!-- Header Start -->
@@ -41,7 +41,7 @@
             <form id="sm" name="ta" method="post" onsubmit="return allCheck()" action="${pageContext.request.contextPath}/applyteacher/update">
                 <div align="center">
                     <h2>강사 등록 신청서</h2>
-            
+확인용 - ${member} - ${apply}
                     <div>
                         <div class="col-sm-5">
                             <table class="table table-bordered">
@@ -49,15 +49,15 @@
                                     <td class="td" align="center" colspan="2">회원 기본 정보</td>
                                 </tr>
                                 <tr>
-                                    <td>아이디:</td>
+                                    <td>아이디</td>
                                     <td><input type="text" id="id" name="id" disabled value="${member.memId}"></td>
                                 </tr>
                                 <tr>
-                                    <td>이름:</td>
+                                    <td>이름</td>
                                     <td><input type="text" id="name" name="name" disabled value="${member.name}"></td>
                                 </tr>
                                 <tr>
-                                    <td>메일주소:</td>
+                                    <td>메일주소</td>
                                     <td><input type="text" id="email" name="email" size="30" disabled value="${member.email}"></td>
                                 </tr>
                                 <tr class="tr">

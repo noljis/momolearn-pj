@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 @RequestMapping("applyteacher")
-@SessionAttributes({ "members", "id" })
+@SessionAttributes({ "members" })
 @RequiredArgsConstructor
 public class ApplyTeacherController {
 
@@ -78,9 +78,9 @@ public class ApplyTeacherController {
 
 	// O 회원 - 내 강사 신청서 목록
 	@GetMapping(value = "/myapplylist")
-	public String myApplyList(Model model, @ModelAttribute("members") MembersDTO members) throws NotExistException {
+	public String getMyApplyList(Model model, @ModelAttribute("members") MembersDTO members) throws NotExistException {
 
-		System.out.println("회원 : 내 신청서 목록");
+		System.out.println("회원 : 내 신청서 목록" + members);
 		
 		ApplyTeacher applyTeacher = applyTeacherService.getOneApply(members.getMemId());
 
@@ -89,17 +89,14 @@ public class ApplyTeacherController {
 			model.addAttribute("apply", apply);
 		}
 
-//		System.out.println("members 정보 : "+members);
-//		model.addAttribute("member", members);
-
 		return "teachers/at-mylist";
 	}
 
 	// O 관리자 - 강사 신청서 전체 목록
 	@GetMapping(value = "/applylist")
-	public String applyList(Model model) throws NotExistException {
+	public String getApplyList(Model model, @ModelAttribute("members") MembersDTO members) throws NotExistException {
 
-		System.out.println("관리자 : 신청서 전체 리스트");
+		System.out.println("관리자 : 신청서 전체 리스트" + members);
 		
 		model.addAttribute("list", applyTeacherService.getApplyList());
 		
@@ -121,7 +118,7 @@ public class ApplyTeacherController {
 
 	// O 작성
 	@PostMapping(value = "/write")
-	public String write(Model model, @ModelAttribute("members") MembersDTO members, ApplyTeacherDTO apply) throws MessageException, NotExistException {
+	public String writeApplyForm(Model model, @ModelAttribute("members") MembersDTO members, ApplyTeacherDTO apply) throws MessageException, NotExistException {
 
 		System.out.println("신청서 제출");
 		System.out.println("-------------11 " + members.getMemId());
@@ -194,7 +191,9 @@ public class ApplyTeacherController {
 		ApplyTeacherDTO applyDTO = applyTeacherService.read(members.getMemId());
 		MembersDTO member = membersService.getOneMember(members.getMemId());
 		//수정된 내용 저장 save
+//		System.out.println("-------------11 " + apply); //null
 		System.out.println("-------------11 " + applyDTO);
+		System.out.println("-------------11 " + applyDTO.getId());
 //		
 //		ApplyTeacher applyTeacher = applyTeacherService.getOneApply(apply.getMembersMemId());
 //		
@@ -202,10 +201,11 @@ public class ApplyTeacherController {
 //		ApplyTeacherDTO applyteacher = applyTeacherService.update(apply.getId(), apply);
 //		MembersDTO member = membersService.getOneMember(newApply.getMembersMemId());
 //
-//		ApplyTeacherDTO applyDTOs = applyTeacherService.update(applyDTO.getId(), applyDTO);
+//		ApplyTeacherDTO updateApply = applyTeacherService.update(applyDTO.getId(), apply);
 		
-//		model.addAttribute("apply", applyDTOs);
-		model.addAttribute("member", member);
+//		model.addAttribute("apply", updateApply); 
+		model.addAttribute("apply", applyDTO);
+		model.addAttribute("member", members);
 		
 //		System.out.println("신청서 수정 정보 : "+ applyDTOs);
 
@@ -241,11 +241,11 @@ public class ApplyTeacherController {
 		
 		TeachersDTO teacher = teachersService.saveOneTeacher(apply);
 		
-		System.out.println("teacher 저장" + teacher);
+		System.out.println("teacher 저장 : " + teacher);
 		
 		model.addAttribute("apply", apply);
 		model.addAttribute("member", member);
-		model.addAttribute("teacher", teacher);
+		//model.addAttribute("teacher", teacher);
 
 		return "teachers/at-readform";
 	}

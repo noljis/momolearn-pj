@@ -16,6 +16,7 @@
 
     <jsp:include page="/separate/head.jsp"></jsp:include>
     <link href="${pageContext.request.contextPath}/css/read.css" rel="stylesheet">
+    <script src="${pageContext.request.contextPath}/js/ckeditor5/build/ckeditor.js"></script>
 </head>
 
 <body>
@@ -50,7 +51,7 @@
                             </div>
                         </div>
                         <div class="article-content">
-                            <p>${dto.comContent}</p>
+                            <p id="comContent">${dto.comContent}</p>
                         </div>
                         <c:choose>
                         	<c:when test="${empty members}">
@@ -122,7 +123,7 @@
 														<div class="form-group">
 														  <textarea class="form-input2" id="input-cmtContent" name="cmtContent" required>${c.cmtContent}</textarea> 
 														</div>
-														<button id="btn-updateCmt" class="btn btn-primary">수정하기</button>
+														<button id="btn-updateCmt" class="btn btn-primary" >수정하기</button>
 													</form>
 			                                    </div>
 			                                    
@@ -202,7 +203,37 @@
 	<jsp:include page="/separate/footer.jsp"></jsp:include>
 	<script src="${pageContext.request.contextPath}/js/comment.js"></script>
 	<script src="${pageContext.request.contextPath}/js/likes.js"></script>
-	
+	<!-- CKEditor -->
+	<!-- <script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
+	<script>
+	ClassicEditor.create(document.querySelector('#comContent'), {
+		removePlugins: [ 'Heading' ],
+		ckfinder: {
+			uploadUrl : '${pageContext.request.contextPath}/board/image/upload'
+		},
+		fontFamily: {
+			options: [
+				'default',
+				'Arial',
+				'궁서체',
+				'바탕',
+				'돋움'
+			],
+			supportAllValues: true
+		}
+	})
+	.then(editor => {
+		console.log('Editor was initialized');
+		editor.isReadOnly; // `false`.
+		editor.enableReadOnlyMode( '#comContent' );
+		editor.isReadOnly; // `true`.
+		const toolbarElement = editor.ui.view.toolbar.element;
+		toolbarElement.style.display = 'none';
+	})
+	.catch(error => {
+		console.error(error);
+	});
+	</script> -->
 </body>
 
 </html>

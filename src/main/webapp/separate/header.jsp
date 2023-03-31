@@ -29,6 +29,8 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <a href="${pageContext.request.contextPath}/board/" class="nav-item nav-link">커뮤니티</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="${pageContext.request.contextPath}/teachers/list" class="nav-item nav-link">강사진</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;
                 <a href="${pageContext.request.contextPath}/notice/" class="nav-item nav-link">공지사항</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <!-- 세션ID 존재할 경우 나오는 메뉴 Start-->
@@ -45,8 +47,7 @@
                             <a href="${pageContext.request.contextPath}/lectures/my-lecture" class="dropdown-item">내 강의</a>
                             <c:choose>
                                 <c:when test="${sessionScope.members.grade == 'admin'}">
-                                    <a href="" class="dropdown-item">관리자메뉴</a>
-                                    <a href="${pageContext.request.contextPath}/applyteacher/applylist" class="dropdown-item">강사 신청 목록</a>
+                                    <a href="${pageContext.request.contextPath}/admin/adpage" class="dropdown-item">관리자 페이지</a>
                                 </c:when>
                                 <c:when test="${sessionScope.members.grade == 'teacher'}">
                                     <a href="${pageContext.request.contextPath}/lectures/upload-check"

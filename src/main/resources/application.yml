@@ -5,8 +5,8 @@ server:
    multipart:
     enabled: true # 멀티파트 업로드 지원여부 (default: true)
     location: src/main/webapp/img #업로드된 파일의 임시 저장 경로
-    max-file-size: 10MB #파일의 최대 사이즈 (default: 1MB)
-    max-request-size: 10MB #요청의 최대 사이즈 (default: 10MB)
+    max-file-size: 20MB #파일의 최대 사이즈 (default: 1MB)
+    max-request-size: 20MB #요청의 최대 사이즈 (default: 10MB)
     
 upload:
  path: "src/main/webapp/img"
@@ -19,7 +19,7 @@ spring:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     generate-ddl: false
     hibernate:
-      ddl-auto: none
+      ddl-auto: none 
     show-sql: true
   mvc:
     view:
@@ -33,10 +33,11 @@ spring:
   jackson:
     # LocalDateTime 타입의 값을 JSON 형식으로 직렬화할 때, 다음과 같은 형식으로 변환 
     date-time-format: yyyy-MM-dd'T'HH:mm
+  thymeleaf:    prefix: /WEB-INF/
+    check-template-location: true
+    suffix: .jsp
+    cache: false
     
-iamport:
- apiKey: 5152205600233867
- apiSecret: OsLhXqsOGXne0bgJ1qsRu9FAUU2FnBpmBVsGV0aJEcFPeDhj88mqvxYaLhUPL0X4s0xj2DU8rjtgpq21
     
 #logging:
 #  level:

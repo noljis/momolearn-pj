@@ -68,18 +68,57 @@ public class ApplyTeacher  {
     public void setApprove(String approve) {
         this.approve = approve;
     }
-
-    public void setApplyForm(String phoneNum, String hopeField, String pfLink, String intro) {
-    	this.phoneNum = phoneNum;
-		this.hopeField = hopeField;
-		this.intro = intro;
-		this.pfLink = pfLink;
-    }
-
+    
 	public ApplyTeacher(int id) {
 		this.id = id;
 	}
     
+
+    public void setApplyForm(int id, Members membersApplyId, String phoneNum, String hopeField, String pfLink, String intro, String approve, LocalDateTime applyRege) {
+    	this.id = id;
+    	this.members = membersApplyId;
+    	this.phoneNum = phoneNum;
+		this.hopeField = hopeField;
+		this.pfLink = pfLink;
+		this.intro = intro;
+		this.approve = approve;
+		this.applyRege = applyRege;
+    }
+    
+    public void setApplyForm3(int id, Members membersApplyId, String phoneNum, String hopeField, String pfLink, String intro) {
+    	this.id = id;
+//    	this.members = membersApplyId;
+    	this.phoneNum = phoneNum;
+    	this.hopeField = hopeField;
+    	this.pfLink = pfLink;
+    	this.intro = intro;
+    }
+
+    public void setApplyForm2(Members membersApplyId, String phoneNum, String hopeField, String pfLink, String intro) {
+    	this.members = membersApplyId;
+    	this.phoneNum = phoneNum;
+    	this.hopeField = hopeField;
+    	this.pfLink = pfLink;
+    	this.intro = intro;
+    }
+
+
+//	public void setPhoneNum(String phoneNum) {
+//		this.phoneNum = phoneNum;
+//	}
+//
+//	public void setHopeField(String hopeField) {
+//		this.hopeField = hopeField;
+//	}
+//
+//	public void setIntro(String intro) {
+//		this.intro = intro;
+//	}
+//
+//	public void setPfLink(String pfLink) {
+//		this.pfLink = pfLink;
+//	}
+
 }
 
 
