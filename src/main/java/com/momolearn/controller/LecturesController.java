@@ -288,9 +288,29 @@ public class LecturesController {
 		return "data_res"; // WEB-INF/main_res.jsp
 	}
 	
-	//11. 강의 수정
+	//11. 강좌 수정폼 이동
+	@GetMapping(value = "/courses-update-form/{courseId}", produces = "application/json;charset=UTF-8")
+	public String moveUpdateCourseForm(Model model, @PathVariable("courseId") int courseId) throws NotExistException {
+		
+		CoursesDTO course = lecturesService.getOneCourse(courseId);
+		
+		model.addAttribute("course", course);
+		
+		return "lecture/course-update-form"; // WEB-INF/lecture/lecture-list.jsp
+	}
 	
-	//12. 강의 삭제
+	
+	//12. 강좌 수정 + 강의id로 강의 디테일 페이지로 이동
+	@PostMapping(value = "/update-course", produces = "application/json;charset=UTF-8")
+	public String updateCourse(Model model, @ModelAttribute CoursesDTO course) throws NotExistException {
+		
+		CoursesDTO courseUpdate =  lecturesService.updateCourse(course);
+		
+		model.addAttribute("lectureId", courseUpdate.getLectureId());
+		
+		return "lecture/success";
+	}
+	
 	
 	//NotExistException 관련 예외처리
 	@ExceptionHandler(value = NotExistException.class)
