@@ -48,7 +48,7 @@ public class MembersSignInController {
 	private KakaoService kakaoService;
 	
 	
-	@RequestMapping(value = "/kakaoLogin")
+	@GetMapping(value = "/kakaoLogin")
 	public ModelAndView kakaoLogin(@RequestParam("code") String code, HttpSession session) {
 
 		ModelAndView mv = new ModelAndView();
