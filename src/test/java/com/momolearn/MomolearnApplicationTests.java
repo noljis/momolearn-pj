@@ -9,10 +9,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.momolearn.model.ApplyTeacherRepository;
 import com.momolearn.model.LikesRepository;
 import com.momolearn.model.MembersRepository;
+import com.momolearn.model.TeachersRepository;
+import com.momolearn.model.service.ApplyTeacherService;
 import com.momolearn.model.service.LikesService;
 import com.momolearn.model.service.MembersService;
+import com.momolearn.model.service.TeachersService;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -21,11 +25,16 @@ class MomolearnApplicationTests {
 
 
 	
+	
 	@Autowired MembersRepository membersRepository;
 	@Autowired MembersService membersService;
 	@Autowired LikesRepository likesRepository;
 	@Autowired LikesService likesService;
 
+	@Autowired ApplyTeacherRepository applyTeacherRepository;
+	@Autowired ApplyTeacherService applyTeacherService;
+	@Autowired TeachersRepository teacherRepository;
+	@Autowired TeachersService teacherService;
 
 	@Autowired
 	private WebApplicationContext controller;
@@ -166,5 +175,23 @@ class MomolearnApplicationTests {
 //		
 //	}
 	
-
+	
+//	@Test
+//	public void update테스트() throws Exception {
+//		
+//		Members member = membersRepository.getById("test02");
+//
+//		ApplyTeacher apply = applyTeacherRepository.getById(16);
+//		
+//		ApplyTeacher applyDTO = new ApplyTeacher();
+//		
+//		applyDTO.setApplyForm(16, member, "1122", "ddddddddd", "12343", "ㅇㅇㅇㅇㅇㅇㅇㅇㅇ", apply.getApprove(), apply.getApplyRege());
+//		
+//		applyTeacherRepository.save(apply); // applyTeacherRepository를 사용하여 변경된 데이터 저장
+//
+//		//ApplyTeacher updatedApply = applyTeacherRepository.getById(16);
+//		
+//		assertThat(apply.getId()).isEqualTo(16);
+//	}
+	
 }
