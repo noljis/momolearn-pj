@@ -5,10 +5,10 @@
 <div class="container py-5">
     <div class="row g-6">
         <div class="col-lg col-md">
-            <a href="${pageContext.request.contextPath}/page/index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+            <a href="${pageContext.request.contextPath}/" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
                 <h2 class="m-0 text-primary"><i class="fa fa-book me-10"></i>MOMOLEARN</h2>
             </a>
-            &nbsp;&nbsp;&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/page/about.html" class="text-primary align-items-right">사이트소개<i class="fa fa-arrow-right ms-3"></i></a> 
+            &nbsp;&nbsp;&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/about" class="text-primary align-items-right">사이트소개<i class="fa fa-arrow-right ms-3"></i></a> 
             <p class="mb-2"><i class="fa fa-map-marker-alt me-10"></i> 서울시 강남구 강남대로 420 역삼빌딩 1205호</p>
             <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>02) 1234 - 5678</p>
             <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@momolearn.com</p>
