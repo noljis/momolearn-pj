@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 @RequestMapping("applyteacher")
-@SessionAttributes({ "members", "id" })
+@SessionAttributes({ "members" })
 @RequiredArgsConstructor
 public class ApplyTeacherController {
 
@@ -80,7 +80,7 @@ public class ApplyTeacherController {
 	@GetMapping(value = "/myapplylist")
 	public String getMyApplyList(Model model, @ModelAttribute("members") MembersDTO members) throws NotExistException {
 
-		System.out.println("회원 : 내 신청서 목록");
+		System.out.println("회원 : 내 신청서 목록" + members);
 		
 		ApplyTeacher applyTeacher = applyTeacherService.getOneApply(members.getMemId());
 
@@ -89,17 +89,14 @@ public class ApplyTeacherController {
 			model.addAttribute("apply", apply);
 		}
 
-//		System.out.println("members 정보 : "+members);
-//		model.addAttribute("member", members);
-
 		return "teachers/at-mylist";
 	}
 
 	// O 관리자 - 강사 신청서 전체 목록
 	@GetMapping(value = "/applylist")
-	public String getApplyList(Model model) throws NotExistException {
+	public String getApplyList(Model model, @ModelAttribute("members") MembersDTO members) throws NotExistException {
 
-		System.out.println("관리자 : 신청서 전체 리스트");
+		System.out.println("관리자 : 신청서 전체 리스트" + members);
 		
 		model.addAttribute("list", applyTeacherService.getApplyList());
 		
@@ -188,13 +185,15 @@ public class ApplyTeacherController {
 	// X 수정
 	// 오류 - 수정기능이 아니라 새로 저장되는중 & memid는 null로 들어감
 	@PostMapping(value = "/update")
-	public String update(Model model, @ModelAttribute("members") MembersDTO members, ApplyTeacherDTO applyDTO) throws NotExistException, MessageException {
+	public String update(Model model, @ModelAttribute("members") MembersDTO members, ApplyTeacherDTO apply) throws NotExistException, MessageException {
 
 		System.out.println("신청서 수정");
-		ApplyTeacherDTO applyTeacher = applyTeacherService.read(members.getMemId());
+		ApplyTeacherDTO applyDTO = applyTeacherService.read(members.getMemId());
 		MembersDTO member = membersService.getOneMember(members.getMemId());
 		//수정된 내용 저장 save
-//		System.out.println("-------------11 " + apply);
+//		System.out.println("-------------11 " + apply); //null
+		System.out.println("-------------11 " + applyDTO);
+		System.out.println("-------------11 " + applyDTO.getId());
 //		
 //		ApplyTeacher applyTeacher = applyTeacherService.getOneApply(apply.getMembersMemId());
 //		
@@ -202,10 +201,11 @@ public class ApplyTeacherController {
 //		ApplyTeacherDTO applyteacher = applyTeacherService.update(apply.getId(), apply);
 //		MembersDTO member = membersService.getOneMember(newApply.getMembersMemId());
 //
-//		ApplyTeacherDTO apply = applyTeacherService.update(apply.getId(), apply);
+//		ApplyTeacherDTO updateApply = applyTeacherService.update(applyDTO.getId(), apply);
 		
-//		model.addAttribute("apply", apply);
-		model.addAttribute("member", member);
+//		model.addAttribute("apply", updateApply); 
+		model.addAttribute("apply", applyDTO);
+		model.addAttribute("member", members);
 		
 //		System.out.println("신청서 수정 정보 : "+ applyDTOs);
 

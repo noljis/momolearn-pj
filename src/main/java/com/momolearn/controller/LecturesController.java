@@ -31,6 +31,7 @@ import com.momolearn.model.dto.LectureCoursesDTO;
 import com.momolearn.model.dto.LecturesDTO;
 import com.momolearn.model.dto.MembersDTO;
 import com.momolearn.model.dto.MyLecturesDTO;
+import com.momolearn.model.dto.MyLecturesTeacherDTO;
 import com.momolearn.model.dto.TeacherMemberDTO;
 import com.momolearn.model.service.FileService;
 import com.momolearn.model.service.LecturesService;
@@ -208,11 +209,22 @@ public class LecturesController {
 	
 	//7-1. 내 강의(학생: memId로 조회) - myLectures -> join fetch Members, Lectures 
 	/* 간략하게 강의명(클릭시 디테일로 들어가야 함 -> 강의번호 필요함)과 강사명 목록만 나열하도록 함
+	 * 등급이 teacher일 경우 teacher로 Lecture엔티티 조회해서 
 	 * */
 	@ApiOperation(value = "수강중인 강의 페이지", notes = "세션 id로 수강중인 강의 조회")
 	@GetMapping(value = "/my-lecture", produces = "application/json;charset=UTF-8")
 	public String myLecture(Model model, @ModelAttribute("members") MembersDTO member) {
 		log.info("myLecture 메소드");
+		
+		List<MyLecturesTeacherDTO> lecture = lecturesService.getMyLectures(member);
+
+		if(member.getGrade().equals("teacher")) {
+			
+			List<LectureCoursesDTO> teacherLecture = lecturesService.getTeacherLectures(member);
+			model.addAttribute("teacherLec", teacherLecture);
+		}
+		
+		model.addAttribute("lecture", lecture);
 		
 		return "lecture/my-lecture";
 	}

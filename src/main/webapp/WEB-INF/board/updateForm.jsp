@@ -14,6 +14,7 @@
 
     <jsp:include page="/separate/head.jsp"></jsp:include>
     <link href="${pageContext.request.contextPath}/css/write.css" rel="stylesheet">
+    <script src="${pageContext.request.contextPath}/js/ckeditor5/build/ckeditor.js"></script>
 </head>
 <body>
 	<jsp:include page="/separate/header2.jsp"></jsp:include>
@@ -38,17 +39,10 @@
     <!---->
     <div class="container-xl px-4 mt-4">
         <!-- Account page navigation-->
-        <nav class="nav nav-borders">
-            <a class="nav-link active ms-0" href="https://www.bootdey.com/snippets/view/bs5-edit-profile-account-details" target="__blank">커뮤니티</a>
-            <a class="nav-link" href="" target="__blank">다른게시판1</a>
-            <a class="nav-link" href="" target="__blank">게시판2</a>
-            <a class="nav-link" href=""  target="__blank">게시판3</a>
-        </nav>
-        <hr class="mt-0 mb-4">
         <div class="row">
-            <div class="col-xl-10">
+            <div class="col-xl-8">
             </div>
-            <div class="col-xl-15">
+            <div class="col-xl-8">
                 <!-- Account details card-->
                 <div class="card mb-4">
                     <div class="card-header">글 수정하기</div>
@@ -114,8 +108,34 @@
 
 
     <!-- Back to Top -->
-<jsp:include page="/separate/script.jsp"></jsp:include>
-<jsp:include page="/separate/footer.jsp"></jsp:include>
+	<jsp:include page="/separate/script.jsp"></jsp:include>
+	<jsp:include page="/separate/footer.jsp"></jsp:include>
+	<!-- CKEditor -->
+	<script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
+	<script>
+	ClassicEditor.create(document.querySelector('#comContent'), {
+		removePlugins: [ 'Heading' ],
+		ckfinder: {
+			uploadUrl : '${pageContext.request.contextPath}/board/image/upload'
+		},
+		fontFamily: {
+			options: [
+				'default',
+				'Arial',
+				'궁서체',
+				'바탕',
+				'돋움'
+			],
+			supportAllValues: true
+		}
+	})
+	.then(editor => {
+		console.log('Editor was initialized');
+	})
+	.catch(error => {
+		console.error(error);
+	});
+	</script>
 </body>
 
 </html>

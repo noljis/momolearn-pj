@@ -15,6 +15,8 @@
 
     <jsp:include page="/separate/head.jsp"></jsp:include>
 	<link href="${pageContext.request.contextPath}/css/write.css" rel="stylesheet">
+	<script src="../js/ckeditor5/build/ckeditor.js"></script>
+	
 </head>
 <body>
 
@@ -41,17 +43,11 @@
     <!---->
     <div class="container-xl px-4 mt-4">
         <!-- Account page navigation-->
-        <nav class="nav nav-borders">
-            <a class="nav-link active ms-0" href="https://www.bootdey.com/snippets/view/bs5-edit-profile-account-details" target="__blank">커뮤니티</a>
-            <a class="nav-link" href="" target="__blank">다른게시판1</a>
-            <a class="nav-link" href="" target="__blank">게시판2</a>
-            <a class="nav-link" href=""  target="__blank">게시판3</a>
-        </nav>
-        <hr class="mt-0 mb-4">
+        
         <div class="row">
-            <div class="col-xl-10">
+            <div class="col-xl-8">
             </div>
-            <div class="col-xl-15">
+            <div class="col-xl-8">
                 <!-- Account details card-->
                 <div class="card mb-4">
                     <div class="card-header">글쓰기</div>
@@ -73,7 +69,7 @@
                             <div class="row gx-3 mb-3">
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputSubject">카테고리</label>
-                                    <form:select path="subject" name="subject" id="subject" class="form-control" >
+                                    <form:select path="subject" name="subject" id="subject" class="form-control">
                                         <form:option value="">---선 택---</form:option>
                                         <form:option value="자유">자  유</form:option>
                                         <form:option value="질문">질  문</form:option>
@@ -92,7 +88,6 @@
                                 </div>
                             </div>
                             <!-- Form Row        -->
-                            <!-- Form Group (email address)-->
                             <div class="mb-3">
                                 <label class="small mb-1" for="inputComContent">글 내용</label>
                                 <form:textarea path="comContent" rows="10" cols="50" id="comContent" name="comContent" class="form-control" placeholder="글 내용을 입력하세요"/>
@@ -101,6 +96,8 @@
 						              <span style="color: red;font:bold">${errors.getFieldError( 'comContent' ).defaultMessage }</span>
 									</c:if>
 								</spring:hasBindErrors>
+								<hr>
+								
                             </div>
                             <!-- Save changes button-->
                             <button class="btn btn-primary" type="submit" >등록</button>
@@ -118,6 +115,32 @@
     <!-- Back to Top -->
 	<jsp:include page="/separate/script.jsp"></jsp:include>
 	<jsp:include page="/separate/footer.jsp"></jsp:include>
+	<!-- CKEditor -->
+	<script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
+	<script>
+	ClassicEditor.create(document.querySelector('#comContent'), {
+		removePlugins: [ 'Heading' ],
+		ckfinder: {
+			uploadUrl : '${pageContext.request.contextPath}/board/image/upload'
+		},
+		fontFamily: {
+			options: [
+				'default',
+				'Arial',
+				'궁서체',
+				'바탕',
+				'돋움'
+			],
+			supportAllValues: true
+		}
+	})
+	.then(editor => {
+		console.log('Editor was initialized');
+	})
+	.catch(error => {
+		console.error(error);
+	});
+	</script>
 </body>
 
 </html>

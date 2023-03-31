@@ -72,14 +72,19 @@ public class CartService {
 		return Arrays.asList(mapper.map(cart, CartDTO[].class));
 	}
 
-	//강의 저장 + 수강바구니 삭제
+	//강의 저장 + 수강바구니 삭제 + 해당 강의 update
 	@Transactional
 	public void getMyLectures(PaymentRequestDTO request) throws NotExistException {
 		
 		for(int i = 0; i < request.getCheckedTitles().size(); i++) {
 			
 			Lectures lecture = lecturesRepository.findByTitleContaining(request.getCheckedTitles().get(i)).get(0);
+			
 			Members member = membersRepository.findById(request.getMemId()).orElseThrow(() -> new NotExistException("존재하는 회원이 없습니다."));
+			
+			//수강생 수 +1
+			lecture.setApplyCnt(lecture.getApplyCnt() + 1);
+			lecturesRepository.save(lecture);
 			
 			myLecturesRepository.save(new MyLectures(member, lecture));
 			int result = cartRepository.deleteByMemberAndLecture(member, lecture);

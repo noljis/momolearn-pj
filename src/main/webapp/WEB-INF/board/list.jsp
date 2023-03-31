@@ -16,6 +16,12 @@
 
     <jsp:include page="/separate/head.jsp"></jsp:include>
     <link href="${pageContext.request.contextPath}/css/board.css" rel="stylesheet">
+    <style>
+    body {
+	  margin-top: 0;
+	  padding-top: 0;
+	}
+    </style>
 </head>
 
 <body>
@@ -29,7 +35,7 @@
                     <h1 class="display-4 text-white animated slideInDown">커뮤니티</h1>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb justify-content-center">
-                            <li class="breadcrumb-item text-white active" aria-current="page">페이지 간단 설명(생략가능)</li>
+                            <li class="breadcrumb-item text-white active" aria-current="page"></li>
                         </ol>
                     </nav>
                 </div>
@@ -44,7 +50,7 @@
         <div class="container">
             <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
                 <h6 class="section-title bg-white text-center text-primary px-3">Community</h6>
-                <h1 class="mb-5">Community Community</h1>
+                <h1 class="mb-5">Community</h1>
             </div>
         </div>
     </div>
@@ -138,7 +144,10 @@
                                         <td>
                                             <span class="text-success font-12"><i class="mdi mdi-checkbox-blank-circle mr-1"></i>${c.subject}</span>
                                         </td>
-                                        <td><a href="${pageContext.request.contextPath}/board/${c.comNo}" id="title">${c.comTitle}&nbsp;[${fn:length(c.comments)}]</a></td>
+                                        <td><a href="${pageContext.request.contextPath}/board/${c.comNo}" id="title">${c.comTitle}&nbsp;[${fn:length(c.comments)}]
+                                        <c:set var="str" value="${c.comContent}"/>
+                                        <c:if test="${fn:contains(str, '<figure class=\"image\">')}">
+                                        <i class='fas fa-file-image' style="color: #ffc107"></i></c:if></a></td>
                                         <td><tf:formatDateTime value="${c.comRegdate}" pattern="yyyy.MM.dd / HH:mm" /></td>
                                         <td>
                                             <div class="team">
@@ -161,8 +170,15 @@
                             </table>
                         </div>
                         <!-- end project-list -->
-                        
-                        <button class="btn btn-outline-primary" style="float: right;" type="submit" onclick="location.href='${pageContext.request.contextPath}/board/writeForm'">글쓰기</button>
+                        <c:choose>
+	                        <c:when test="${empty members}">
+	                        	<button class="btn btn-outline-primary" id="loginPlz" style="float: right;">글쓰기<br>
+	                        	<p style="font-size: 10px; color: blue; margin: auto;" >(클릭시 로그인창으로 이동)</p></button>
+	                        </c:when>
+	                        <c:otherwise>
+		                        <button class="btn btn-outline-primary" style="float: right;" type="submit" onclick="location.href='${pageContext.request.contextPath}/board/writeForm'">글쓰기</button>
+	                        </c:otherwise>
+                        </c:choose>
                         <div class="pt-3">
                             <ul class="pagination justify-content-center mb-0">
                             
@@ -179,7 +195,6 @@
 	                                <li class="page-item ${endPage == nowPage? 'disabled':''}">
 	                                    <a class="page-link" href="${pageContext.request.contextPath}/board?page=${nowPage}" tabindex="+1" >Next</a>
 	                                </li>
-                                
                             </ul>
                         </div>
                     </div>
@@ -193,6 +208,7 @@
 <!-- Back to Top -->
 <jsp:include page="/separate/script.jsp"></jsp:include>
 <jsp:include page="/separate/footer.jsp"></jsp:include>
+<script src="${pageContext.request.contextPath}/js/comment.js"></script>
 </body>
 
 </html>

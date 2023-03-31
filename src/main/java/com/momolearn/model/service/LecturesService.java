@@ -16,14 +16,15 @@ import com.momolearn.model.CategoryLectureRepository;
 import com.momolearn.model.CategoryRepository;
 import com.momolearn.model.CoursesRepository;
 import com.momolearn.model.LecturesRepository;
-import com.momolearn.model.MembersRepository;
 import com.momolearn.model.MyLecturesRepository;
 import com.momolearn.model.dto.CategoryDTO;
 import com.momolearn.model.dto.CoursesDTO;
 import com.momolearn.model.dto.CoursesListDTO;
 import com.momolearn.model.dto.LectureCoursesDTO;
 import com.momolearn.model.dto.LecturesDTO;
+import com.momolearn.model.dto.MembersDTO;
 import com.momolearn.model.dto.MyLecturesDTO;
+import com.momolearn.model.dto.MyLecturesTeacherDTO;
 import com.momolearn.model.entity.Category;
 import com.momolearn.model.entity.CategoryLecture;
 import com.momolearn.model.entity.Courses;
@@ -254,7 +255,6 @@ public class LecturesService {
 			}
 		}
 		
-		
 		if(result == false) {
 
 			throw new NotExistException("현재 수강중인 강의가 아닙니다. 수강신청 후 이용해주세요.");
@@ -276,6 +276,26 @@ public class LecturesService {
 		}
 		
 		return mapper.map(myLecture, MyLecturesDTO.class);
+	}
+
+	//member로 수강중인 강의 조회. 필요한 속성: 강의, 회원, 강사명(lecture.teachers)
+	public List<MyLecturesTeacherDTO> getMyLectures(MembersDTO member) {
+		
+		Members members = mapper.map(member, Members.class);
+		
+		List<MyLectures> myLecture = myLecturesRepository.findByMember(members);
+		
+		return Arrays.asList(mapper.map(myLecture, MyLecturesTeacherDTO[].class));
+	}
+
+	//member로 내가 올린 강의 조회. teachersApplyTeacherMembers
+	public List<LectureCoursesDTO> getTeacherLectures(MembersDTO member) {
+		
+		Members members = mapper.map(member, Members.class);
+		
+		List<Lectures> lectures = lecturesRepository.findByteachersApplyTeacherMembersMemId(members.getMemId());
+				
+		return Arrays.asList(mapper.map(lectures, LectureCoursesDTO[].class));
 	}
 	
 	
