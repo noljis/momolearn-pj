@@ -1,5 +1,6 @@
 package com.momolearn.model.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
@@ -94,6 +95,20 @@ public class BoardService {
 		
 		Page<BoardListDTO> dtoPage = entityPage.map(e->new BoardListDTO(e));
 		return dtoPage;
+	}
+	
+	//인기글
+	public List<BoardDTO> getHitPosts(String criteria) {
+		System.out.println("getHitPosts() service-----------------------");
+		
+//		if("comment".equals(criteria)) {
+//			boardRepository.findTop10ByOrderByCommentsDesc();
+//		}else if("likes".equals(criteria)) {
+//			boardRepository.findTop10ByOrderByLikesDesc();
+//		}else {
+//			boardRepository.findTop10ByOrderByComViewCountDesc();
+//		}
+		return null;
 	}
 
 }

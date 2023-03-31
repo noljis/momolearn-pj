@@ -390,4 +390,14 @@ img {
 	font-size:15px;
 	margin-right:10px;
 }
+.ck.ck-editor {
+	width: 80%;
+	max-width: 800px;
+	margin: 0 auto;
+}
+
+.ck-editor__editable {
+	height: 60vh;
+}
+
 

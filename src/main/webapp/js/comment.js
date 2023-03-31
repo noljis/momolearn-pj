@@ -1,5 +1,4 @@
 $(document).ready(function(){
-	let _this = this;
     $("#loginPlz").click(function(){
 		let currentPageUrl = window.location.href;
         console.log(currentPageUrl);
@@ -12,30 +11,37 @@ $(document).ready(function(){
     });
     
 	
-	$(document).on('click', '#btn-updateCmt', function() {
-	  const data = {
-		comNo : $('#input-comNo').val(),
-	    cmtNo : $(this).closest('form').find('#input-cmtNo').val(),
-	    cmtContent : $(this).closest('form').find('#input-cmtContent').val()
-	  }
-	  $.ajax({
-	    type: 'PUT',
-	    url: '../board/'+data.comNo+'/comment/'+data.cmtNo,
-	    data: JSON.stringify(data),
-	    dataType: 'JSON',
-	    contentType: 'application/json; charset=utf-8',
-	    success:function(response){
-	      alert("댓글 수정 성공");
-	      window.location.reload();
-	    },
-	    error:function(error){
-	      alert('댓글 수정 실패. 다시 시도해주세요');
-	      alert(JSON.stringify(error));
-	    }
-	  });
+    $("#btn-comment").click(function() {
+    	writeComment();
 	});
-		
 	
+    $("#btn-deleteCmt").click(function() {
+    	deleteComment(comNo,cmtNo);
+	});
+    
+});
+
+$(document).on('click', '#btn-updateCmt', function() {
+  const data = {
+	comNo : $('#input-comNo').val(),
+    cmtNo : $(this).closest('form').find('#input-cmtNo').val(),
+    cmtContent : $(this).closest('form').find('#input-cmtContent').val()
+  }
+  $.ajax({
+    type: 'PUT',
+    url: '../board/'+data.comNo+'/comment/'+data.cmtNo,
+    data: JSON.stringify(data),
+    dataType: 'JSON',
+    contentType: 'application/json; charset=utf-8',
+    success:function(response){
+      alert("댓글 수정 성공");
+      window.location.reload();
+    },
+    error:function(error){
+      alert('댓글 수정 실패. 다시 시도해주세요');
+      alert(JSON.stringify(error));
+    }
+  });
 });
 
 

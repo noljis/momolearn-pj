@@ -9,11 +9,6 @@ $(document).ready(function(){
 
         }
     });
-    
-    
-    
-    
-    
 });
     $(document).on('click', '#btn-like', function() {
     $(this).html("<i class='fas fa-heart' style='font-size:15px'> 좋아요 취소</i>");
