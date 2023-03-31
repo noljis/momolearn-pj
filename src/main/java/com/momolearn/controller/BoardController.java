@@ -1,10 +1,15 @@
 package com.momolearn.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -21,8 +26,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.momolearn.exception.NotExistException;
 import com.momolearn.model.dto.BoardDTO;
@@ -85,9 +95,8 @@ public class BoardController {
 			List<ObjectError> errorList = bindingResult.getAllErrors();
 			for(ObjectError error : errorList) {
 				log.info("등록 실패: "+error.getDefaultMessage());
+				throw new NotExistException(error.getDefaultMessage());
 			}
-			
-			return "board/writeForm";
 		}
 		
 		int comNo = boardService.save(dto); //->해당 게시글로 가게할지?고민중
@@ -174,6 +183,37 @@ public class BoardController {
 		return "board/list";
 	}
 	
+	@PostMapping("/image/upload")
+	public ModelAndView uploadImage(@RequestParam Map<String, Object> map, MultipartHttpServletRequest request) throws NotExistException, IllegalStateException, IOException{
+		
+		ModelAndView mv = new ModelAndView("jsonView"); //ckeditor를 위한 설정.. WebConfig에 등록해둠
+		List<MultipartFile> fileList = request.getFiles("upload"); //에디터에서 받아온파일 리스트. ckeditor에서는 파일을 보낼때 upload:파일 형식으로 넘어옴.
+		
+		String uploadPath = null;
+		
+		for(MultipartFile uploadFile : fileList) {
+			if(fileList.get(0).getSize()>0) {
+				String originalFileName = uploadFile.getOriginalFilename();
+				String ext = originalFileName.substring(originalFileName.indexOf("."));
+				String newFileName = UUID.randomUUID() + ext; //파일이름 중복방지
+				
+				String realPath = request.getServletContext().getRealPath("/");//현재경로 알아내기
+				System.out.println("realPath:"+realPath);
+				String savePath = realPath + "img/upload/" + newFileName; //저장경로
+				System.out.println("savePath:"+savePath);
+				uploadPath = "../img/upload/" + newFileName; //상대경로. 브라우저에서 이미지 불러올때 보안을 위함
+				
+				File file = new File(savePath); //저장경로에 파일 객체 생성
+				
+				uploadFile.transferTo(file);//업로드
+			}
+		}
+
+		mv.addObject("uploaded", true); //업로드 완료 메시지
+		mv.addObject("url", uploadPath); //업로드파일 경로
+		
+		return mv;
+	}
 	
 	
 	@ExceptionHandler

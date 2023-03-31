@@ -138,7 +138,10 @@
                                         <td>
                                             <span class="text-success font-12"><i class="mdi mdi-checkbox-blank-circle mr-1"></i>${c.subject}</span>
                                         </td>
-                                        <td><a href="${pageContext.request.contextPath}/board/${c.comNo}" id="title">${c.comTitle}&nbsp;[${fn:length(c.comments)}]</a></td>
+                                        <td><a href="${pageContext.request.contextPath}/board/${c.comNo}" id="title">${c.comTitle}&nbsp;[${fn:length(c.comments)}]
+                                        <c:set var="str" value="${c.comContent}"/>
+                                        <c:if test="${fn:contains(str, '<figure class=\"image\">')}">
+                                        <i class='fas fa-file-image' style="color: #ffc107"></i></c:if></a></td>
                                         <td><tf:formatDateTime value="${c.comRegdate}" pattern="yyyy.MM.dd / HH:mm" /></td>
                                         <td>
                                             <div class="team">
@@ -161,8 +164,15 @@
                             </table>
                         </div>
                         <!-- end project-list -->
-                        
-                        <button class="btn btn-outline-primary" style="float: right;" type="submit" onclick="location.href='${pageContext.request.contextPath}/board/writeForm'">글쓰기</button>
+                        <c:choose>
+	                        <c:when test="${empty members}">
+	                        	<button class="btn btn-outline-primary" id="loginPlz" style="float: right;">글쓰기<br>
+	                        	<p style="font-size: 10px; color: blue; margin: auto;" >(클릭시 로그인창으로 이동)</p></button>
+	                        </c:when>
+	                        <c:otherwise>
+		                        <button class="btn btn-outline-primary" style="float: right;" type="submit" onclick="location.href='${pageContext.request.contextPath}/board/writeForm'">글쓰기</button>
+	                        </c:otherwise>
+                        </c:choose>
                         <div class="pt-3">
                             <ul class="pagination justify-content-center mb-0">
                             
@@ -179,7 +189,6 @@
 	                                <li class="page-item ${endPage == nowPage? 'disabled':''}">
 	                                    <a class="page-link" href="${pageContext.request.contextPath}/board?page=${nowPage}" tabindex="+1" >Next</a>
 	                                </li>
-                                
                             </ul>
                         </div>
                     </div>
@@ -193,6 +202,7 @@
 <!-- Back to Top -->
 <jsp:include page="/separate/script.jsp"></jsp:include>
 <jsp:include page="/separate/footer.jsp"></jsp:include>
+<script src="${pageContext.request.contextPath}/js/comment.js"></script>
 </body>
 
 </html>
