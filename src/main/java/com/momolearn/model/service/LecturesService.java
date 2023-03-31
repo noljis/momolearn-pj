@@ -3,9 +3,11 @@ package com.momolearn.model.service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -51,6 +53,7 @@ public class LecturesService {
 	private ModelMapper mapper = new ModelMapper();
 
 	// 강의 업로드 후 강좌 등록을 위한 강의 조회(반환)
+	@Transactional
 	public LecturesDTO uploadLecture(LecturesDTO lectureDTO) throws MessageException {
 		
 		Lectures lectures = mapper.map(lectureDTO, Lectures.class);
@@ -82,6 +85,7 @@ public class LecturesService {
 	/*
 	 * 1. 카테고리 ,으로 split 2. 카테고리 테이블에 존재하는지 여부 확인(존재하지 않으면 save) 3. 카테고리-강의테이블에 저장
 	 */
+	@Transactional
 	public void getCategory(String category, LecturesDTO lectures) {
 		// 엔티티로 변환
 		Lectures lecture = mapper.map(lectures, Lectures.class);
@@ -101,6 +105,7 @@ public class LecturesService {
 
 	// 강좌 등록 CoursesListDTO: 속성 타입들이 List
 	// 강좌 추가된만큼 lecture cnt ++
+	@Transactional
 	public List<CoursesDTO> uploadCourses(CoursesListDTO coursesList) throws NotExistException{
 		System.out.println("강좌등록 서비스 메소드");
 		List<Courses> courses = new ArrayList<>();
@@ -297,7 +302,20 @@ public class LecturesService {
 				
 		return Arrays.asList(mapper.map(lectures, LectureCoursesDTO[].class));
 	}
-	
-	
+
+	//강의 업데이트
+	@Transactional
+	public CoursesDTO updateCourse(CoursesDTO course) throws NotExistException {
+		
+		Courses courses = coursesRepository.findById(course.getCourseId()).orElseThrow(() -> new NotExistException("해당 강좌 정보가 존재하지 않습니다."));
+		
+		courses.setTitle(course.getTitle());
+		courses.setTime(course.getTime());
+		courses.setUrl(course.getUrl());
+		
+		courses = coursesRepository.save(courses);
+		
+		return mapper.map(courses, CoursesDTO.class);
+	}
 	
 }

@@ -94,8 +94,10 @@
               <button class="btn btn-primary btn-lg btn-block" type="submit">강좌 등록하기</button>
           </div>
         </div>
+        </div>
       </form>
     </div>
+
 
 	<!-- Back to Top -->
 	<jsp:include page="/separate/script.jsp"></jsp:include>
