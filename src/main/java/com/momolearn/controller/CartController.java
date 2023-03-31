@@ -2,9 +2,11 @@ package com.momolearn.controller;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.HttpSessionRequiredException;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -101,6 +103,17 @@ public class CartController {
 		
 		cartService.getMyLectures(request);
 		
+	}
+	
+	//6. 장바구니 삭제
+	@ApiOperation(value = "결제 성공", notes = "결제 후 수강바구니 삭제 및 MyLectures 추가")
+	@DeleteMapping(value = "/delete", produces = "application/json;charset=UTF-8")
+	public ResponseEntity<?> deleteCart(@RequestBody PaymentRequestDTO request) throws NotExistException {
+	    log.info("장바구니 삭제 메소드" + request.getCheckedTitles().get(0));
+	    
+	    cartService.deleteCart(request);
+	    
+	    return ResponseEntity.ok().build(); // 코드 200
 	}
 	
 	//NotExistException 관련 예외처리

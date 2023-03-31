@@ -89,13 +89,34 @@ public class CartService {
 			myLecturesRepository.save(new MyLectures(member, lecture));
 			int result = cartRepository.deleteByMemberAndLecture(member, lecture);
 			
-			System.out.println(result);
 			if(result == 0) {
 				
 				throw new NotExistException("수강신청에 실패했습니다. 관리자에게 문의하십시오.");
 				
 			}
 			
+		}
+		
+	}
+
+	//수강바구니 삭제 
+	@Transactional
+	public void deleteCart(PaymentRequestDTO request) throws NotExistException {
+		for(int i = 0; i < request.getCheckedTitles().size(); i++) {
+			
+			Lectures lecture = lecturesRepository.findByTitleContaining(request.getCheckedTitles().get(i)).get(0);
+			
+			Members member = membersRepository.findById(request.getMemId()).orElseThrow(() -> new NotExistException("존재하는 회원이 없습니다."));
+			
+			int result = cartRepository.deleteByMemberAndLecture(member, lecture);
+			
+			System.out.println(result);
+			if(result == 0) {
+				
+				throw new NotExistException("수강바구니에서 강의를 삭제할 수 없습니다. 관리자에게 문의하십시오.");
+				
+			}
+		
 		}
 		
 	}

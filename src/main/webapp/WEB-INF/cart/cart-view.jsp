@@ -76,7 +76,7 @@
 				</tbody>
 				<tfoot>
 					<tr>
-						<td><!-- <button id="delete" class="btn btn-danger">삭제하기</button> --></td>
+						<td><button id="delete" class="btn btn-danger" onclick="deleteCart()">삭제하기</button></td>
 						<td></td>
 						<td style="text-align: right;"><button id="payment" class="btn btn-primary mr-3" onclick="requestPay()">결제하기</button></td>
 					</tr>

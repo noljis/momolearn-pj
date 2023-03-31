@@ -12,12 +12,11 @@ function uuidv4() {
 
 const merchant_uid = uuidv4();
 
-
-
 //장바구니 결제
 function requestPay() {
 	//결제 금액이 0원일 경우
 	const checkedTitles = Array.from(document.querySelectorAll("input#check:checked"));
+	
 	if (checkedTitles.length === 0 || checkedTitles[0] === undefined) {
 		alert("결제할 강의를 선택해주세요.");
 		return;
@@ -81,3 +80,34 @@ function requestPay() {
 		}
 	});
 }
+
+function deleteCart() {
+	const checkedTitles = Array.from(document.querySelectorAll("input#check:checked"));
+	
+	if (checkedTitles.length === 0 || checkedTitles[0] === undefined) {
+		alert("삭제할 강의를 선택해주세요.");
+		return;
+	}
+	
+	const memId = $("#id").val();
+	
+	$.ajax({
+		url: '/momolearn/cart/delete',
+		type: 'DELETE',
+		contentType: 'application/json',
+		data: JSON.stringify({
+			checkedTitles: checkedTitles.map(item => item.parentNode.parentNode.querySelector("#title").innerText),
+			memId: memId
+		}),
+		success: function() {
+			alert("해당 강의목록이 장바구니에서 삭제되었습니다.");
+			let url = "/momolearn/cart/get-cart";
+			window.location.href = url;
+		},
+		error: function(error) {
+			console.error(error);
+			alert("삭제에 실패했습니다. 원인: " + error.status + " " + error.statusText);
+		}
+	});
+}
+	
