@@ -16,6 +16,12 @@
 
     <jsp:include page="/separate/head.jsp"></jsp:include>
     <link href="${pageContext.request.contextPath}/css/board.css" rel="stylesheet">
+    <style>
+    body {
+	  margin-top: 0;
+	  padding-top: 0;
+	}
+    </style>
 </head>
 
 <body>
@@ -29,7 +35,7 @@
                     <h1 class="display-4 text-white animated slideInDown">커뮤니티</h1>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb justify-content-center">
-                            <li class="breadcrumb-item text-white active" aria-current="page">페이지 간단 설명(생략가능)</li>
+                            <li class="breadcrumb-item text-white active" aria-current="page"></li>
                         </ol>
                     </nav>
                 </div>
@@ -44,7 +50,7 @@
         <div class="container">
             <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
                 <h6 class="section-title bg-white text-center text-primary px-3">Community</h6>
-                <h1 class="mb-5">Community Community</h1>
+                <h1 class="mb-5">Community</h1>
             </div>
         </div>
     </div>

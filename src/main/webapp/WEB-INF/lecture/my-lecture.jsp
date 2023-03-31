@@ -99,7 +99,7 @@
 								<td>${teacher.teachersApplyTeacherMembers.name}</td>
 							</tr>
 						</c:forEach>
-						<c:if test="${empty lecture}">
+						<c:if test="${empty teacherLec}">
 							<tr><td class="text-center"><h4 class="text-secondary" style="font-style: italic;">현재 등록한 강의가 없습니다.</h4></td></tr>
 						</c:if>
 					</tbody>

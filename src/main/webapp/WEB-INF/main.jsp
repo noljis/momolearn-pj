@@ -30,10 +30,13 @@
 	                        <div class="row justify-content-start">
 	                            <div class="col-sm-10 col-lg-8">
 	                                <h5 class="text-primary text-uppercase mb-3 animated slideInDown">왜 모모런인가?</h5>
-	                                <h1 class="display-5 text-white animated slideInDown">오직 모모런에서만 만날 수 있는 강의!</h1>
+	                                <p class="display-5 text-white animated slideInDown" style="font-size: 50px">오직 모모런에서만</p>
+	                                <p class="display-5 text-white animated slideInDown" style="font-size: 50px">만날 수 있는 강의!</p>
 	                                <p class="fs-5 text-white mb-4 pb-2">모두에게 배움의 기회를!</p>
 	                                <a href="about.html" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">모모런 알아보기</a>
-	                                <a href="" class="btn btn-light py-md-3 px-md-5 animated slideInRight">Join Now</a>
+	                                <c:if test="${empty members}">
+	                                	<a href="${pageContext.request.contextPath}/member/joinView" class="btn btn-light py-md-3 px-md-5 animated slideInRight">Join Now</a>
+	                                </c:if>
 	                            </div>
 	                        </div>
 	                    </div>
@@ -45,11 +48,10 @@
 	                    <div class="container">
 	                        <div class="row justify-content-start">
 	                            <div class="col-sm-10 col-lg-8">
-	                                <h5 class="text-primary text-uppercase mb-3 animated slideInDown">입문자 강의</h5>
-	                                <h1 class="display-3 text-white animated slideInDown">누구나 입문할 수 있다는 문구</h1>
-	                                <p class="fs-5 text-white mb-4 pb-2">카테고리명: 입문</p>
-	                                <a href="" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Read More</a>
-	                                <a href="" class="btn btn-light py-md-3 px-md-5 animated slideInRight">Join Now</a>
+	                                <h5 class="text-primary text-uppercase mb-3 animated slideInDown">이달의 인기 강의</h5>
+	                                <p class="display-3 text-white animated slideInDown" style="font-size: 50px">웹개발 입문자들의 봄🌸</p>
+	                                <p class="fs-5 text-white mb-4 pb-2">김영한 강사님이 여러분의 봄(Spring)을 찾아드립니다!</p>
+	                                <a href="${pageContext.request.contextPath}/lectures/detail/1" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">스프링 입문강의 들으러가기➡️</a>
 	                            </div>
 	                        </div>
 	                    </div>
@@ -62,10 +64,9 @@
 	                        <div class="row justify-content-start">
 	                            <div class="col-sm-10 col-lg-8">
 	                                <h5 class="text-primary text-uppercase mb-3 animated slideInDown">이달의 신규강의</h5>
-	                                <h1 class="display-3 text-white animated slideInDown">남궁성 강사님 모모런 도착!</h1>
-	                                <p class="fs-5 text-white mb-4 pb-2">자바의 정석 홍보문구</p>
-	                                <a href="" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">강의 들으러가기</a>
-	                                <a href="" class="btn btn-light py-md-3 px-md-5 animated slideInRight">Join Now</a>
+	                                <p class="display-3 text-white animated slideInDown" style="font-size: 50px">남궁성 강사님 모모런 도착!</p>
+	                                <p class="fs-5 text-white mb-4 pb-2">자바를 처음 접하는 사람들에게 빛✨과 소금🧂이 되어줄 강의!</p>
+	                                <a href="${pageContext.request.contextPath}/lectures/detail/1" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">자바의 정석 들으러가기➡️</a>
 	                            </div>
 	                        </div>
 	                    </div>
