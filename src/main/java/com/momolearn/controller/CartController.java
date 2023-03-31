@@ -106,7 +106,7 @@ public class CartController {
 	}
 	
 	//6. 장바구니 삭제
-	@ApiOperation(value = "결제 성공", notes = "결제 후 수강바구니 삭제 및 MyLectures 추가")
+	@ApiOperation(value = "장바구니 삭제", notes = "장바구니에서 체크한 강의 삭제 메소드")
 	@DeleteMapping(value = "/delete", produces = "application/json;charset=UTF-8")
 	public ResponseEntity<?> deleteCart(@RequestBody PaymentRequestDTO request) throws NotExistException {
 	    log.info("장바구니 삭제 메소드" + request.getCheckedTitles().get(0));
