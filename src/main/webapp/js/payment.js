@@ -16,13 +16,12 @@ const merchant_uid = uuidv4();
 function requestPay() {
 	//결제 금액이 0원일 경우
 	const checkedTitles = Array.from(document.querySelectorAll("input#check:checked"));
-	const totalPrice = $('#totalPrice').text();
 	
 	if (checkedTitles.length === 0 || checkedTitles[0] === undefined) {
 		alert("결제할 강의를 선택해주세요.");
 		return;
 	}
-	
+	const totalPrice = $('#totalPrice').text();
 	if (totalPrice === "0") {
 		const memId = $("#id").val();
 		
@@ -49,13 +48,14 @@ function requestPay() {
 
 	// 결제금액이 0원이 아니면 IMP.request_pay() 함수 호출
 	IMP.request_pay({
-		pg: "kcp.store-060db7e3-01a1-4965-8ea2-9443b50c4f14",
+		pg: "kakaopay.TC0ONETIME",
 		pay_method: "card",
 		merchant_uid: merchant_uid,
 		name: $('#checkedTitles').text(),
 		amount: totalPrice,
 		buyer_name: $('#name').val()
 	}, function(rsp) {
+		console.log("request_pay() response:", rsp);
 		if (rsp.success) {
 			const memId = $("#id").val();
 			$.ajax({
@@ -77,7 +77,7 @@ function requestPay() {
 				}
 			});
 		} else {
-			alert('결제에 실패했습니다. 잠시 후 다시 시도해 주십시오.');
+			alert('결제에 실패했습니다. 관리자에게 문의하여 주십시오.');
 		}
 	});
 }
