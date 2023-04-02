@@ -4,7 +4,7 @@ IMP.init("imp08322828");
 //주문번호 생성 uuid
 function uuidv4() {
 	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-		var r = Math.random() * 16 | 0,
+		let r = Math.random() * 16 | 0,
 			v = c == 'x' ? r : (r & 0x3 | 0x8);
 		return v.toString(16);
 	});
@@ -16,12 +16,13 @@ const merchant_uid = uuidv4();
 function requestPay() {
 	//결제 금액이 0원일 경우
 	const checkedTitles = Array.from(document.querySelectorAll("input#check:checked"));
+	const totalPrice = $('#totalPrice').text();
 	
 	if (checkedTitles.length === 0 || checkedTitles[0] === undefined) {
 		alert("결제할 강의를 선택해주세요.");
 		return;
 	}
-	const totalPrice = $('#totalPrice').text();
+	
 	if (totalPrice === "0") {
 		const memId = $("#id").val();
 		
@@ -106,7 +107,7 @@ function deleteCart() {
 		},
 		error: function(error) {
 			console.error(error);
-			alert("삭제에 실패했습니다. 원인: " + error.status + " " + error.statusText);
+			alert("이미 처리되었거나 삭제할 수 없는 강의입니다. 재확인해주십시오.");
 		}
 	});
 }

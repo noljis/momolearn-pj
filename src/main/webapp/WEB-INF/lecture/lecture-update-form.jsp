@@ -41,56 +41,47 @@
 	<jsp:include page="/separate/header3.jsp"></jsp:include>
 	<!-- form Start -->
     <div>
-      <form name="upload" action="${pageContext.request.contextPath}/lectures/upload-lecture" method="post" enctype="multipart/form-data" onsubmit="return checkFileSize()">
-        
+      <form name="upload" action="${pageContext.request.contextPath}/lectures/update-lecture" method="post" enctype="multipart/form-data" onsubmit="return checkFileSize()">
+        <input type="hidden" name="_method" value="put"/>
     	<div class="container">
         <div class="input-form-backgroud row">
           <div class="input-form col-md-12 mx-auto">
-            <h2 class="mb-2">강의 등록하기</h2>
+            <h2 class="mb-2">강의 정보 수정하기</h2>
               <div class="row">
                 <div class="mb-3">
                   <label for="title">강의명</label>
-                  <input type="text" class="form-control-plaintext form-control-sm border-bottom" name="title" placeholder="강의명을 입력해주세요." required>
+                  <input type="text" class="form-control-plaintext form-control-sm border-bottom" name="title" placeholder="강의명을 입력해주세요." value="${lecture.title}" required>
+                <input type="hidden" class="form-control-plaintext form-control-sm border-bottom" name="id" value="${lecture.id}">
                 </div>
               </div>
               <div class="mb-3">
-                <label for="category">카테고리</label>
-                <div class="text-danger" style="font-size: 13px;">*카테고리는 수정할 수 없으니 참고하시길 바랍니다.</div>
-                <input type="text" class="form-control-plaintext form-control-sm border-bottom" name="category" id="category" placeholder="카테고리를 쉼표(,)로 구분하여 입력하세요." required>
-              </div>
-              <div class="mb-3">
-                <label for="teachersTeacherNo">강사명<br><h5>${teacher.name}</h5></label>
-                <input type="hidden" class="form-control-plaintext form-control-sm border-bottom" name="teachersTeacherNo" value="${teacher.teacherNo}">
+                <label for="teachersTeacherNo">강사명<br><h5>${lecture.teachersApplyTeacherMembers.name}</h5></label>
+                <input type="hidden" class="form-control-plaintext form-control-sm border-bottom" name="teachersTeacherNo" value="${lecture.teachersTeacherNo}">
               </div>
               <div class="mb-3">
                 <label for="image">강의 썸네일</label>
-                <div class="text-danger" style="font-size: 13px;">*최대 3MB까지의 파일만 가능합니다.</div>
+                <h6 class="text-danger">*최대 3MB까지의 파일만 가능합니다.</h6>
                 <div class="mb-3">
                   <input class="form-control" id="file-input" name="file" type="file" required>
                 </div>
               </div>
-    
               <div class="mb-3 row">
                 <label for="price" class="col-md-6 col-form-label">강의 가격</label>
                 <div class="col-md-6 d-flex align-items-center">
-                 <input type="text" class="form-control-plaintext form-control-sm border-bottom" name="price" placeholder="가격을 입력하세요." required>원
+                 <input type="text" class="form-control-plaintext form-control-sm border-bottom" name="price" placeholder="가격을 입력하세요." value="${lecture.price}" required>원
                 </div>
               </div>
     
               <div class="mb-3">
                 <label for="info">강의 한줄 설명<span class="text-muted">&nbsp;</span></label>
-                <input type="text" class="form-control-plaintext form-control-sm border-bottom" name="info" placeholder="한줄로 강의를 어필하세요!" required>
+                <input type="text" class="form-control-plaintext form-control-sm border-bottom" name="info" placeholder="한줄로 강의를 어필하세요!" value="${lecture.info}">
               </div>
 
               <div class="mb-3">
                 <label for="description">강의 상세설명<span class="text-muted">&nbsp;</span></label>
-                <textarea class="form-control" name="description" rows="5" placeholder="강의에 대한 상세 설명을 적어주세요!" required></textarea>
+                <textarea class="form-control" name="description" rows="5" placeholder="강의에 대한 상세 설명을 적어주세요!">${lecture.description}</textarea>
               </div>
               <hr class="mb-4">
-              <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="aggrement" required>
-                <label class="custom-control-label" for="aggrement">개인정보 수집 및 이용에 동의합니다.</label>
-              </div>
               <div class="mb-4"></div>
               <button class="btn btn-primary btn-lg btn-block" type="submit">강좌 등록하기</button>
           </div>

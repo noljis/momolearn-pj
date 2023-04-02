@@ -51,7 +51,6 @@ public class TeachersService {
 		}
 	}
 
-	//LectureController에서 사용: 회원ID와 승인여부로 강사 조회 Teachers -> applyTeacher -> members -> memId
 	public TeacherMemberDTO getOneTeachers(String id) throws NotExistException{
 		
 		Teachers teacher = teachersRepository.findByMemIdAndApprove(id).orElseThrow(() -> new NotExistException("현재 강사로 등록되어 있지 않습니다."));

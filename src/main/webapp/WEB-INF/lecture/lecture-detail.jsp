@@ -50,9 +50,9 @@ tr:nth-child(odd) {
 		<!-- Header Start -->
 	    <div class="container-fluid bg-primary py-5 mb-5 page-header">
 	        <div class="container py-5">
-	            <div class="row justify-content-center">
-	                <div class="col-lg-10 text-center">
-	                    <h1 class="display-4 text-white animated slideInDown">강의 상세보기</h1>
+	            <div class="row justify-content">
+	                <div class="col-lg-10">
+	                    <div class="display-4 text-white animated slideInDown" style="font-size: 40px;">➡️강의 상세보기</div>
 	                    <nav aria-label="breadcrumb">
 	                        <ol class="breadcrumb justify-content-center">
 	                            <li class="breadcrumb-item text-white active" aria-current="page"></li>
@@ -76,6 +76,16 @@ tr:nth-child(odd) {
 					</div>
 					<div class="col-md-6">
 						<h2 class="spoqa-han-sans text-white" id="checkedTitles">🖥️ ${lecture.title}</h2><br>
+						<c:if test="${members.memId eq lecture.teachersApplyTeacherMembers.memId}">
+							<div class="d-flex">
+								<button class="btn btn-primary mr-2" onclick="location.href='${pageContext.request.contextPath}/lectures/lecture-update-form/${lecture.id}'">강의 정보 수정</button> &nbsp;&nbsp;
+								<form name="delete" action="${pageContext.request.contextPath}/lectures/delete-lecture/${lecture.id}" method="post" enctype="multipart/form-data" onsubmit="return checkFileSize()">
+		       						<input type="hidden" name="_method" value="delete"/>
+									<button type="submit" class="btn btn-primary mr-2">강의 삭제</button>
+								</form>
+							</div>
+						</c:if>
+						<br>
 						<h4 class="spoqa-han-sans text-warning"> ${lecture.info}</h4>
 						<p class="spoqa-han-sans text-light"> ${lecture.description}</p>
 					</div>
@@ -132,9 +142,7 @@ tr:nth-child(odd) {
 						<c:when test="${empty myLecture}">
 							<h4 class="card-title text-primary" id="totalPrice">${lecture.price}￦</h4>
 							<div class="d-grid gap-2">
-								<form action="${pageContext.request.contextPath}/cart/add-cart/${lecture.id}" method="post">
-								    <button type="submit" class="btn btn-secondary mr-2">수강바구니에 담기🧺</button>
-								</form>
+								<button type="submit" class="btn btn-secondary mr-2" onclick="location.href='${pageContext.request.contextPath}/cart/check-cart/${lecture.id}'">수강바구니에 담기🧺</button>
 							</div>
 						</c:when>
 						<c:otherwise>

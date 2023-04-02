@@ -49,6 +49,7 @@ label {
 					<div class="input-form col-md-12 mx-auto">
 							<h2 class="mb-2">" ${course.title} " 수정하기</h2>
 							<form name="update" action="${pageContext.request.contextPath}/lectures/update-course" method="post" >
+							<input type="hidden" name="_method" value="put"/>
 							<div class="row" id="form-container">
 								<div class="mb-3">
 									<input id="lectureid" type="hidden" name="courseId" value="${course.courseId}" />

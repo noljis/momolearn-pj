@@ -42,6 +42,7 @@ public class CartService {
 
 		for (int i = 0; i < cart.size(); i++) {
 			// List에 세션id 값이 존재하면 true 반환
+			System.out.println("멤버ID 조회: " + cart.get(i).getMember().getMemId());
 			if (cart.get(i).getMember().getMemId().equals(memId)) {
 
 				return true;
@@ -124,7 +125,6 @@ public class CartService {
 
 			int result = cartRepository.deleteByMemberAndLecture(member, lecture);
 
-			System.out.println(result);
 			if (result == 0) {
 
 				throw new NotExistException("수강바구니에서 강의를 삭제할 수 없습니다. 관리자에게 문의하십시오.");
