@@ -18,9 +18,6 @@ public interface TeachersRepository extends JpaRepository<Teachers, Integer>{
 	@Query("select t from Teachers t join fetch t.applyTeacher at join fetch at.members m where m.memId = :id and at.approve = 'true'")
 	Optional<Teachers> findByMemIdAndApprove(@Param("id") String id);
 	
-	// 강사 신청서 정보를 강사 테이블에 저장
-	Teachers save(Teachers teachers); 
-		
 	//강사 전체 목록 조회
 	List<Teachers> findAll();
 	
@@ -28,5 +25,4 @@ public interface TeachersRepository extends JpaRepository<Teachers, Integer>{
 
 	Optional<Teachers> findByApplyTeacherId(int id);
 
-	//Teachers save(TeachersDTO newTeacher);
 }

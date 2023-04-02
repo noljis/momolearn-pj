@@ -38,10 +38,9 @@
             <!-- Header End -->
 
             <!-- Form Start -->
-            <form id="sm" name="ta" method="post" onsubmit="return allCheck()" action="${pageContext.request.contextPath}/applyteacher/update">
+            <form id="sm" name="ta" method="post" onsubmit="return allCheck()" action="${pageContext.request.contextPath}/applyteacher/update/${apply.id}">
                 <div align="center">
                     <h2>강사 등록 신청서</h2>
-확인용 - ${member} - ${apply}
                     <div>
                         <div class="col-sm-5">
                             <table class="table table-bordered">
@@ -65,15 +64,15 @@
                                 </tr>
                                 <tr>
                                     <td>연락처</td>
-                                    <td><input type="text" id="phonenum" name="phonenum" size="30" value="${apply.phoneNum}"></td>
+                                    <td><input type="text" id="phonenum" name="phoneNum" size="30" value="${apply.phoneNum}"></td>
                                 </tr>
                                 <tr>
                                     <td>포트폴리오 url</td>
-                                    <td><input type="text" id="url" name="url" size="30" value="${apply.pfLink}"></td>
+                                    <td><input type="text" id="url" name="pfLink" size="30" value="${apply.pfLink}"></td>
                                 </tr>
                                 <tr>
                                     <td>희망분야</td>
-                                    <td><input type="text" id="hope" name="hope" size="30" value="${apply.hopeField}"></td>
+                                    <td><input type="text" id="hope" name="hopeField" size="30" value="${apply.hopeField}"></td>
                                 </tr>
                                 <tr>
                                     <td>자기소개</td>
