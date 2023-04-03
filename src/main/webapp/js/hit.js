@@ -1,6 +1,6 @@
 function getHitData(criteria, callback) {
   $.ajax({
-    url: '/momolearn/hit-board?criteria=' + criteria,
+    url: 'hit-board?criteria=' + criteria,
     dataType: 'JSON',
     success: function(response){
       callback(response);
@@ -18,7 +18,7 @@ function showHitPosts(criteria, targetElemId) {
   });
 
   function showNextPost() {
-    $('#' + targetElemId).html('<li><a href="' + hitPosts[currentPost].comNo + '">' + '['+hitPosts[currentPost].subject+']  '+hitPosts[currentPost].comTitle + '</a></li>');
+    $('#' + targetElemId).html('<li><a href="board/' + hitPosts[currentPost].comNo + '">' + '['+hitPosts[currentPost].subject+']  '+hitPosts[currentPost].comTitle + '</a></li>');
     $(hitPosts[currentPost]).fadeIn(500, function(){
       currentPost = (currentPost+1) % hitPosts.length;
       $(hitPosts[currentPost]).fadeOut(500);
