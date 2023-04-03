@@ -23,6 +23,18 @@
 
 <jsp:include page="/separate/header2.jsp"></jsp:include>
 
+       <!-- Header Start -->
+    <div class="container-fluid py-4">
+        <div class="container">
+            <div class="row justify-content">
+                <div class="col-lg-10">
+                    <div class="display-3" style="font-size: 20px;">커뮤니티 > 글읽기</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
+
     <!-- 블로그 시작-->
     <div class="blog-single gray-bg">
         <div class="container">

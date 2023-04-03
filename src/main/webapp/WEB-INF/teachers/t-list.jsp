@@ -20,22 +20,17 @@
 <body>
 <jsp:include page="/separate/header2.jsp"></jsp:include>
 
-    <!-- Header Start -->
-    <div class="container-fluid bg-primary py-5 mb-5 page-header">
-        <div class="container py-5">
-            <div class="row justify-content-center">
-                <div class="col-lg-10 text-center">
-                    <h1 class="display-3 text-white animated slideInDown">강사진</h1>
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb justify-content-center">
-                            <li class="breadcrumb-item"><a class="text-white" href="#">모모런과 함께 해주시는 분들</a></li>
-                        </ol>
-                    </nav>
+	<!-- Header Start -->
+    <div class="container-fluid py-4">
+        <div class="container">
+            <div class="row justify-content">
+                <div class="col-lg-10">
+                    <div class="display-3" style="font-size: 20px;">모모런과 함께 해주시는 분들</div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Header End -->
+	<!-- Header End -->
 
     <!-- Team Start -->
     <!-- <div class="container-xxl py-5">

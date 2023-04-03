@@ -17,16 +17,11 @@
 <!-- searchList: 스터디 검색시 비동기로 출력-->
 <div id="searchList">
 	<!-- Header Start -->
-	    <div class="container-fluid bg-primary py-5 mb-5 page-header">
-	        <div class="container py-5">
+	    <div class="container-fluid py-4">
+	        <div class="container">
 	            <div class="row justify-content">
 	                <div class="col-lg-10">
-	                    <div class="display-4 text-white animated slideInDown" style="font-size: 40px;">➡️강의 목록</div>
-	                    <nav aria-label="breadcrumb">
-	                        <ol class="breadcrumb justify-content-center">
-	                            <li class="breadcrumb-item text-white active" aria-current="page"></li>
-	                        </ol>
-	                    </nav>
+	                    <div class="display-3" style="font-size: 20px;">강의 > 강의 목록</div>
 	                </div>
 	            </div>
 	        </div>
@@ -34,17 +29,17 @@
 	    <!-- Header End -->
 
 	<!-- Categories Start -->
-    <div class="container-xxl py-5 category">
+    <div class="container-xxl py-3 category">
         <div class="container">
             <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                <h4 class="section-title bg-white text-center text-primary px-3">Categories</h4>
+                <h5 class="section-title bg-white text-center text-primary px-3">Categories</h5>
             </div>
             <div class="">
             	<!-- 조회한 카테고리 반복문 돌려주자 -->
-                <button id="catebtn2" type="button" class="btn btn-outline-primary">전체강의</button>
+                <button id="catebtn2" type="button" class="btn btn-outline-primary shadow-sm">전체강의</button>
                 <c:if test="${not empty category}">
 	                <c:forEach var="cate" items="${category}">
-					    <button id="catebtn" type="button" class="btn btn-outline-primary" value="${cate.cateId}">${cate.cateName}</button>
+					    <button id="catebtn" type="button" class="btn btn-outline-primary shadow-sm" value="${cate.cateId}">${cate.cateName}</button>
 					</c:forEach>
                 </c:if>
             </div>

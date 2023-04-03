@@ -12,14 +12,13 @@ function drawTable2(list) {
 		col.className = "col-md-3";
 
 		let card = document.createElement("div");
-		card.className = "card";
+		card.className = "card shadow";
 		card.style.border = "2px solid #78d5e7";
 		card.style.borderRadius = "5px";
 		card.style.padding = "10px";
 		card.style.marginBottom = "30px";
 		card.style.textAlign = "center";
 		card.style.height = "410px";
-		card.style.backgroundColor = "#E8F5FF";
 
 		let thumbnailLink = document.createElement("a");
 		thumbnailLink.href = `/../../momolearn/lectures/detail/${lecture.id}`;

@@ -20,22 +20,17 @@
             <jsp:include page="/separate/header2.jsp"></jsp:include>
 
 
-            <!-- Header Start -->
-            <div class="container-fluid bg-primary py-5 mb-5 page-header">
-                <div class="container py-5">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-10 text-center">
-                            <h1 class="display-4 text-white animated slideInDown">강사 신청서 상세 조회</h1>
-                            <!-- <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb justify-content-center">
-                                    <li class="breadcrumb-item text-white active" aria-current="page">신청서 상세보기</li>
-                                </ol>
-                            </nav> -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Header End -->
+		<!-- Header Start -->
+	    <div class="container-fluid py-4">
+	        <div class="container">
+	            <div class="row justify-content">
+	                <div class="col-lg-10">
+	                    <div class="display-3" style="font-size: 20px;">강사 신청 > 신청서 상세</div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+		<!-- Header End -->
 
             <!-- Form Start -->
             <div align="center">

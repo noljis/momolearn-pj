@@ -24,6 +24,17 @@
 <body>
 
 	<jsp:include page="/separate/header4.jsp"></jsp:include>
+	<!-- Header Start -->
+    <div class="container-fluid py-4">
+        <div class="container">
+            <div class="row justify-content">
+                <div class="col-lg-10">
+                    <div class="display-3" style="font-size: 20px;">회원정보 찾기 > id찾기</div>
+                </div>
+            </div>
+        </div>
+    </div>
+	<!-- Header End -->
 
 	<div class="wrap">
 		<div class="find">

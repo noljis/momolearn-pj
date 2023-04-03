@@ -42,6 +42,18 @@ label {
 </head>
 <body>
 	<jsp:include page="/separate/header3.jsp"></jsp:include>
+	
+	<!-- Header Start -->
+    <div class="container-fluid py-4">
+        <div class="container">
+            <div class="row justify-content">
+                <div class="col-lg-10">
+                    <div class="display-3 text-white" style="font-size: 20px;">강좌 등록 > " ${lectitle} "의 강좌 등록하기</div>
+                </div>
+            </div>
+        </div>
+    </div>
+	<!-- Header End -->
 	<!-- form Start -->
 	<form id="upload" method="post" >
 		<div class="container">

@@ -23,6 +23,8 @@
 		<br>
 			<div class="row">
 				<div class="col-12">
+					<div class="display-3" style="font-size: 20px;">강의 > 강의 상세 > 강의 시청</div>
+					<br>
 					<h3 class="">🖥️ ${lecture.title} 🪄 ${course.title}</h3>
 				</div>
 			</div>

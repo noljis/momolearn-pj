@@ -21,7 +21,17 @@
 
 	<!-- searchList: 스터디 검색시 비동기로 출력-->
 	<div id="searchList">
-
+	<!-- Header Start -->
+    <div class="container-fluid py-4">
+        <div class="container">
+            <div class="row justify-content">
+                <div class="col-lg-10">
+                    <div class="display-3" style="font-size: 20px;">사이트 소개</div>
+                </div>
+            </div>
+        </div>
+    </div>
+	<!-- Header End -->
 		<section class="section section_0 we_are_header">
 			<div class="container position-relative">
 				<img class="img-fluid" src="img/about.png" alt="" />

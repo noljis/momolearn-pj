@@ -39,16 +39,11 @@
 	<div id="searchList">
 	
 		<!-- Header Start -->
-	    <div class="container-fluid bg-primary py-5 mb-5 page-header">
-	        <div class="container py-5">
-	            <div class="row justify-content-center">
-	                <div class="col-lg-10 text-center">
-	                    <h1 class="display-4 text-white animated slideInDown">내 강의</h1>
-	                    <nav aria-label="breadcrumb">
-	                        <ol class="breadcrumb justify-content-center">
-	                            <li class="breadcrumb-item text-primary active" aria-current="page"></li>
-	                        </ol>
-	                    </nav>
+	    <div class="container-fluid py-4">
+	        <div class="container">
+	            <div class="row justify-content">
+	                <div class="col-lg-10">
+	                    <div class="display-3" style="font-size: 20px;">내 강의</div>
 	                </div>
 	            </div>
 	        </div>
@@ -56,7 +51,7 @@
 	    <!-- Header End -->
 	    <!-- 수강중인 강의 Start -->
 		<div class="container">
-			<h1 class="text-center mb-5">수강중인 강의</h1>
+			<h2 class="text-center mb-5 text-primary">수강중인 강의</h2>
 			<table class="table custom-table">
 				<thead>
 					<tr>
@@ -68,8 +63,8 @@
 					<c:forEach var="lecture" items="${lecture}">
 						<tr onclick="location.href='${pageContext.request.contextPath}/lectures/detail/${lecture.lecture.id}'" style="cursor: pointer;">
 							<td><img src="${pageContext.request.contextPath}/img/lecture/${lecture.lecture.image}" class="card-img-top"
-								alt="강의 이미지" style="width: 50px; height: 25px;">&nbsp;&nbsp;&nbsp; ${lecture.lecture.title}</td>
-							<td>${lecture.lectureTeachersApplyTeacherMembers.name}</td>
+								alt="강의 이미지" style="width: 100px; height: 50px;">&nbsp;&nbsp;&nbsp; ${lecture.lecture.title}</td>
+							<td class="py-4">${lecture.lectureTeachersApplyTeacherMembers.name}</td>
 						</tr>
 					</c:forEach>
 					<c:if test="${empty lecture}">
@@ -83,7 +78,7 @@
 		<!-- 강사일 경우 강사의 강의 Start -->
 		<c:if test="${members.grade == 'teacher'}">
 			<div class="container">
-				<h1 class="text-center mb-5">내가 올린 강의</h1>
+				<h2 class="text-center mb-5 text-primary">내가 올린 강의</h2>
 				<table class="table custom-table table-bordered">
 					<thead>
 						<tr>
@@ -95,8 +90,8 @@
 						<c:forEach var="teacher" items="${teacherLec}">
 							<tr onclick="location.href='${pageContext.request.contextPath}/lectures/detail/${teacher.id}'" style="cursor: pointer;">
 								<td><img src="${pageContext.request.contextPath}/img/lecture/${teacher.image}" class="card-img-top"
-									alt="강의 이미지" style="width: 50px; height: 25px;">&nbsp;&nbsp;&nbsp; ${teacher.title}</td>
-								<td>${teacher.teachersApplyTeacherMembers.name}</td>
+									alt="강의 이미지" style="width: 100px; height: 50px;">&nbsp;&nbsp;&nbsp; ${teacher.title}</td>
+								<td class="py-4">${teacher.teachersApplyTeacherMembers.name}</td>
 							</tr>
 						</c:forEach>
 						<c:if test="${empty teacherLec}">

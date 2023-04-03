@@ -39,6 +39,17 @@
 </head>
 <body>
 	<jsp:include page="/separate/header3.jsp"></jsp:include>
+	<!-- Header Start -->
+    <div class="container-fluid py-4">
+        <div class="container">
+            <div class="row justify-content">
+                <div class="col-lg-10">
+                    <div class="display-3 text-white" style="font-size: 20px;">강의 등록</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
 	<!-- form Start -->
     <div>
       <form name="upload" action="${pageContext.request.contextPath}/lectures/upload-lecture" method="post" enctype="multipart/form-data" onsubmit="return checkFileSize()">

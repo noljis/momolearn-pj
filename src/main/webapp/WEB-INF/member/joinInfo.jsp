@@ -19,22 +19,17 @@
 <body>
    <jsp:include page="/separate/header3.jsp"></jsp:include>
 
-    <!-- Header Start -->
-    <div class="container-fluid bg-primary py-5 mb-5 page-header">
-        <div class="container py-5">
-            <div class="row justify-content-center">
-                <div class="col-lg-10 text-center">
-                    <h1 class="display-4 text-white animated slideInDown">회원가입 정보</h1>
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb justify-content-center">
-                            <li class="breadcrumb-item text-white active" aria-current="page"></li>
-                        </ol>
-                    </nav>
+	<!-- Header Start -->
+    <div class="container-fluid py-4">
+        <div class="container">
+            <div class="row justify-content">
+                <div class="col-lg-10">
+                    <div class="display-3" style="font-size: 20px;">회원가입 > 가입완료</div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Header End -->
+	<!-- Header End -->
 	
 	<!-- Info Start -->
 	    <!-- Form Start -->

@@ -18,19 +18,17 @@ table {
 	margin: 0 auto;
 	border-collapse: collapse;
 	border: 1px solid #dee2e6;
+	border-radius:10px;
 }
 
-th, td {
+td, th {
 	padding: 0.75rem;
 	border: 1px solid #dee2e6;
+	
 }
 
-th {
-	background-color: #f8f9fa;
-	font-weight: bold;
-}
 
-tr:nth-child(odd) {
+tr {
 	background-color: #f2f2f2;
 }
 
@@ -48,16 +46,11 @@ tr:nth-child(odd) {
 	<div id="searchList">
 	
 		<!-- Header Start -->
-	    <div class="container-fluid bg-primary py-5 mb-5 page-header">
-	        <div class="container py-5">
+	    <div class="container-fluid py-4">
+	        <div class="container">
 	            <div class="row justify-content">
 	                <div class="col-lg-10">
-	                    <div class="display-4 text-white animated slideInDown" style="font-size: 40px;">➡️강의 상세보기</div>
-	                    <nav aria-label="breadcrumb">
-	                        <ol class="breadcrumb justify-content-center">
-	                            <li class="breadcrumb-item text-white active" aria-current="page"></li>
-	                        </ol>
-	                    </nav>
+	                    <div class="display-3" style="font-size: 20px;">강의 > 강의 상세</div>
 	                </div>
 	            </div>
 	        </div>
@@ -98,19 +91,19 @@ tr:nth-child(odd) {
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12">
-						<h3 class="mb-4">강좌 리스트
-						<c:if test="${members.memId eq lecture.teachersApplyTeacherMembers.memId}">
-							<button class="btn btn-primary mr-2" onclick="location.href='${pageContext.request.contextPath}/lectures/courses-form/${lecture.title}/${lecture.id}'">강좌 추가하기</button>
-						</c:if>
-						</h3>
-						
+						<div class="d-flex">
+							<h3 class="mb-4">강좌</h3>&nbsp;&nbsp;<h5 class="text-muted" style="font-size:18px;">*총 ${lecture.cnt} 강</h5>
+						</div>
+							<c:if test="${members.memId eq lecture.teachersApplyTeacherMembers.memId}">
+								<button class="btn btn-primary mr-2" onclick="location.href='${pageContext.request.contextPath}/lectures/courses-form/${lecture.title}/${lecture.id}'">강좌 추가하기</button>
+							</c:if>
 						<div style="max-width: 800px; margin: 0;">
-							<table class="table table-striped table-hover" style="background-color: #E0EBFF;">
+							<table class="table table-hover" style="background-color: #E0EBFF;">
 								<tbody>
 									<c:forEach var="course" items="${lecture.courses}">
 										<tr>
-											<td style="background-color: #E0EBFF;cursor: pointer;" onclick="location.href='${pageContext.request.contextPath}/lectures/check-mylecture/${course.courseId}'">${course.title}</td>
-											<td style="background-color: #E0EBFF;cursor: pointer;text-align: right;">${course.time} &nbsp;
+											<td style="background-color: #F9FFFF;cursor: pointer;" onclick="location.href='${pageContext.request.contextPath}/lectures/check-mylecture/${course.courseId}'">${course.title}</td>
+											<td style="background-color: #F9FFFF;cursor: pointer;text-align: right;">${course.time} &nbsp;
 												<c:if test="${members.memId eq lecture.teachersApplyTeacherMembers.memId}">
 													<button class="btn btn-primary mr-2" onclick="location.href='${pageContext.request.contextPath}/lectures/courses-update-form/${course.courseId}'">강좌 수정</button>
 												</c:if>

@@ -21,18 +21,16 @@
 <body>
 <div id="searchList">
     <!-- Header Start -->
-    <div class="container-fluid bg-primary py-5 mb-5 page-header">
-        <div class="container py-5">
-            <div class="row justify-content-center">
-                <div class="col-lg-10 text-center">
-                    <h1 class="display-4 text-white animated slideInDown">커뮤니티</h1>
-                    <nav aria-label="breadcrumb">
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Header End -->
+	    <div class="container-fluid py-4">
+	        <div class="container">
+	            <div class="row justify-content">
+	                <div class="col-lg-10">
+	                    <div class="display-3" style="font-size: 20px;">작성글 보기</div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	    <!-- Header End -->
 
     <!-- 게시판 시작 -->
     <div class="container">

@@ -22,27 +22,19 @@
 <body>
 <jsp:include page="/separate/header.jsp"></jsp:include>
 <div id="searchList">
-    <!-- Header Start -->
-    <div class="container-fluid bg-primary py-5 mb-5 page-header">
-        <div class="container py-5">
-            <div class="row justify-content-center">
-                <div class="col-lg-10 text-center">
-                    <h1 class="display-4 text-white animated slideInDown">공지사항</h1>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Header End -->
+
 	
-    <!-- Categories Start -->
-    
-   	<div class="container-xxl py-5 category">
-        <div class="container">
-            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                <h6 class="section-title bg-white text-center px-3">공지사항</h6>
-            </div>
-        </div>
-    </div>
+    <!-- Header Start -->
+	    <div class="container-fluid py-4">
+	        <div class="container">
+	            <div class="row justify-content">
+	                <div class="col-lg-10">
+	                    <div class="display-3" style="font-size: 20px;">공지사항</div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	<!-- Header End -->
 
 
 	<div id="main-content" class="file_manager">

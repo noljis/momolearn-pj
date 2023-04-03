@@ -29,20 +29,15 @@
 	<jsp:include page="/separate/header2.jsp"></jsp:include>
 
 	<!-- Header Start -->
-	<div class="container-fluid bg-primary py-5 mb-5 page-header">
-		<div class="container py-5">
-			<div class="row justify-content-center">
-				<div class="col-lg-10 text-center">
-					<h1 class="display-4 text-white animated slideInDown">정보 수정</h1>
-					<nav aria-label="breadcrumb">
-						<ol class="breadcrumb justify-content-center">
-							<li class="breadcrumb-item text-white active" aria-current="page"></li>
-						</ol>
-					</nav>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="container-fluid py-4">
+        <div class="container">
+            <div class="row justify-content">
+                <div class="col-lg-10">
+                    <div class="display-3" style="font-size: 20px;">내 정보 > 수정</div>
+                </div>
+            </div>
+        </div>
+    </div>
 	<!-- Header End -->
 	
 	
