@@ -17,6 +17,13 @@
     <jsp:include page="/separate/head.jsp"></jsp:include>
     <link href="${pageContext.request.contextPath}/css/board.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/notice.css" rel="stylesheet">
+    
+	<style>
+	    body {
+		  margin-top: 0;
+		  padding-top: 0;
+		}
+    </style>
 </head>
 
 <body>
