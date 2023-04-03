@@ -57,7 +57,7 @@ public class BoardController {
 	
 	//모든 게시글 목록
 	@GetMapping
-	public String list(Model model, @PageableDefault(sort = "comNo", direction = Sort.Direction.DESC) Pageable pageable) {
+	public String getBoardList(Model model, @PageableDefault(sort = "comNo", direction = Sort.Direction.DESC) Pageable pageable) {
 		System.out.println("list()---------------");
 		
 		Page<BoardListDTO> listPage = boardService.paging(pageable);
@@ -82,7 +82,7 @@ public class BoardController {
 	
 	//게시글 작성
 	@PostMapping
-	public String write(@Valid BoardSaveDTO dto, BindingResult bindingResult) throws NotExistException{
+	public String writePost(@Valid BoardSaveDTO dto, BindingResult bindingResult) throws NotExistException{
 		System.out.println("write()---------------");
 		System.out.println(dto.toString());
 		
@@ -96,7 +96,7 @@ public class BoardController {
 			}
 		}
 		
-		int comNo = boardService.save(dto); //->해당 게시글로 가게할지?고민중
+		boardService.savePost(dto);
 		return "redirect:/board";
 	}
 	
@@ -104,10 +104,10 @@ public class BoardController {
 	
 	//게시글 보기 + 조회수증가 + 좋아요개수 + 좋아요여부(?)
 	@GetMapping("/{comNo}")
-	public String read(@PathVariable int comNo, Model model) throws NotExistException{
+	public String readPost(@PathVariable int comNo, Model model) throws NotExistException{
 		System.out.println("read()------------");
 		//조회
-		BoardDTO dto = boardService.read(comNo);
+		BoardDTO dto = boardService.readPost(comNo);
 		//댓글조회
 		List<CommentDTO> cmtList = commentService.readComment(comNo);
 		//조회수증가
@@ -130,13 +130,13 @@ public class BoardController {
 	@GetMapping("/updateForm/{comNo}")
 	public String updateForm(@PathVariable int comNo, Model model) throws NotExistException{
 		System.out.println("updateForm()----------------");
-		model.addAttribute("dto", boardService.read(comNo));
+		model.addAttribute("dto", boardService.readPost(comNo));
 		return "board/updateForm";
 	}
 	
 	//게시글 수정
 	@PutMapping("/{comNo}")
-	public String update(@PathVariable int comNo, @Valid BoardSaveDTO dto, BindingResult bindingResult) throws NotExistException{
+	public String updatePost(@PathVariable int comNo, @Valid BoardSaveDTO dto, BindingResult bindingResult) throws NotExistException{
 		System.out.println("update()------------------");
 		
 		//유효성 검증
@@ -149,16 +149,16 @@ public class BoardController {
 			}
 		}
 		
-		boardService.update(comNo, dto);
+		boardService.updatePost(comNo, dto);
 		return "redirect:/board";
 		
 	}
 	
 	//게시글 삭제
 	@DeleteMapping("/{comNo}")
-	public String delete(@PathVariable int comNo) throws NotExistException {
+	public String deletePost(@PathVariable int comNo) throws NotExistException {
 		System.out.println("delete() ---------");
-		boardService.delete(comNo);
+		boardService.deletePost(comNo);
 		return "redirect:/board";
 	}
 	//검색+페이징

@@ -33,11 +33,6 @@
             <div class="row justify-content-center">
                 <div class="col-lg-10 text-center">
                     <h1 class="display-4 text-white animated slideInDown">커뮤니티</h1>
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb justify-content-center">
-                            <li class="breadcrumb-item text-white active" aria-current="page"></li>
-                        </ol>
-                    </nav>
                 </div>
             </div>
         </div>
@@ -48,23 +43,61 @@
     <!-- Categories Start -->
     
    	<div class="container-xxl py-3 category">
-        <div class="container" id="hit-head">
+        <div class="container">
+            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                <h6 class="section-title bg-white text-center text-primary px-3">실시간 인기글</h6>
+            </div>
         </div>
     </div>
 
 
     <!-- 게시판 시작 -->
     <div class="container">
-    <div class="row">
+   	 <div class="row">
      
-         
-	<span id = "hit-comViewCount-sec" class="col"></span>
-	<span id = "hit-comment-sec" class="col"></span>
-	<span id = "hit-likes-sec" class="col"></span>
+    	<div class="col-xl-3 col-md-6">
+            <div class="card bg-pattern">
+                <div class="card-body">
+                    <div class="float-right">
+                        <i class='far fa-eye' style='font-size:18px;color: #06BBCC'><b> 실시간 조회수 Top5</b></i>
+                    </div>
+                    <h5 class="font-size-20 mt-0 pt-1"></h5>
+                    <div id="hit-comViewCount">
+                    	<ul></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-pattern">
+                <div class="card-body">
+                    <div class="float-right">
+                        <i class='fas fa-comment-dots' style='font-size:18px;color: #06BBCC'> 실시간 댓글 Top5</i>
+                    </div>
+                    <h5 class="font-size-20 mt-0 pt-1"></h5>
+                    <div id="hit-comment" >
+                    	<ul></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-pattern">
+                <div class="card-body">
+                    <div class="float-right">
+                        <i class='fas fa-fire-alt' style='font-size:18px;color: #06BBCC'> 실시간 좋아요 Top5</i>
+                    </div>
+                    <h5 class="font-size-20 mt-0 pt-1"></h5>
+                    <div id="hit-likes" style="color: black">
+                    	<ul></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
            <!-- Categories End --> 
             
-            
-            <div class="col">
+            <div class="col-xl-3 col-md-6">
                 <div class="card">
                     <div class="card-body">
                     <!-- 검색 폼 -->

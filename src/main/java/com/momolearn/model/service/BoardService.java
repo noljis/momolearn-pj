@@ -38,16 +38,15 @@ public class BoardService {
 	
 	//게시글 작성
 	@Transactional
-	public Integer save(BoardSaveDTO dto) throws NotExistException{
+	public void savePost(BoardSaveDTO dto) throws NotExistException{
 		System.out.println("save() service-----");
 		Members memEntity = membersRepository.findById(dto.getMembersMemId()).orElseThrow(()->new NotExistException("다시 로그인 해 주세요."));
 		Board entity = boardRepository.save(dto.toEntity(memEntity));
 		System.out.println(entity.toString());
-		return entity.getComNo();
 	}
 	
 	//게시글 보기
-	public BoardDTO read(int comNo) throws NotExistException{
+	public BoardDTO readPost(int comNo) throws NotExistException{
 		System.out.println("read() service----------");
 		Board entity = boardRepository.findById(comNo).orElseThrow(()->new NotExistException("해당 게시글은 존재하지 않습니다."));
 		BoardDTO dto = new BoardDTO(entity);
@@ -63,7 +62,7 @@ public class BoardService {
 	
 	//게시글 삭제
 	@Transactional
-	public void delete(int comNo) throws NotExistException {
+	public void deletePost(int comNo) throws NotExistException {
 		System.out.println("delete() service --------------");
 		Board board = boardRepository.findById(comNo).orElseThrow(()->new NotExistException("해당 게시글은 존재하지 않습니다."));
 		boardRepository.delete(board);
@@ -71,7 +70,7 @@ public class BoardService {
 
 	//게시글 수정
 	@Transactional
-	public void update(int comNo, BoardSaveDTO dto) throws NotExistException{
+	public void updatePost(int comNo, BoardSaveDTO dto) throws NotExistException{
 		System.out.println("update() service---------------");
 		Optional<Board> board = boardRepository.findById(comNo);
 		Board entity = board.orElseThrow(()->new NotExistException("해당 게시글은 존재하지 않습니다."));
