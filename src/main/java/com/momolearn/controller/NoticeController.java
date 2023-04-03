@@ -81,14 +81,14 @@ public class NoticeController {
 			}
 		}
 		
-		int comNo = boardService.save(dto); //->해당 게시글로 가게할지?고민중
+		boardService.savePost(dto); //->해당 게시글로 가게할지?고민중
 		return "redirect:/notice";
 	}
 	
 	@GetMapping("/{comNo}")
 	public String read(@PathVariable int comNo, Model model) throws NotExistException{
 		//조회
-		BoardDTO dto = boardService.read(comNo);
+		BoardDTO dto = boardService.readPost(comNo);
 		//조회수증가
 		boardService.increaseViewCount(comNo);
 		//좋아요개수
@@ -107,7 +107,7 @@ public class NoticeController {
 	@GetMapping("/updateForm/{comNo}")
 	public String noticeUpdateForm(@PathVariable int comNo, Model model) throws NotExistException{
 		System.out.println("updateForm()----------------");
-		model.addAttribute("dto", boardService.read(comNo));
+		model.addAttribute("dto", boardService.readPost(comNo));
 		return "board/noticeUpdateForm";
 	}
 	
@@ -125,7 +125,7 @@ public class NoticeController {
 			}
 		}
 		
-		boardService.update(comNo, dto);
+		boardService.updatePost(comNo, dto);
 		return "redirect:/notice";
 		
 	}
@@ -134,7 +134,7 @@ public class NoticeController {
 	@DeleteMapping("/{comNo}")
 	public String deleteNotice(@PathVariable int comNo) throws NotExistException {
 		System.out.println("delete() ---------");
-		boardService.delete(comNo);
+		boardService.deletePost(comNo);
 		return "redirect:/notice";
 	}
 	
