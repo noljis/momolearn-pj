@@ -1,5 +1,7 @@
 package com.momolearn.model.service;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
@@ -22,11 +24,8 @@ import lombok.RequiredArgsConstructor;
 public class TeachersService {
 
 	private final TeachersRepository teachersRepository;
-
 	private final ApplyTeacherRepository applyTeacherRepository;
-	
 	private final MembersRepository membersRepository;
-
 	private ModelMapper mapper = new ModelMapper();
 	
 	
@@ -34,18 +33,13 @@ public class TeachersService {
 	public TeachersDTO saveOneTeacher(ApplyTeacherDTO applyDTO) throws NotExistException, MessageException {
 		
 		System.out.println("+++ 1 +++ : " + applyDTO);
-		
 		Teachers teacher = TeachersDTO.toEntity(applyDTO);
-		
 		System.out.println("+++ 2 +++ : " + teacher);
 		
 		try {
 			Teachers teachers = teachersRepository.save(teacher);
-
 			System.out.println("+++ 3 +++ : " + teacher);
-			
 			return mapper.map(teachers, TeachersDTO.class);
-			
 		} catch (Exception e) {
 			throw new MessageException("강사 등록에 실패했습니다.");
 		}
@@ -64,6 +58,18 @@ public class TeachersService {
 		Optional<Teachers> teacher = teachersRepository.findById(id);
 
 		return teacher.get().getApplyTeacher().getMembers().getName();
+	}
+
+	// 강사 전체 목록
+	public List<TeachersDTO> getTeacherList() {
+		List<Teachers> tealists = teachersRepository.findAll();
+		return Arrays.asList(mapper.map(tealists, TeachersDTO[].class));
+	}
+	
+	// 1개의 강사 번호로 강사 정보 조회
+	public TeachersDTO getOneTeacher(int id) throws NotExistException {
+		Teachers teacher = teachersRepository.findById(id).orElseThrow(() -> new NotExistException("등록된 강사가 아닙니다."));
+		return mapper.map(teacher, TeachersDTO.class);
 	}
 	
 	

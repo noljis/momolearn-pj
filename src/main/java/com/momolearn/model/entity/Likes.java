@@ -1,6 +1,7 @@
 package com.momolearn.model.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,11 +21,11 @@ public class Likes {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer likeNo;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "com_no")
 	private Board board;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "mem_id")
 	private Members members;
 	

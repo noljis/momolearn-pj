@@ -21,5 +21,8 @@ public interface LikesRepository extends JpaRepository<Likes, Integer>{
 	Long countByComNo(@Param("com_no") int comNo);
 
 	List<Likes> findAllByBoard(Board board);
+	
+	@Query(value="select l.com_no from Likes l group by l.com_no order by count(l.com_no) desc limit 5", nativeQuery = true)
+	List<Integer> findTop5ByOrderByLikesDesc();
 
 }

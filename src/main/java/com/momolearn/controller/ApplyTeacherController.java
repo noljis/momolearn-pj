@@ -82,10 +82,10 @@ public class ApplyTeacherController {
 	@GetMapping(value = "/applylist")
 	public String getApplyList(Model model, @ModelAttribute("members") MembersDTO members) throws NotExistException {
 
-		System.out.println("관리자 : 신청서 전체 리스트" + members);
-
-		model.addAttribute("list", applyTeacherService.getApplyList());
-
+		if(members.getGrade().equals("admin")) {
+			System.out.println("관리자 : 신청서 전체 리스트" + members);
+			model.addAttribute("list", applyTeacherService.getApplyList());
+		}
 		return "teachers/at-list";
 
 	}
@@ -127,12 +127,12 @@ public class ApplyTeacherController {
 	public String read(Model model, @ModelAttribute("members") MembersDTO members) throws NotExistException {
 
 		System.out.println("회원 : 신청서 상세 조회");
-
+		
 		ApplyTeacherDTO apply = applyTeacherService.read(members.getMemId());
-		MembersDTO member = membersService.getOneMember(members.getMemId());
+		//MembersDTO member = membersService.getOneMember(members.getMemId());
 
 		model.addAttribute("apply", apply);
-		model.addAttribute("member", member);
+		model.addAttribute("member", members);
 
 		System.out.println("신청서 조회 정보 : " + apply);
 		return "teachers/at-readform";
@@ -143,21 +143,17 @@ public class ApplyTeacherController {
 	public String read(Model model, @PathVariable int id, @ModelAttribute("members") MembersDTO members)
 			throws NotExistException, MessageException {
 
-		if (members.getGrade() != "admin") {
-
-			return "error";
-
-		} else {
-
+		if(members.getGrade().equals("admin")) {
 			System.out.println("관리자 : 신청서 상세 조회");
-
+			
 			ApplyTeacherDTO apply = applyTeacherService.getOneApplyTeacher(id);
 			MembersDTO member = membersService.getOneMember(apply.getMembersMemId());
-
+			
 			model.addAttribute("apply", apply);
 			model.addAttribute("member", member);
-			return "teachers/at-readform";
 		}
+
+		return "teachers/at-readform";
 	}
 
 	// O 수정 페이지로 이동
@@ -166,10 +162,10 @@ public class ApplyTeacherController {
 
 		System.out.println("신청서 수정 폼 이동");
 		ApplyTeacherDTO apply = applyTeacherService.read(members.getMemId());
-		MembersDTO member = membersService.getOneMember(members.getMemId());
+		//MembersDTO member = membersService.getOneMember(members.getMemId());
 
 		model.addAttribute("apply", apply);
-		model.addAttribute("member", member);
+		model.addAttribute("member", members);
 
 		return "teachers/at-updateform";
 	}
@@ -199,25 +195,19 @@ public class ApplyTeacherController {
 	// O 승인
 	@PostMapping(value = "/approve/{id}")
 	public String approve(Model model, @PathVariable int id) throws NotExistException, MessageException {
-
 		System.out.println("신청서 승인");
 		applyTeacherService.approve(id);
-
 		ApplyTeacherDTO apply = applyTeacherService.getOneApplyTeacher(id);
 		System.out.println("승인 후 신청서 정보" + apply);
 
 		// MembersDTO member = membersService.getOneMember(apply.getMembersMemId());
 
-		Members member = membersService.updateGrade(apply.getMembersMemId());
-
+		MembersDTO member = membersService.updateGrade(apply.getMembersMemId());
 		System.out.println("등급 변경 후 회원 정보" + member);
-
 		System.out.println("apply 정보 : " + apply);
-
+		
 		TeachersDTO teacher = teachersService.saveOneTeacher(apply);
-
 		System.out.println("teacher 저장 : " + teacher);
-
 		model.addAttribute("apply", apply);
 		model.addAttribute("member", member);
 
