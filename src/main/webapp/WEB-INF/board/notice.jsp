@@ -61,7 +61,7 @@
 		                            <c:when test="${fn:contains(str, '<figure class=\"image\">')}">
 		                            	<c:set var="start" value="${fn:indexOf(str, '<figure class=\"image\">')}" />
 										<c:set var="end" value="${fn:indexOf(str,  '</figure>')}" />
-										<c:set var="imgSrc" value="${fn:substring(str, start, end)}"/>
+										<c:set var="imgSrc" value="${fn:substring(str, start+32, end)}"/>
 										<div class="image-wrapper" >
 											<img src="${imgSrc}">
 										</div>
@@ -76,7 +76,9 @@
                                 <div class="file-name">
                                     <p class="m-b-5 text-muted">[${c.subject}]&nbsp;&nbsp;${c.comTitle}</p>
                                     <small>${c.member.name}<span class="date text-muted"><tf:formatDateTime value="${c.comRegdate}" pattern="yyyy.MM.dd" />&nbsp;&nbsp;
-                                    <i class='fas fa-heart' style='font-size:15px;color: #ff93c5'>&nbsp;${fn:length(c.likes)}</i></span></small>
+                                    <i class='fas fa-heart' style='font-size:15px;color: #ff93c5'>&nbsp;${fn:length(c.likes)}</i>
+                                    <i class='far fa-eye' style='font-size:15px'>&nbsp;${c.comViewCount}</i>
+                                    </span></small>
                                 </div>
                             </a>
                         </div>
