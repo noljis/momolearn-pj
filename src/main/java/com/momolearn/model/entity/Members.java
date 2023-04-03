@@ -19,7 +19,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -61,12 +60,12 @@ public class Members  {
 	
 	@OneToMany(mappedBy = "members" , cascade = CascadeType.REMOVE)
 	public List<Board> board = new ArrayList<>();
-	
-	@OneToMany(mappedBy = "members" , cascade = CascadeType.REMOVE)
-	public List<Comment> comment = new ArrayList<>();
-	
-	@OneToMany(mappedBy = "members" , cascade = CascadeType.REMOVE)
-	public List<Likes> like = new ArrayList<>();
+//	
+//	@OneToMany(mappedBy = "members" , cascade = CascadeType.REMOVE)
+//	public List<Comment> comment = new ArrayList<>();
+//	
+//	@OneToMany(mappedBy = "members" , cascade = CascadeType.REMOVE)
+//	public List<Likes> like = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "member" , cascade = CascadeType.REMOVE)
 	public List<Cart> cart = new ArrayList<>();

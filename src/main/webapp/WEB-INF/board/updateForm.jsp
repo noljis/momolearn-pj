@@ -24,11 +24,6 @@
             <div class="row justify-content-center">
                 <div class="col-lg-10 text-center">
                     <h1 class="display-4 text-white animated slideInDown">커뮤니티</h1>
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb justify-content-center">
-                            <li class="breadcrumb-item text-white active" aria-current="page">페이지 간단 설명(생략가능)</li>
-                        </ol>
-                    </nav>
                 </div>
             </div>
         </div>

@@ -27,66 +27,32 @@
             <div class="row justify-content-center">
                 <div class="col-lg-10 text-center">
                     <h1 class="display-4 text-white animated slideInDown">커뮤니티</h1>
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb justify-content-center">
-                            <li class="breadcrumb-item text-white active" aria-current="page">페이지 간단 설명(생략가능)</li>
-                        </ol>
-                    </nav>
                 </div>
             </div>
         </div>
     </div>
     <!-- Header End -->
-
-
+	
     <!-- Categories Start -->
-    <div class="container-xxl py-5 category">
-        <div class="container">
-            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                <h6 class="section-title bg-white text-center text-primary px-3">Community</h6>
-                <h1 class="mb-5">Community Community</h1>
-            </div>
+    
+   	<div class="container-xxl py-3 category">
+        <div class="container" id="hit-head">
         </div>
     </div>
 
 
     <!-- 게시판 시작 -->
     <div class="container">
-        <div class="row">
-            <div class="col-xl-3 col-md-6">
-                <div class="card bg-pattern">
-                    <div class="card-body">
-                        <div class="float-right">
-                            <i class="fa fa-archive text-primary h4 ml-3"></i>
-                        </div>
-                        <h5 class="font-size-20 mt-0 pt-1">24</h5>
-                        <p class="text-muted mb-0">Total Projects</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-md-6">
-                <div class="card bg-pattern">
-                    <div class="card-body">
-                        <div class="float-right">
-                            <i class="fa fa-th text-primary h4 ml-3"></i>
-                        </div>
-                        <h5 class="font-size-20 mt-0 pt-1">18</h5>
-                        <p class="text-muted mb-0">Completed Projects</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-md-6">
-                <div class="card bg-pattern">
-                    <div class="card-body">
-                        <div class="float-right">
-                            <i class="fa fa-file text-primary h4 ml-3"></i>
-                        </div>
-                        <h5 class="font-size-20 mt-0 pt-1">06</h5>
-                        <p class="text-muted mb-0">Pending Projects</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-md-6">
+    <div class="row">
+     
+         
+	<span id = "hit-comViewCount-sec" class="col"></span>
+	<span id = "hit-comment-sec" class="col"></span>
+	<span id = "hit-likes-sec" class="col"></span>
+           <!-- Categories End --> 
+            
+            
+            <div class="col">
                 <div class="card">
                     <div class="card-body">
                     <!-- 검색 폼 -->
@@ -144,11 +110,37 @@
                                         <i class='fas fa-file-image' style="color: #ffc107"></i></c:if></a></td>
                                         <td><tf:formatDateTime value="${c.comRegdate}" pattern="yyyy.MM.dd / HH:mm" /></td>
                                         <td>
-                                            <div class="team">
-                                                <a href="javascript: void(0);" class="team-member" data-toggle="tooltip" data-placement="top">
-                                                    <img src="${pageContext.request.contextPath}/img/profile/${c.member.profile}" class="profile-image rounded-circle" style="width: 30px; height: 30px; border: 1px solid #06BBCC;" />&nbsp;${c.member.memId}
-                                                </a>
-                                            </div>
+                                        	<c:choose>
+                                        		<c:when test="${empty members}">
+	                                        		<div class="team">
+	                                                <a class="team-member" data-toggle="tooltip" data-placement="top">
+	                                                    <img src="${pageContext.request.contextPath}/img/profile/${c.member.profile}" class="profile-image rounded-circle" style="width: 30px; height: 30px; border: 1px solid #06BBCC;" />&nbsp;${c.member.memId}
+	                                                </a>
+	                                            	</div>
+                                        		</c:when>
+                                        		<c:otherwise>
+		                                            <div class="dropdown">
+		                                                <a href="javascript: void(0);" class="team-member dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" >
+		                                                    <img src="${pageContext.request.contextPath}/img/profile/${c.member.profile}" class="profile-image rounded-circle" style="width: 30px; height: 30px; border: 1px solid #06BBCC;" />
+		                                                    &nbsp;${c.member.memId}
+		                                                </a>
+		                                                <c:choose>
+			                                                <c:when test="${members.memId == c.member.memId}">
+			                                                	<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+															    <li><a class="dropdown-item" href="#" onclick="window.open('${pageContext.request.contextPath}/member-info?memId=${c.member.memId}', 'memberInfo', 'width=700, height=700'); return false;">내 정보 보기</a></li>
+															    <li><a class="dropdown-item" href="#" onclick="window.open('${pageContext.request.contextPath}/board/searchOneMemberPosts?searchType=writer&searchText=${c.member.memId}', 'memberInfo', 'width=1500, height=700'); return false;">내가 쓴 글 보기</a></li>
+						  										</ul>
+			                                                </c:when>
+			                                                <c:otherwise>
+				                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+																    <li><a class="dropdown-item" href="#" onclick="window.open('${pageContext.request.contextPath}/member-info?memId=${c.member.memId}', 'memberInfo', 'width=700, height=700'); return false;">회원정보 보기</a></li>
+																    <li><a class="dropdown-item" href="#" onclick="window.open('${pageContext.request.contextPath}/board/searchOneMemberPosts?searchType=writer&searchText=${c.member.memId}', 'memberInfo', 'width=1500, height=700'); return false;">작성한 글 보기</a></li>
+							  									</ul>
+						  									</c:otherwise>
+					  									</c:choose>
+		                                            </div>
+                                            	</c:otherwise>
+                                            </c:choose>
                                         </td>
                                         <td>
                                             <p class="mb-0">${c.comViewCount}</p>
@@ -203,6 +195,7 @@
 <jsp:include page="/separate/script.jsp"></jsp:include>
 <jsp:include page="/separate/footer.jsp"></jsp:include>
 <script src="${pageContext.request.contextPath}/js/comment.js"></script>
+<script src="${pageContext.request.contextPath}/js/hit.js"></script>
 </body>
 
 </html>

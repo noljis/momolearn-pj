@@ -27,7 +27,7 @@
         <div class="container py-5">
             <div class="row justify-content-center">
                 <div class="col-lg-10 text-center">
-                    <h1 class="display-4 text-white animated slideInDown">커뮤니티</h1>
+                    <h1 class="display-4 text-white animated slideInDown">공지사항</h1>
                 </div>
             </div>
         </div>
@@ -45,10 +45,10 @@
             <div class="col-xl-8">
                 <!-- Account details card-->
                 <div class="card mb-4">
-                    <div class="card-header">글쓰기</div>
+                    <div class="card-header">공지쓰기</div>
                     <div class="card-body">
                         <!-- Form Row-->
-                        <form:form modelAttribute="boardSaveDTO" class="container" action="${ pageContext.servletContext.contextPath }/board" method="post">
+                        <form:form modelAttribute="boardSaveDTO" class="container" action="${ pageContext.servletContext.contextPath }/notice" method="post">
                             <div class="mb-3">
                                 <label class="small mb-1" for="inputComTitle">제목</label>
                                 <form:input path="comTitle" class="form-control" id="comTitle" name="comTitle" type="text" placeholder="제목을 입력하세요"/>
@@ -59,17 +59,15 @@
 								</spring:hasBindErrors>
                             </div>
                             <div>
-                            	<input id="type" name="type" value="community" type="hidden">
+                            	<input id="type" name="type" value="notice" type="hidden">
                             </div>
                             <div class="row gx-3 mb-3">
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputSubject">카테고리</label>
                                     <form:select path="subject" name="subject" id="subject" class="form-control">
                                         <form:option value="">---선 택---</form:option>
-                                        <form:option value="자유">자  유</form:option>
-                                        <form:option value="질문">질  문</form:option>
-                                        <form:option value="정보">정  보</form:option>
-                                        <form:option value="모집">모  집</form:option>
+                                        <form:option value="공지">공  지</form:option>
+                                        <form:option value="이벤트">이 벤 트</form:option>
                                     </form:select>
                                     <spring:hasBindErrors name="boardSaveDTO">
 							            <c:if test="${errors.hasFieldErrors('subject') }">                                     
@@ -84,7 +82,7 @@
                             </div>
                             <!-- Form Row        -->
                             <div class="mb-3">
-                                <label class="small mb-1" for="inputComContent">글 내용</label>
+                                <label class="small mb-1" for="inputComContent">공지 내용</label>
                                 <form:textarea path="comContent" rows="10" cols="50" id="comContent" name="comContent" class="form-control" placeholder="글 내용을 입력하세요"/>
                             	<spring:hasBindErrors name="boardSaveDTO">
 						            <c:if test="${errors.hasFieldErrors('comContent') }">                                     
@@ -96,7 +94,7 @@
                             </div>
                             <!-- Save changes button-->
                             <button class="btn btn-primary" type="submit" >등록</button>
-                            <button class="btn btn-primary" type="button" onclick="location.href='${pageContext.request.contextPath}/board'">글목록</button>
+                            <button class="btn btn-primary" type="button" onclick="location.href='${pageContext.request.contextPath}/notice'">공지목록</button>
                         </form:form>
                     </div>
                 </div>
