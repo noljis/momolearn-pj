@@ -61,7 +61,7 @@
 		                            <c:when test="${fn:contains(str, '<figure class=\"image\">')}">
 		                            	<c:set var="start" value="${fn:indexOf(str, '<figure class=\"image\">')}" />
 										<c:set var="end" value="${fn:indexOf(str,  '</figure>')}" />
-										<c:set var="imgSrc" value="${fn:substring(str, start+32, end)}"/>
+										<c:set var="imgSrc" value="${fn:substring(str, start+32, end-2)}"/>
 										<div class="image-wrapper" >
 											<img src="${imgSrc}">
 										</div>

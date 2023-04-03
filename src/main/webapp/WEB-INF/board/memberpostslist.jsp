@@ -25,7 +25,7 @@
         <div class="container py-5">
             <div class="row justify-content-center">
                 <div class="col-lg-10 text-center">
-                    <h1 class="display-4 text-white animated slideInDown">커뮤니티</h1>
+                    <h1 class="display-4 text-white animated slideInDown">작성한 글 목록</h1>
                     <nav aria-label="breadcrumb">
                     </nav>
                 </div>
