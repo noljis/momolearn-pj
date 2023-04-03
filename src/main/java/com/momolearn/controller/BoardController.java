@@ -9,7 +9,6 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -26,9 +25,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -66,7 +63,7 @@ public class BoardController {
 		Page<BoardListDTO> listPage = boardService.paging(pageable);
 		int nowPage = listPage.getPageable().getPageNumber()+1; //pagable은 0부터 시작
 		int startPage = Math.max(1, listPage.getPageable().getPageNumber() -2);
-		int endPage = Math.min(listPage.getPageable().getPageNumber() +2, listPage.getTotalPages());
+		int endPage = Math.min(listPage.getPageable().getPageNumber() +3, listPage.getTotalPages());
 		
 		model.addAttribute("list", listPage.getContent());
 		model.addAttribute("listPage", listPage);
@@ -183,6 +180,26 @@ public class BoardController {
 		return "board/list";
 	}
 	
+	//다른회원글쓴목록찾기
+	@GetMapping("/searchOneMemberPosts")
+	public String searchOneMemberPosts(@RequestParam String searchType, @RequestParam String searchText, Model model, @PageableDefault(sort = "comNo", direction = Sort.Direction.DESC) Pageable pageable) {
+		System.out.println("searchPost()--------------");
+		
+		Page<BoardListDTO> listPage = boardService.searchPost(searchType, searchText, pageable);
+		int nowPage = listPage.getPageable().getPageNumber()+1;
+		int startPage = Math.max(1, listPage.getPageable().getPageNumber() -2);
+		int endPage = Math.min(listPage.getPageable().getPageNumber() +2, listPage.getTotalPages());
+		
+		model.addAttribute("list", listPage.getContent());
+		model.addAttribute("listPage", listPage);
+		model.addAttribute("nowPage", nowPage);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("endPage", endPage);
+		
+		return "board/memberpostslist";
+	}
+	
+	//다중이미지 업로드
 	@PostMapping("/image/upload")
 	public ModelAndView uploadImage(@RequestParam Map<String, Object> map, MultipartHttpServletRequest request) throws NotExistException, IllegalStateException, IOException{
 		
@@ -190,6 +207,7 @@ public class BoardController {
 		List<MultipartFile> fileList = request.getFiles("upload"); //에디터에서 받아온파일 리스트. ckeditor에서는 파일을 보낼때 upload:파일 형식으로 넘어옴.
 		
 		String uploadPath = null;
+		String fileUrl = null;
 		
 		for(MultipartFile uploadFile : fileList) {
 			if(fileList.get(0).getSize()>0) {
@@ -197,20 +215,23 @@ public class BoardController {
 				String ext = originalFileName.substring(originalFileName.indexOf("."));
 				String newFileName = UUID.randomUUID() + ext; //파일이름 중복방지
 				
-				String realPath = request.getServletContext().getRealPath("/");//현재경로 알아내기
+				String realPath = request.getServletContext().getRealPath("/img/upload");//현재경로
 				System.out.println("realPath:"+realPath);
-				String savePath = realPath + "img/upload/" + newFileName; //저장경로
-				System.out.println("savePath:"+savePath);
-				uploadPath = "../img/upload/" + newFileName; //상대경로. 브라우저에서 이미지 불러올때 보안을 위함
+				uploadPath = realPath + "/" + newFileName; //저장경로
+				System.out.println("savePath:"+uploadPath);
 				
-				File file = new File(savePath); //저장경로에 파일 객체 생성
+				File file = new File(uploadPath); //저장경로에 파일 객체 생성
+				if(!file.exists()) {
+					file.mkdirs();
+				}
 				
+				fileUrl = request.getContextPath()+"/img/upload/"+newFileName;
 				uploadFile.transferTo(file);//업로드
 			}
 		}
-
+		
 		mv.addObject("uploaded", true); //업로드 완료 메시지
-		mv.addObject("url", uploadPath); //업로드파일 경로
+		mv.addObject("url", fileUrl); //업로드파일 경로
 		
 		return mv;
 	}

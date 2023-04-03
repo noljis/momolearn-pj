@@ -2,6 +2,7 @@ package com.momolearn.model.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -11,10 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.momolearn.exception.NotExistException;
 import com.momolearn.model.BoardRepository;
+import com.momolearn.model.CommentRepository;
+import com.momolearn.model.LikesRepository;
 import com.momolearn.model.MembersRepository;
 import com.momolearn.model.dto.BoardDTO;
 import com.momolearn.model.dto.BoardListDTO;
 import com.momolearn.model.dto.BoardSaveDTO;
+import com.momolearn.model.dto.HitBoardDTO;
 import com.momolearn.model.entity.Board;
 import com.momolearn.model.entity.Members;
 
@@ -25,8 +29,9 @@ import lombok.RequiredArgsConstructor;
 public class BoardService {
 	
 	private final BoardRepository boardRepository;
-	
 	private final MembersRepository membersRepository;
+	private final LikesRepository likesRepository;
+	private final CommentRepository commentRepository;
 	
 	public ModelMapper mapper = new ModelMapper();
 	
@@ -75,7 +80,13 @@ public class BoardService {
 	
 	//목록보기+페이징
 	public Page<BoardListDTO> paging(Pageable pageable){
-		Page<Board> entityPage = boardRepository.findAll(pageable);
+		Page<Board> entityPage = boardRepository.findByType("community", pageable);
+		Page<BoardListDTO> dtoPage = entityPage.map(e->new BoardListDTO(e));
+		return dtoPage;
+	}
+	//notice 목록보기+페이징
+	public Page<BoardListDTO> pagingNotice(Pageable pageable){
+		Page<Board> entityPage = boardRepository.findByType("notice", pageable);
 		Page<BoardListDTO> dtoPage = entityPage.map(e->new BoardListDTO(e));
 		return dtoPage;
 	}
@@ -98,17 +109,26 @@ public class BoardService {
 	}
 	
 	//인기글
-	public List<BoardDTO> getHitPosts(String criteria) {
+	public List<HitBoardDTO> getHitPosts(String criteria) throws NotExistException {
 		System.out.println("getHitPosts() service-----------------------");
 		
-//		if("comment".equals(criteria)) {
-//			boardRepository.findTop10ByOrderByCommentsDesc();
-//		}else if("likes".equals(criteria)) {
-//			boardRepository.findTop10ByOrderByLikesDesc();
-//		}else {
-//			boardRepository.findTop10ByOrderByComViewCountDesc();
-//		}
-		return null;
+		List<HitBoardDTO> dtoList = null;
+		
+		if("comment".equals(criteria)) {
+			List<Integer> selectedList = commentRepository.findTop5ByOrderByCommentsDesc();
+			List<Board> entityList = boardRepository.findAllById(selectedList);
+			dtoList = entityList.stream().map(e->new HitBoardDTO(e)).collect(Collectors.toList());
+			
+		}else if("likes".equals(criteria)) {
+			List<Integer> selectedList = likesRepository.findTop5ByOrderByLikesDesc();
+			List<Board> entityList = boardRepository.findAllById(selectedList);
+			dtoList = entityList.stream().map(e->new HitBoardDTO(e)).collect(Collectors.toList());
+			
+		}else {
+			List<Board> entityList = boardRepository.findTop5ByOrderByComViewCountDesc();
+			dtoList = entityList.stream().map(e->new HitBoardDTO(e)).collect(Collectors.toList());
+		}
+		return dtoList;
 	}
 
 }

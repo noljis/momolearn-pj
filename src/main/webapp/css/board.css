@@ -10,6 +10,11 @@ body{
 }
 
 
+li{
+	list-style-type: none;
+}
+
+
 .avatar-xs {
     height: 2.3rem;
     width: 2.3rem;
@@ -19,4 +24,36 @@ body{
 }
 #title:hover{
     color: #06BBCC;
+}
+
+#hit ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#hit li {
+  display: none;
+}
+#hit-comment{
+  height: 50px;
+  overflow: auto; /* 내용이 넘칠 경우 스크롤바를 추가합니다 */
+}
+
+#hit-likes{
+  height: 50px;
+  overflow: auto; /* 내용이 넘칠 경우 스크롤바를 추가합니다 */
+}
+#hit-comViewCount{
+  height: 50px;
+  overflow: auto; /* 내용이 넘칠 경우 스크롤바를 추가합니다 */
+}
+
+#hit-comment a{
+  color: #52565b;
+}
+#hit-likes a{
+  color: #52565b;
+}
+#hit-comViewCount a{
+  color: #52565b;
 }

@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -14,20 +13,17 @@
     <meta content="" name="description">
 
     <jsp:include page="/separate/head.jsp"></jsp:include>
-	<link href="${pageContext.request.contextPath}/css/write.css" rel="stylesheet">
-	<script src="../js/ckeditor5/build/ckeditor.js"></script>
-	
+    <link href="${pageContext.request.contextPath}/css/write.css" rel="stylesheet">
+    <script src="${pageContext.request.contextPath}/js/ckeditor5/build/ckeditor.js"></script>
 </head>
 <body>
-
 	<jsp:include page="/separate/header2.jsp"></jsp:include>
-
     <!-- Header Start -->
     <div class="container-fluid bg-primary py-5 mb-5 page-header">
         <div class="container py-5">
             <div class="row justify-content-center">
                 <div class="col-lg-10 text-center">
-                    <h1 class="display-4 text-white animated slideInDown">커뮤니티</h1>
+                    <h1 class="display-4 text-white animated slideInDown">공지사항</h1>
                 </div>
             </div>
         </div>
@@ -38,44 +34,42 @@
     <!---->
     <div class="container-xl px-4 mt-4">
         <!-- Account page navigation-->
-        
         <div class="row">
             <div class="col-xl-8">
             </div>
             <div class="col-xl-8">
                 <!-- Account details card-->
                 <div class="card mb-4">
-                    <div class="card-header">글쓰기</div>
+                    <div class="card-header">공지 수정하기</div>
                     <div class="card-body">
                         <!-- Form Row-->
-                        <form:form modelAttribute="boardSaveDTO" class="container" action="${ pageContext.servletContext.contextPath }/board" method="post">
+                        <form class="container" action="../${dto.comNo}" method="post">
+                        	<input type="hidden" name="_method" value="put"/>
                             <div class="mb-3">
                                 <label class="small mb-1" for="inputComTitle">제목</label>
-                                <form:input path="comTitle" class="form-control" id="comTitle" name="comTitle" type="text" placeholder="제목을 입력하세요"/>
-                                <spring:hasBindErrors name="boardSaveDTO">
+                                <input class="form-control" id="comTitle" name="comTitle" type="text" placeholder="제목을 입력하세요" value="${dto.comTitle}"/>
+                            	<spring:hasBindErrors name="boardSaveDTO">
 						            <c:if test="${errors.hasFieldErrors('comTitle') }">                                     
 						              <span style="color: red;font:bold">${errors.getFieldError( 'comTitle' ).defaultMessage }</span>
 									</c:if>
 								</spring:hasBindErrors>
                             </div>
                             <div>
-                            	<input id="type" name="type" value="community" type="hidden">
+                            	<input id="type" name="type" value="notice" type="hidden">
                             </div>
                             <div class="row gx-3 mb-3">
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputSubject">카테고리</label>
-                                    <form:select path="subject" name="subject" id="subject" class="form-control">
-                                        <form:option value="">---선 택---</form:option>
-                                        <form:option value="자유">자  유</form:option>
-                                        <form:option value="질문">질  문</form:option>
-                                        <form:option value="정보">정  보</form:option>
-                                        <form:option value="모집">모  집</form:option>
-                                    </form:select>
+                                    <select name="subject" id="subject" class="form-control" >
+	                                    <option value="">---선 택---</option>
+										<option value="공지"<c:if test="${dto.subject eq '공지'}">selected</c:if>>공  지</option>
+										<option value="이벤트"<c:if test="${dto.subject eq '이벤트'}">selected</c:if>>이 벤 트</option>
+                                    </select>
                                     <spring:hasBindErrors name="boardSaveDTO">
 							            <c:if test="${errors.hasFieldErrors('subject') }">                                     
 							              <span style="color: red;font:bold">${errors.getFieldError( 'subject' ).defaultMessage }</span>
 										</c:if>
-									</spring:hasBindErrors>
+									</spring:hasBindErrors>   
                                 </div>
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputdMembersMemId">작성자</label>
@@ -83,21 +77,20 @@
                                 </div>
                             </div>
                             <!-- Form Row        -->
+                            <!-- Form Group (email address)-->
                             <div class="mb-3">
                                 <label class="small mb-1" for="inputComContent">글 내용</label>
-                                <form:textarea path="comContent" rows="10" cols="50" id="comContent" name="comContent" class="form-control" placeholder="글 내용을 입력하세요"/>
+                                <textarea  rows="10" cols="50" id="comContent" name="comContent" class="form-control" placeholder="글 내용을 입력하세요" >${dto.comContent}</textarea>
                             	<spring:hasBindErrors name="boardSaveDTO">
-						            <c:if test="${errors.hasFieldErrors('comContent') }">                                     
+						            <c:if test="${errors.hasFieldErrors('comContent') }">
 						              <span style="color: red;font:bold">${errors.getFieldError( 'comContent' ).defaultMessage }</span>
 									</c:if>
 								</spring:hasBindErrors>
-								<hr>
-								
                             </div>
                             <!-- Save changes button-->
                             <button class="btn btn-primary" type="submit" >등록</button>
-                            <button class="btn btn-primary" type="button" onclick="location.href='${pageContext.request.contextPath}/board'">글목록</button>
-                        </form:form>
+                            <button class="btn btn-primary" type="button" onclick="location.href='../'">공지목록</button>
+                        </form>
                     </div>
                 </div>
             </div>

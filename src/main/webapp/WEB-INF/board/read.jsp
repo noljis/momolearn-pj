@@ -39,11 +39,34 @@
                                 		style="width: 50px; height: 50px; border: 2px solid #06BBCC;">
                                 </div>
                                 <div class="media-body">
-                                    <label>${dto.member.memId}</label>
+                                    <c:choose>
+                                    <c:when test="${empty members}">
+                                    	<label>${dto.member.memId}</label>
+                                    </c:when>
+                                    <c:otherwise>
+	                                    <label class="dropdown">
+	                                        <a href="javascript: void(0);" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"  style="color: #fc5356" >${dto.member.memId}</a>
+	                                        <c:choose>
+		                                        <c:when test="${members.memId == dto.member.memId}">
+		                                        	<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+														<li><a class="dropdown-item" href="#" onclick="window.open('${pageContext.request.contextPath}/member-info?memId=${dto.member.memId}', 'memberInfo', 'width=700, height=700'); return false;">내 정보 보기</a></li>
+														<li><a class="dropdown-item" href="#" onclick="window.open('${pageContext.request.contextPath}/board/searchOneMemberPosts?searchType=writer&searchText=${dto.member.memId}', 'memberInfo', 'width=1500, height=700'); return false;">내가 쓴 글 보기</a></li>
+						  							</ul>
+		                                        </c:when>
+		                                        <c:otherwise>
+			                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+														<li><a class="dropdown-item" href="#" onclick="window.open('${pageContext.request.contextPath}/member-info?memId=${dto.member.memId}', 'memberInfo', 'width=700, height=700'); return false;">회원정보 보기</a></li>
+														<li><a class="dropdown-item" href="#" onclick="window.open('${pageContext.request.contextPath}/board/searchOneMemberPosts?searchType=writer&searchText=${dto.member.memId}', 'memberInfo', 'width=1500, height=700'); return false;">작성한 글 보기</a></li>
+						  							</ul>
+					  							</c:otherwise>
+				  							</c:choose>
+	                                    </label>
+                                    </c:otherwise>
+                                    </c:choose>
                                 </div>
                                 <div class="detail">
                                     <span>작성일 <fmt:parseDate value="${dto.comRegdate}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="lastupdate" type="both" />
-												<fmt:formatDate pattern="yyyy.MM.dd / HH시 mm분" value="${lastupdate}" /></span>
+												<fmt:formatDate pattern="yyyy.MM.dd / HH : mm" value="${lastupdate}" /></span>
                                     <span style="float: right;">댓글 ${fn:length(cmtList)}</span>
                                     <span class="border-separator" style="float: right;" id="likesCount">좋아요 ${likesCount}</span>
                                     <span class="border-separator"style="float: right;">조회 ${dto.comViewCount }</span>
@@ -82,7 +105,7 @@
                         	</c:otherwise>
                         </c:choose>
                     </article>
-                    
+                    <!-- 댓글 -->
                     <div class="contact-form article-comment">
                         
                         <div class="container">
@@ -98,16 +121,38 @@
 		                                <c:forEach items="${cmtList}" var="c">
 			                                <div class="be-comment" id="comment-block">
 			                                    <div class="be-img-comment">
-			                                        <a href="blog-detail-2.html">
+			                                        <a >
 			                                            <img class="profile-image rounded-circle" src="${pageContext.request.contextPath}/img/profile/${c.member.profile}"
                                 							style="width: 50px; height: 50px; border: 2px solid #06BBCC;">
 			                                        </a>
 			                                    </div>
 			                                    <div class="be-comment-content">
-			                                        
-			                                            <span class="be-comment-name">
-			                                                <a href="blog-detail-2.html">${c.member.memId}</a>
-			                                                </span>
+			                                        <c:choose>
+			                                        	<c:when test="${empty members}">
+			                                        		<a>${c.member.memId}</a>
+			                                       		</c:when>
+			                                       		<c:otherwise>
+				                                            <span class="dropdown">
+				                                                <a href="javascript: void(0);" class="team-member dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" >
+				                                                    ${c.member.memId}
+				                                                </a>
+				                                                <c:choose>
+					                                                <c:when test="${members.memId == c.member.memId}">
+					                                                	<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+																		    <li><a class="dropdown-item" href="#" onclick="window.open('${pageContext.request.contextPath}/member-info?memId=${c.member.memId}', 'memberInfo', 'width=700, height=700'); return false;">내 정보 보기</a></li>
+																		    <li><a class="dropdown-item" href="#" onclick="window.open('${pageContext.request.contextPath}/board/searchOneMemberPosts?searchType=writer&searchText=${c.member.memId}', 'memberInfo', 'width=1500, height=700'); return false;">내가 쓴 글 보기</a></li>
+								  										</ul>
+					                                                </c:when>
+					                                                <c:otherwise>
+						                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+																		    <li><a class="dropdown-item" href="#" onclick="window.open('${pageContext.request.contextPath}/member-info?memId=${c.member.memId}', 'memberInfo', 'width=700, height=700'); return false;">회원정보 보기</a></li>
+																		    <li><a class="dropdown-item" href="#" onclick="window.open('${pageContext.request.contextPath}/board/searchOneMemberPosts?searchType=writer&searchText=${c.member.memId}', 'memberInfo', 'width=1500, height=700'); return false;">작성한 글 보기</a></li>
+									  									</ul>
+								  									</c:otherwise>
+							  									</c:choose>
+				                                            </span>
+			                                            </c:otherwise>
+			                                        </c:choose>    
 			                                            <span class="be-comment-time">
 			                                                <i class="fa fa-clock-o"></i>
 			                                                <fmt:parseDate value="${c.cmtRegdate}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="lastupdate" type="both" />
