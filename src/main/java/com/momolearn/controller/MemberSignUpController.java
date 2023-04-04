@@ -14,9 +14,8 @@ public class MemberSignUpController {
 	@Autowired
 	private MembersService membersService;
 
-	//아이디 중복 체크 (성공)
-	@PostMapping("member/checkOk")
-	public boolean dedupId(String memId) throws Exception {
+	@PostMapping(value = "member/checkOk")
+	public boolean dedupId( String memId) throws Exception {
 		
 		boolean check = membersService.checkId(memId);
 		

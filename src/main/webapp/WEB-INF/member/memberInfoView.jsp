@@ -47,6 +47,7 @@
 		<div class="row justify-content-center">
 			<div class="col-md-8">
 				<div class="card">
+				
 					<div class="card-header bg-primary">
 						<h5 class="text-white font-weight-bold">${member.memId}님의 정보</h5>
 					</div>
@@ -61,6 +62,7 @@
 											${member.memId}
 										</td>
 									</tr>
+									
 									<tr>
 										<th>이름</th>
 										<td>
@@ -75,6 +77,7 @@
 										</c:choose>
 										</td>
 									</tr>
+									
 									<tr>
 										<th>이메일</th>
 										<td>
@@ -90,10 +93,12 @@
 										</c:choose>
 										</td>
 									</tr>
+									
 									<tr>
 										<th>등급</th>
 										<td>${member.grade}</td>
 									</tr>
+									
 									<tr>
 										<th>가입일</th>
 										<td>
@@ -101,6 +106,7 @@
 											<fmt:formatDate pattern="yyyy.MM.dd" value="${lastupdate}" />
 										</td>
 									</tr>
+									
 								</tbody>
 							</table>
 						</div>
@@ -119,9 +125,7 @@
 			</div>
 		</div>
 	</div>
-
 	<!-- Info End -->
-	
 
 </body>
 

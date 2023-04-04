@@ -37,16 +37,21 @@
 	<div class="wrap">
 		<div class="login">
 			<h2 id="h2" class="text-primary" >로그인</h2>
+			
 			<form name="f" action="${pageContext.request.contextPath}/member/login" method="post">
+			
 			<input type="hidden" name="returnUrl" value="${param.returnUrl }"/><!--  -->
+				
 				<div class="login_id">
 					<h5>아이디</h5>
 					<input type="text" id="memId" name="memId" placeholder="아이디를 입력해주세요.">
 				</div>
+				
 				<div class="login_pw">
 					<h5>비밀번호</h5>
 					<input class="input" type="password" name="password" placeholder="비밀번호를 입력해주세요.">
 				</div>
+				
 				<div class="login_etc">
 					<div class="checkbox">
 						<a id="a" href="${pageContext.request.contextPath}/member/findIdView">아이디 찾기</a>
@@ -54,42 +59,49 @@
 						<a id="a" href="${pageContext.request.contextPath}/member/findPwdView">비밀번호 찾기</a>
 					</div>
 				</div>
+				
 				<div class="submit">
 					<input type="button" style="background-color: #36cedb;" value="로그인" onclick="blank()" >
 				</div>
+				
 				<div class="text">
 					<p id="p">sns계정으로 시작하기</p>
 				</div>
+				
 				<div class="login_sns">
 					<li><a id="a2" href="https://kauth.kakao.com/oauth/authorize?client_id=b05da66ce6b812c049b788547193fbdc&redirect_uri=http://localhost/momolearn/member/kakaoLogin&response_type=code"><i class="fa-solid fa-comment"></i> 카카오로 로그인</a></li>
 				</div>
+				
 				<div class="text">
 					아직 회원이 아니신가요? &nbsp; <a href="${pageContext.request.contextPath}/member/joinView"> 회원가입 하러가기</a>
 				</div>
+				
 			</form>
 		</div>
 	</div>
 
 	<jsp:include page="/separate/footer.jsp"></jsp:include>
-	
-	
 	<jsp:include page="/separate/script.jsp"></jsp:include>
 	
 	<script>	
 	function blank() {
-		//아이디 빈칸이라면 경고
+		
 		if (f.memId.value == "") {
+			
 			alert("아이디를 입력하세요.");
 			f.memId.focus();
+			
 			return false;
-
 		}
-		//비밀번호 빈칸이라면 경고
+		
 		if (f.password.value == "") {
+			
 			alert("비밀번호를 입력하세요.");
 			f.password.focus();
+			
 			return false;
 		}
+		
 		f.submit();
 
 	}

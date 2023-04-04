@@ -35,10 +35,8 @@ import com.momolearn.exception.NotExistException;
 import com.momolearn.model.dto.BoardDTO;
 import com.momolearn.model.dto.BoardListDTO;
 import com.momolearn.model.dto.BoardSaveDTO;
-import com.momolearn.model.dto.CommentDTO;
 import com.momolearn.model.dto.LikesDTO;
 import com.momolearn.model.service.BoardService;
-import com.momolearn.model.service.CommentService;
 import com.momolearn.model.service.LikesService;
 
 import lombok.RequiredArgsConstructor;
@@ -52,7 +50,6 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardController {
 	
 	private final BoardService boardService;
-	private final CommentService commentService;
 	private final LikesService likesService;
 	
 	//모든 게시글 목록

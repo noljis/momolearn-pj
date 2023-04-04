@@ -13,4 +13,3 @@ public class MomolearnApplication {
 	}
 
 }
-//http://localhost/momolearn/page/index.html

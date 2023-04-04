@@ -27,53 +27,62 @@ import lombok.RequiredArgsConstructor;
 public class TeachersService {
 
 	private final TeachersRepository teachersRepository;
+	
 	private final ApplyTeacherRepository applyTeacherRepository;
+	
 	private final MembersRepository membersRepository;
+	
 	private ModelMapper mapper = new ModelMapper();
 	
 	
-	// 강사 신청서 승인이 된 회원의 신청서 정보를 강사 테이블에 등록
 	public TeachersDTO saveOneTeacher(ApplyTeacherDTO applyDTO) throws NotExistException, MessageException {
+		
 		Teachers teacher = TeachersDTO.toEntity(applyDTO);
+		
 		try {
 			Teachers teachers = teachersRepository.save(teacher);
 			return mapper.map(teachers, TeachersDTO.class);
+			
 		} catch (Exception e) {
 			throw new MessageException("강사 등록에 실패했습니다.");
 		}
 	}
 
 	public TeacherMemberDTO getOneTeachers(String id) throws NotExistException{
-		Teachers teacher = teachersRepository.findByMemIdAndApprove(id).orElseThrow(() -> new NotExistException("현재 강사로 등록되어 있지 않습니다."));
+		
+		Teachers teacher = teachersRepository.findByMemIdAndApprove(id)
+				.orElseThrow(() -> new NotExistException("현재 강사로 등록되어 있지 않습니다."));
 		return new TeacherMemberDTO(teacher.getApplyTeacher().getMembers().getName(), teacher.getTeacherNo());
 	}	
 
-	// 강사번호로 이름만 반환
 	public String getOneteacher(int id) {
+		
 		Optional<Teachers> teacher = teachersRepository.findById(id);
 		return teacher.get().getApplyTeacher().getMembers().getName();
 	}
 
-	// 강사번호로 프로필 사진만 반환
 	public String getOneteacherPro(int id) {
+		
 		Optional<Teachers> teacher = teachersRepository.findById(id);
 		return teacher.get().getApplyTeacher().getMembers().getProfile();
 	}
 	
-	// 강사 전체 목록
 	public List<TeachersDTO> getTeacherList() {
+		
 		List<Teachers> tealists = teachersRepository.findAll();
 		return Arrays.asList(mapper.map(tealists, TeachersDTO[].class));
 	}
 	
 	public List<TeachersListDTO> getAllTeacherList() {
+		
 		List<Teachers> tealists = teachersRepository.findAll();
 		return Arrays.asList(mapper.map(tealists, TeachersListDTO[].class));
 	}
 	
-	// 1개의 강사 번호로 강사 정보 조회
 	public TeachersDTO getOneTeacher(int id) throws NotExistException {
-		Teachers teacher = teachersRepository.findById(id).orElseThrow(() -> new NotExistException("등록된 강사가 아닙니다."));
+		
+		Teachers teacher = teachersRepository.findById(id)
+				.orElseThrow(() -> new NotExistException("등록된 강사가 아닙니다."));
 		return mapper.map(teacher, TeachersDTO.class);
 	}
 	

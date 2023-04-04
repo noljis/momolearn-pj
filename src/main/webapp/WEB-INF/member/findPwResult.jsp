@@ -56,11 +56,5 @@
 	<jsp:include page="/separate/script.jsp"></jsp:include>
 	<jsp:include page="/separate/footer.jsp"></jsp:include>
 	
-	
-
-
-
-		
-	
 </body>
 </html>
