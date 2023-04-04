@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+<%@ taglib prefix="tf" tagdir="/WEB-INF/tags"%>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -77,8 +77,7 @@
                                     </c:choose>
                                 </div>
                                 <div class="detail">
-                                    <span>작성일 <fmt:parseDate value="${dto.comRegdate}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="lastupdate" type="both" />
-												<fmt:formatDate pattern="yyyy.MM.dd / HH : mm" value="${lastupdate}" /></span>
+                                    <span>작성일 <tf:formatDateTime value="${dto.comRegdate}" pattern="yyyy.MM.dd / HH:mm" /></span>
                                     <span style="float: right;" id="likesCount">좋아요 ${likesCount}</span>
                                     <span class="border-separator"style="float: right;">조회 ${dto.comViewCount }</span>
                                 </div>

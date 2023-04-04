@@ -83,7 +83,7 @@
                             <!-- Form Row        -->
                             <div class="mb-3">
                                 <label class="small mb-1" for="inputComContent">공지 내용</label>
-                                <form:textarea path="comContent" rows="10" cols="50" id="comContent" name="comContent" class="form-control" placeholder="글 내용을 입력하세요"/>
+                                <form:textarea path="comContent" rows="10" cols="50" id="comContent" name="comContent" class="form-control" placeholder="글 내용을 입력하세요. 사진이 여러장일 경우 첫번째 사진이 썸네일로 등록되니 신중히 작성해주세요."/>
                             	<spring:hasBindErrors name="boardSaveDTO">
 						            <c:if test="${errors.hasFieldErrors('comContent') }">                                     
 						              <span style="color: red;font:bold">${errors.getFieldError( 'comContent' ).defaultMessage }</span>

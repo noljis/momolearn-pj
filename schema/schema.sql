@@ -41,35 +41,53 @@ INSERT INTO teachers (phone_num, hope, intro, pf_link, apply_id) VALUES ('010-12
 -- 공지사항 게시글
 INSERT INTO board (mem_id, type, com_title, subject, com_regdate, com_content, com_view_count) VALUES ('admin', 'notice', '공지사항입니다.', '공지', NOW(), '첫번째 공지입니다.', 0);
 INSERT INTO board (mem_id, type, com_title, subject, com_regdate, com_content, com_view_count) VALUES ('admin', 'notice', '긴급공지입니다.', '공지', NOW(), '두번째 공지입니다. 서버 점검이 있겠습니다.', 0);
+INSERT INTO board (mem_id, type, com_title, subject, com_regdate, com_content, com_view_count) VALUES ('admin', 'notice', '이벤트입니다.', '이벤트', NOW(), '이벤트 소식입니다. 일주일동안 진행됩니다.', 0);
+INSERT INTO board (mem_id, type, com_title, subject, com_regdate, com_content, com_view_count) VALUES ('admin', 'notice', '두번째 이벤트입니다.', '이벤트', NOW(), '두번째 이벤트입니다. 일주일동안 진행됩니다.', 0);
+INSERT INTO board (mem_id, type, com_title, subject, com_regdate, com_content, com_view_count) VALUES ('admin', 'notice', '공지입니다.', '공지', NOW(), '세번째 공지입니다. 서버 점검이 있겠습니다.', 0);
+INSERT INTO board (mem_id, type, com_title, subject, com_regdate, com_content, com_view_count) VALUES ('admin', 'notice', '서버 점검이 종료되었습니다.', '공지', NOW(), '서버 점검이 끝났습니다. 시스템 재개하였습니다', 0);
 -- 커뮤니티 게시글
 INSERT INTO board (mem_id, type, com_title, subject, com_regdate, com_content, com_view_count) VALUES ('test01', 'community', 'test01의 커뮤니티 글입니다.', '자유', NOW(), '커뮤니티 게시글 내용입니다.', 0);
 INSERT INTO board (mem_id, type, com_title, subject, com_regdate, com_content, com_view_count) VALUES ('test02', 'community', 'test02의 커뮤니티글입니다. ', '질문', NOW(), '멋진 개발자가 될 수 있을까요?', 0);
 INSERT INTO Board (mem_id, type, com_title, subject, com_regdate, com_content, com_view_count) VALUES ('test01', 'community', '자바 프로그래밍 초보 가이드', '질문', NOW(), '자바 초보자를 위한 가이드입니다. 어떻게 시작해야 할까요?', 0);
 INSERT INTO Board (mem_id, type, com_title, subject, com_regdate, com_content, com_view_count) VALUES ('test03', 'community', '어떤 상황에서 이런 오류가 발생하나요?', '질문', NOW(), '궁금한 게 있어서 문의드립니다', 0);
 INSERT INTO Board (mem_id, type, com_title, subject, com_regdate, com_content, com_view_count) VALUES ('test01', 'community', '다음 주 출시될 제품 소개', '정보', NOW(), '이번에 출시될 제품은 이런 특징을 가지고 있습니다.', 0);
-INSERT INTO Board (mem_id, type, com_title, subject, com_regdate, com_content, com_view_count) VALUES ('test07', 'community', 'JPA를 이용한 데이터베이스 관리', '공지', NOW(), 'JPA를 사용하여 데이터베이스를 관리하는 방법을 알려드립니다.', 0);
+INSERT INTO Board (mem_id, type, com_title, subject, com_regdate, com_content, com_view_count) VALUES ('test07', 'community', 'JPA를 이용한 데이터베이스 관리', '정보', NOW(), 'JPA를 사용하여 데이터베이스를 관리하는 방법을 알려드립니다.', 0);
 INSERT INTO Board (mem_id, type, com_title, subject, com_regdate, com_content, com_view_count) VALUES ('test05', 'community', '코딩 초보를 위한 자바스크립트 공부법', '정보', NOW(), '자바스크립트를 처음 공부하는 분들을 위한 팁입니다. 우선 기본 문법부터 천천히 익혀보세요.', 0);
 INSERT INTO Board (mem_id, type, com_title, subject, com_regdate, com_content, com_view_count) VALUES ('test02', 'community', '파이썬 질문', '질문', NOW(), '파이썬에서 문자열을 뒤집는 방법에 대해 알려주세요.', 0);
 INSERT INTO Board (mem_id, type, com_title, subject, com_regdate, com_content, com_view_count) VALUES ('test06', 'community', '파이썬으로 데이터 분석하기', '정보', NOW(), '파이썬을 이용하여 데이터를 분석하는 방법에 대해 알아봅니다.', 0);
 INSERT INTO Board (mem_id, type, com_title, subject, com_regdate, com_content, com_view_count) VALUES ('test03', 'community', '스프링 부트로 웹 애플리케이션 만들기', '질문', NOW(), '스프링 부트와 JPA를 이용하여 웹 애플리케이션을 만들어보려고 합니다. 참고할 만한 자료가 있을까요?', 0);
 INSERT INTO Board (mem_id, type, com_title, subject, com_regdate, com_content, com_view_count) VALUES ('test04', 'community', 'JPA로 데이터베이스 연동하기', '질문', NOW(), 'JPA를 이용하여 데이터베이스와 연동하는 방법에 대해 공부하고 있습니다. JPA의 장단점과 사용법을 알고 싶습니다.', 0);
-
 -- 커뮤니티 댓글
-INSERT INTO comment (com_no, mem_id, cmt_content) VALUES (1, 'test02', '1등');
-INSERT INTO comment (com_no, mem_id, cmt_content) VALUES (1, 'test03', '허허');
-INSERT INTO comment (com_no, mem_id, cmt_content) VALUES (1, 'test05', '가입축하합니다ㅎㅎ');
-INSERT INTO comment (com_no, mem_id, cmt_content) VALUES (2, 'test01', '예 감사합니다');
-INSERT INTO comment (com_no, mem_id, cmt_content) VALUES (2, 'test04', '친하게 지내요~');
-INSERT INTO comment (com_no, mem_id, cmt_content) VALUES (2, 'test07', '같이 공부해요!');
-INSERT INTO comment (com_no, mem_id, cmt_content) VALUES (2, 'test02', '많은관심 감사합니다');
+INSERT INTO comment (com_no, mem_id, cmt_content, cmt_regdate) VALUES (8, 'test02', '1등', NOW());
+INSERT INTO comment (com_no, mem_id, cmt_content, cmt_regdate) VALUES (8, 'test03', '허허', NOW());
+INSERT INTO comment (com_no, mem_id, cmt_content, cmt_regdate) VALUES (9, 'test05', '가입축하합니다ㅎㅎ', NOW());
+INSERT INTO comment (com_no, mem_id, cmt_content, cmt_regdate) VALUES (9, 'test01', '감사합니다', NOW());
+INSERT INTO comment (com_no, mem_id, cmt_content, cmt_regdate) VALUES (9, 'test04', '친하게 지내요~', NOW());
+INSERT INTO comment (com_no, mem_id, cmt_content, cmt_regdate) VALUES (10, 'test07', '같이 공부해요!', NOW());
+INSERT INTO comment (com_no, mem_id, cmt_content, cmt_regdate) VALUES (11, 'test11', '많은관심 감사합니다', NOW());
+INSERT INTO comment (com_no, mem_id, cmt_content, cmt_regdate) VALUES (12, 'test11', '저도 궁금해요', NOW());
+INSERT INTO comment (com_no, mem_id, cmt_content, cmt_regdate) VALUES (12, 'test12', '공부 너무 어려워요~', NOW());
+INSERT INTO comment (com_no, mem_id, cmt_content, cmt_regdate) VALUES (12, 'test02', '좋은 정보 감사합니다', NOW());
+INSERT INTO comment (com_no, mem_id, cmt_content, cmt_regdate) VALUES (13, 'test03', '글 잘 읽었습니다', NOW());
+INSERT INTO comment (com_no, mem_id, cmt_content, cmt_regdate) VALUES (14, 'test04', '글을 정말 잘 쓰시네요', NOW());
+INSERT INTO comment (com_no, mem_id, cmt_content, cmt_regdate) VALUES (14, 'test05', '좋은 글입니다.', NOW());
+INSERT INTO comment (com_no, mem_id, cmt_content, cmt_regdate) VALUES (15, 'test08', '좋은 정보입니다.', NOW());
+INSERT INTO comment (com_no, mem_id, cmt_content, cmt_regdate) VALUES (16, 'test09', '공부하는데 많은 도움이 되었어요.', NOW());
 -- 좋아요
-INSERT INTO likes (com_no, mem_id) VALUES (1, 'test02');
-INSERT INTO likes (com_no, mem_id) VALUES (1, 'test03');
-INSERT INTO likes (com_no, mem_id) VALUES (1, 'test04');
-INSERT INTO likes (com_no, mem_id) VALUES (1, 'test05');
-INSERT INTO likes (com_no, mem_id) VALUES (1, 'test06');
-INSERT INTO likes (com_no, mem_id) VALUES (2, 'test03');
-INSERT INTO likes (com_no, mem_id) VALUES (2, 'test07');
+INSERT INTO likes (com_no, mem_id) VALUES (7, 'test02');
+INSERT INTO likes (com_no, mem_id) VALUES (7, 'test03');
+INSERT INTO likes (com_no, mem_id) VALUES (8, 'test04');
+INSERT INTO likes (com_no, mem_id) VALUES (9, 'test05');
+INSERT INTO likes (com_no, mem_id) VALUES (9, 'test06');
+INSERT INTO likes (com_no, mem_id) VALUES (9, 'test08');
+INSERT INTO likes (com_no, mem_id) VALUES (10, 'test07');
+INSERT INTO likes (com_no, mem_id) VALUES (12, 'test07');
+INSERT INTO likes (com_no, mem_id) VALUES (12, 'test02');
+INSERT INTO likes (com_no, mem_id) VALUES (13, 'test03');
+INSERT INTO likes (com_no, mem_id) VALUES (14, 'test01');
+INSERT INTO likes (com_no, mem_id) VALUES (14, 'test09');
+INSERT INTO likes (com_no, mem_id) VALUES (15, 'test11');
+INSERT INTO likes (com_no, mem_id) VALUES (15, 'test13');
 -- 강사1의 강의(남궁성)
 INSERT INTO lectures (teacher_no, title, image, price, cnt, regdate, info, description, apply_cnt) VALUES (1, '자바의 정석', '자바의 정석.jpg', 5000, 10, NOW(), '자바의 정석입니다.', '자바의 역사부터 기본문법, 객체지개념까지 다룹니다.', 2);
 -- 강사2의 강의(니꼴라스)

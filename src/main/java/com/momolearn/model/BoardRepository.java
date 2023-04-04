@@ -24,6 +24,7 @@ public interface BoardRepository extends JpaRepository<Board, Integer>{
 	Page<Board> findByComContentContaining(String searchText, Pageable pageable);
 	Page<Board> findByMembers_MemIdContaining(String searchText, Pageable pageable);
 
+	@Query(value="select * from Board b where b.type='community' group by b.com_no order by count(b.com_no) desc limit 5", nativeQuery = true)
 	List<Board> findTop5ByOrderByComViewCountDesc();
 	
 	Page<Board> findByType(String type, Pageable pageable);
