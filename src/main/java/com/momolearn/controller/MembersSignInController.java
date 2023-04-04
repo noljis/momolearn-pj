@@ -30,9 +30,6 @@ import com.momolearn.model.service.FileService;
 import com.momolearn.model.service.KakaoService;
 import com.momolearn.model.service.MembersService;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Controller
 @RequestMapping("member")
 @SessionAttributes({"members"})
@@ -45,8 +42,7 @@ public class MembersSignInController {
 	private FileService fileService;
 	
 	@Autowired
-	private KakaoService kakaoService;
-	
+	private KakaoService kakaoService; //카카오 로그인 못하면 지우기.
 	
 	@GetMapping(value = "/kakaoLogin")
 	public ModelAndView kakaoLogin(@RequestParam("code") String code, HttpSession session) {
@@ -87,21 +83,18 @@ public class MembersSignInController {
 //		return mv;
 //	}
 	
-	//회원가입 입력폼
     @GetMapping(value = "/joinView", produces = "application/json; charset=UTF-8")
     protected String memJoinView() throws SQLException {
 		
 		return "member/join";
 	}
     
-	// 회원가입 후 정보 보기 
 	@PostMapping(value = "/join", produces = "application/json; charset=UTF-8")
 	public String memInsert(Model model, MembersDTO members, @RequestParam("memId") String memId
 						,@RequestParam("password") String pw, @RequestParam("name") String name, 
 						@RequestParam("email") String email,
 						@RequestParam("file") MultipartFile file) throws SQLException, IOException, MessageException {
 		
-        // profile 파일 저장
 		if(file != null && !file.isEmpty()) {
 			
 			String savedFileName = fileService.getProfile(memId, file);
@@ -126,24 +119,20 @@ public class MembersSignInController {
 		return "member/joinInfo"; 
 	}
     
-	//로그인 입력폼 (확인)
 	@GetMapping(value = "/loginView", produces = "application/json; charset=UTF-8")
     protected String memLoginView() throws SQLException {
 		
 		return "member/login";
 	}
     
-	// id 찾기 페이지 이동 (확인)
 	@GetMapping(value = "/findIdView")
 	public String findIdForm() {
 		
 		return "member/findId";
 	}
 
-	// id 찾기  (확인)
 	@PostMapping(value = "/findId", produces = "application/json; charset=UTF-8")
 	public String findId(Model model, @RequestParam("email") String email ) throws SQLException {
-		
 		
 		MembersDTO member = membersService.findId(email);
 		
@@ -159,22 +148,20 @@ public class MembersSignInController {
         return "member/findIdResult"; // 이동할 JSP 파일명
 	}
 	
-	// pwd 찾기 페이지 이동 (확인)
 	@GetMapping(value = "/findPwdView", produces = "application/json; charset=UTF-8")
 	public String findPwdForm() {
 		
 		return "member/findPw";
 	}
 
-	// pwd 찾기 (확인)
 	@PostMapping(value = "/findPwd", produces = "application/json; charset=UTF-8")
 	public String findPwd(Model model, @RequestParam("memId") String memId, @RequestParam("email") String email) throws SQLException {
 	
 		MembersDTO member = membersService.findPw(memId,email);
 		
         if (member == null) {
+        	
             model.addAttribute("msg", "일치하는 회원 정보가 없습니다.");
-            
             
         } else {
             model.addAttribute("member", member);
@@ -185,17 +172,16 @@ public class MembersSignInController {
 	
 	}
     
-	//로그인 (확인)
 	@PostMapping(value = "/login", produces = "application/json; charset=UTF-8")
 	public String login(Model model, @RequestParam("memId") String memId, 
 						@RequestParam("password") String password) throws Exception {
 		
 		MembersDTO members = membersService.loginMember(memId, password);
 		
-		if (members != null) { // 로그인성공
-			model.addAttribute("members", members); // 세션에 프로필 저장
+		if (members != null) { 
+			model.addAttribute("members", members); 
 
-			return "redirect:/"; // 로그인 후 메인화면
+			return "redirect:/"; 
 
 		} else {
 			
@@ -204,7 +190,6 @@ public class MembersSignInController {
 		
 	}
 	
-	//로그아웃 (확인)
 	@GetMapping(value = "/sessionOut", produces = "application/json; charset=UTF-8")
 	public String sessionOut(SessionStatus status) throws Exception {
 
@@ -214,38 +199,32 @@ public class MembersSignInController {
 		return "redirect:/";
 	}
 	
-    /**
-     * 멤버 정보 관리 기능 
-     */
-	//로그인 후 정보조회 (확인)
 	@GetMapping(value = "/myinfo", produces = "application/json; charset=UTF-8")
 	public String viewOne(Model model, @ModelAttribute("members") MembersDTO mem) throws SQLException {
  
 		return "member/myinfoview";
 	}
 	
-	//프로필 수정 페이지 이동 (확인)
 	@GetMapping(value = "/updatepage", produces = "application/json; charset=UTF-8")
 	public String updatePage(Model model, @ModelAttribute("members") MembersDTO mem) throws SQLException {
 
 		return "member/updateInfo";
 	}
 		
-	//프로필 수정 기능 (확인)
 	@PostMapping(value = "/update", produces = "application/json; charset=UTF-8")
 	public String updatePage( Model model, HttpSession session, @ModelAttribute("members") MembersDTO mem,
 			@RequestParam("newpw") String newpw, @RequestParam("password") String password, 
 			@RequestParam("name") String name, 
 			@RequestParam("file") MultipartFile file) throws SQLException, IOException {
 		
-		// 세션에서 아이디 불러오기
-		String memId = mem.getMemId(); // 세션에서 아이디 불러오기
+		String memId = mem.getMemId(); 
 		
-		// profile 파일 저장 -- 수정
 		if(file == null || file.isEmpty()) {
+			
 			mem.setProfile(memId+".jpg");
 			
 		}else {
+			
 			String savedFileName = fileService.getProfile(memId, file);
 			mem.setProfile(savedFileName);
 		}
@@ -253,22 +232,23 @@ public class MembersSignInController {
 		mem.setName(name);
 		
 		if(newpw==null  || newpw.isEmpty()) {
+			
 			mem.setPw(mem.getPw());
 			
 		}else {
+			
 			mem.setPw(newpw);
 			
 		}
 		
 		membersService.updateMember(mem);
 		
-		model.addAttribute("members", mem); // 수정 정보를 모델에 담아서 리턴
+		model.addAttribute("members", mem); 
 		
 		return "member/myinfoview"; 
 		
 	}
 	
-	//회원 삭제 (확인)
 	@GetMapping(value = "/delete/{memId}", produces = "application/json; charset=UTF-8")
 	public String delete(Model model, @PathVariable String memId, SessionStatus status){
 		 try {
@@ -285,14 +265,10 @@ public class MembersSignInController {
 		 
 		 return "redirect:/";
 	}
-
-	//전체회원조회
-
 	
-	// 예외 처리에 대한 중복 코드를 분리해서 예외처리 전담 메소드
-	//http://localhost/team2_studyroom/WEB-INF/auth/error.jsp
 	@ExceptionHandler
 	public String totalEx(SQLException e, HttpServletRequest req) { 
+		
 		e.printStackTrace();
 
 		req.setAttribute("errorMsg", e.getMessage());

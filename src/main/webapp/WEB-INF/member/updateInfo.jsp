@@ -40,8 +40,6 @@
     </div>
 	<!-- Header End -->
 	
-	
-	
 	<!-- Info Start -->
 	<!-- Form Start -->
 	<div class="container">
@@ -57,12 +55,11 @@
 									<div class="table-responsive">
 										<table class="table table-hover">
 											<tr>
-												<!-- 1 -->
 												<td>아이디</td>
 												<td>${members.memId}</td>
 											</tr>
+											
 					                        <tr>
-					                            <!-- 2 -->
 					                            <td>비밀번호</td>
 					                            <td>
 					                            	<input class="updateInfo" type="password" id="password" name="password" oninput="passConfirm1()" required>
@@ -73,7 +70,6 @@
 					                        </tr>
 					                        
 					                        <tr>
-					                            <!-- 2 -->
 					                            <td>새비밀번호</td>
 					                            <td>
 					                          		<div style="display: none;" id="newPw">
@@ -82,25 +78,23 @@
 					                            	</div>
 					                            </td>
 					                        </tr>
+					                        
 											<tr>
-												<!-- 5 -->
 												<td>이름</td>
 												<td><input class="updateInfo" type="text" name="name" value="${members.name}" required></td>
 											</tr>
+											
 											<tr>
-												<!-- 6 -->
 												<td>이메일</td>
 												<td>${members.email }</td>
 											</tr>
 	
 											<tr>
-												<!-- 7 -->
 												<td>등급</td>
 												<td>${members.grade }</td>
 											</tr>
 	
 											<tr>
-												<!-- 8 -->
 												<td>프로필사진</td>
 												<td>
 													<div class="mb-3">
@@ -109,12 +103,12 @@
 												</td>
 											</tr>
 	
-	
 											<tr>
 												<td colspan="2" align="center">
 												<input class="btn btn-primary" id="submitBtn" type="submit" value="수정하기">&nbsp;
 												<button class="btn btn-danger" type="reset" id="cancle">취소하기</button></td>
 											</tr>
+											
 										</table>
 									</div>
 								</div>
@@ -132,34 +126,38 @@
 	<jsp:include page="/separate/footer.jsp"></jsp:include>
 	
 	<script>
-	const savedPw = "${members.pw}"; //db저장된 기존 비번
+	
+	const savedPw = "${members.pw}"; 
+	
 	var check1 = false; 
 	var check2 = false; 
 	
-	var passwordInput = document.getElementById("newpw"); //input에 입력될 비번
-	passwordInput.value = null; // 값이 null로 설정됩니다.
-
+	var passwordInput = document.getElementById("newpw"); 
+	
+	passwordInput.value = null; 
 	
 	function passConfirm1() {
 		
 		const inputPw = document.getElementById("password").value;
 		
 		if (inputPw === "") {
+			
 		 	document.getElementById("passResult1").innerHTML = "";
 		
 	 	} else if (inputPw === savedPw) {
+	 		
 			document.getElementById("passResult1").innerHTML = "비밀번호 일치";
 			check1 = true;
 			document.getElementById("submitBtn").disabled = false;
 			
 		} else {
+			
 			document.getElementById("passResult1").innerHTML = "비밀번호 불일치";
 			check1 = false;
-			document.getElementById("submitBtn").disabled = true; // 수정하기 버튼 비활성화
+			document.getElementById("submitBtn").disabled = true; 
 		}
 		
 		checkAllTrue();
-	 	
 	}
 	
 	function passConfirm2() {
@@ -167,21 +165,23 @@
 		const inputPw = document.getElementById("newpw").value;
 		
 		if (inputPw === "") {
+			
 		 	document.getElementById("passResult2").innerHTML = "";
 		
 	 	} else if (inputPw === savedPw) {
+	 		
 			document.getElementById("passResult2").innerHTML = "기존 비밀번호와 일치하여 변경 불가";
 			check2 = false;
 			document.getElementById("submitBtn").disabled = true;
 			
 		} else {
+			
 			document.getElementById("passResult2").innerHTML = "변경 가능";
 			check2 = true;
 			document.getElementById("submitBtn").disabled = false;
 		}
 		
 		checkAllTrue();
-	 	
 	}
 	
 	function onUpdate() {
@@ -190,21 +190,20 @@
 	}
 	
 	function onCancle() {
+		
 	    document.getElementById("newPw").style.display = "none"; 
-		/* history.back(); */
 	}
-	
  
- 	
 	function checkAllTrue() {
+		
 		if (check1 === true) {
-			document.getElementById("f").submit();
-		}
-		else if ( check1 == true && check2 == true ) {
-			document.getElementById("f").submit();
-		}
-		else{
 			
+			document.getElementById("f").submit();
+		}
+		
+		else if ( check1 == true && check2 == true ) {
+			
+			document.getElementById("f").submit();
 		}
 		
 	}
