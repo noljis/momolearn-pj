@@ -74,11 +74,9 @@
     
     <script>
     
-    var check = false; // 중복 체크 여부 확인 
+    var check = false; 
     
-	//id 중복체크
 	function dedupId() {
-		
 		
 		axios.post('${pageContext.request.contextPath}/member/checkOk', {}, {
 			params : {
@@ -90,24 +88,28 @@
 		 })
 	}
     
-	//사용여부
 	function validate(val) {
 		const memId = document.getElementById("memId").value;
-		
 	
 		if (memId.length < 5) {
+			
 			alert("아이디는 5자 이상 입력해주세요.");
 			
 		}else{
+			
 			if(memId == ""){
+				
 				alert('아이디를 입력하세요.');
+				
 				return;
 				
 			}else if(val == true) {
+				
 				alert('사용가능한 아이디 입니다.');
 				check = true;
 				
 			}else {
+				
 				alert('이미 존재하는 아이디 입니다.');
 				check = false;
 			}
@@ -115,41 +117,47 @@
 		
 	}
 
-	
-	//입력 태그 null값 경고
 	function blank() {
-		//아이디
+		
 		if(f.memId.value==""){
+			
 			alert("아이디를 입력하세요..");
 			f.memId.focus();
+			
 			return false;
 		}
-		//비밀번호
+		
 		if(f.password.value==""){
+			
 			alert("비밀번호를 입력하세요.");
 			f.password.focus();
+			
 			return false;
 		}
 		
-		//이메일
 		if(f.email.value==""){
+			
 			alert("이메일을 입력하세요.");
 			f.email.focus();
+			
 			return false;
 		}
-		//이름
+
 		if(f.name.value==""){
+			
 			alert("이름을 입력하세요.");
 			f.name.focus();
+			
 			return false;
 		}
 		
-		//중복 체크 확인
 		if(check == false){
+			
 			alert("아이디 중복확인 해주세요.");
 		}
 		
 		if(check == true){
+			
 			f.submit();
 		}
 		

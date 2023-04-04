@@ -24,10 +24,8 @@ public class MembersService {
 
 	private ModelMapper mapper = new ModelMapper();
 
-	//회원가입
     @Transactional
     public void memJoin(MembersDTO members) throws SQLException, MessageException {
-    	
     	
 		try {
 			
@@ -35,86 +33,96 @@ public class MembersService {
 			Optional<Members> memId = membersRepository.findById(mem.getMemId());
 			
 			if(memId.isPresent()) {
+				
 				throw new MessageException("이미 존재하는 아이디입니다.");
+				
 			}else {
+				
 				membersRepository.save(mem);
 			}
 	        
 		 } catch (Exception e) {
+			 
 			e.printStackTrace();
 			throw new SQLException("Failed to join member.");
 		}
     }
     
-    //id중복체크
     public boolean checkId(String memId) throws Exception {
 
-    	// Members 테이블에서 아이디값들을 가져옴
 		List<Members> members  = membersRepository.findAll();
 		
-		// 컨트롤러에서 전달받은 memId 값과 비교하여 중복 여부를 확인
 		for(Members member : members) {
+			
 			if(memId.equals(member.getMemId())) {
-				return false; // 이미 존재하는 아이디인 경우
+				
+				return false; 
 			}
 		}
 		
-		return true; // 중복되는 아이디가 없을 경우 true를 리턴
+		return true; 
     }
     
-	//로그인
     @Transactional
     public MembersDTO loginMember(String memId, String password) throws SQLException {
         
     	try {
+    		
         	boolean data = validateUser(memId,password);
         	
         	if(data == true) {
+        		
         		Members loginData = membersRepository.findByMemIdAndPw(memId, password);
-        		System.out.println(loginData);
+        		
         		return mapper.map(loginData, MembersDTO.class);
         	}
         	
         } catch (Exception e) {
+        	
             e.printStackTrace();
-            throw new SQLException("로그인 실패: 아이디를 확인하세요.");
+            
+            throw new SQLException("로그인 실패: 아이디/비밀번호를 재확인하세요.");
         }
+    	
 		return null;
     }
 	 
-    //로그인 회원정보 확인
 	public boolean validateUser(String memId, String password) throws Exception {
 	
 		Members member = membersRepository.findByMemId(memId);
 		
         if (member != null && member.getPw().equals(password)) {
+        	
             return true;
         }
+        
         return false;
 	}
 	
-	//id찾기 (email로 찾기)
 	public MembersDTO findId(String email) throws SQLException{
 		
 		Members member = membersRepository.findByEmail(email);
 		
         if (member == null) {
+        	
             return null;
         }
+        
         return mapper.map(member, MembersDTO.class);
 	}
 	
-	//pw찾기 (id,email로 찾기)
 	public MembersDTO findPw(String memId, String email) throws SQLException{
 		
 		Members member = membersRepository.findByMemIdAndEmail(memId, email);
+		
         if (member == null) {
+        	
         	return null;
         }
+        
         return mapper.map(member, MembersDTO.class);
 	}
     
-	//본인 조회 - jpa
     public MembersDTO getMember (String memId) {
     	
     	Members member = membersRepository.findByMemId(memId);
@@ -127,7 +135,6 @@ public class MembersService {
         return mapper.map(member, MembersDTO.class);
 	}
     
-	//id로 한명의 회원정보 불러오기
 	public MembersDTO getOneMember(String id) throws NotExistException {
 
 		Members member = membersRepository.findById(id).orElseThrow(() -> new NotExistException("해당 회원을 찾을 수 없습니다."));
@@ -135,13 +142,12 @@ public class MembersService {
 		return mapper.map(member, MembersDTO.class);
 	}
     
-    //본인 프로필 수정 
     @Transactional
     public void updateMember (MembersDTO members) throws SQLException {
   	
     try {
     	
-		Members mem = mapper.map(members, Members.class); //엔티티로
+		Members mem = mapper.map(members, Members.class); 
 		membersRepository.save(mem);
 		
     } catch (Exception e) {
@@ -151,7 +157,6 @@ public class MembersService {
 	    }
     }
     
-    //회원 한명 삭제
     @Transactional
     public void deleteMember(String memId) throws SQLException {
     	
@@ -166,7 +171,7 @@ public class MembersService {
                 
             } else {
             	
-                System.out.println("이미 탈퇴처리가 완료된 회원입니다."); 
+                throw new SQLException("이미 탈퇴처리가 완료된 회원입니다.");
                 
             }
         } catch (Exception e) {
@@ -176,17 +181,19 @@ public class MembersService {
         }
     }
 	
-	//모든 회원 검색
-	//관리자 - 모든 회원 검색 : ApplyTeacher 에서 사용
 	public List<Members> getAllMembers() {
+		
 		return membersRepository.findAll();
 	}
 
-	// 회원 등급 변경 : ApplyTeacher에서 사용
 	public MembersDTO updateGrade(String membersMemId) throws NotExistException{
+		
 		Members member = membersRepository.findById(membersMemId).orElseThrow(()->new NotExistException("회원정보가 존재하지 않습니다."));
+		
 		member.setGrade("teacher");
+		
 		membersRepository.save(member);
+		
 		return mapper.map(member, MembersDTO.class);
 	}
 	

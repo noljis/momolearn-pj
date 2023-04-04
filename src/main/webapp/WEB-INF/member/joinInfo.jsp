@@ -37,7 +37,7 @@
     <!-- Header End -->
 	
 	<!-- Info Start -->
-	    <!-- Form Start -->
+	<!-- Form Start -->
     <form id="sm" name="pej" method="post" onsubmit="return allCheck()" action="">
         <div align="center">
             <h2>내 정보</h2> <!-- class="nav-item nav-link" -->
@@ -65,30 +65,31 @@
                             <td>이름</td>
                             <td>${member.name }</td>
                         </tr>
+                        
                         <tr>
                             <!-- 4 -->
                             <td>이메일</td>
                             <td>${member.email }</td>
                         </tr>
                         
-                       <tr>
+                        <tr>
                        		<!-- 5 -->
                             <td>등급</td>
                             <td>${member.grade }</td>
                         </tr>
                         
-                       <tr>
+                        <tr>
                        		<!-- 5 -->
                             <td>프로필사진</td>
                             <td>${member.profile }</td>
                         </tr>                        
-
 
                         <tr>
                             <td colspan="2" align="center">
                                 <a href="${pageContext.request.contextPath}/member/loginView">로그인 하러가기</a>
                             </td>
                         </tr>
+                        
                     </table>
                 </div>
             </div>
