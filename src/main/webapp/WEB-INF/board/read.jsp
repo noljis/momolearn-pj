@@ -16,7 +16,6 @@
 
     <jsp:include page="/separate/head.jsp"></jsp:include>
     <link href="${pageContext.request.contextPath}/css/read.css" rel="stylesheet">
-    <script src="${pageContext.request.contextPath}/js/ckeditor5/build/ckeditor.js"></script>
 </head>
 
 <body>
@@ -61,14 +60,14 @@
 	                                        <c:choose>
 		                                        <c:when test="${members.memId == dto.member.memId}">
 		                                        	<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-														<li><a class="dropdown-item" href="#" onclick="window.open('${pageContext.request.contextPath}/member-info?memId=${dto.member.memId}', 'memberInfo', 'width=700, height=700'); return false;">내 정보 보기</a></li>
-														<li><a class="dropdown-item" href="#" onclick="window.open('${pageContext.request.contextPath}/board/searchOneMemberPosts?searchType=writer&searchText=${dto.member.memId}', 'memberInfo', 'width=1500, height=700'); return false;">내가 쓴 글 보기</a></li>
+														<li><a class="dropdown-item" href="#" onclick="window.open('${pageContext.request.contextPath}/member-info?memId=${dto.member.memId}', 'memberInfo', 'width=600, height=500'); return false;">내 정보 보기</a></li>
+														<li><a class="dropdown-item" href="#" onclick="window.open('${pageContext.request.contextPath}/board/searchOneMemberPosts?searchType=writer&searchText=${dto.member.memId}', 'memberInfo', 'width=1500, height=600'); return false;">내가 쓴 글 보기</a></li>
 						  							</ul>
 		                                        </c:when>
 		                                        <c:otherwise>
 			                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-														<li><a class="dropdown-item" href="#" onclick="window.open('${pageContext.request.contextPath}/member-info?memId=${dto.member.memId}', 'memberInfo', 'width=700, height=700'); return false;">회원정보 보기</a></li>
-														<li><a class="dropdown-item" href="#" onclick="window.open('${pageContext.request.contextPath}/board/searchOneMemberPosts?searchType=writer&searchText=${dto.member.memId}', 'memberInfo', 'width=1500, height=700'); return false;">작성한 글 보기</a></li>
+														<li><a class="dropdown-item" href="#" onclick="window.open('${pageContext.request.contextPath}/member-info?memId=${dto.member.memId}', 'memberInfo', 'width=600, height=500'); return false;">회원정보 보기</a></li>
+														<li><a class="dropdown-item" href="#" onclick="window.open('${pageContext.request.contextPath}/board/searchOneMemberPosts?searchType=writer&searchText=${dto.member.memId}', 'memberInfo', 'width=1500, height=600'); return false;">작성한 글 보기</a></li>
 						  							</ul>
 					  							</c:otherwise>
 				  							</c:choose>
@@ -79,7 +78,7 @@
                                 <div class="detail">
                                     <span>작성일 <fmt:parseDate value="${dto.comRegdate}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="lastupdate" type="both" />
 												<fmt:formatDate pattern="yyyy.MM.dd / HH : mm" value="${lastupdate}" /></span>
-                                    <span style="float: right;">댓글 ${fn:length(cmtList)}</span>
+                                    <span style="float: right;" id="cmtCount"></span>
                                     <span class="border-separator" style="float: right;" id="likesCount">좋아요 ${likesCount}</span>
                                     <span class="border-separator"style="float: right;">조회 ${dto.comViewCount }</span>
                                 </div>
@@ -122,80 +121,10 @@
                         
                         <div class="container">
                             <div class="be-comment-block" >
-                                <h1 class="comments-title">댓글 ${fn:length(cmtList)}개</h1>
-                                <c:choose>
-	                                <c:when test="${empty cmtList}">
-		                                <p class="be-comment-text">
-			                                 등록된 댓글이 없습니다.
-			                            </p>
-	                                </c:when>
-	                                <c:otherwise>
-		                                <c:forEach items="${cmtList}" var="c">
-			                                <div class="be-comment" id="comment-block">
-			                                    <div class="be-img-comment">
-			                                        <a >
-			                                            <img class="profile-image rounded-circle" src="${pageContext.request.contextPath}/img/profile/${c.member.profile}"
-                                							style="width: 50px; height: 50px; border: 2px solid #06BBCC;">
-			                                        </a>
-			                                    </div>
-			                                    <div class="be-comment-content">
-			                                        <c:choose>
-			                                        	<c:when test="${empty members}">
-			                                        		<a>${c.member.memId}</a>
-			                                       		</c:when>
-			                                       		<c:otherwise>
-				                                            <span class="dropdown">
-				                                                <a href="javascript: void(0);" class="team-member dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" >
-				                                                    ${c.member.memId}
-				                                                </a>
-				                                                <c:choose>
-					                                                <c:when test="${members.memId == c.member.memId}">
-					                                                	<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-																		    <li><a class="dropdown-item" href="#" onclick="window.open('${pageContext.request.contextPath}/member-info?memId=${c.member.memId}', 'memberInfo', 'width=700, height=700'); return false;">내 정보 보기</a></li>
-																		    <li><a class="dropdown-item" href="#" onclick="window.open('${pageContext.request.contextPath}/board/searchOneMemberPosts?searchType=writer&searchText=${c.member.memId}', 'memberInfo', 'width=1500, height=700'); return false;">내가 쓴 글 보기</a></li>
-								  										</ul>
-					                                                </c:when>
-					                                                <c:otherwise>
-						                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-																		    <li><a class="dropdown-item" href="#" onclick="window.open('${pageContext.request.contextPath}/member-info?memId=${c.member.memId}', 'memberInfo', 'width=700, height=700'); return false;">회원정보 보기</a></li>
-																		    <li><a class="dropdown-item" href="#" onclick="window.open('${pageContext.request.contextPath}/board/searchOneMemberPosts?searchType=writer&searchText=${c.member.memId}', 'memberInfo', 'width=1500, height=700'); return false;">작성한 글 보기</a></li>
-									  									</ul>
-								  									</c:otherwise>
-							  									</c:choose>
-				                                            </span>
-			                                            </c:otherwise>
-			                                        </c:choose>    
-			                                            <span class="be-comment-time">
-			                                                <i class="fa fa-clock-o"></i>
-			                                                <fmt:parseDate value="${c.cmtRegdate}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="lastupdate" type="both" />
-															<fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${lastupdate}" />
-			                                            </span>
-			                            
-			                                        <p class="be-comment-text">
-			                                            ${c.cmtContent}
-			                                        </p>
-			                                        <form class="collapse" id="text-updateCmt-${c.cmtNo}" name="updateForm" >
-														<input type="hidden" id="input-cmtNo" value="${c.cmtNo}" name="cmtNo">
-														<input type="hidden" id="input-comNo" value="${dto.comNo}" name="comNo">
-														<div class="form-group">
-														  <textarea class="form-input2" id="input-cmtContent" name="cmtContent" required>${c.cmtContent}</textarea> 
-														</div>
-														<button id="btn-updateCmt" class="btn btn-primary" >수정하기</button>
-													</form>
-			                                    </div>
-			                                    
-			                                    
-			                                    <c:if test="${sessionScope.members.memId == c.member.memId }">
-				                                    <div id="btn-putdelete" class="list-unstyled list-inline media-detail pull-right">
-							        		          <a data-bs-toggle="collapse" href="#text-updateCmt-${c.cmtNo}" role="button" aria-expanded="false" aria-controls="text-updateCmt-${c.cmtNo}">수정</a>
-							                            <a id="btn-deleteCmt" type="button" style="color: red" onclick="deleteComment(${dto.comNo},${c.cmtNo})">삭제</a>
-							                        </div>
-						                        </c:if>
-			                                </div>
-			                                <br><hr>
-			                            </c:forEach>    
-	                                </c:otherwise>
-                                </c:choose>
+                             <input id="board-comNo" type="hidden" value="${dto.comNo}">
+                             <input id="session-members" type="hidden" value="${members}">
+                             <input id="session-memId" type="hidden" value="${members.memId}">
+                             <div id="cmtTest" class="be-comment"></div>
                                 <c:choose>
                                 	<c:when test="${empty members}">
                                 		<form class="form-block">
@@ -227,7 +156,6 @@
 		                                        </div>
 		                                        <div>
 		                                        	<button id="btn-comment" type="button" class="btn btn-primary pull-right" >댓글 등록</button>
-		                                        	<!-- <button id="btn-refresh" type="button" style="float: right" class="btn btn-primary pull-right" ><i class='fas fa-sync'></i> 댓글</button> -->
 		                                        	
 		                                        </div>
 		                                    </div>
@@ -256,41 +184,11 @@
  
 
     <!-- Back to Top -->
+    <script>var contextPath = "${pageContext.request.contextPath}";</script>
 	<jsp:include page="/separate/script.jsp"></jsp:include>
 	<jsp:include page="/separate/footer.jsp"></jsp:include>
 	<script src="${pageContext.request.contextPath}/js/comment.js"></script>
 	<script src="${pageContext.request.contextPath}/js/likes.js"></script>
-	<!-- CKEditor -->
-	<!-- <script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
-	<script>
-	ClassicEditor.create(document.querySelector('#comContent'), {
-		removePlugins: [ 'Heading' ],
-		ckfinder: {
-			uploadUrl : '${pageContext.request.contextPath}/board/image/upload'
-		},
-		fontFamily: {
-			options: [
-				'default',
-				'Arial',
-				'궁서체',
-				'바탕',
-				'돋움'
-			],
-			supportAllValues: true
-		}
-	})
-	.then(editor => {
-		console.log('Editor was initialized');
-		editor.isReadOnly; // `false`.
-		editor.enableReadOnlyMode( '#comContent' );
-		editor.isReadOnly; // `true`.
-		const toolbarElement = editor.ui.view.toolbar.element;
-		toolbarElement.style.display = 'none';
-	})
-	.catch(error => {
-		console.error(error);
-	});
-	</script> -->
 </body>
 
 </html>
