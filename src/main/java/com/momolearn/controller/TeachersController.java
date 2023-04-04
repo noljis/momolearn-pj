@@ -23,6 +23,7 @@ public class TeachersController {
 	//강사별 강의 리스트로 이동....?
 	@GetMapping(value = "/list/{teacherNo}")
 	public String getTeacherDetail(@PathVariable int teacherNo) {
+		
 		return "teachers/t-detail";
 	}
 }
