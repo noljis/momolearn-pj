@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.momolearn.exception.MessageException;
 
 @Service
 public class KakaoService {
@@ -27,6 +28,7 @@ public class KakaoService {
 			URL url = new URL(reqURL);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			
+			conn.setDoInput(true);
 			conn.setRequestMethod("POST");
 			conn.setDoOutput(true);
 			
@@ -41,7 +43,7 @@ public class KakaoService {
 			bw.flush();
 			
 			int responseCode = conn.getResponseCode();
-			System.out.println("responseCode : " + responseCode); //400에러남
+			System.out.println("responseCode : " + responseCode); 
 
 			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 			System.out.println("----");
@@ -84,10 +86,16 @@ public class KakaoService {
 			
 			conn.setRequestMethod("POST");
 			conn.setDoOutput(true);
-			conn.setRequestProperty("Authorization", "Bearer" + accessToken);
+			conn.setRequestProperty("Authorization", "Bearer " + accessToken);
 			
-			int responseCode = conn.getResponseCode();
-			System.out.println("responseCode : " + responseCode); //401에러 남.. 200이라면 성공
+			int responseCode = conn.getResponseCode(); //401에러 남.. 200이라면 성공
+			
+			if (responseCode != 200) {
+				
+				throw new MessageException("로그인에 실패하셨습니다.");
+			}
+			
+			System.out.println("responseCode : " + responseCode);
 			
 			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 			
