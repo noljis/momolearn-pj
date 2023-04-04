@@ -29,8 +29,6 @@ public class CommentService {
 	
 	@Transactional
 	public int writeComment(String memId, int comNo, CommentSaveDTO dto) throws NotExistException {
-		System.out.println("writeComment() service-----------------");
-		System.out.println("ㅇ"+memId+"ㅎ"+comNo+dto.toString());
 		Members member = membersRepository.findById(memId).orElseThrow(()->new NotExistException("다시 로그인 해 주세요."));
 		Board board = boardRepository.findById(comNo).orElseThrow(()->new NotExistException("해당 게시글이 존재하지 않습니다."));
 		dto.setMembers(member);
@@ -42,17 +40,14 @@ public class CommentService {
 	}
 
 	public List<CommentDTO> readComment(int comNo) throws NotExistException{
-		System.out.println("readComment() service ------------");
 		Board board = boardRepository.findById(comNo).orElseThrow(()->new NotExistException("해당 게시글이 존재하지 않습니다."));
 		List<Comment> entityList = board.getComments();
 		List<CommentDTO> cmtList = entityList.stream().map(CommentDTO::new).collect(Collectors.toList());
-		
 		return cmtList;
 	}
 
 	@Transactional
 	public void updateComment(int cmtNo, CommentDTO dto) throws NotExistException {
-		System.out.println("updateComment() service----------");
 		Comment comment = commentRepository.findById(cmtNo).orElseThrow(()->new NotExistException("해당 댓글이 존재하지 않습니다."));
 		System.out.println(comment.toString());
 		comment.update(dto.getCmtContent());

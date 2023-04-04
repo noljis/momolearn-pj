@@ -172,14 +172,14 @@
 		                                                <c:choose>
 			                                                <c:when test="${members.memId == c.member.memId}">
 			                                                	<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-															    <li><a class="dropdown-item" href="#" onclick="window.open('${pageContext.request.contextPath}/member-info?memId=${c.member.memId}', 'memberInfo', 'width=700, height=700'); return false;">내 정보 보기</a></li>
-															    <li><a class="dropdown-item" href="#" onclick="window.open('${pageContext.request.contextPath}/board/searchOneMemberPosts?searchType=writer&searchText=${c.member.memId}', 'memberInfo', 'width=1500, height=700'); return false;">내가 쓴 글 보기</a></li>
+															    <li><a class="dropdown-item" href="#" onclick="window.open('${pageContext.request.contextPath}/member-info?memId=${c.member.memId}', 'memberInfo', 'width=600, height=500'); return false;">내 정보 보기</a></li>
+															    <li><a class="dropdown-item" href="#" onclick="window.open('${pageContext.request.contextPath}/board/searchOneMemberPosts?searchType=writer&searchText=${c.member.memId}', 'memberInfo', 'width=1500, height=600'); return false;">내가 쓴 글 보기</a></li>
 						  										</ul>
 			                                                </c:when>
 			                                                <c:otherwise>
 				                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-																    <li><a class="dropdown-item" href="#" onclick="window.open('${pageContext.request.contextPath}/member-info?memId=${c.member.memId}', 'memberInfo', 'width=700, height=700'); return false;">회원정보 보기</a></li>
-																    <li><a class="dropdown-item" href="#" onclick="window.open('${pageContext.request.contextPath}/board/searchOneMemberPosts?searchType=writer&searchText=${c.member.memId}', 'memberInfo', 'width=1500, height=700'); return false;">작성한 글 보기</a></li>
+																    <li><a class="dropdown-item" href="#" onclick="window.open('${pageContext.request.contextPath}/member-info?memId=${c.member.memId}', 'memberInfo', 'width=600, height=500'); return false;">회원정보 보기</a></li>
+																    <li><a class="dropdown-item" href="#" onclick="window.open('${pageContext.request.contextPath}/board/searchOneMemberPosts?searchType=writer&searchText=${c.member.memId}', 'memberInfo', 'width=1500, height=600'); return false;">작성한 글 보기</a></li>
 							  									</ul>
 						  									</c:otherwise>
 					  									</c:choose>
@@ -203,7 +203,7 @@
                         <!-- end project-list -->
                         <c:choose>
 	                        <c:when test="${empty members}">
-	                        	<button class="btn btn-outline-primary" id="loginPlz" style="float: right;">글쓰기<br>
+	                        	<button class="btn btn-outline-primary" id="btn-likeLogin" style="float: right;">글쓰기<br>
 	                        	<p style="font-size: 10px; color: blue; margin: auto;" >(클릭시 로그인창으로 이동)</p></button>
 	                        </c:when>
 	                        <c:otherwise>
@@ -239,7 +239,7 @@
 <!-- Back to Top -->
 <jsp:include page="/separate/script.jsp"></jsp:include>
 <jsp:include page="/separate/footer.jsp"></jsp:include>
-<script src="${pageContext.request.contextPath}/js/comment.js"></script>
+<script src="${pageContext.request.contextPath}/js/likes.js"></script>
 <script src="${pageContext.request.contextPath}/js/hit.js"></script>
 </body>
 

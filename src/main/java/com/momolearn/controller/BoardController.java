@@ -108,8 +108,6 @@ public class BoardController {
 		System.out.println("read()------------");
 		//조회
 		BoardDTO dto = boardService.readPost(comNo);
-		//댓글조회
-		List<CommentDTO> cmtList = commentService.readComment(comNo);
 		//조회수증가
 		boardService.increaseViewCount(comNo);
 		//좋아요개수
@@ -119,7 +117,6 @@ public class BoardController {
 		System.out.println(likesList);
 		
 		model.addAttribute("dto", dto);
-		model.addAttribute("cmtList", cmtList);
 		model.addAttribute("likesCount", likesCount);
 		model.addAttribute("likesList", likesList);
 		model.addAttribute("localDateTimeFormat", new SimpleDateFormat("yyyy-MM-dd hh:mm"));
