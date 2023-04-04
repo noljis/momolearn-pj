@@ -1,122 +1,59 @@
-const instructors = [
-    {
-        name: "Instructor Name",
-        designation: "Designation",
-        image: "../img/profile/test07.jpg",
-        githubLink: ""
-    }
-];
+function createCard(teacher) {
+    const card = document.createElement('div');
+    card.classList.add('card');
+    card.style.width = '300px';
+    card.style.flex = '1 1 1';
+    card.style.border = '2px solid var(--primary)';
+    card.style.borderRadius = '10px';
+    card.style.margin = '20px';
 
+    const cardBody = document.createElement('div');
+    cardBody.classList.add('card-body');
 
-function drawTable() {
-    const container = document.createElement("div");
-    container.classList.add("container-xxl", "py-5");
+    const cardImg = document.createElement('img');
+    cardImg.classList.add('card-img-bottom');
+    cardImg.src = '../img/teacher-1.jpg';
+    cardImg.alt = 'Card image';
+    cardImg.style.width = '100%';
 
-    const innerContainer = document.createElement("div");
-    innerContainer.classList.add("container");
+    const cardTitle = document.createElement('h4');
+    cardTitle.classList.add('card-title');
+    cardTitle.textContent = `강사 ${teacher.teacherNo}`;
+    cardTitle.style.borderBottom = '2px solid var(--primary)';
 
-    const titleDiv = document.createElement("div");
-    titleDiv.classList.add("text-center", "wow", "fadeInUp");
-    titleDiv.dataset.wowDelay = "0.1s";
+    const cardText = document.createElement('p');
+    cardText.classList.add('card-text');
+    cardText.textContent = `분야: ${teacher.hope}`;
+    cardText.style.border = 'none';
 
-    const title = document.createElement("h4");
-    title.classList.add("section-title", "bg-white", "text-center", "text-primary", "px-3");
-    title.innerText = "Instructors";
+    const cardLink = document.createElement('a');
+    cardLink.classList.add('btn', 'btn-primary');
+    cardLink.href = `/../../momolearn/teachers/t-list/${teacher.teacherNo}`;
+    cardLink.textContent = '프로필 상세보기';
+    cardLink.style.borderTop = '2px solid var(--primary)';
 
-    titleDiv.appendChild(title);
-    innerContainer.appendChild(titleDiv);
+    cardBody.appendChild(cardImg);
+    cardBody.appendChild(cardTitle);
+    cardBody.appendChild(cardText);
+    cardBody.appendChild(cardLink);
+    card.appendChild(cardBody);
 
-    const row = document.createElement("div");
-    row.classList.add("row", "g-4");
-
-    for (let i = 0; i < 4; i++) {
-        const col = document.createElement("div");
-        col.classList.add("col-lg-3", "col-md-6", "wow", "fadeInUp");
-        col.dataset.wowDelay = "0.1s";
-
-        const teamItem = document.createElement("div");
-        teamItem.classList.add("team-item", "bg-light");
-
-        const overflow = document.createElement("div");
-        overflow.classList.add("overflow-hidden");
-
-        const img = document.createElement("img");
-        img.classList.add("img-fluid");
-        img.src = instructors[i].image;
-        img.alt = "";
-
-        overflow.appendChild(img);
-        teamItem.appendChild(overflow);
-
-        const position = document.createElement("div");
-        position.classList.add("position-relative", "d-flex", "justify-content-center");
-        position.style.marginTop = "-23px";
-
-        const bgLight = document.createElement("div");
-        bgLight.classList.add("bg-light", "d-flex", "justify-content-center", "pt-2", "px-1");
-
-        const githubLink = document.createElement("a");
-        githubLink.classList.add("btn", "btn-sm-square", "btn-primary", "mx-1");
-        githubLink.href = instructors[i].githubLink;
-
-        const githubIcon = document.createElement("i");
-        githubIcon.classList.add("fab", "fa-github");
-
-        githubLink.appendChild(githubIcon);
-        bgLight.appendChild(githubLink);
-        position.appendChild(bgLight);
-        teamItem.appendChild(position);
-
-        const textCenter = document.createElement("div");
-        textCenter.classList.add("text-center", "p-4");
-
-        const instructorLink = document.createElement("a");
-        instructorLink.href = "../teachers/t-detail.jsp";
-
-        const name = document.createElement("h5");
-        name.classList.add("mb-0");
-        name.innerText = instructors[i].name;
-
-        instructorLink.appendChild(name);
-        textCenter.appendChild(instructorLink);
-
-        const designation = document.createElement("small");
-        designation.innerText = instructors[i].designation;
-
-        textCenter.appendChild(designation);
-        teamItem.appendChild(textCenter);
-        col.appendChild(teamItem);
-        row.appendChild(col);
-    }
-
-    innerContainer.appendChild(row);
-    container.appendChild(innerContainer);
-    document.body.appendChild(container);
+    return card;
 }
 
-
-drawTable();
-
-
-
-// const createTable = (teachersNo) => {
-//     const n = Math.ceil(teachersNo / 4);
-//     const table = document.createElement('table');
-  
-//     for (let i = 0; i < n; i++) {
-//       const row = table.insertRow();
-  
-//       for (let j = 0; j < 4; j++) {
-//         const cell = row.insertCell();
-  
-//         if ((i * 4 + j) < teachersNo) {
-//           cell.textContent = `Teacher ${i * 4 + j + 1}`;
-//         } else {
-//           cell.textContent = '';
-//         }
-//       }
-//     }
-  
-//     return table;
-//   };
-  
+window.onload = function () {
+    axios({
+        method: 'GET',
+        url: '/../../momolearn/teachers/t-list'
+    })
+        .then(function (response) {
+            response.data.forEach(function (teacher) {
+                const card = createCard(teacher);
+                const container = document.getElementById('teacher-list');
+                container.appendChild(card);
+            });
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}

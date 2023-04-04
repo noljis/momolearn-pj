@@ -52,7 +52,7 @@ INSERT INTO Board (mem_id, type, com_title, subject, com_regdate, com_content, c
 INSERT INTO Board (mem_id, type, com_title, subject, com_regdate, com_content, com_view_count) VALUES ('test02', 'community', '파이썬 질문', '질문', NOW(), '파이썬에서 문자열을 뒤집는 방법에 대해 알려주세요.', 0);
 INSERT INTO Board (mem_id, type, com_title, subject, com_regdate, com_content, com_view_count) VALUES ('test06', 'community', '파이썬으로 데이터 분석하기', '정보', NOW(), '파이썬을 이용하여 데이터를 분석하는 방법에 대해 알아봅니다.', 0);
 INSERT INTO Board (mem_id, type, com_title, subject, com_regdate, com_content, com_view_count) VALUES ('test03', 'community', '스프링 부트로 웹 애플리케이션 만들기', '질문', NOW(), '스프링 부트와 JPA를 이용하여 웹 애플리케이션을 만들어보려고 합니다. 참고할 만한 자료가 있을까요?', 0);
-INSERT INTO Board (mem_id, type, com_title, subject, com_regdate, com_content, com_view_count) VALUES ('test04', 'community', 'JPA로 데이터베이스 연동하기', '질문', NOW(), 'JPA를 이용하여 데이터베이스와 연동하는 방법에 대해 공부하고 있습니다. JPA의 장단점과 사용법을 알고 싶습니다.', 0)
+INSERT INTO Board (mem_id, type, com_title, subject, com_regdate, com_content, com_view_count) VALUES ('test04', 'community', 'JPA로 데이터베이스 연동하기', '질문', NOW(), 'JPA를 이용하여 데이터베이스와 연동하는 방법에 대해 공부하고 있습니다. JPA의 장단점과 사용법을 알고 싶습니다.', 0);
 
 -- 커뮤니티 댓글
 INSERT INTO comment (com_no, mem_id, cmt_content) VALUES (1, 'test02', '1등');

@@ -200,9 +200,10 @@ public class ApplyTeacherController {
 		ApplyTeacherDTO apply = applyTeacherService.getOneApplyTeacher(id);
 		System.out.println("승인 후 신청서 정보" + apply);
 
-		// MembersDTO member = membersService.getOneMember(apply.getMembersMemId());
 
-		MembersDTO member = membersService.updateGrade(apply.getMembersMemId());
+		membersService.updateGrade(apply.getMembersMemId());
+//		MembersDTO member = membersService.updateGrade(apply.getMembersMemId());
+		 MembersDTO member = membersService.getOneMember(apply.getMembersMemId());
 		System.out.println("등급 변경 후 회원 정보" + member);
 		System.out.println("apply 정보 : " + apply);
 		
@@ -212,6 +213,15 @@ public class ApplyTeacherController {
 		model.addAttribute("member", member);
 
 		return "teachers/at-readform";
+	}
+	
+	
+	
+	@ExceptionHandler(value = NotExistException.class)
+	public String notExistException(NotExistException e, Model model) {
+		e.printStackTrace();
+		model.addAttribute("errorMsg", e.getMessage());
+		return "error";
 	}
 
 }

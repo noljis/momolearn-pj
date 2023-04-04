@@ -21,12 +21,13 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
+@Data
 @DynamicInsert
 @DynamicUpdate
 
@@ -65,49 +66,17 @@ public class ApplyTeacher  {
     @OneToOne(mappedBy = "applyTeacher", cascade = CascadeType.REMOVE)
     public Teachers teacher;
     
-    public void setApprove(String approve) {
-        this.approve = approve;
-    }
-    
 	public ApplyTeacher(int id) {
 		this.id = id;
 	}
-    
 
-    public void setApplyForm(int id, Members membersApplyId, String phoneNum, String hopeField, String pfLink, String intro, String approve, LocalDateTime applyRege) {
-    	this.id = id;
-    	this.members = membersApplyId;
-    	this.phoneNum = phoneNum;
+	public void setApplyForm(String phoneNum, String hopeField, String pfLink, String intro) {
+		this.phoneNum = phoneNum;
 		this.hopeField = hopeField;
 		this.pfLink = pfLink;
 		this.intro = intro;
-		this.approve = approve;
-		this.applyRege = applyRege;
-    }
+	}
     
-    public void setApplyForm3(int id, Members membersApplyId, String phoneNum, String hopeField, String pfLink, String intro) {
-    	this.id = id;
-//    	this.members = membersApplyId;
-    	this.phoneNum = phoneNum;
-    	this.hopeField = hopeField;
-    	this.pfLink = pfLink;
-    	this.intro = intro;
-    }
-    
-    public void setApplyForm4(String phoneNum, String hopeField, String pfLink, String intro) {
-    	this.phoneNum = phoneNum;
-    	this.hopeField = hopeField;
-    	this.pfLink = pfLink;
-    	this.intro = intro;
-    }
-
-    public void setApplyForm2(Members membersApplyId, String phoneNum, String hopeField, String pfLink, String intro) {
-    	this.members = membersApplyId;
-    	this.phoneNum = phoneNum;
-    	this.hopeField = hopeField;
-    	this.pfLink = pfLink;
-    	this.intro = intro;
-    }
 }
 
 

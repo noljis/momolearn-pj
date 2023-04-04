@@ -183,11 +183,11 @@ public class MembersService {
 	}
 
 	// 회원 등급 변경 : ApplyTeacher에서 사용
-	public MembersDTO updateGrade(String membersMemId) throws NotExistException{
-		Members member = membersRepository.findById(membersMemId).orElseThrow(()->new NotExistException("회원정보가 존재하지 않습니다."));
+	@Transactional
+	public void updateGrade(String membersMemId) throws NotExistException {
+		Members member = membersRepository.findById(membersMemId).orElseThrow(()-> new NotExistException("회원정보가 존재하지 않습니다."));
 		member.setGrade("teacher");
 		membersRepository.save(member);
-		return mapper.map(member, MembersDTO.class);
 	}
 	
 }

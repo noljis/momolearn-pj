@@ -1,6 +1,7 @@
 package com.momolearn.model.dto;
 
-import com.momolearn.model.entity.Lectures;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.momolearn.model.entity.Members;
 import com.momolearn.model.entity.Teachers;
 
@@ -11,23 +12,21 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class TeachersListDTO  {
+
+@JsonSerialize
+@JsonDeserialize
+public class TeachersListDTO {
+    private Integer teachersNo;
+    private Members members;
+    private String name;
+    private String profile;
+
 	
-	private int teacherNo;
-	private Members member;
-//	private String profile;
-//	private String name;
-	private String hope;
-	private String pfLink;
-	private Lectures lectures;
-	
-	public TeachersListDTO(Teachers teachers) {
-		this.teacherNo = teachers.getTeacherNo();
-		this.member = teachers.getApplyTeacher().getMembers();
-//		this.profile = teachers.getApplyTeacher().getMembers().getProfile();
-//		this.name = teachers.getApplyTeacher().getMembers().getName();
-		this.hope = teachers.getHope();
-		this.pfLink = teachers.getPfLink();
-		this.lectures = teachers.getLecture().get(teacherNo);
-	}
+    public TeachersListDTO(Teachers teachers) {
+        this.teachersNo = teachers.getTeacherNo();
+        this.members = teachers.getApplyTeacher().getMembers();
+        this.name = teachers.getApplyTeacher().getMembers().getName();
+        this.profile = teachers.getApplyTeacher().getMembers().getProfile();
+    }
+
 }

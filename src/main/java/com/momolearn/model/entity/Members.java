@@ -73,4 +73,5 @@ public class Members  {
 	public Members(String memId) {
 		this.memId = memId;		
 	}
+
 }
