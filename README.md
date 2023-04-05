@@ -1,22 +1,30 @@
 # ✏️ MOMOLEARN(모모런) 
+
+<img src ="https://user-images.githubusercontent.com/111185073/229681015-4c66ec2a-3abc-421a-8ce5-2ea54cb62f45.jpg" width="35%"/>
+
+<br><br>
+## 💡 프로젝트 소개
 ⚡ Spring Boot + Spring Data JPA 를 이용한 프로젝트입니다. <br>
 ⚡ 온라인 강의 플랫폼 MOMOLEARN 입니다. <br> 
 ⚡ 모모런은 수강생들이 강의를 수강하는 것뿐만 아니라, 강사가 강의를 개설하고<br>
 수강생들끼리 소통할 수 있는 커뮤니티 등 다양한 기능을 제공하여 학습을 보다 쉽고 효과적으로 할 수 있도록 도와줍니다.<br>
 
-<img src ="https://user-images.githubusercontent.com/111185073/229681015-4c66ec2a-3abc-421a-8ce5-2ea54cb62f45.jpg" width="35%"/>
 
-
-<br><br>
-## 💡 프로젝트 소개
-☑ 코로나19 이후 ~
-
-
-
-<br><br>
+<br><br><br>
 ## ⏰ 개발기간
 2023.03.13 ~ 2023.04.
 
+
+
+<br><br><br>
+## 👩‍💻 팀원
+
+|   이름   |                        깃허브 주소                         | 
+| :------: | :--------------------------------------------------------: | 
+|  🌱김솔진  | [https://github.com/noljis](https://github.com/noljis)   | 
+|  🌌박혜인  | [https://github.com/PHyeinP](https://github.com/PHyeinP) |
+|  🐲이민지  | [https://github.com/minddi00](https://github.com/minddi00) |
+|  🍋이시현  | [https://github.com/SIHYEONee](https://github.com/SIHYEONee) |
 
 <br><br><br>
 ## ‼️ 다음 파일을 받아주세요
@@ -93,13 +101,12 @@
 ☑    
 ☑    
 
+
 <br><br><br>
-## 👩‍💻 팀원
+## ✨ 프로젝트 소감
 
-|   이름   |                        깃허브 주소                         | 
-| :------: | :--------------------------------------------------------: | 
-|  🌱김솔진  | [https://github.com/noljis](https://github.com/noljis)   | 
-|  🌌박혜인  | [https://github.com/PHyeinP](https://github.com/PHyeinP) |
-|  🐲이민지  | [https://github.com/minddi00](https://github.com/minddi00) |
-|  🍋이시현  | [https://github.com/SIHYEONee](https://github.com/SIHYEONee) |
+✅   
+✅   
+✅   
 
+<br><br><br>
