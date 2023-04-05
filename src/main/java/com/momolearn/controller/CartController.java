@@ -36,12 +36,6 @@ public class CartController {
 	
 	private final CartService cartService;
 	
-	//1. 장바구니 담기전 검증
-	/* 1. 필요한 속성 : 세션id, 강의id
-	 * 2. 동일 과목을 담으면 이미 담겨있다는 알람창이 뜨도록 함 -> 장바구니로 이동하시겠습니까? 예 아니오
-	 * 3. 동일 과목이 없으면 장바구니에 저장url
-	 * */
-	@ApiOperation(value = "수강바구니 담기전 검증", notes = "동일 과목을 담았는지 여부 판별 후 이동")
 	@GetMapping(value = "/check-cart/{lecId}", produces = "application/json;charset=UTF-8")
 	public String checkCart(Model model, @PathVariable("lecId") int lecId, @ModelAttribute("members") MembersDTO member) {
 		log.info(member.getMemId() + "회원이 수강바구니에 " + lecId + "번 강의를 담았는지 검증");
@@ -52,16 +46,13 @@ public class CartController {
 			
 			model.addAttribute("msg", "이미 수강바구니에 담겨있습니다. 수강바구니 페이지로 이동하시겠습니까?");
 			
-			return "cart/success";	//cart/lecture/success.jsp 예: 장바구니조회url 아니오 history.back()
+			return "cart/success";
 		}
 		
 		return "redirect:/cart/add-cart/" + lecId;
 	}
 	
-	//2. 장바구니 담기
-	/* 장바구니에 저장 -> 저장되었다는 알람창 장바구니로 이동하시겠습니까? 예 아니오
-	 * */
-	@ApiOperation(value = "수강바구니 담기", notes = "해당 강의 수강바구니에 담기")
+	
 	@GetMapping(value = "/add-cart/{lecId}", produces = "application/json;charset=UTF-8")
 	public String addCart(Model model, @PathVariable("lecId") int lecId, @ModelAttribute("members") MembersDTO member) throws NotExistException {
 		log.info(member.getMemId() + "회원이 수강바구니에 " + lecId + "번 강의를 추가");

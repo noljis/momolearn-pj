@@ -40,6 +40,7 @@ import com.momolearn.model.service.FileService;
 import com.momolearn.model.service.LecturesService;
 import com.momolearn.model.service.TeachersService;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -109,6 +110,7 @@ public class LecturesController {
 		return "lecture/course-form";
 	}
 	
+	@ApiOperation(value = "강좌 업로드", notes = "강좌 업로드 데이터를 전송")
 	@PostMapping(value = "/upload-course", produces = "application/json;charset=UTF-8")
 	public String uploadCourse(Model model, @RequestBody CoursesListDTO coursesListDTO)throws NotExistException {
 		
@@ -125,6 +127,7 @@ public class LecturesController {
 		return "data_res";
 	}
 	
+	@ApiOperation(value = "강의 전체목록", notes = "강의 전체목록을 조회")
 	@GetMapping(value = "/lecture-list", produces = "application/json;charset=UTF-8")
 	public String getAllLectures(Model model)throws MessageException, IOException {
 		
@@ -146,15 +149,12 @@ public class LecturesController {
 		
 	}
 	
-	//5. 강의 정보페이지 + 강좌 목록 + 강좌 추가 버튼 + 강의바구니 버튼 // 수강중인 강의 검증..Mylectures
 	@GetMapping(value = "/detail/{title}", produces = "application/json;charset=UTF-8")
 	public String getLectureDetail(Model model, @PathVariable("title") int title, @ModelAttribute("members") MembersDTO member) throws NotExistException {
 		log.info("강의 하나 정보조회 메소드: " + title);
 		
-		//강의번호로 강의+강좌 정보 조회
 		LectureCoursesDTO lecture = lecturesService.getLectureDetail(title);
 		
-		//수강중인 강의여부 확인
 		MyLecturesDTO myLecture = lecturesService.checkMyLectureByLecId(title, member.getMemId());
 		
 		model.addAttribute("lecture", lecture);
@@ -163,9 +163,6 @@ public class LecturesController {
 		return "lecture/lecture-detail"; //WEB-INF/lecture/lecture-detail.jsp
 	}
 	
-	//6-1. 강좌 수강 여부 검증 MyLectures에서 lecture -> courses -> courseId로 조회 V
-	/* 1. 세션Id와 일치하면 watch-course로 이동
-	 * */
 	@GetMapping(value="/check-mylecture/{title}", produces = "application/json;charset=UTF-8")
 	public String checkMyLecture(@PathVariable int title, @ModelAttribute("members") MembersDTO member) throws NotExistException {
 		log.info("강좌 수강 여부 검증 : " + title + member.getMemId());
@@ -175,33 +172,21 @@ public class LecturesController {
 		return "redirect:/lectures/watch-course/" + title;
 	}
 	
-	
-	//6-2. 강좌 시청 watch-course?
-	/* 1. 사이드바에 강좌 목록 -> LectureCoursesDTO lecture = lecturesService.getLectureDetail(title); 활용
-	 * 2. jsp에서 조건문으로 title과 lecture.get(i).getCourses().get(j).getCourseId와 비교해서 일치하면 해당 강좌 불러오기
-	 * */
 	@GetMapping(value = "/watch-course/{title}", produces = "application/json;charset=UTF-8")
 	public String getOneCourse(Model model, @PathVariable int title) throws NotExistException {
 		
 		log.info("강좌 시청 메소드 강좌id: " + title);
 		
-		//강좌 하나 조회
 		CoursesDTO course = lecturesService.getOneCourse(title);
 		
-		//강의번호로 강의 + 강좌 목록 전부 조회
 		LectureCoursesDTO lecture = lecturesService.getLectureDetail(course.getLectureId());
-		
 		
 		model.addAttribute("lecture", lecture);
 		model.addAttribute("course", course);
 		
-		return "lecture/courses-view"; //WEB-INF/lecture/courses-view.jsp
+		return "lecture/courses-view";
 	}
 	
-	//7-1. 내 강의(학생: memId로 조회) - myLectures -> join fetch Members, Lectures 
-	/* 간략하게 강의명(클릭시 디테일로 들어가야 함 -> 강의번호 필요함)과 강사명 목록만 나열하도록 함
-	 * 등급이 teacher일 경우 teacher로 Lecture엔티티 조회해서 
-	 * */
 	@GetMapping(value = "/my-lecture", produces = "application/json;charset=UTF-8")
 	public String myLecture(Model model, @ModelAttribute("members") MembersDTO member) {
 		log.info("myLecture 메소드");
@@ -220,25 +205,21 @@ public class LecturesController {
 	}
 	
 	
-	
-	//8.강의 제목으로 부분검색
-	//Model에 JSONArray데이터 담은 후 res.jsp로 forward전송
-	/* 1. 강의 테이블 조회
-	 * 2. 그에 따른 카테고리-강의 테이블 조회
-	 * 3. 넘어가야 할 속성: 강의번호(조회용), 강사명, 강의제목, 이미지, 가격, 강의수, 한줄 설명, 수강학생 수, 카테고리명(배열)
-	 * */
+	@ApiOperation(value = "강의 부분검색", notes = "강의 제목으로 부분검색")
 	@GetMapping(value = "/search-lecture/{title}", produces = "application/json;charset=UTF-8")
 	public String searchLecture(Model model, @PathVariable String title) {
 		log.info("searchLecture()호출: " + title);
 		try {
-			// 방 리스트를 데이터에 담아줌
+			
 			model.addAttribute("data", lecturesService.searchLectures(title));
 			
 		} catch (JsonIOException s) {
 			
 			model.addAttribute("data", "내부적인 오류로 검색하지 못했습니다.");
 			s.printStackTrace();
+			
 		} catch (NullPointerException ne) {
+			
 			System.out.println("NullPointerException");
 			model.addAttribute("data", "해당 검색어가 포함된 강의가 없습니다.");
 			ne.printStackTrace();
@@ -257,6 +238,7 @@ public class LecturesController {
 		return "lecture/lecture-list";
 	}
 	
+	@ApiOperation(value = "카테고리로 강의 조회", notes = "카테고리에 해당하는 강의 조회")
 	@GetMapping(value = "/search-category/{title}", produces = "application/json;charset=UTF-8")
 	public String searchCategory(Model model, @PathVariable int title) {
 		log.info("카테고리로 강의 조회 메소드. 카테고리Id: " + title);
@@ -302,7 +284,6 @@ public class LecturesController {
 		return "lecture/lecture-update-form";
 	}
 	
-	//12. 강의 수정 + 강의id로 강의 디테일 페이지로 이동
 	@PutMapping(value = "/update-lecture", produces = "application/json;charset=UTF-8")
 	public String updateLecture(Model model, @ModelAttribute LecturesDTO lectureDTO,
 			@RequestParam("file") MultipartFile file) throws NotExistException, Exception {
@@ -342,7 +323,6 @@ public class LecturesController {
 	}
 	
 	
-	//12. 강좌 수정 + 강의id로 강의 디테일 페이지로 이동
 	@PutMapping(value = "/update-course", produces = "application/json;charset=UTF-8")
 	public String updateCourse(Model model, @ModelAttribute CoursesDTO course) throws NotExistException, Exception {
 		log.info("강좌 수정 메소드. 강좌 Id: " + course.getCourseId());
@@ -362,24 +342,21 @@ public class LecturesController {
 		return "lecture/update-success";
 	}
 	
-	//NotExistException 관련 예외처리
 	@ExceptionHandler(value = NotExistException.class)
 	public String notExistException(NotExistException ne, Model model) {
 		System.out.println(ne.getMessage());
 		ne.printStackTrace();
 		model.addAttribute("errorMsg", ne.getMessage());
-		return "error"; //예: WEB-INF/error.jsp
+		return "error";
 	}
 	
-	// MessageException 관련 예외처리
 	@ExceptionHandler(value = MessageException.class)
 	public String messageException(MessageException ne, Model model) {
 		ne.printStackTrace();
 		model.addAttribute("errorMsg", ne.getMessage());
-		return "error"; // 예: WEB-INF/error.jsp
+		return "error";
 	}
 	
-	//비로그인시 HttpSessionRequiredException 예외처리
 	@ExceptionHandler(HttpSessionRequiredException.class)
     public String handleSessionRequiredException(HttpSessionRequiredException e, Model model) {
 		

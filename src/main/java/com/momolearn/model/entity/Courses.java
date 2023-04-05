@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,10 +21,13 @@ import lombok.NoArgsConstructor;
 @Getter
 
 @Entity
+@ApiModel(value="강좌 정보", description = "강의에 할당된 강좌번호, 강의, 강좌명, 재생시간, url 정보")
 public class Courses  {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@ApiModelProperty(example="1")
 	@Column(name = "course_id")
+	
 	private Integer courseId;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -30,12 +35,15 @@ public class Courses  {
 	private Lectures lecture;
 	
 	@Column(length = 50, nullable = false)
+	@ApiModelProperty(example="[1강]오리엔테이션")
 	private String title;
 
 	@Column(length = 12, nullable = false)
+	@ApiModelProperty(example="00:05:24")
 	private String time;
 	
 	@Column(length = 255, nullable = false)
+	@ApiModelProperty(example="https://www.youtube.com/embed/QILiHiTD3uc")
 	private String url;
 	
 	public void setLecture(Lectures lecture) {

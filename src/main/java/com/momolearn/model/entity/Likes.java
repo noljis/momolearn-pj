@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 @Entity
+@ApiModel(value="좋아요 정보", description = "게시글에 할당된 좋아요 번호, 게시글, 회원 정보")
 public class Likes {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

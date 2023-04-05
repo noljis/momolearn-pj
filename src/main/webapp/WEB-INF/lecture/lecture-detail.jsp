@@ -74,7 +74,7 @@ tr {
 								<button class="btn btn-primary mr-2" onclick="location.href='${pageContext.request.contextPath}/lectures/lecture-update-form/${lecture.id}'">강의 정보 수정</button> &nbsp;&nbsp;
 								<form name="delete" action="${pageContext.request.contextPath}/lectures/delete-lecture/${lecture.id}" method="post" enctype="multipart/form-data" onsubmit="return checkFileSize()">
 		       						<input type="hidden" name="_method" value="delete"/>
-									<button type="submit" class="btn btn-primary mr-2">강의 삭제</button>
+									<button type="submit" class="btn btn-primary mr-2" onclick="return confirm('강의를 삭제하시겠습니까?');">강의 삭제</button>
 								</form>
 							</div>
 						</c:if>

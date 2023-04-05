@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,10 +19,12 @@ import lombok.NoArgsConstructor;
 @Getter
 
 @Entity
+@ApiModel(value="카테고리-강의 정보", description = "강의에 할당된 카테고리들 정보")
 public class CategoryLecture {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ApiModelProperty(example="1")
 	private Integer cateLecId;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
