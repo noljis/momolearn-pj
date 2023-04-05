@@ -56,16 +56,25 @@ public class MembersSignInController {
 		HashMap<String, Object> userInfo = kakaoService.getUserInfo(access_token); //여기 메소드에서 에러남 401
 		System.out.println(3);
 		if(userInfo.get("email") != null) {
-			System.out.println(4);
-			session.setAttribute("memId", userInfo.get("email"));
-			System.out.println(5);
-			session.setAttribute("access_token", access_token);
-			System.out.println(6);
+	        String email = userInfo.get("email").toString();
+	        String[] memId = email.split("@");
+	        String name = userInfo.get("nickname").toString();
+	        
+	        MembersDTO memberDto = new MembersDTO(memId[0], "1111", name, email, "user.jpg", "student", LocalDateTime.now());
+	        int res = membersService.memJoin1(memberDto);
+	        
+	        if (res > 0) {
+	            session.setAttribute("memId", email);
+	            session.setAttribute("access_token", access_token);
+	            mv.addObject("memId", email);
+	            mv.setViewName("main");
+	            
+			}else {
+				
+	            throw new RuntimeException("회원가입에 실패하였습니다.");
+	        }
+		
 		}
-		
-		mv.addObject("memId", userInfo.get("email"));
-		mv.setViewName("main");
-		
 		return mv;
 	}
 	

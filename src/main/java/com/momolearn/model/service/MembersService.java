@@ -48,6 +48,10 @@ public class MembersService {
 		}
     }
     
+    public int memJoin1 (MembersDTO memberDto) {
+        return membersRepository.memJoin(memberDto);
+    }
+    
     public boolean checkId(String memId) throws Exception {
 
 		List<Members> members  = membersRepository.findAll();
