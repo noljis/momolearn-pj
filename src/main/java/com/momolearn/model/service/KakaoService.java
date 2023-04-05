@@ -118,11 +118,9 @@ public class KakaoService {
 			
 			userInfo.put("nickname", nickname);
 			userInfo.put("email", email);
-			userInfo.put("profile_image", properties.getAsJsonObject().get("profile_image").getAsString());
 		
 	       System.out.println("nickname : " + nickname);
 	       System.out.println("email : " + email);
-	       System.out.println("profile_image : " + properties.getAsJsonObject().get("profile_image").getAsString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -130,30 +128,30 @@ public class KakaoService {
 		return userInfo;
 	}
 
-//	public void kakaoLogout(String accessToken) {
-//		
-//		String reqURL = "http://kauth.kakao.com/v1/user/logout";
-//		
-//		try {
-//			
-//			URL url = new URL(reqURL);
-//			
-//			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-//			conn.setRequestMethod("POST");
-//			conn.setRequestProperty("Authorization", "Bearer" + accessToken);
-//			
-//			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-//			
-//			String line = "";
-//			String result = "";
-//			
-//			while((line = br.readLine()) != null) {
-//				result += line;
-//			}
-//			
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
+	public void kakaoLogout(String accessToken) {
+		
+		String reqURL = "https://kauth.kakao.com/oauth/logout?client_id=b05da66ce6b812c049b788547193fbdc&logout_redirect_uri=http://localhost/momolearn/member/sessionOut";
+		
+		try {
+			
+			URL url = new URL(reqURL);
+			
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("GET");
+			conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+			
+	        int responseCode = conn.getResponseCode();
+	        
+	        if (responseCode != 200) {
+	            throw new RuntimeException("카카오 로그아웃 요청 실패: HTTP error code: " + responseCode);
+	        }
+			
+			
+		} catch (Exception e) {
+			
+			throw new RuntimeException("로그아웃 요청 실패: " + e.getMessage());
+			
+		}
+	}
 
 }

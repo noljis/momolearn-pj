@@ -9,8 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.momolearn.exception.MessageException;
 import com.momolearn.exception.NotExistException;
-import com.momolearn.model.ApplyTeacherRepository;
-import com.momolearn.model.MembersRepository;
 import com.momolearn.model.TeachersRepository;
 import com.momolearn.model.dto.ApplyTeacherDTO;
 import com.momolearn.model.dto.TeacherMemberDTO;
@@ -25,12 +23,7 @@ public class TeachersService {
 
 	private final TeachersRepository teachersRepository;
 	
-	private final ApplyTeacherRepository applyTeacherRepository;
-	
-	private final MembersRepository membersRepository;
-	
 	private ModelMapper mapper = new ModelMapper();
-	
 	
 	public TeachersDTO saveOneTeacher(ApplyTeacherDTO applyDTO) throws NotExistException, MessageException {
 		

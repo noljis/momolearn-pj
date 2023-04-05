@@ -45,7 +45,7 @@ public class MembersSignInController {
 	private KakaoService kakaoService; //카카오 로그인 못하면 지우기.
 	
 	@GetMapping(value = "/kakaoLogin")
-	public ModelAndView kakaoLogin(@RequestParam("code") String code, HttpSession session) {
+	public ModelAndView kakaoLogin(@RequestParam("code") String code, HttpSession session, Model model) throws SQLException, MessageException {
 
 		ModelAndView mv = new ModelAndView();
 		System.out.println(1);
@@ -59,15 +59,27 @@ public class MembersSignInController {
 	        String email = userInfo.get("email").toString();
 	        String[] memId = email.split("@");
 	        String name = userInfo.get("nickname").toString();
+	        String password = "1111" ;
 	        
-	        MembersDTO memberDto = new MembersDTO(memId[0], "1111", name, email, "user.jpg", "student", LocalDateTime.now());
-	        int res = membersService.memJoin1(memberDto);
+	        MembersDTO memberDto = new MembersDTO(memId[0], password, name, email, "user.jpg", "student", LocalDateTime.now());
+	        String res = membersService.memJoin(memberDto);
 	        
-	        if (res > 0) {
+	        if (res != null) {
 	            session.setAttribute("memId", email);
 	            session.setAttribute("access_token", access_token);
 	            mv.addObject("memId", email);
-	            mv.setViewName("main");
+	            
+	    		MembersDTO members = membersService.loginMember(memId[0].toString(), password);
+	    		
+	    		if (members != null) { 
+	    			model.addAttribute("members", members); 
+
+	    			 mv.setViewName("redirect:/");
+
+	    		} else {
+	    			
+	    			mv.setViewName("loginError");
+	    		}
 	            
 			}else {
 				
@@ -77,20 +89,6 @@ public class MembersSignInController {
 		}
 		return mv;
 	}
-	
-	//카카오 로그아웃
-//	@RequestMapping(value = "/kakaoLogout")
-//	public ModelAndView kakaoLogout(@RequestParam("code") String code, HttpSession session) {
-//		
-//		ModelAndView mv = new ModelAndView();
-//		
-//		kakaoService.kakaoLogout((String) session.getAttribute("access_token"));
-//		session.removeAttribute("access_token");
-//		session.removeAttribute("userId");
-//		mv.setViewName("member/kakaoLogin");
-//		
-//		return mv;
-//	}
 	
     @GetMapping(value = "/joinView", produces = "application/json; charset=UTF-8")
     protected String memJoinView() throws SQLException {
@@ -200,13 +198,22 @@ public class MembersSignInController {
 	}
 	
 	@GetMapping(value = "/sessionOut", produces = "application/json; charset=UTF-8")
-	public String sessionOut(SessionStatus status) throws Exception {
+	public String sessionOut(SessionStatus status, HttpSession session) throws Exception {
 
 		status.setComplete();
 		status = null;
 		
+	    String accessToken = (String) session.getAttribute("access_token");
+
+	    if (accessToken != null) {
+	    	
+	        kakaoService.kakaoLogout(accessToken);
+	        session.removeAttribute("access_token");
+	        session.removeAttribute("userId");
+	    }
+		
 		return "redirect:/";
-	}
+	} 
 	
 	@GetMapping(value = "/myinfo", produces = "application/json; charset=UTF-8")
 	public String viewOne(Model model, @ModelAttribute("members") MembersDTO mem) throws SQLException {

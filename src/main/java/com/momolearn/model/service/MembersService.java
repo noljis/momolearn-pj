@@ -25,7 +25,9 @@ public class MembersService {
 	private ModelMapper mapper = new ModelMapper();
 
     @Transactional
-    public void memJoin(MembersDTO members) throws SQLException, MessageException {
+    public String memJoin(MembersDTO members) throws SQLException, MessageException {
+    	
+    	String returns = null ;
     	
 		try {
 			
@@ -39,6 +41,8 @@ public class MembersService {
 			}else {
 				
 				membersRepository.save(mem);
+				
+				returns = "success";
 			}
 	        
 		 } catch (Exception e) {
@@ -46,10 +50,9 @@ public class MembersService {
 			e.printStackTrace();
 			throw new SQLException("Failed to join member.");
 		}
-    }
-    
-    public int memJoin1 (MembersDTO memberDto) {
-        return membersRepository.memJoin(memberDto);
+		
+		return returns;
+		
     }
     
     public boolean checkId(String memId) throws Exception {
