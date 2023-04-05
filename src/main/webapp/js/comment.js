@@ -35,7 +35,7 @@ $(document).on('click', '#btn-updateCmt', function() {
     type: 'PUT',
     url: '../board/'+comNo+'/comment/'+data.cmtNo,
     data: JSON.stringify(data),
-    dataType: 'JSON',
+    dataType: 'text',
     contentType: 'application/json; charset=utf-8',
     success:function(response){
 		readComment();
@@ -149,7 +149,7 @@ function writeComment(){
     $.ajax({
         type: 'POST',
         url: '../board/'+data.comNo+'/comment',
-        dataType: 'JSON',
+        dataType: 'text',
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(data),
         success:function(response){
@@ -171,7 +171,7 @@ function deleteComment(comNo, cmtNo){
 		$.ajax({
 			type: 'DELETE',
 			url: '../board/'+comNo+'/comment/'+cmtNo,
-			dataType: 'JSON',
+			dataType: 'text',
 			success:function(response){
 				readComment();
 			},

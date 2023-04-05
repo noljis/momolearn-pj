@@ -189,6 +189,8 @@
 	<jsp:include page="/separate/footer.jsp"></jsp:include>
 	<script src="${pageContext.request.contextPath}/js/comment.js"></script>
 	<script src="${pageContext.request.contextPath}/js/likes.js"></script>
+	<div id="message"></div>
+	<script src="${pageContext.request.contextPath}/js/alarm.js"></script>
 </body>
 
 </html>

@@ -207,7 +207,7 @@
 	                        	<p style="font-size: 10px; color: blue; margin: auto;" >(클릭시 로그인창으로 이동)</p></button>
 	                        </c:when>
 	                        <c:otherwise>
-		                        <button class="btn btn-outline-primary" style="float: right;" type="submit" onclick="location.href='${pageContext.request.contextPath}/board/writeForm'">글쓰기</button>
+		                        <button class="btn btn-outline-primary" style="float: right;" type="submit" onclick="location.href='${pageContext.request.contextPath}/board/writeform'">글쓰기</button>
 	                        </c:otherwise>
                         </c:choose>
                         <div class="pt-3">
@@ -241,6 +241,8 @@
 <jsp:include page="/separate/footer.jsp"></jsp:include>
 <script src="${pageContext.request.contextPath}/js/likes.js"></script>
 <script src="${pageContext.request.contextPath}/js/hit.js"></script>
+<div id="message"></div>
+<script src="${pageContext.request.contextPath}/js/alarm.js"></script>
 </body>
 
 </html>

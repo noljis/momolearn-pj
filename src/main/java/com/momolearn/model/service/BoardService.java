@@ -36,7 +36,6 @@ public class BoardService {
 	public ModelMapper mapper = new ModelMapper();
 	
 	
-	//게시글 작성
 	@Transactional
 	public void savePost(BoardSaveDTO dto) throws NotExistException{
 		System.out.println("save() service-----");
@@ -45,7 +44,6 @@ public class BoardService {
 		System.out.println(entity.toString());
 	}
 	
-	//게시글 보기
 	public BoardDTO readPost(int comNo) throws NotExistException{
 		System.out.println("read() service----------");
 		Board entity = boardRepository.findById(comNo).orElseThrow(()->new NotExistException("해당 게시글은 존재하지 않습니다."));
@@ -53,14 +51,12 @@ public class BoardService {
 		return dto;
 	}
 	
-	//게시글 보기 - 조회수+1
 	@Transactional
 	public void increaseViewCount(int comNo) {
 		System.out.println("increase() service------------");
 		boardRepository.increaseCountByComNo(comNo);
 	}
 	
-	//게시글 삭제
 	@Transactional
 	public void deletePost(int comNo) throws NotExistException {
 		System.out.println("delete() service --------------");
@@ -68,7 +64,6 @@ public class BoardService {
 		boardRepository.delete(board);
 	}
 
-	//게시글 수정
 	@Transactional
 	public void updatePost(int comNo, BoardSaveDTO dto) throws NotExistException{
 		System.out.println("update() service---------------");
@@ -77,20 +72,18 @@ public class BoardService {
 		entity.update(dto.getComTitle(), dto.getSubject(), dto.getComContent());
 	}
 	
-	//목록보기+페이징
 	public Page<BoardListDTO> paging(Pageable pageable){
 		Page<Board> entityPage = boardRepository.findByType("community", pageable);
 		Page<BoardListDTO> dtoPage = entityPage.map(e->new BoardListDTO(e));
 		return dtoPage;
 	}
-	//notice 목록보기+페이징
+	
 	public Page<BoardListDTO> pagingNotice(Pageable pageable){
 		Page<Board> entityPage = boardRepository.findByType("notice", pageable);
 		Page<BoardListDTO> dtoPage = entityPage.map(e->new BoardListDTO(e));
 		return dtoPage;
 	}
 	
-	//검색+페이징
 	public Page<BoardListDTO> searchPost(String searchType, String searchText, Pageable pageable){
 		System.out.println("searchPost() service-----------------");
 		Page<Board> entityPage = null;
@@ -107,7 +100,6 @@ public class BoardService {
 		return dtoPage;
 	}
 	
-	//인기글
 	public List<HitBoardDTO> getHitPosts(String criteria) throws NotExistException {
 		System.out.println("getHitPosts() service-----------------------");
 		
@@ -120,6 +112,7 @@ public class BoardService {
 			
 		}else if("likes".equals(criteria)) {
 			List<Integer> selectedList = likesRepository.findTop5ByOrderByLikesDesc();
+			selectedList.stream().forEach(e->System.out.print(e));
 			List<Board> entityList = boardRepository.findAllById(selectedList);
 			dtoList = entityList.stream().map(e->new HitBoardDTO(e)).collect(Collectors.toList());
 			
