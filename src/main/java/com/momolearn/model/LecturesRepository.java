@@ -34,6 +34,7 @@ public interface LecturesRepository extends JpaRepository<Lectures, Integer>{
 	//회원정보로 찾아가기
 	@EntityGraph(attributePaths = {"teachers.applyTeacher.members"})
 	List<Lectures> findByteachersApplyTeacherMembersMemId(String memId);
+
 	
 	
 }
