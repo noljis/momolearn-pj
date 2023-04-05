@@ -140,11 +140,11 @@ public class KakaoService {
 			conn.setRequestMethod("GET");
 			conn.setRequestProperty("Authorization", "Bearer " + accessToken);
 			
-	        int responseCode = conn.getResponseCode();
-	        
-	        if (responseCode != 200) {
-	            throw new RuntimeException("카카오 로그아웃 요청 실패: HTTP error code: " + responseCode);
-	        }
+//	        int responseCode = conn.getResponseCode();
+//	        
+//	        if (responseCode != 200) {
+//	            throw new RuntimeException("카카오 로그아웃 요청 실패: HTTP error code: " + responseCode);
+//	        }
 			
 			
 		} catch (Exception e) {
