@@ -1,13 +1,13 @@
 package com.momolearn.model;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.google.common.base.Optional;
 import com.momolearn.model.entity.Board;
 import com.momolearn.model.entity.Likes;
 import com.momolearn.model.entity.Members;

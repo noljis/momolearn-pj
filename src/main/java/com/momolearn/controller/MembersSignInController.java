@@ -42,19 +42,17 @@ public class MembersSignInController {
 	private FileService fileService;
 	
 	@Autowired
-	private KakaoService kakaoService; //카카오 로그인 못하면 지우기.
+	private KakaoService kakaoService;
 	
 	@GetMapping(value = "/kakaoLogin")
 	public ModelAndView kakaoLogin(@RequestParam("code") String code, HttpSession session, Model model) throws SQLException, MessageException {
 
 		ModelAndView mv = new ModelAndView();
-		System.out.println(1);
-		// 인증코드 요청 전달
+		
 		String access_token = kakaoService.getAccessToken(code); 
-		System.out.println(2);
-		// 인증코드 토큰 전달
-		HashMap<String, Object> userInfo = kakaoService.getUserInfo(access_token); //여기 메소드에서 에러남 401
-		System.out.println(3);
+		
+		HashMap<String, Object> userInfo = kakaoService.getUserInfo(access_token);
+
 		if(userInfo.get("email") != null) {
 	        String email = userInfo.get("email").toString();
 	        String[] memId = email.split("@");
