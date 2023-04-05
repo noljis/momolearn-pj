@@ -22,11 +22,9 @@ public class HitBoardController {
 	
 	private final BoardService boardService;
 	
-	//인기게시글
+	
 	@GetMapping
 	public List<HitBoardDTO> getHitPosts(@RequestParam String criteria) throws NotExistException{
-		System.out.println("getHitPosts()----------------");
-		
 		return boardService.getHitPosts(criteria);
 	}
 	
