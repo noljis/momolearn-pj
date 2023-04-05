@@ -69,7 +69,7 @@
 				</div>
 				
 				<div class="login_sns">
-					<li><a id="a2" href="https://kauth.kakao.com/oauth/authorize?client_id=b05da66ce6b812c049b788547193fbdc&redirect_uri=http://localhost/momolearn/member/kakaoLogin&response_type=code"><i class="fa-solid fa-comment"></i> 카카오로 로그인</a></li>
+					<li><a id="kakao-login-btn" href="https://kauth.kakao.com/oauth/authorize?client_id=b05da66ce6b812c049b788547193fbdc&redirect_uri=http://localhost/momolearn/member/kakaoLogin&response_type=code"><i class="fa-solid fa-comment"></i> 카카오로 로그인</a></li>
 				</div>
 				
 				<div class="text">
@@ -105,6 +105,39 @@
 		f.submit();
 
 	}
+	
+	Kakao.init('49ef5fc681ad9efc0d82ad0375574e44');
+
+
+	$("#kakao-login-btn").on("click", function(){
+
+	    Kakao.Auth.login({
+	        success: function(authObj) {
+	         
+	 
+	          Kakao.API.request({
+	            url: '/v2/user/me',
+	            success: function(res) {
+	              console.log(res);
+	              var id = res.id;
+				  scope : 'account_email';
+				alert('로그인성공');
+	              location.href="http://localhost/momolearn/";
+			
+	        }
+	          })
+	          console.log(authObj);
+	          var token = authObj.access_token;
+	        },
+	        fail: function(err) {
+	          alert(JSON.stringify(err));
+	        }
+	      });
+	        
+	}) 
+
 	</script>
+	
+	<script src = "https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 </body>
 </html>

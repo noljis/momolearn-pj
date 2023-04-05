@@ -7,17 +7,12 @@ import java.util.Optional;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.momolearn.exception.MessageException;
 import com.momolearn.exception.NotExistException;
-import com.momolearn.model.ApplyTeacherRepository;
-import com.momolearn.model.MembersRepository;
 import com.momolearn.model.TeachersRepository;
 import com.momolearn.model.dto.ApplyTeacherDTO;
 import com.momolearn.model.dto.TeacherMemberDTO;
 import com.momolearn.model.dto.TeachersDTO;
-import com.momolearn.model.dto.TeachersListDTO;
 import com.momolearn.model.entity.Teachers;
 
 import lombok.RequiredArgsConstructor;
@@ -28,12 +23,7 @@ public class TeachersService {
 
 	private final TeachersRepository teachersRepository;
 	
-	private final ApplyTeacherRepository applyTeacherRepository;
-	
-	private final MembersRepository membersRepository;
-	
 	private ModelMapper mapper = new ModelMapper();
-	
 	
 	public TeachersDTO saveOneTeacher(ApplyTeacherDTO applyDTO) throws NotExistException, MessageException {
 		
@@ -71,12 +61,6 @@ public class TeachersService {
 		
 		List<Teachers> tealists = teachersRepository.findAll();
 		return Arrays.asList(mapper.map(tealists, TeachersDTO[].class));
-	}
-	
-	public List<TeachersListDTO> getAllTeacherList() {
-		
-		List<Teachers> tealists = teachersRepository.findAll();
-		return Arrays.asList(mapper.map(tealists, TeachersListDTO[].class));
 	}
 	
 	public TeachersDTO getOneTeacher(int id) throws NotExistException {

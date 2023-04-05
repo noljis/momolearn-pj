@@ -87,7 +87,7 @@
                 
                 <span>
                    <c:if test="${members.grade == 'admin'}">
-                    <button class="btn btn-outline-danger" style="float: right;" type="submit" onclick="location.href='${pageContext.request.contextPath}/notice/writeForm'">공지쓰기</button>
+                    <button class="btn btn-outline-danger" style="float: right;" type="submit" onclick="location.href='${pageContext.request.contextPath}/notice/writeform'">공지쓰기</button>
                    </c:if>
                </span>                            
             </div>

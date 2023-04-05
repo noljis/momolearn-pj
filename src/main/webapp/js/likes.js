@@ -21,7 +21,6 @@ $(document).ready(function(){
 		contentType: 'application/json; charset=utf-8',
 		success: function(response){
 			$('#likesCount').html('좋아요 '+response);
-			//alert("좋아요를 눌렀습니다.");
 		},
 		error:function(error){
 			alert("실패. 새로고침 해주세요");
@@ -40,7 +39,6 @@ $(document).ready(function(){
 		contentType: 'application/json; charset=utf-8',
 		success: function(response){
 			$('#likesCount').html('좋아요 '+response);
-			//alert("좋아요를 취소했습니다.");
 		},
 		error:function(error){
 			alert("실패. 새로고침 해주세요");

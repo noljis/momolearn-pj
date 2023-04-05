@@ -28,14 +28,12 @@ public class CommentService {
 	private final BoardRepository boardRepository;
 	
 	@Transactional
-	public int writeComment(String memId, int comNo, CommentSaveDTO dto) throws NotExistException {
+	public void writeComment(String memId, int comNo, CommentSaveDTO dto) throws NotExistException {
 		Members member = membersRepository.findById(memId).orElseThrow(()->new NotExistException("다시 로그인 해 주세요."));
 		Board board = boardRepository.findById(comNo).orElseThrow(()->new NotExistException("해당 게시글이 존재하지 않습니다."));
 		dto.setMembers(member);
 		dto.setBoard(board);
-		commentRepository.save(dto.toEntity());
-		
-		return dto.getCmtNo();
+		commentRepository.save(dto.toEntity()).getCmtNo();
 		
 	}
 

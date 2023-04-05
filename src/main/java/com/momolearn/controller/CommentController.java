@@ -18,6 +18,7 @@ import com.momolearn.exception.NotExistException;
 import com.momolearn.model.dto.CommentDTO;
 import com.momolearn.model.dto.CommentSaveDTO;
 import com.momolearn.model.dto.MembersDTO;
+import com.momolearn.model.service.AlarmService;
 import com.momolearn.model.service.CommentService;
 
 import lombok.RequiredArgsConstructor;
@@ -28,10 +29,13 @@ import lombok.RequiredArgsConstructor;
 public class CommentController {
 	
 	private final CommentService commentService;
+	private final AlarmService alarmService;
 	
 	@PostMapping("/board/{comNo}/comment")
-	public int writeComment(@PathVariable int comNo, @ModelAttribute("members") MembersDTO members, @RequestBody CommentSaveDTO dto) throws NotExistException {
-		return commentService.writeComment(members.getMemId(), comNo, dto);
+	public void writeComment(@PathVariable int comNo, @ModelAttribute("members") MembersDTO members, @RequestBody CommentSaveDTO dto) throws NotExistException {
+		
+		commentService.writeComment(members.getMemId(), comNo, dto);
+		alarmService.writeCommentEvent(comNo);
 	}
 	
 	@GetMapping("/board/{comNo}/comment")
@@ -41,15 +45,13 @@ public class CommentController {
 	}
 	
 	@PutMapping("/board/{comNo}/comment/{cmtNo}")
-	public int updateComment(@PathVariable int comNo, @PathVariable int cmtNo, @RequestBody CommentDTO dto) throws NotExistException {
+	public void updateComment(@PathVariable int comNo, @PathVariable int cmtNo, @RequestBody CommentDTO dto) throws NotExistException {
 		commentService.updateComment(cmtNo, dto);
-		return cmtNo;
 	}
 	
 	@DeleteMapping("/board/{comNo}/comment/{cmtNo}")
-	public int deleteComment(@PathVariable int comNo, @PathVariable int cmtNo) throws NotExistException {
+	public void deleteComment(@PathVariable int comNo, @PathVariable int cmtNo) throws NotExistException {
 		commentService.deleteComment(cmtNo);
-		return cmtNo;
 	}
 	
 	@ExceptionHandler

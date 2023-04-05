@@ -29,8 +29,8 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <a href="${pageContext.request.contextPath}/board" class="nav-item nav-link">커뮤니티</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="${pageContext.request.contextPath}/teachers/list" class="nav-item nav-link">강사진</a>
-                &nbsp;&nbsp;&nbsp;&nbsp;
+                <!-- <a href="${pageContext.request.contextPath}/teachers/list" class="nav-item nav-link">강사진</a>
+                &nbsp;&nbsp;&nbsp;&nbsp; -->
                 <a href="${pageContext.request.contextPath}/notice" class="nav-item nav-link">공지사항</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <!-- 세션ID 존재할 경우 나오는 메뉴 Start-->
@@ -59,7 +59,7 @@
                                 </c:when>
                             </c:choose>
                             <a href="${pageContext.request.contextPath}/member/sessionOut"
-                                class="dropdown-item">로그아웃</a>
+                                class="dropdown-item" onclick="kakaoLogout()">로그아웃</a>
                         </div>
                     </div>
                 </c:if>
@@ -77,3 +77,22 @@
         <!-- axios 사용을 위한 추가 설정 -->
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/select.js"></script>
+        
+        
+		<script src = "https://developers.kakao.com/sdk/js/kakao.min.js"
+			integrity="sha384-dpu02ieKC6NUeKFoGMOKz6102CLEWi9+5RQjWSV0ikYSFFd8M3Wp2reIcquJOemx" crossorigin="anonymous"></script>
+		<script> Kakao.init('49ef5fc681ad9efc0d82ad0375574e44'); </script>	
+		
+		<script>
+			function kakaoLogout() {
+			  Kakao.Auth.logout()
+			    .then(function() {
+			      alert('logout ok\naccess token -> ' + Kakao.Auth.getAccessToken());
+			      deleteCookie();
+			    })
+			    .catch(function() {
+			      alert('Not logged in');
+			    });
+			}
+		</script>	
+  

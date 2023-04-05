@@ -61,7 +61,7 @@ public class NoticeController {
 		return "board/notice";
 	}
 	
-	@GetMapping("/writeForm")
+	@GetMapping("/writeform")
 	public String writeForm(@ModelAttribute BoardSaveDTO dto) {
 		return "board/noticeWriteForm";
 	}
