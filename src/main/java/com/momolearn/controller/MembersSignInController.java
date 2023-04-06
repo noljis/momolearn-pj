@@ -60,7 +60,7 @@ public class MembersSignInController {
 	        String password = "1111" ;
 	        
 	        MembersDTO memberDto = new MembersDTO(memId[0], password, name, email, "user.jpg", "student", LocalDateTime.now());
-	        String res = membersService.memJoin(memberDto);
+	        MembersDTO res = membersService.memJoin(memberDto);
 	        
 	        if (res != null) {
 	            session.setAttribute("memId", email);
@@ -70,13 +70,14 @@ public class MembersSignInController {
 	    		MembersDTO members = membersService.loginMember(memId[0].toString(), password);
 	    		
 	    		if (members != null) { 
-	    			model.addAttribute("members", members); 
+	    			
+	    			model.addAttribute("member", members); 
 
-	    			 mv.setViewName("redirect:/");
+	    			mv.setViewName("member/joinInfo");
 
 	    		} else {
 	    			
-	    			mv.setViewName("loginError");
+	    			mv.setViewName("Error");
 	    		}
 	            
 			}else {

@@ -76,7 +76,7 @@
 					</div>
 					
 					<div class="text">
-						<p id="p">sns계정으로 시작하기</p>
+						<p id="p">간편 가입하기</p>
 					</div>
 					
 					<div class="login_sns">
