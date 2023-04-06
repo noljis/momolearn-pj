@@ -127,6 +127,7 @@ public class LecturesController {
 		return "data_res";
 	}
 	
+	@ApiOperation(value = "강의 전체목록", notes = "강의 전체목록을 조회")
 	@GetMapping(value = "/lecture-list", produces = "application/json;charset=UTF-8")
 	public String getAllLectures(Model model)throws MessageException, IOException {
 		
@@ -204,6 +205,7 @@ public class LecturesController {
 	}
 	
 	
+	@ApiOperation(value = "강의 부분검색", notes = "강의 제목으로 부분검색")
 	@GetMapping(value = "/search-lecture/{title}", produces = "application/json;charset=UTF-8")
 	public String searchLecture(Model model, @PathVariable String title) {
 		log.info("searchLecture()호출: " + title);
@@ -236,6 +238,7 @@ public class LecturesController {
 		return "lecture/lecture-list";
 	}
 	
+	@ApiOperation(value = "카테고리로 강의 조회", notes = "카테고리에 해당하는 강의 조회")
 	@GetMapping(value = "/search-category/{title}", produces = "application/json;charset=UTF-8")
 	public String searchCategory(Model model, @PathVariable int title) {
 		log.info("카테고리로 강의 조회 메소드. 카테고리Id: " + title);
