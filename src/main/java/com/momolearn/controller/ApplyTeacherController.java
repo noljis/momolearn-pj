@@ -14,9 +14,7 @@ import com.momolearn.exception.MessageException;
 import com.momolearn.exception.NotExistException;
 import com.momolearn.model.dto.ApplyTeacherDTO;
 import com.momolearn.model.dto.MembersDTO;
-import com.momolearn.model.dto.TeachersDTO;
 import com.momolearn.model.entity.ApplyTeacher;
-import com.momolearn.model.entity.Members;
 import com.momolearn.model.service.ApplyTeacherService;
 import com.momolearn.model.service.MembersService;
 import com.momolearn.model.service.TeachersService;
@@ -147,7 +145,7 @@ public class ApplyTeacherController {
 		membersService.updateGrade(apply.getMembersMemId());
 		MembersDTO member = membersService.getOneMember(apply.getMembersMemId());
 		
-		TeachersDTO teacher = teachersService.saveOneTeacher(apply);
+		teachersService.saveOneTeacher(apply);
 		model.addAttribute("apply", apply);
 		model.addAttribute("member", member);
 
