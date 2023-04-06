@@ -71,7 +71,7 @@ public class BoardController {
 	
 	@GetMapping("/writeform")
 	public String writeForm(@ModelAttribute BoardSaveDTO dto) {
-		return "board/writeform";
+		return "board/writeForm";
 	}
 	
 	@PostMapping
