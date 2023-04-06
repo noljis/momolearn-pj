@@ -16,14 +16,19 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class CommentSaveDTO {
+	
 	private int cmtNo;
+	
 	private Board board;
+	
 	private Members members;
+	
 	private String cmtContent;
+	
 	private LocalDateTime cmtRegdate;
 	
-	
 	public Comment toEntity() {
+		
 		Comment comment = Comment.builder()
 				.cmtNo(cmtNo)
 				.board(board)
@@ -31,6 +36,9 @@ public class CommentSaveDTO {
 				.cmtContent(cmtContent)
 				.cmtRegdate(cmtRegdate)
 				.build();
+		
 		return comment;
+		
 	}
+	
 }

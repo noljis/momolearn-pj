@@ -119,6 +119,7 @@
 		    if (file.size > maxSize) {
 		    	
 		      alert("썸네일 크기는 최대 3MB 까지만 업로드 가능합니다.");
+		      
 		      return false; 
 		      
 		    }

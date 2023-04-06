@@ -75,7 +75,9 @@ public class Members  {
 	public List<Cart> cart = new ArrayList<>();
 	
 	public Members(String memId) {
+		
 		this.memId = memId;		
+		
 	}
 
 }

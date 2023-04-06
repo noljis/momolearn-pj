@@ -42,13 +42,14 @@ import lombok.extern.slf4j.Slf4j;
 public class NoticeController {
 	
 	private final BoardService boardService;
+	
 	private final LikesService likesService;
 	
 	@GetMapping
 	public String getNoticeList(Model model, @PageableDefault(sort = "comNo", direction = Sort.Direction.DESC) Pageable pageable) {
 		
 		Page<BoardListDTO> listPage = boardService.pagingNotice(pageable);
-		int nowPage = listPage.getPageable().getPageNumber()+1; //pagable은 0부터 시작
+		int nowPage = listPage.getPageable().getPageNumber()+1;
 		int startPage = Math.max(1, listPage.getPageable().getPageNumber() -2);
 		int endPage = Math.min(listPage.getPageable().getPageNumber() +2, listPage.getTotalPages());
 		
@@ -63,63 +64,66 @@ public class NoticeController {
 	
 	@GetMapping("/writeform")
 	public String writeForm(@ModelAttribute BoardSaveDTO dto) {
+		
 		return "board/noticeWriteForm";
+		
 	}
 	
 	@PostMapping
 	public String write(@Valid BoardSaveDTO dto, BindingResult bindingResult) throws NotExistException{
-		System.out.println("write()---------------");
-		System.out.println(dto.toString());
 		
-		//유효성 검증
 		if(bindingResult.hasErrors()) {
-			//에러를 list에 저장
+			
 			List<ObjectError> errorList = bindingResult.getAllErrors();
+			
 			for(ObjectError error : errorList) {
+				
 				log.info("등록 실패: "+error.getDefaultMessage());
 				throw new NotExistException(error.getDefaultMessage());
 			}
 		}
 		
-		boardService.savePost(dto); //->해당 게시글로 가게할지?고민중
+		boardService.savePost(dto);
+		
 		return "redirect:/notice";
 	}
 	
 	@GetMapping("/{comNo}")
 	public String read(@PathVariable int comNo, Model model) throws NotExistException{
-		//조회
+
 		BoardDTO dto = boardService.readPost(comNo);
-		//조회수증가
+
 		boardService.increaseViewCount(comNo);
-		//좋아요개수
+
 		long likesCount = likesService.countLike(comNo);
-		//좋아요여부 List
+
 		List<LikesDTO> likesList = likesService.getLikesList(comNo);
-		System.out.println(likesList);
 		
 		model.addAttribute("dto", dto);
 		model.addAttribute("likesCount", likesCount);
 		model.addAttribute("likesList", likesList);
 		model.addAttribute("localDateTimeFormat", new SimpleDateFormat("yyyy-MM-dd hh:mm"));
+		
 		return "board/noticeDetail";
 	}
 	
 	@GetMapping("/updateForm/{comNo}")
 	public String noticeUpdateForm(@PathVariable int comNo, Model model) throws NotExistException{
-		System.out.println("updateForm()----------------");
+
 		model.addAttribute("dto", boardService.readPost(comNo));
+		
 		return "board/noticeUpdateForm";
 	}
 	
 	@PutMapping("/{comNo}")
 	public String updateNotice(@PathVariable int comNo, @Valid BoardSaveDTO dto, BindingResult bindingResult) throws NotExistException{
-		System.out.println("update()------------------");
 		
-		//유효성 검증
 		if(bindingResult.hasErrors()) {
-			//에러를 list에 저장
+
 			List<ObjectError> errorList = bindingResult.getAllErrors();
+			
 			for(ObjectError error : errorList) {
+				
 				log.info("수정 실패: "+error.getDefaultMessage());
 				throw new NotExistException(error.getDefaultMessage());
 			}
@@ -130,18 +134,20 @@ public class NoticeController {
 		
 	}
 	
-	//게시글 삭제
 	@DeleteMapping("/{comNo}")
 	public String deleteNotice(@PathVariable int comNo) throws NotExistException {
-		System.out.println("delete() ---------");
+
 		boardService.deletePost(comNo);
+		
 		return "redirect:/notice";
 	}
 	
 	@ExceptionHandler
 	public String exHandler(NotExistException e, Model model) {
+		
 		e.printStackTrace();
 		model.addAttribute("errorMsg", e.getMessage());
+		
 		return "error";
 	}
 	

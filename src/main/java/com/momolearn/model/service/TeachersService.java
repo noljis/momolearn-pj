@@ -31,9 +31,11 @@ public class TeachersService {
 		
 		try {
 			Teachers teachers = teachersRepository.save(teacher);
+			
 			return mapper.map(teachers, TeachersDTO.class);
 			
 		} catch (Exception e) {
+			
 			throw new MessageException("강사 등록에 실패했습니다.");
 		}
 	}
@@ -42,24 +44,28 @@ public class TeachersService {
 		
 		Teachers teacher = teachersRepository.findByMemIdAndApprove(id)
 				.orElseThrow(() -> new NotExistException("현재 강사로 등록되어 있지 않습니다."));
+		
 		return new TeacherMemberDTO(teacher.getApplyTeacher().getMembers().getName(), teacher.getTeacherNo());
 	}	
 
 	public String getOneteacher(int id) {
 		
 		Optional<Teachers> teacher = teachersRepository.findById(id);
+		
 		return teacher.get().getApplyTeacher().getMembers().getName();
 	}
 
 	public String getOneteacherPro(int id) {
 		
 		Optional<Teachers> teacher = teachersRepository.findById(id);
+		
 		return teacher.get().getApplyTeacher().getMembers().getProfile();
 	}
 	
 	public List<TeachersDTO> getTeacherList() {
 		
 		List<Teachers> tealists = teachersRepository.findAll();
+		
 		return Arrays.asList(mapper.map(tealists, TeachersDTO[].class));
 	}
 	
@@ -67,6 +73,7 @@ public class TeachersService {
 		
 		Teachers teacher = teachersRepository.findById(id)
 				.orElseThrow(() -> new NotExistException("등록된 강사가 아닙니다."));
+		
 		return mapper.map(teacher, TeachersDTO.class);
 	}
 	

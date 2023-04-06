@@ -10,9 +10,13 @@ import lombok.NoArgsConstructor;
 public class MyLecturesTeacherDTO  {
 	
 	private Integer mylecId;
+	
 	private MembersDTO member;
+	
 	private LecturesDTO lecture;
+	
 	private TeachersDTO teachers; 
+	
 	private MembersDTO lectureTeachersApplyTeacherMembers;
 
 }

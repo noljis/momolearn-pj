@@ -63,7 +63,9 @@ public class Teachers {
 	public List<Lectures> lecture = new ArrayList<>();
 	
 	public void setTeacherNo(Integer teacherNo) {
+		
 		this.teacherNo = teacherNo;
+		
 	}
 	
 }

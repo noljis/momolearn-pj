@@ -37,7 +37,9 @@ public class Category  {
 	public List<CategoryLecture> categoryLecture = new ArrayList<>();
 	
 	public Category(String cateName) {
+		
 		this.cateName = cateName;
+		
 	}
 	
 }

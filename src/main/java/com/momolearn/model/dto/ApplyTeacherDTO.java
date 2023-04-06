@@ -15,15 +15,23 @@ import lombok.NoArgsConstructor;
 public class ApplyTeacherDTO {
 
     private int id;
+    
     private String membersMemId;
+    
     private String phoneNum;
+    
     private String hopeField;
+    
     private String intro;
+    
     private String pfLink;
+    
     private LocalDateTime applyRege;
+    
     private String approve;
     
     public ApplyTeacher toEntity(ApplyTeacherDTO applyDTO) {
+    	
     	return ApplyTeacher.builder()
     			.id(applyDTO.getId())
     			.phoneNum(applyDTO.getPhoneNum())
@@ -34,6 +42,7 @@ public class ApplyTeacherDTO {
     			.applyRege(applyDTO.getApplyRege())
     			.members(new Members(applyDTO.getMembersMemId()))
     			.build();
+    	
     }
 
 }

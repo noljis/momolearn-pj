@@ -1,6 +1,7 @@
 let lecture;
 
 function drawTable(list) {
+	
 	const container = document.createElement("div");
 	container.className = "container";
 
@@ -13,6 +14,7 @@ function drawTable(list) {
 	row.className = "row justify-content-center";
 
 	list.forEach((lecture) => {
+		
 		const col = document.createElement("div");
 		col.className = "col-md-3";
 
@@ -126,30 +128,29 @@ function drawTable(list) {
 	return document.getElementById("searchList").appendChild(container);
 }
 
-
-// 강의 검색
 function dataReceive(title) {
+	
 	axios({
 		method: "GET",
 		url: "/../../momolearn/lectures/search-lecture/" + title
 	}).then(function(resData) {
 		lecture = resData.data;
-		console.log('넘어온 데이터' + lecture);
-		// data타입이 object가 아니면 json이 아닌 예외 메세지가 왔다는 뜻
+		
 		if (typeof (lecture) == "string") {
 			alert("🥲검색어 : " + title + lecture);
 		} else if (typeof (lecture) == "object") {
 			drawTable(lecture);
 		}
+		
 	}).catch(function() {
 		alert("검색어를 입력하여 주십시오.");
 	});
 }
-//id=btn인 버튼을 클릭시 발생
+
 document.querySelector('#btn').addEventListener('click', function() {
-	// title: searchLecture input 태그의 값
+	
 	let title = document.querySelector('#searchLecture').value;
-	console.log(title);
 	dataReceive(title);
 	title.innerText = '';
+	
 });

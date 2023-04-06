@@ -80,10 +80,12 @@ public class ApplyTeacher  {
 	}
 
 	public void setApplyForm(String phoneNum, String hopeField, String pfLink, String intro) {
+		
 		this.phoneNum = phoneNum;
 		this.hopeField = hopeField;
 		this.pfLink = pfLink;
 		this.intro = intro;
+		
 	}
     
 }

@@ -46,15 +46,14 @@ public class KakaoService {
 			System.out.println("responseCode : " + responseCode); 
 
 			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-			System.out.println("----");
+
 			String line = "";
 			String result = "";
 			
 			while((line = br.readLine()) != null) {
+				
 				result += line;
 			}
-			
-			System.out.println("response body : " + result); 
 			
 			JsonParser parser = new JsonParser();
 			JsonElement element = parser.parse(result);
@@ -62,13 +61,11 @@ public class KakaoService {
 			accessToken  = element.getAsJsonObject().get("access_token").getAsString();
 			refreshToken  = element.getAsJsonObject().get("refresh_token").getAsString();
 
-            System.out.println("access_token : " + accessToken);
-            System.out.println("refresh_token : " + refreshToken);
-            
 			br.close();
 			bw.close();
 			
 		} catch (Exception e) {
+			
 			e.printStackTrace();
 		}
 		
@@ -88,14 +85,12 @@ public class KakaoService {
 			conn.setDoOutput(true);
 			conn.setRequestProperty("Authorization", "Bearer " + accessToken);
 			
-			int responseCode = conn.getResponseCode(); //401에러 남.. 200이라면 성공
+			int responseCode = conn.getResponseCode();
 			
 			if (responseCode != 200) {
 				
 				throw new MessageException("로그인에 실패하셨습니다.");
 			}
-			
-			System.out.println("responseCode : " + responseCode);
 			
 			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 			
@@ -103,9 +98,9 @@ public class KakaoService {
 			String result = "";
 			
 			while((line = br.readLine()) != null) {
+				
 				result += line;
 			}
-			System.out.println("response body : " + result);
 					
 			JsonParser parser = new JsonParser();
 			JsonElement element = parser.parse(result);
@@ -119,10 +114,10 @@ public class KakaoService {
 			userInfo.put("nickname", nickname);
 			userInfo.put("email", email);
 		
-	       System.out.println("nickname : " + nickname);
-	       System.out.println("email : " + email);
 		} catch (Exception e) {
+			
 			e.printStackTrace();
+			
 		}
 		
 		return userInfo;
@@ -139,13 +134,6 @@ public class KakaoService {
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			conn.setRequestProperty("Authorization", "Bearer " + accessToken);
-			
-//	        int responseCode = conn.getResponseCode();
-//	        
-//	        if (responseCode != 200) {
-//	            throw new RuntimeException("카카오 로그아웃 요청 실패: HTTP error code: " + responseCode);
-//	        }
-			
 			
 		} catch (Exception e) {
 			

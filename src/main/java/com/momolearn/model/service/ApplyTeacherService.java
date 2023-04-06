@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import org.aspectj.weaver.NewFieldTypeMunger;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +13,6 @@ import com.momolearn.exception.MessageException;
 import com.momolearn.exception.NotExistException;
 import com.momolearn.model.ApplyTeacherRepository;
 import com.momolearn.model.MembersRepository;
-import com.momolearn.model.TeachersRepository;
 import com.momolearn.model.dto.ApplyTeacherDTO;
 import com.momolearn.model.entity.ApplyTeacher;
 import com.momolearn.model.entity.Members;
@@ -25,8 +23,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ApplyTeacherService {
 
-	private final TeachersRepository teachersRepository;
-	
 	private final ApplyTeacherRepository applyTeacherRepository;
 	
 	private final MembersRepository membersRepository;
@@ -36,27 +32,27 @@ public class ApplyTeacherService {
 	public List<ApplyTeacherDTO> getApplyList() {
 		
 		List<ApplyTeacher> applylists = applyTeacherRepository.findAll();
+		
 		return Arrays.asList(mapper.map(applylists, ApplyTeacherDTO[].class));
+		
 	}
 	
-	// X 강사 승인 신청서가 있는 회원 목록
-	public List<Members> getApplyApproveMembers() {
-//		List<Members> applymemlist = membersRepository.findBy;
-		return null;
-	}
-
 	public ApplyTeacherDTO write(ApplyTeacherDTO apply) throws MessageException{
 		
 		ApplyTeacher applyTeachers = apply.toEntity(apply);
 		
 		try {
+			
 			ApplyTeacher applyTeacher = applyTeacherRepository.save(applyTeachers);
 			
 			return mapper.map(applyTeacher, ApplyTeacherDTO.class);
 			
 		} catch (Exception e) {
+			
 			throw new MessageException("신청서 등록에 실패했습니다.");
+			
 		}
+		
 	}	
 	
 	public ApplyTeacherDTO read(String membersMemId) throws NotExistException {
@@ -75,6 +71,7 @@ public class ApplyTeacherService {
 				.orElseThrow(() -> new NotExistException("신청서가 존재하지 않습니다."));
 		applyTeacher.setApplyForm(applyDTO.getPhoneNum(), applyDTO.getHopeField(), applyDTO.getPfLink(), applyDTO.getIntro());
 		applyTeacherRepository.save(applyTeacher);
+		
 	}
 
 	@Transactional

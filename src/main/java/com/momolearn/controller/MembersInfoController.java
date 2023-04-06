@@ -21,16 +21,19 @@ public class MembersInfoController {
 	
 	@GetMapping
 	public String getMembersInfo(String memId, Model model) throws NotExistException {
-		System.out.println("getMembersInfo()------------------");
+		
 		MembersDTO member = membersService.getOneMember(memId);
 		model.addAttribute("member", member);
+		
 		return "member/memberInfoView";
 	}
 	
-	@ExceptionHandler
+	@ExceptionHandler(NotExistException.class)
 	public String exHandler(NotExistException e, Model model) {
+		
 		e.printStackTrace();
 		model.addAttribute("errorMsg", e.getMessage());
+		
 		return "error";
 	}
 }

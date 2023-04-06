@@ -20,7 +20,9 @@ public interface BoardRepository extends JpaRepository<Board, Integer>{
 	int increaseCountByComNo(@Param("comNo") int comNo);
 
 	Page<Board> findByComTitleContaining(String searchText, Pageable pageable);
+	
 	Page<Board> findByComContentContaining(String searchText, Pageable pageable);
+	
 	Page<Board> findByMembers_MemIdContaining(String searchText, Pageable pageable);
 
 	@Query(value="select * from Board b where b.type='community' group by b.com_no order by com_view_count desc limit 5", nativeQuery = true)

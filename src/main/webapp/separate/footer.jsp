@@ -42,7 +42,6 @@
 </div>
 <!-- Footer End -->
 
-<!-- axios 사용을 위한 추가 설정 -->
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 

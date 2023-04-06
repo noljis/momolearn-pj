@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>성공뷰</title>
+<title>성공</title>
 </head>
 <body onload='succ("${msg}")'>
 

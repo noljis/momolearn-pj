@@ -73,7 +73,6 @@ public class CartController {
 		
 	}
 	
-	//3. 장바구니 조회
 	@ApiOperation(value = "수강바구니 담기", notes = "해당 강의 수강바구니에 담기")
 	@GetMapping(value = "/get-cart", produces = "application/json;charset=UTF-8")
 	public String getCart(Model model, @ModelAttribute("members") MembersDTO member) throws NotExistException {
@@ -86,7 +85,6 @@ public class CartController {
 		return "cart/cart-view";
 	}
 	
-	//5. 결제 API 사용 - 결제성공시 mylecture에 추가, 장바구니 데이터 삭제 -> 내 강의로 이동, 강의 학생수 1 증가
 	@ApiOperation(value = "결제 성공", notes = "결제 후 수강바구니 삭제 및 MyLectures 추가")
 	@PostMapping(value = "/success", produces = "application/json;charset=UTF-8")
 	public void movePaymentForm(@RequestBody PaymentRequestDTO request) throws NotExistException {
@@ -96,7 +94,6 @@ public class CartController {
 		
 	}
 	
-	//6. 장바구니 삭제
 	@ApiOperation(value = "장바구니 삭제", notes = "장바구니에서 체크한 강의 삭제 메소드")
 	@DeleteMapping(value = "/delete", produces = "application/json;charset=UTF-8")
 	public ResponseEntity<?> deleteCart(@RequestBody PaymentRequestDTO request) throws NotExistException {
@@ -104,29 +101,33 @@ public class CartController {
 	    
 	    cartService.deleteCart(request);
 	    
-	    return ResponseEntity.ok().build(); // 코드 200
+	    return ResponseEntity.ok().build();
 	}
 	
-	//NotExistException 관련 예외처리
 	@ExceptionHandler(value = NotExistException.class)
 	public String notExistException(NotExistException ne, Model model) {
-		System.out.println(ne.getMessage());
-		model.addAttribute("errorMsg", ne.getMessage());
-		return "error"; //예: WEB-INF/error.jsp
-	}
-	
-	// MessageException 관련 예외처리
-	@ExceptionHandler(value = MessageException.class)
-	public String messageExceptio(MessageException ne, Model model) {
+		
 		ne.printStackTrace();
 		model.addAttribute("errorMsg", ne.getMessage());
-		return "error"; // 예: WEB-INF/error.jsp
+		
+		return "error";
+		
 	}
 	
-	//비로그인시 HttpSessionRequiredException 예외처리
+	@ExceptionHandler(value = MessageException.class)
+	public String messageExceptio(MessageException ne, Model model) {
+		
+		ne.printStackTrace();
+		model.addAttribute("errorMsg", ne.getMessage());
+		
+		return "error";
+		
+	}
+	
 	@ExceptionHandler(HttpSessionRequiredException.class)
     public String handleSessionRequiredException(HttpSessionRequiredException e, Model model) {
 		
+		e.printStackTrace();
 		model.addAttribute("errorMsg", "로그인 후 이용해주시기 바랍니다.");
 		
         return "cart/error";

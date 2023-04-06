@@ -13,8 +13,11 @@ import lombok.NoArgsConstructor;
 public class CoursesListDTO {
 
 	private List<Integer> lectureId = new ArrayList<>();
+	
     private List<String> title = new ArrayList<>();
+    
     private List<String> time = new ArrayList<>();
+    
     private List<String> url = new ArrayList<>();
 
 }

@@ -40,8 +40,10 @@ public class Cart  {
 	
 	@Builder
 	public Cart(Members member, Lectures lecture) {
+		
 		this.member = member;
 		this.lecture = lecture;
+		
 	}
 	
 }

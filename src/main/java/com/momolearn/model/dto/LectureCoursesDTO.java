@@ -15,16 +15,27 @@ import lombok.Setter;
 public class LectureCoursesDTO {
 
     private int id;
+    
     private int teachersTeacherNo;
+    
     private String title;
+    
     private String image;
+    
     private int price;
+    
     private int cnt;
+    
     private LocalDateTime regdate;
+    
     private String info;
+    
     private String description;
+    
     private int applyCnt;
+    
     private List<CoursesDTO> courses;
+    
     private MembersDTO teachersApplyTeacherMembers;
 
 }

@@ -1,6 +1,7 @@
 let lecture2;
 
 function drawTable2(list) {
+	
 	let container = document.createElement("div");
 	container.className = "container";
 
@@ -90,13 +91,15 @@ function drawTable2(list) {
 		categoryWrapper.style.marginTop = "10px";
 
 		let categories = JSON.parse(lecture.category);
-		console.log(lecture.category);
+
 		categories.forEach((category) => {
+			
 			let categoryBtn = document.createElement("a");
 			categoryBtn.className = "btn btn-sm btn-primary px-3 me-2 mb-2";
 			categoryBtn.style.borderRadius = "30px";
 			categoryBtn.textContent = category;
 			categoryWrapper.appendChild(categoryBtn);
+			
 		});
 
 		card.appendChild(thumbnailLink);
@@ -120,69 +123,70 @@ function drawTable2(list) {
 	return document.getElementById("lectureList").appendChild(container);
 }
 
-// 강의 전체 조회 onload
 window.onload = function() {
+	
 	axios({
 		method: "GET",
 		url: "/../../momolearn/lectures/lecture-list"
 	}).then(function(resData) {
 		lecture2 = resData.data;
-		console.log('넘어온 데이터' + lecture2);
-		// data타입이 object가 아니면 json이 아닌 예외 메세지가 왔다는 뜻
+		
 		if (typeof (lecture2) == "string") {
 			alert("실행중 문제 발생 : " + lecture2);
 		} else if (typeof (lecture2) == "object") {
 			drawTable2(lecture2);
 		}
+		
 	}).catch(function() {
 		alert("실행중 문제 발생 : " + "검색된 강의가 없습니다.");
 	});
 }
 
-//카테고리로 강의 검색
 function dataReceive2(title) {
+	
 	axios({
 		method: "GET",
 		url: "/../../momolearn/lectures/search-category/" + title
 	}).then(function(resData) {
 		lecture2 = resData.data;
-		// data타입이 object가 아니면 json이 아닌 예외 메세지가 왔다는 뜻
+		
 		if (typeof (lecture2) == "string") {
 			alert(lecture2);
 			return document.getElementById("lectureList").innerHTML = '';
 		} else if (typeof (lecture2) == "object") {
 			drawTable2(lecture2);
 		}
+		
 	}).catch(function() {
 		alert("실행중 문제 발생 : " + "값을 입력해주세요.");
 	});
 }
 
-
-
-//category값 버튼(반복문: querySelectorAll, id가 catebtn인 모든 버튼을 조회)
 document.querySelectorAll('#catebtn').forEach(function(button) {
+	
 	button.addEventListener('click', function() {
+		
 		let title = button.value;
 		dataReceive2(title);
 		title.innerText = '';
+		
 	});
 });
 
-//전체조회 버튼
 document.querySelector('#catebtn2').addEventListener('click', function() {
+	
 	axios({
 		method: "GET",
 		url: "/../../momolearn/lectures/lecture-list"
 	}).then(function(resData) {
 		lecture2 = resData.data;
-		//console.log('넘어온 데이터' + lecture2);
-		// data타입이 object가 아니면 json이 아닌 예외 메세지가 왔다는 뜻
+		
 		if (typeof (lecture2) == "string") {
 			alert("실행중 문제 발생 : " + lecture2);
 		} else if (typeof (lecture2) == "object") {
 			drawTable2(lecture2);
 		}
+		
 	}).catch(function() {
 		alert("실행중 문제 발생 : " + "검색된 강의가 없습니다.");
 	});

@@ -13,14 +13,19 @@ import lombok.NoArgsConstructor;
 public class TeachersDTO  {
 	
 	private int teacherNo;
+	
 	private String phoneNum;
+	
 	private String hope;
+	
 	private String intro;
+	
 	private String pfLink;
+	
 	private int applyId;
 
-
 	public static Teachers toEntity(ApplyTeacherDTO applyDTO) {
+		
 		return Teachers.builder()
 				.phoneNum(applyDTO.getPhoneNum())
 				.pfLink(applyDTO.getPfLink())
@@ -28,5 +33,7 @@ public class TeachersDTO  {
 				.intro(applyDTO.getIntro())
 				.applyTeacher(new ApplyTeacher(applyDTO.getId()))
 				.build();
+		
 	}
+	
 }

@@ -90,9 +90,7 @@ public class LecturesController {
 		}
 
 		LecturesDTO lecture = lecturesService.uploadLecture(lectureDTO);
-
 		lecturesService.getCategory(category, lecture);
-		
 		model.addAttribute("lecture", lecture);
 
 		return "redirect:courses-form/" + URLEncoder.encode(lecture.getTitle(), StandardCharsets.UTF_8) + "/" + lecture.getId();
@@ -117,11 +115,9 @@ public class LecturesController {
 		log.info("강좌 업로드 메소드: " + coursesListDTO.toString());
 		
 		List<CoursesDTO> courses = lecturesService.uploadCourses(coursesListDTO);
-		
 		JsonObject jsonData = new JsonObject();
 		
 		jsonData.addProperty("id", courses.get(0).getLectureId());
-		
 		model.addAttribute("data", jsonData);
 		
 		return "data_res";
@@ -139,7 +135,6 @@ public class LecturesController {
 			
 		} catch (JsonIOException s) {
 			
-			System.out.println("JSONException");
 			model.addAttribute("data", "내부적인 오류로 검색하지 못했습니다.");
 			s.printStackTrace();
 			
@@ -344,14 +339,16 @@ public class LecturesController {
 	
 	@ExceptionHandler(value = NotExistException.class)
 	public String notExistException(NotExistException ne, Model model) {
-		System.out.println(ne.getMessage());
+
 		ne.printStackTrace();
 		model.addAttribute("errorMsg", ne.getMessage());
+		
 		return "error";
 	}
 	
 	@ExceptionHandler(value = MessageException.class)
 	public String messageException(MessageException ne, Model model) {
+		
 		ne.printStackTrace();
 		model.addAttribute("errorMsg", ne.getMessage());
 		return "error";
@@ -360,6 +357,7 @@ public class LecturesController {
 	@ExceptionHandler(HttpSessionRequiredException.class)
     public String handleSessionRequiredException(HttpSessionRequiredException e, Model model) {
 		
+		e.printStackTrace();
 		model.addAttribute("errorMsg", "로그인 후 이용해주시기 바랍니다.");
 		
         return "cart/error";
@@ -368,7 +366,8 @@ public class LecturesController {
 	
 	@ExceptionHandler(FileSizeLimitExceededException.class)
     public String fileSizeLimitExceededException(FileSizeLimitExceededException fe, Model model) {
-		System.out.println(fe.getMessage());
+		
+		fe.printStackTrace();
 		model.addAttribute("errorMsg", "썸네일 크기는 최대 3MB 까지만 업로드 가능합니다.");
 		
         return "error";

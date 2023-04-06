@@ -11,6 +11,7 @@ import lombok.Setter;
 public class PaymentRequestDTO {
 	
 	private List<String> checkedTitles;
+	
 	private String memId;
 
 }
