@@ -172,9 +172,10 @@
 ## [💣](#list)<a name="3">3. 트러블 슈팅</a>
 ☑ 카테고리로 강의 조회시 카테고리가 하나만 검색되는 이슈<br>
 👉<br>
-☑ 인기게시물 조회시 순환참조로 인한 직렬화 에러 이슈<br>   
-☑    
-
+☑ 인기게시물 조회시 순환참조로 인한 직렬화 에러 이슈<br>
+👉<br>
+☑ 좋아요한 글 목록 조회시 fetch join과 paging 병용 불가 이슈<br>
+👉 JPA에서 paging할때 -ToMany 관계는 데이터의 수가 변해 fetch join이 불가능함. fetch join을 제거하고 application.yml에 default_batch_fetch_size=10 추가<br>
 ## [✨](#list)<a name="4">4. 프로젝트 개선할 점</a>
 ✅ 
 ✅   
