@@ -20,17 +20,17 @@
             <jsp:include page="/separate/header2.jsp"></jsp:include>
 
 
-		<!-- Header Start -->
-	    <div class="container-fluid py-4">
-	        <div class="container">
-	            <div class="row justify-content">
-	                <div class="col-lg-10">
-	                    <div class="display-3" style="font-size: 20px;">강사 신청 > 신청서 상세</div>
-	                </div>
-	            </div>
-	        </div>
-	    </div>
-		<!-- Header End -->
+            <!-- Header Start -->
+            <div class="container-fluid py-4">
+                <div class="container">
+                    <div class="row justify-content">
+                        <div class="col-lg-10">
+                            <div class="display-3" style="font-size: 20px;">강사 신청 > 신청서 상세</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Header End -->
 
             <!-- Form Start -->
             <div align="center">
@@ -102,12 +102,16 @@
                                                         id="approveButton"
                                                         onclick="return confirm('강사신청서를 승인하시겠습니까?');">
                                                 </form>
+                                                <button type="button" class="btn btn-primary mr-2"
+                                                    onclick="location.href='${pageContext.request.contextPath}/applyteacher/applylist'">목록</button>
                                             </c:when>
                                             <c:when test="${members.grade == 'admin' && apply.approve == 'true'}">
                                                 <form id="sm" name="ta" method="post"
                                                     action="${pageContext.request.contextPath}/applyteacher/approve/${apply.id}">
                                                     <input class="btn btn-secondary" type="submit" value="승인" disabled>
                                                 </form>
+                                                <button type="button" class="btn btn-primary mr-2"
+                                                    onclick="location.href='${pageContext.request.contextPath}/applyteacher/applylist'">목록</button>
                                             </c:when>
                                             <c:when test="${members.grade == 'student'}">
                                                 <form id="sm" name="ta" method="get"
@@ -119,6 +123,8 @@
                                                     <input class="btn btn-primary" type="submit" value="삭제"
                                                         onclick="return confirm('강사신청서를 삭제하시겠습니까?');">
                                                 </form>
+                                                <button type="button" class="btn btn-primary mr-2"
+                                                    onclick="location.href='${pageContext.request.contextPath}/applyteacher/myapplylist'">목록</button>
                                             </c:when>
                                         </c:choose>
                                     </div>

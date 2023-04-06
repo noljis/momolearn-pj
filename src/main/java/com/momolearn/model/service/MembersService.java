@@ -199,8 +199,6 @@ public class MembersService {
 		
 		member.setGrade("teacher");
 		
-		membersRepository.save(member);
-		
 		return mapper.map(member, MembersDTO.class);
 	}
 	

@@ -70,8 +70,6 @@ public class ApplyTeacherService {
 		ApplyTeacher applyTeacher = applyTeacherRepository.findById(id)
 				.orElseThrow(() -> new NotExistException("신청서가 존재하지 않습니다."));
 		applyTeacher.setApplyForm(applyDTO.getPhoneNum(), applyDTO.getHopeField(), applyDTO.getPfLink(), applyDTO.getIntro());
-		applyTeacherRepository.save(applyTeacher);
-		
 	}
 
 	@Transactional
@@ -88,7 +86,6 @@ public class ApplyTeacherService {
 		ApplyTeacher applyTeacher = applyTeacherRepository.findById(id)
 				.orElseThrow(()->new NotExistException("신청서가 존재하지 않습니다."));
 		applyTeacher.setApprove("true");
-		applyTeacherRepository.save(applyTeacher);
 	}
 
 	public ApplyTeacherDTO getOneApplyTeacher(int id) throws NotExistException {
