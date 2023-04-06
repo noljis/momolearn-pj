@@ -169,7 +169,7 @@
                     <button type="button" class="btn btn-primary" style="margin-top: 15px;" onclick="location.href='../board'">목록</button>
                     <div class="text-right mt-3" style="float: right;">
                     <c:if test="${members.memId == dto.member.memId}">
-                        <button type="button" class="btn btn-primary" onclick="location.href='../board/updateForm/${dto.comNo}'">수정</button>&nbsp;
+                        <button type="button" class="btn btn-primary" onclick="location.href='../board/updateform/${dto.comNo}'">수정</button>&nbsp;
                         <form id="delete_form" action="../board/${dto.comNo}" method="post"  style="float:left;margin:0;">
 					    <input type="hidden" name="_method" value="delete"/>
 					    <a onclick="if (confirm('정말로 삭제하시겠습니까?')) document.getElementById('delete_form').submit();" class="btn btn-danger">삭제</a>&nbsp;
@@ -189,8 +189,6 @@
 	<jsp:include page="/separate/footer.jsp"></jsp:include>
 	<script src="${pageContext.request.contextPath}/js/comment.js"></script>
 	<script src="${pageContext.request.contextPath}/js/likes.js"></script>
-	<div id="message"></div>
-	<script src="${pageContext.request.contextPath}/js/alarm.js"></script>
 </body>
 
 </html>

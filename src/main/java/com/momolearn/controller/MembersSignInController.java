@@ -9,7 +9,6 @@ import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -30,19 +29,19 @@ import com.momolearn.model.service.FileService;
 import com.momolearn.model.service.KakaoService;
 import com.momolearn.model.service.MembersService;
 
+import lombok.RequiredArgsConstructor;
+
 @Controller
 @RequestMapping("member")
 @SessionAttributes({"members"})
+@RequiredArgsConstructor
 public class MembersSignInController {
 	
-	@Autowired
-	private MembersService membersService;
+	private final MembersService membersService;
 	
-	@Autowired
-	private FileService fileService;
+	private final FileService fileService;
 	
-	@Autowired
-	private KakaoService kakaoService;
+	private final KakaoService kakaoService;
 	
 	@GetMapping(value = "/kakaoLogin")
 	public ModelAndView kakaoLogin(@RequestParam("code") String code, HttpSession session, Model model) throws SQLException, MessageException {
@@ -54,15 +53,17 @@ public class MembersSignInController {
 		HashMap<String, Object> userInfo = kakaoService.getUserInfo(access_token);
 
 		if(userInfo.get("email") != null) {
+			
 	        String email = userInfo.get("email").toString();
 	        String[] memId = email.split("@");
 	        String name = userInfo.get("nickname").toString();
 	        String password = "1111" ;
 	        
 	        MembersDTO memberDto = new MembersDTO(memId[0], password, name, email, "user.jpg", "student", LocalDateTime.now());
-	        String res = membersService.memJoin(memberDto);
+	        MembersDTO res = membersService.memJoin(memberDto);
 	        
 	        if (res != null) {
+	        	
 	            session.setAttribute("memId", email);
 	            session.setAttribute("access_token", access_token);
 	            mv.addObject("memId", email);
@@ -70,13 +71,14 @@ public class MembersSignInController {
 	    		MembersDTO members = membersService.loginMember(memId[0].toString(), password);
 	    		
 	    		if (members != null) { 
-	    			model.addAttribute("members", members); 
+	    			
+	    			model.addAttribute("member", members); 
 
-	    			 mv.setViewName("redirect:/");
+	    			mv.setViewName("member/joinInfo");
 
 	    		} else {
 	    			
-	    			mv.setViewName("loginError");
+	    			mv.setViewName("Error");
 	    		}
 	            
 			}else {
@@ -150,7 +152,7 @@ public class MembersSignInController {
             model.addAttribute("member", member);
         }
         
-        return "member/findIdResult"; // 이동할 JSP 파일명
+        return "member/findIdResult";
 	}
 	
 	@GetMapping(value = "/findPwdView", produces = "application/json; charset=UTF-8")
@@ -173,7 +175,7 @@ public class MembersSignInController {
             
         }
         
-        return "member/findPwResult"; // 이동할 JSP 파일명
+        return "member/findPwResult";
 	
 	}
     
@@ -265,15 +267,20 @@ public class MembersSignInController {
 	
 	@GetMapping(value = "/delete/{memId}", produces = "application/json; charset=UTF-8")
 	public String delete(Model model, @PathVariable String memId, SessionStatus status){
+		
 		 try {
+			 
 		        membersService.deleteMember(memId);
 				status.setComplete();
 				status = null;
+				
 		        model.addAttribute("message", "회원 탈퇴가 완료되었습니다.");
 		        
 		    } catch (Exception e) {
+		    	
 		        e.printStackTrace();
 		        model.addAttribute("message", "회원 탈퇴에 실패했습니다.");
+		        
 		        return "member/myinfoview";
 		    }
 		 
@@ -284,7 +291,6 @@ public class MembersSignInController {
 	public String totalEx(SQLException e, HttpServletRequest req) { 
 		
 		e.printStackTrace();
-
 		req.setAttribute("errorMsg", e.getMessage());
 
 		return "error";

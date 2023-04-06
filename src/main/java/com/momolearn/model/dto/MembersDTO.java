@@ -10,12 +10,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class MembersDTO {
+	
 	private String memId;
+	
 	private String pw;
+	
 	private String name;
+	
 	private String email;
+	
 	private String profile;
+	
 	private String grade;
+	
 	private LocalDateTime regdate;
 	
 }

@@ -22,23 +22,21 @@ public class FileService {
 	    String savedFileName = memId + ".jpg" ;
 	    
 	    try {
-	        //프로필 사진 저장할 경로
+	    	
 	        String savePath = uploadPath + "/profile/";
 	        
-	        //file.getBytes(): 파일을 다운받기 위해 byte배열로 변환함
 	        byte[] bytes = file.getBytes();
 	        
-	        //src/main/webapp/img/profile/[유저id.확장자]
 	        Path path = Paths.get(savePath + savedFileName);
 	        
-	        //path에 파일(bytes)을 저장함
 	        Files.write(path, bytes);
 	        
 	    } catch (IOException e) {
+	    	
 	        e.printStackTrace();
 	        e.getMessage();
 	    }
-	    //DB에 저장할 image명 리턴
+	    
 		return savedFileName;
 	}
 	

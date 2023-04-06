@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 public class TeacherMemberDTO {
 	
 	private String name;
+	
 	private int teacherNo;
 	
 }

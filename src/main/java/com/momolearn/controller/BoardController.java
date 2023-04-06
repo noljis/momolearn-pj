@@ -50,12 +50,14 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardController {
 	
 	private final BoardService boardService;
+	
 	private final LikesService likesService;
 	
 	@GetMapping
 	public String getBoardList(Model model, @PageableDefault(sort = "comNo", direction = Sort.Direction.DESC) Pageable pageable) {
 		
 		Page<BoardListDTO> listPage = boardService.paging(pageable);
+		
 		int nowPage = listPage.getPageable().getPageNumber()+1;
 		int startPage = Math.max(1, listPage.getPageable().getPageNumber() -2);
 		int endPage = Math.min(listPage.getPageable().getPageNumber() +3, listPage.getTotalPages());
@@ -71,7 +73,9 @@ public class BoardController {
 	
 	@GetMapping("/writeform")
 	public String writeForm(@ModelAttribute BoardSaveDTO dto) {
+
 		return "board/writeForm";
+
 	}
 	
 	@PostMapping
@@ -79,18 +83,20 @@ public class BoardController {
 		System.out.println(dto.toString());
 		
 		if(bindingResult.hasErrors()) {
+			
 			List<ObjectError> errorList = bindingResult.getAllErrors();
+			
 			for(ObjectError error : errorList) {
+				
 				log.info("등록 실패: "+error.getDefaultMessage());
 				throw new NotExistException(error.getDefaultMessage());
+				
 			}
 		}
 		
 		boardService.savePost(dto);
 		return "redirect:/board";
 	}
-	
-	
 	
 	@GetMapping("/{comNo}")
 	public String readPost(@PathVariable int comNo, Model model) throws NotExistException{
@@ -99,31 +105,36 @@ public class BoardController {
 		boardService.increaseViewCount(comNo);
 		long likesCount = likesService.countLike(comNo);
 		List<LikesDTO> likesList = likesService.getLikesList(comNo);
-		System.out.println(likesList);
 		
 		model.addAttribute("dto", dto);
 		model.addAttribute("likesCount", likesCount);
 		model.addAttribute("likesList", likesList);
 		model.addAttribute("localDateTimeFormat", new SimpleDateFormat("yyyy-MM-dd hh:mm"));
+		
 		return "board/read";
 	}
 	
 	
-	@GetMapping("/updateForm/{comNo}")
+	@GetMapping("/updateform/{comNo}")
 	public String updateForm(@PathVariable int comNo, Model model) throws NotExistException{
+		
 		model.addAttribute("dto", boardService.readPost(comNo));
+		
 		return "board/updateForm";
 	}
-	
 	
 	@PutMapping("/{comNo}")
 	public String updatePost(@PathVariable int comNo, @Valid BoardSaveDTO dto, BindingResult bindingResult) throws NotExistException{
 		
 		if(bindingResult.hasErrors()) {
+			
 			List<ObjectError> errorList = bindingResult.getAllErrors();
+			
 			for(ObjectError error : errorList) {
+				
 				log.info("수정 실패: "+error.getDefaultMessage());
 				throw new NotExistException(error.getDefaultMessage());
+				
 			}
 		}
 		
@@ -132,11 +143,11 @@ public class BoardController {
 		
 	}
 	
-	
-	
 	@DeleteMapping("/{comNo}")
 	public String deletePost(@PathVariable int comNo) throws NotExistException {
+		
 		boardService.deletePost(comNo);
+		
 		return "redirect:/board";
 	}
 	
@@ -187,7 +198,9 @@ public class BoardController {
 		String fileUrl = null;
 		
 		for(MultipartFile uploadFile : fileList) {
+			
 			if(fileList.get(0).getSize()>0) {
+				
 				String originalFileName = uploadFile.getOriginalFilename();
 				String ext = originalFileName.substring(originalFileName.indexOf("."));
 				String newFileName = UUID.randomUUID() + ext;
@@ -196,8 +209,11 @@ public class BoardController {
 				uploadPath = realPath + "/" + newFileName;
 				
 				File file = new File(uploadPath);
+				
 				if(!file.exists()) {
+					
 					file.mkdirs();
+					
 				}
 				
 				fileUrl = request.getContextPath()+"/img/upload/"+newFileName;
@@ -211,11 +227,12 @@ public class BoardController {
 		return mv;
 	}
 	
-	
-	@ExceptionHandler
+	@ExceptionHandler(NotExistException.class)
 	public String exHandler(NotExistException e, Model model) {
+		
 		e.printStackTrace();
 		model.addAttribute("errorMsg", e.getMessage());
+		
 		return "error";
 	}
 	

@@ -25,14 +25,18 @@ public class HitBoardController {
 	
 	@GetMapping
 	public List<HitBoardDTO> getHitPosts(@RequestParam String criteria) throws NotExistException{
+		
 		return boardService.getHitPosts(criteria);
+		
 	}
 	
 	
 	@ExceptionHandler
 	public String exHandler(NotExistException e, Model model) {
+		
 		e.printStackTrace();
 		model.addAttribute("errorMsg", e.getMessage());
+		
 		return "error";
 	}
 }

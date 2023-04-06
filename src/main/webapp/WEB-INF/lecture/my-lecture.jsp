@@ -35,7 +35,6 @@
 <body>
 	<jsp:include page="/separate/header.jsp"></jsp:include>
 	
-	<!-- searchList: 스터디 검색시 비동기로 출력-->
 	<div id="searchList">
 	
 		<!-- Header Start -->

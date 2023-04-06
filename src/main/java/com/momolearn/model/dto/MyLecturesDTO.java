@@ -12,8 +12,11 @@ import lombok.NoArgsConstructor;
 public class MyLecturesDTO  {
 	
 	private Integer mylecId;
+	
 	private String memberId;
+	
 	private int lectureId;
+	
 	private LocalDateTime lecRege;
 
 }

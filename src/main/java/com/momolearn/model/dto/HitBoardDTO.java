@@ -12,16 +12,25 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class HitBoardDTO {
+	
 	private int comNo;
+	
 	private String membersMemId;
+	
 	private String type;
+	
 	private String comTitle;
+	
 	private String subject;
+	
 	private LocalDateTime comRegdate;
+	
 	private String comContent;
+	
 	private int comViewCount;
 	
 	public HitBoardDTO(Board board) {
+		
 		this.comNo = board.getComNo();
 		this.membersMemId = board.getMembers().getMemId();
 		this.type = board.getType();
@@ -30,5 +39,7 @@ public class HitBoardDTO {
 		this.comRegdate = board.getComRegdate();
 		this.comContent = board.getComContent();
 		this.comViewCount = board.getComViewCount();
+		
 	}
+	
 }

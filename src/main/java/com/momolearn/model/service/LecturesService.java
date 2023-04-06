@@ -3,7 +3,6 @@ package com.momolearn.model.service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,6 @@ import com.momolearn.model.CoursesRepository;
 import com.momolearn.model.LecturesRepository;
 import com.momolearn.model.MyLecturesRepository;
 import com.momolearn.model.dto.CategoryDTO;
-import com.momolearn.model.dto.CategoryLectureDTO;
 import com.momolearn.model.dto.CoursesDTO;
 import com.momolearn.model.dto.CoursesListDTO;
 import com.momolearn.model.dto.LectureCoursesDTO;
@@ -53,16 +51,15 @@ public class LecturesService {
 
 	private ModelMapper mapper = new ModelMapper();
 
-	// 강의 업로드 후 강좌 등록을 위한 강의 조회(반환)
 	@Transactional
 	public LecturesDTO uploadLecture(LecturesDTO lectureDTO) throws MessageException {
 		
 		Lectures lectures = mapper.map(lectureDTO, Lectures.class);
 		
-		// 저장
 		try {
 			
 			Lectures lecture = lecturesRepository.save(lectures);
+			
 			return mapper.map(lecture, LecturesDTO.class);
 			
 		} catch (Exception e) {
@@ -161,7 +158,6 @@ public class LecturesService {
 		return getLectureJson(lectures);
 	}
 	
-	//강의번호로 강의-강좌 하나 조회
 	public LectureCoursesDTO getLectureDetail(int title) throws NotExistException {
 		
 		Lectures lecture = lecturesRepository.findById(title);
@@ -174,7 +170,6 @@ public class LecturesService {
 		return mapper.map(lecture, LectureCoursesDTO.class);
 	}
 	
-	//강좌번호로 강좌 하나 조회
 	public CoursesDTO getOneCourse(int title) throws NotExistException{
 		
 		Courses courses = coursesRepository.findById(title).orElseThrow(() -> new NotExistException("해당 강좌 정보가 존재하지 않습니다."));
@@ -182,7 +177,6 @@ public class LecturesService {
 		return mapper.map(courses, CoursesDTO.class);
 	}
 
-	//강의 번호에 속한 강좌들 조회
 	public List<CoursesDTO> getCourses(int title) {
 		
 		List<Courses> courses =  coursesRepository.findAllByLectureId(title);
@@ -221,16 +215,10 @@ public class LecturesService {
 		return lecturesJson;
 	}
 
-	//수강중인 강좌 조회. 강좌 id로 조회
-	/* MyLectures -> lecture -> courses
-	 * 조회 후 memId와 비교해서 일치하는게 있으면 true 없으면 예외 발생
-	 * 강사의 경우 -> 해당 강좌 id로 members 조회 후 일치하면 true
-	 * */
 	public void checkMyLecture(int title, String memId) throws NotExistException{
 		boolean result = false;
-		//1. 회원일 경우 검증
+		
 		List<MyLectures> myLecture = myLecturesRepository.findByLectureCoursesCourseId(title);
-		//2. 강사본인일 경우 검증
 		Lectures lecture = lecturesRepository.findByCoursesCourseId(title);
 		
 		if(lecture.getTeachers().getApplyTeacher().getMembers().getMemId().equals(memId)) {
@@ -239,7 +227,7 @@ public class LecturesService {
 		}
 		
 		for(int i = 0; i < myLecture.size(); i++) {
-			//로그인 회원이 강의를 올린 강사면 조회 가능
+			
 			if(myLecture.get(i).getMember().getMemId().equals(memId)) {
 				
 				result = true;
@@ -254,10 +242,6 @@ public class LecturesService {
 		}
 	}
 	
-	//수강중인 강의 조회. 강의id로 조회 : 
-	/* MyLectures -> lecture(id)
-	 * not empty조건만 만족하면 되니까 MyLecturesDTO 반환
-	 * */
 	public MyLecturesDTO checkMyLectureByLecId(int lectureId, String memId) {
 		
 		MyLectures myLecture = myLecturesRepository.findByLectureIdAndMemberMemId(lectureId, memId);
@@ -270,7 +254,6 @@ public class LecturesService {
 		return mapper.map(myLecture, MyLecturesDTO.class);
 	}
 
-	//member로 수강중인 강의 조회. 필요한 속성: 강의, 회원, 강사명(lecture.teachers)
 	public List<MyLecturesTeacherDTO> getMyLectures(MembersDTO member) {
 		
 		Members members = mapper.map(member, Members.class);
@@ -280,7 +263,6 @@ public class LecturesService {
 		return Arrays.asList(mapper.map(myLecture, MyLecturesTeacherDTO[].class));
 	}
 
-	//member로 내가 올린 강의 조회. teachersApplyTeacherMembers
 	public List<LectureCoursesDTO> getTeacherLectures(MembersDTO member) {
 		
 		Members members = mapper.map(member, Members.class);
@@ -301,7 +283,6 @@ public class LecturesService {
 		lectures.setInfo(lectureDTO.getInfo());
 		lectures.setDescription(lectureDTO.getDescription());
 		
-		// 저장
 		try {
 			
 			lectures = lecturesRepository.save(lectures);
@@ -313,7 +294,6 @@ public class LecturesService {
 		}
 	}
 
-	//강좌 업데이트
 	@Transactional
 	public CoursesDTO updateCourse(CoursesDTO course) throws NotExistException {
 		
@@ -327,7 +307,7 @@ public class LecturesService {
 		
 		return mapper.map(courses, CoursesDTO.class);
 	}
-	//강의 삭제
+	
 	public void deleteLecture(int lectureId) throws NotExistException {
 		
 		if(lecturesRepository.findById(lectureId) != null) {

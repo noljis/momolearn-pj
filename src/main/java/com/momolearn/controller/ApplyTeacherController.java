@@ -16,7 +16,6 @@ import com.momolearn.model.dto.ApplyTeacherDTO;
 import com.momolearn.model.dto.MembersDTO;
 import com.momolearn.model.dto.TeachersDTO;
 import com.momolearn.model.entity.ApplyTeacher;
-import com.momolearn.model.entity.Members;
 import com.momolearn.model.service.ApplyTeacherService;
 import com.momolearn.model.service.MembersService;
 import com.momolearn.model.service.TeachersService;
@@ -24,7 +23,6 @@ import com.momolearn.model.service.TeachersService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Controller
 @RequestMapping("applyteacher")
 @SessionAttributes({ "members" })
@@ -44,8 +42,10 @@ public class ApplyTeacherController {
 		ApplyTeacher applyTeacher = applyTeacherService.getOneApply(members.getMemId());
 
 		if (applyTeacher != null) {
+			
 			ApplyTeacherDTO apply = applyTeacherService.read(members.getMemId());
 			model.addAttribute("apply", apply);
+			
 		}
 
 		return "teachers/at-mylist";
@@ -55,8 +55,10 @@ public class ApplyTeacherController {
 	public String getApplyList(Model model, @ModelAttribute("members") MembersDTO members) throws NotExistException {
 
 		if(members.getGrade().equals("admin")) {
+			
 			model.addAttribute("list", applyTeacherService.getApplyList());
 		}
+		
 		return "teachers/at-list";
 
 	}
@@ -156,8 +158,10 @@ public class ApplyTeacherController {
 	
 	@ExceptionHandler(value = NotExistException.class)
 	public String notExistException(NotExistException e, Model model) {
+		
 		e.printStackTrace();
 		model.addAttribute("errorMsg", e.getMessage());
+		
 		return "error";
 	}
 

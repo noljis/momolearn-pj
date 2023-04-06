@@ -82,17 +82,20 @@ public class Board  {
 	
 	@Builder
 	public Board(String type, String comTitle, String subject, String comContent, Members membersMemId, Integer comViewCount) {
+		
 		this.type = type;
 		this.comTitle = comTitle;
 		this.subject = subject;
 		this.comContent = comContent;
 		this.members = membersMemId;
 		this.comViewCount = comViewCount;
+		
 	}
 
 	
 	
 	public void update(String comTitle, String subject, String comContent) {
+		
 		this.comTitle = comTitle;
 		this.subject = subject;
 		this.comContent = comContent;

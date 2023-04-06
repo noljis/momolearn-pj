@@ -52,6 +52,8 @@ public class Comment {
 	private LocalDateTime cmtRegdate;
 
 	public void update(String cmtContent) {
+		
 		this.cmtContent = cmtContent;
+		
 	}
 }

@@ -35,14 +35,12 @@ public class CartService {
 
 	private ModelMapper mapper = new ModelMapper();
 
-	// 수강바구니 검증 메소드
 	public boolean checkCart(int lecId, String memId) {
 
 		List<Cart> cart = cartRepository.findByLectureId(lecId);
 
 		for (int i = 0; i < cart.size(); i++) {
-			// List에 세션id 값이 존재하면 true 반환
-			System.out.println("멤버ID 조회: " + cart.get(i).getMember().getMemId());
+			
 			if (cart.get(i).getMember().getMemId().equals(memId)) {
 
 				return true;
@@ -52,7 +50,6 @@ public class CartService {
 		return false;
 	}
 
-	// 수강바구니에 담기
 	@Transactional
 	public CartDTO addCart(int lecId, String memId) throws NotExistException {
 
@@ -65,7 +62,6 @@ public class CartService {
 		return mapper.map(cart, CartDTO.class);
 	}
 
-	// 수강바구니 조회
 	public List<CartDTO> getCart(String memId) {
 
 		List<Cart> cart = cartRepository.findByMemberMemId(memId);
@@ -73,7 +69,6 @@ public class CartService {
 		return Arrays.asList(mapper.map(cart, CartDTO[].class));
 	}
 
-	// 강의 저장 + 수강바구니 삭제 + 해당 강의 update
 	@Transactional
 	public void getMyLectures(PaymentRequestDTO request) throws NotExistException {
 
@@ -90,7 +85,6 @@ public class CartService {
 			Members member = membersRepository.findById(request.getMemId())
 					.orElseThrow(() -> new NotExistException("존재하는 회원이 없습니다."));
 
-			// 수강생 수 +1
 			lecture.setApplyCnt(lecture.getApplyCnt() + 1);
 			lecturesRepository.save(lecture);
 
@@ -107,9 +101,9 @@ public class CartService {
 
 	}
 
-	// 수강바구니 삭제
 	@Transactional
 	public void deleteCart(PaymentRequestDTO request) throws NotExistException {
+		
 		for (int i = 0; i < request.getCheckedTitles().size(); i++) {
 
 			Lectures lecture = lecturesRepository.findByTitleContaining(request.getCheckedTitles().get(i)).get(0);

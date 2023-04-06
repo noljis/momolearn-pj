@@ -27,20 +27,19 @@
 </head>
 <body>
 	<jsp:include page="/separate/header.jsp"></jsp:include>
-	<!-- searchList: 스터디 검색시 비동기로 출력-->
-	<div id="searchList">
-    <!-- Header Start -->
-    <div class="container-fluid py-4">
-        <div class="container">
-            <div class="row justify-content">
-                <div class="col-lg-10">
-                    <div class="display-3" style="font-size: 20px;">수강 바구니</div>
-                </div>
-            </div>
-        </div>
-    </div>
-	<!-- Header End -->
 
+	<div id="searchList">
+	    <!-- Header Start -->
+	    <div class="container-fluid py-4">
+	        <div class="container">
+	            <div class="row justify-content">
+	                <div class="col-lg-10">
+	                    <div class="display-3" style="font-size: 20px;">수강 바구니</div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+		<!-- Header End -->
 		<!-- 장바구니 Start -->
 		<div class="container">
 			<table class="table custom-table">
@@ -84,44 +83,55 @@
 	</div>
 
 	<script>
-	  let checkAll = document.querySelector("#checkAll");	//전체 체크박스
-	  let checkList = document.querySelectorAll("#check");	//체크 박스
+	
+	  let checkAll = document.querySelector("#checkAll");
+	  let checkList = document.querySelectorAll("#check");
 	  let totalPrice = document.querySelector("#totalPrice");
 	  
-	  //체크박스 합계 구하기
 	  function updateTotalPrice() {
 	    let sum = 0;
-	    let checkedTitles = []; // 체크된 강의명을 저장할 배열
-	    //input#check:checked 체크된 속성만 반복문으로 돌려서 합산해줌
+	    let checkedTitles = [];
+	    
 	    document.querySelectorAll("input#check:checked").forEach((item) => {
+	    	
 	      sum += parseInt(item.parentNode.parentNode.querySelector("#price").innerText.replace(",", "").replace("원", ""));
 	      checkedTitles.push(item.parentNode.parentNode.querySelector("#title").innerText);
+	      
 	    });
+	    
 	    totalPrice.innerText = sum.toLocaleString();
 	    document.querySelector("#checkedTitles").innerText = checkedTitles.length > 0 ? checkedTitles[0] + " 외 " + (checkedTitles.length - 1) + "개" : "";
+	
 	  }
 	
 	  checkAll.addEventListener("click", () => {
+		  
 	    checkList.forEach((item) => {
+	    	
 	      item.checked = checkAll.checked;
+	      
 	    });
+	    
 	    updateTotalPrice();
+	    
 	  });
 	
 	  checkList.forEach((item) => {
+		  
 	    item.addEventListener("click", () => {
-	    	//[...checkList]: nodeList(#check)를 배열로 반환. 배열을 돌면서 체크시켜줌
+	    	
 	      checkAll.checked = [...checkList].every((item) => item.checked);
 	      updateTotalPrice();
+	      
 	    });
+	    
 	  });
 	</script>
 
 
-	<!-- Back to Top -->
 	<jsp:include page="/separate/script.jsp"></jsp:include>
 	<jsp:include page="/separate/footer.jsp"></jsp:include>
-	<!-- axios 사용을 위한 추가 설정 -->
+
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/payment.js"></script>
 </body>

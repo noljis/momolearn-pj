@@ -47,23 +47,32 @@ public class Courses  {
 	private String url;
 	
 	public void setLecture(Lectures lecture) {
+		
 		this.lecture = lecture;
+		
 	}
 	
 	public void setTitle(String title) {
+		
 		this.title = title;
+		
 	}
 	
 	public void setUrl(String url) {
+		
 		this.url = url;
+		
 	}
 	
 	public void setTime(String time) {
+		
 		this.time = time;
+		
 	}
 	
 	@Builder
     public Courses(Lectures lecture, String title, String time, String url) {
+		
         this.lecture = lecture;
         this.title = title;
         this.time = time;

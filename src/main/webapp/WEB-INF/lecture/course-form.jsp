@@ -117,62 +117,72 @@ label {
         	        </div>
         	    </div>`;
         	    
-				template.innerHTML += newForm; //폼 추가
-				 // json 배열을 위한 고유한 name 속성 설정
-			    template.querySelector('[name="lectureId"]').name = `lectureId${formCounter}`;
+				template.innerHTML += newForm;
+
+				template.querySelector('[name="lectureId"]').name = `lectureId${formCounter}`;
 			    template.querySelector('[name="title"]').name = `title${formCounter}`;
 			    template.querySelector('[name="url"]').name = `url${formCounter}`;
 			    template.querySelector('[name="time"]').name = `time${formCounter}`;
 			    
-        	    formCounter++; // 카운트 증가
+        	    formCounter++;
        });
        document.getElementById("delete-form").addEventListener("click", function() {
            let formContainer = document.getElementById("form-container");
            let formCount = formContainer.childElementCount;
-           if (formCount > 1) { // 폼이 하나 이상인 경우에만 폼 삭제 가능
+           if (formCount > 1) { 
                formContainer.removeChild(formContainer.lastElementChild);
-           	   formCounter--; //카운트 감소
+           	   formCounter--;
            }
        });
-       //버튼 이벤트
+
        document.getElementById("upload").addEventListener("submit", function(event) {
-    	    event.preventDefault(); // 기본 동작 중단
+    	    event.preventDefault();
     	    let form = event.target;
-    	    let formData = new FormData(form); // 폼 데이터 가져오기
+    	    let formData = new FormData(form);
     	    console.log(formData);
-    	    let jsonData = formDataToJson(formData); // FormData를 JSON으로 변환
+    	    let jsonData = formDataToJson(formData);
     	    console.log(jsonData);
-    	    sendJsonData(jsonData); // JSON 데이터를 서버에 보내기
+    	    sendJsonData(jsonData);
     	});
       
-		//json으로 변환
        function formDataToJson(formData) {
+    	   
     	    let jsonData = {};
 
     	    for (let [key, value] of formData.entries()) {
+    	    	
     	        if (jsonData.hasOwnProperty(key)) {
+    	        	
     	            jsonData[key].push(value);
+    	            
     	        } else {
+    	        	
     	            jsonData[key] = [value];
+    	            
     	        }
     	    }
 
     	    return jsonData;
     	}
-		//json으로 변환된 폼 보내기
+       
     	function sendJsonData(jsonData) {
+    		
     	    axios({
+    	    	
     	        method: "POST",
     	        url: "/momolearn/lectures/upload-course",
     	        data: jsonData,
     	        headers: {
-    	            "Content-Type": "application/json" 	//json
+    	        	
+    	            "Content-Type": "application/json" 
     	        }
     	    }).then(function(response) {
+    	    	
     	    	 alert("성공적으로 등록되었습니다! 강의 페이지로 이동합니다.");
-    	    	 let id = response.data.id; // 서버에서 반환된 ID 값
+    	    	 let id = response.data.id;
     	         let url = "/momolearn/lectures/detail/" + id;
     	         window.location.href = url;
+    	         
     	    }).catch(function(error) {
     	    	
     	    });

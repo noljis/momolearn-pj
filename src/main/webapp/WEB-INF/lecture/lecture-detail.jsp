@@ -56,7 +56,6 @@ tr {
 	        </div>
 	    </div>
 	    <!-- Header End -->
-
 		<!-- 강의정보 단락 -->
 		<div class="container-fluid bg-dark py-5 d-flex justify-content-center align-items-center">
 			<div class="container">
@@ -85,8 +84,7 @@ tr {
 				</div>
 			</div>
 		</div>
-
-		<!-- 강좌 리스트 단락 수강여부 조회해서 활성화 / 비활성화 -->
+		<!-- 강좌 리스트 -->
 		<div class="container-fluid bg-white py-5">
 			<div class="container">
 				<div class="row">
@@ -119,9 +117,7 @@ tr {
 			</div>
 		</div>
 		<!-- 강좌 단락 끝 -->
-
-
-		<!-- 결제 박스 / 이미 수강중인 경우 : 수강중인 강좌입니다.(이전 컨트롤러에서 mylecture 조회)-->
+		<!-- 결제 박스 -->
 		<div class="position-fixed top-50 end-0">
 			<div class="card mb-3 text-center" style="width: 300px; height: 100%; border-radius: 20px; right: 50px;">
 				<div class="card-body mb-3">

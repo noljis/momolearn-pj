@@ -32,7 +32,9 @@ public class Likes {
 	private Members members;
 	
 	public Likes(Board board, Members members) {
+		
 		this.board = board;
 		this.members = members;
+		
 	}
 }

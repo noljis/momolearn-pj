@@ -50,17 +50,23 @@ public class MyLectures  {
 	private LocalDateTime lecRege;
 	
 	public void setMember(Members member) {
+		
 		this.member = member;
+		
 	}
 	
 	public void setLecture(Lectures lecture) {
+		
 		this.lecture = lecture;
+		
 	}
 	
 	@Builder
 	public MyLectures(Members member, Lectures lecture) {
+		
 		this.member = member;
 		this.lecture = lecture;
+		
 	}
 
 }

@@ -16,18 +16,29 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class BoardListDTO {
+	
 	private int comNo;
+	
 	private Members member;
+	
 	private String type;
+	
 	private String comTitle;
+	
 	private String subject;
+	
 	private LocalDateTime comRegdate;
+	
 	private String comContent;
+	
 	private int comViewCount;
+	
 	private List<Comment> comments;
+	
 	private List<Likes> likes;
 	
 	public BoardListDTO(Board board) {
+		
 		this.comNo = board.getComNo();
 		this.member = board.getMembers();
 		this.type = board.getType();

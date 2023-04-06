@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,18 +15,18 @@ import com.momolearn.model.MembersRepository;
 import com.momolearn.model.dto.MembersDTO;
 import com.momolearn.model.entity.Members;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @Service
 public class MembersService {
 	
-	@Autowired 
-	private MembersRepository membersRepository;
+	private final MembersRepository membersRepository;
 
 	private ModelMapper mapper = new ModelMapper();
 
     @Transactional
-    public String memJoin(MembersDTO members) throws SQLException, MessageException {
-    	
-    	String returns = null ;
+    public MembersDTO memJoin(MembersDTO members) throws SQLException, MessageException {
     	
 		try {
 			
@@ -42,7 +41,7 @@ public class MembersService {
 				
 				membersRepository.save(mem);
 				
-				returns = "success";
+				return mapper.map(mem, MembersDTO.class);
 			}
 	        
 		 } catch (Exception e) {
@@ -50,8 +49,6 @@ public class MembersService {
 			e.printStackTrace();
 			throw new SQLException("Failed to join member.");
 		}
-		
-		return returns;
 		
     }
     

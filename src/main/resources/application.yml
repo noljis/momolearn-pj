@@ -35,11 +35,3 @@ spring:
     
 upload:
  path: "src/main/webapp/img"
-    
-#logging:
-#  level:
-#    org:
-#      hibernate: DEBUG
-#      
-## p6spy 사용을 위한 설정
-#decorator.datasource.p6spy.enable-logging: true  # false : Disable p6spy

@@ -10,7 +10,9 @@ import lombok.NoArgsConstructor;
 public class CategoryLectureDTO  {
 	
 	private int cateLecId;
+	
 	private int lectureId;
+	
 	private int categoryId;
 
 }

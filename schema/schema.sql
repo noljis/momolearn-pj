@@ -1,3 +1,148 @@
+-- 1. members 유저
+CREATE TABLE members (
+  mem_id VARCHAR(20) NOT NULL,
+  pw VARCHAR(20) NOT NULL,
+  name VARCHAR(10) NOT NULL,
+  email VARCHAR(100) NOT NULL,
+  profile VARCHAR(255) NOT NULL DEFAULT 'user.jpg',
+  grade VARCHAR(20) NOT NULL DEFAULT 'student',
+  regdate DATETIME NOT NULL,
+  PRIMARY KEY (mem_id)
+);
+
+
+-- 2. my_lectures 내 강의
+CREATE TABLE my_lectures (
+  mylec_id INT NOT NULL AUTO_INCREMENT,
+  member_id VARCHAR(20) NOT NULL,
+  lecture_id INT NOT NULL,
+  lec_rege DATETIME NOT NULL,
+  PRIMARY KEY (mylec_id),
+  FOREIGN KEY (member_id) REFERENCES members (mem_id),
+  FOREIGN KEY (lecture_id) REFERENCES lectures (id)
+);
+
+
+-- 3. apply_teacher 강사 신청내역
+CREATE TABLE apply_teacher (
+  id INT NOT NULL AUTO_INCREMENT,
+  apply_id VARCHAR(20) NOT NULL,
+  phone_num VARCHAR(20) NOT NULL,
+  hope_field VARCHAR(20) NOT NULL,
+  intro VARCHAR(255) NOT NULL,
+  pf_link VARCHAR(100) NOT NULL,
+  apply_rege DATETIME NOT NULL,
+  approve VARCHAR(15) NOT NULL DEFAULT 'false',
+  PRIMARY KEY (id),
+  UNIQUE (apply_id),
+  FOREIGN KEY (apply_id) REFERENCES members (mem_id)
+);
+
+-- 4. teachers 강사
+CREATE TABLE teachers (
+  teacher_no INT NOT NULL AUTO_INCREMENT,
+  phone_num VARCHAR(20) NOT NULL,
+  hope VARCHAR(20) NOT NULL,
+  intro VARCHAR(255) NOT NULL,
+  pf_link VARCHAR(100) NOT NULL,
+  apply_id VARCHAR(20) NOT NULL UNIQUE,
+  PRIMARY KEY (teacher_no),
+  FOREIGN KEY (apply_id) REFERENCES apply_teacher (apply_id)
+);
+
+-- 5. lectures 강의
+CREATE TABLE lectures (
+  id INT NOT NULL AUTO_INCREMENT,
+  teacher_no INT NOT NULL,
+  title VARCHAR(50) NOT NULL,
+  image VARCHAR(255) NOT NULL DEFAULT 'default.jpg',
+  price INT NOT NULL,
+  cnt INT NOT NULL DEFAULT 0,
+  regdate DATETIME NOT NULL,
+  info VARCHAR(255) NOT NULL,
+  description TEXT NOT NULL,
+  apply_cnt INT NOT NULL DEFAULT 0,
+  PRIMARY KEY (id),
+  FOREIGN KEY (teacher_no) REFERENCES teachers (teacher_no)
+);
+
+-- 6. category_lecture 카테고리-강의
+CREATE TABLE category_lecture (
+  cate_lec_id INT NOT NULL AUTO_INCREMENT,
+  lecture_id INT NOT NULL,
+  category_id INT NOT NULL,
+  PRIMARY KEY (cate_lec_id),
+  FOREIGN KEY (lecture_id) REFERENCES lectures (id),
+  FOREIGN KEY (category_id) REFERENCES category (cate_id)
+);
+
+-- 7. category 카테고리
+CREATE TABLE category (
+  cate_id INT NOT NULL AUTO_INCREMENT,
+  cate_name VARCHAR(50) NOT NULL,
+  PRIMARY KEY (cate_id)
+);
+
+-- 8. courses 강의
+CREATE TABLE courses (
+  course_id INT NOT NULL AUTO_INCREMENT,
+  lecture_id INT NOT NULL,
+  title VARCHAR(50) NOT NULL,
+  time VARCHAR(12) NOT NULL,
+  url VARCHAR(255) NOT NULL,
+  PRIMARY KEY (course_id),
+  FOREIGN KEY (lecture_id) REFERENCES lectures (id)
+);
+
+-- 9. cart 수강바구니
+CREATE TABLE cart (
+cart_id INT NOT NULL AUTO_INCREMENT,
+member_id VARCHAR(20) NOT NULL,
+lecture_id INT NOT NULL,
+PRIMARY KEY (cart_id),
+FOREIGN KEY (member_id) REFERENCES Members (mem_id),
+FOREIGN KEY (lecture_id) REFERENCES Lectures (id)
+);
+
+-- 10. board 게시판
+CREATE TABLE board (
+  com_no INT NOT NULL AUTO_INCREMENT,
+  mem_id VARCHAR(20) NOT NULL,
+  type VARCHAR(20) NOT NULL,
+  com_title VARCHAR(50) NOT NULL,
+  subject VARCHAR(20) NOT NULL,
+  com_regdate DATETIME NOT NULL,
+  com_content TEXT NOT NULL,
+  com_view_count INT NOT NULL DEFAULT 0,
+  PRIMARY KEY (com_no),
+  FOREIGN KEY (mem_id) REFERENCES members (mem_id)
+);
+
+
+-- 11. comment 댓글
+CREATE TABLE comment (
+cmt_no INT NOT NULL AUTO_INCREMENT,
+com_no INT NOT NULL,
+mem_id VARCHAR(20) NOT NULL,
+cmt_content VARCHAR(500) NOT NULL,
+cmt_regdate DATETIME(6) NOT NULL,
+PRIMARY KEY (cmt_no),
+FOREIGN KEY (com_no) REFERENCES Board (board_no),
+FOREIGN KEY (mem_id) REFERENCES Members (mem_id)
+);
+
+-- 12. likes 좋아요
+CREATE TABLE likes (
+like_no INT NOT NULL AUTO_INCREMENT,
+com_no INT NOT NULL,
+mem_id VARCHAR(20) NOT NULL,
+PRIMARY KEY (like_no),
+FOREIGN KEY (com_no) REFERENCES Board (com_no),
+FOREIGN KEY (mem_id) REFERENCES Members (mem_id)
+);
+
+
+
 -- members 
 INSERT INTO members (mem_id, pw, name, email, profile, grade, regdate) VALUES ('admin', 'admin', '관리자', 'admin@gmail.com', 'admin.jpg', 'admin', NOW());
 INSERT INTO members (mem_id, pw, name, email, profile, grade, regdate) VALUES ('test01', '1234', '학생1', 'test01@gmail.com', 'test01.jpg', 'student', NOW());
