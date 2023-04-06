@@ -20,16 +20,16 @@ public class WebConfig {
 		return new MappingJackson2JsonView();
 	}
 	
-	@Bean
-    public Docket swaggerApi() {
-    	
-        return new Docket(DocumentationType.OAS_30)
-        		.apiInfo(apiInfo())
-        		.select()
-                .apis(RequestHandlerSelectors.basePackage("com.momolearn"))
-                .build()
-                .useDefaultResponseMessages(false); 
-    }
+	 @Bean
+	    public Docket swaggerApi() {
+	    	
+	        return new Docket(DocumentationType.OAS_30)
+	        		.apiInfo(apiInfo())
+	        		.select()
+	                .apis(RequestHandlerSelectors.basePackage("com.momolearn"))
+	                .build()
+	                .useDefaultResponseMessages(false); 
+	    }
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
