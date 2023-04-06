@@ -115,7 +115,7 @@ public class BoardController {
 	}
 	
 	
-	@GetMapping("/updateForm/{comNo}")
+	@GetMapping("/updateform/{comNo}")
 	public String updateForm(@PathVariable int comNo, Model model) throws NotExistException{
 		
 		model.addAttribute("dto", boardService.readPost(comNo));

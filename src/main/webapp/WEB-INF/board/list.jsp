@@ -242,7 +242,6 @@
 <script src="${pageContext.request.contextPath}/js/likes.js"></script>
 <script src="${pageContext.request.contextPath}/js/hit.js"></script>
 <div id="message"></div>
-<script src="${pageContext.request.contextPath}/js/alarm.js"></script>
 </body>
 
 </html>
