@@ -76,11 +76,11 @@
 					</div>
 					
 					<div class="text">
-						<p id="p">sns계정으로 시작하기</p>
+						<p id="p">간편 가입하기</p>
 					</div>
 					
 					<div class="login_sns">
-						<li><a id="kakao-login-btn" href="https://kauth.kakao.com/oauth/authorize?client_id=b05da66ce6b812c049b788547193fbdc&redirect_uri=http://localhost/momolearn/member/kakaoLogin&response_type=code"><i class="fa-solid fa-comment"></i> 카카오로 로그인</a></li>
+						<li><a id="kakao-login-btn" href="https://kauth.kakao.com/oauth/authorize?client_id=b05da66ce6b812c049b788547193fbdc&redirect_uri=http://localhost/momolearn/member/kakaoLogin&response_type=code"><i class="fa-solid fa-comment"></i> 카카오로 회원가입</a></li>
 					</div>
 					
 					<div class="submit">
