@@ -76,6 +76,9 @@
 </p>
 
 ## 💻<a name="2">[주요 기능](#list)</a>
+
+<img src="https://user-images.githubusercontent.com/111185073/230281363-3e59d970-3a77-49f1-ba80-fbeb5e74d5a4.png"/>
+
 **💡소제목을 클릭하시면 다시 리스트로 돌아옵니다.**
 
  1. [회원가입](#join) (일반 회원가입/소셜 간편가입)
