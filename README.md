@@ -98,6 +98,10 @@
 <img width="142" alt="image" src="https://user-images.githubusercontent.com/117498827/230252114-9eee75df-41e8-4be2-9d44-2edc9cc9674c.png">
 
 #### (2) 소셜 간편가입
+![소셜회원가입](https://user-images.githubusercontent.com/117498827/230406090-d0f1cd02-46fd-4f40-b951-c8f2ab39fc59.gif)
+⚡소셜 회원가입 시 개인정보 제공에 대한 동의서를 제시합니다. 동의 항목은 닉네임, 이메일주소입니다.<br>
+⚡가입정보는 회원테이블에 저장되며, 이후 일반로그인으로 로그인이 가능합니다.<br>
+⚡가입시 카카오계정의 ID부분이 모모런의 ID가 됩니다.<br>
 
 ### 2. <a name="login">[로그인](#2)</a>
 ![일반 로그인](https://user-images.githubusercontent.com/117498827/230252820-0b2446d8-be9a-4a7f-9132-3ef179198280.gif)
@@ -167,11 +171,12 @@
 
 ## [💣](#list)<a name="3">3. 트러블 슈팅</a>
 ☑ 카테고리로 강의 조회시 카테고리가 하나만 검색되는 이슈<br>
+👉<br>
 ☑ 인기게시물 조회시 순환참조로 인한 직렬화 에러 이슈<br>   
 ☑    
 
 ## [✨](#list)<a name="4">4. 프로젝트 개선할 점</a>
-✅   
+✅ 
 ✅   
 ✅   
 
