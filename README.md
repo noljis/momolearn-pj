@@ -108,7 +108,13 @@
 ⚡필수 기입 속성은 ID, PW입니다.<br>
 
 ### 3. <a name="teacher">[강사 신청](#2)</a>
-![강사신청](https://user-images.githubusercontent.com/117498827/230254773-c21529f7-6f8d-4d69-8f75-4514dc600bcf.gif)
+<p align="center">
+ 
+<img src="https://user-images.githubusercontent.com/117498827/230254773-c21529f7-6f8d-4d69-8f75-4514dc600bcf.gif" alt="강사신청" width="500"/>
+<img src="https://user-images.githubusercontent.com/117498827/230516168-2917b3f3-35e2-4006-a7c8-667d2064b712.gif" alt="강사 승인" width="500"/><br>
+
+</p>
+
 ⚡강사 신청 가능 등급은 student(학생)입니다.<br>
 ⚡한 회원당 신청서는 하나만 작성할 수 있습니다.<br>
 ⚡기존 회원의 정보가 신청서에 입력되며, 필수 기입 속성은 연락처, 포트폴리오url, 희망분야, 자기소개입니다.<br>
@@ -170,12 +176,12 @@
 14. 공지사항 게시판
 
 ## [💣](#list)<a name="3">3. 트러블 슈팅</a>
-☑ 카테고리로 강의 조회시 카테고리가 하나만 검색되는 이슈<br>
-👉<br>
+☑ Lecture 조회 쿼리에서 강의를 조회한 후 카테고리를 조회하여 1+N 문제 발생<br>
+👉join fetch를 사용하여 해결하려고 하였으나, 쿼리 중복이 발생하여 강의 개수만큼 카테고리의 배열이 출력되는 이슈가 새롭게 발생하여 EntityGraph를 사용하여 해결하였습니다.<br>
 ☑ 인기게시물 조회시 순환참조로 인한 직렬화 에러 이슈<br>
 👉<br>
 ☑ 좋아요한 글 목록 조회시 fetch join과 paging 병용 불가 이슈<br>
-👉 JPA에서 paging할때 -ToMany 관계는 데이터의 수가 변해 fetch join이 불가능함. fetch join을 제거하고 application.yml에 default_batch_fetch_size=10 추가<br>
+👉 JPA에서 paging할때 -ToMany 관계는 데이터의 수가 변해 fetch join이 불가능. fetch join을 제거하고 application.yml에 default_batch_fetch_size=10 추가해주었습니다.<br>
 ## [✨](#list)<a name="4">4. 프로젝트 개선할 점</a>
 ✅ 
 ✅   
