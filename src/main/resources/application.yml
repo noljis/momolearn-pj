@@ -27,14 +27,13 @@ spring:
       filter:
         enabled: true
   jackson:
-    # LocalDateTime 타입의 값을 JSON 형식으로 직렬화할 때, 다음과 같은 형식으로 변환 
     date-time-format: yyyy-MM-dd'T'HH:mm
   servlet:
    multipart:
-    enabled: true # 멀티파트 업로드 지원여부 (default: true)
-    location: src/main/webapp/img #업로드된 파일의 임시 저장 경로
-    maxFileSize: 3MB #파일의 최대 사이즈 (default: 1MB)
-    maxRequestSize: 3MB #요청의 최대 사이즈 (default: 10MB)
+    enabled: true 
+    location: src/main/webapp/img 
+    maxFileSize: 3MB
+    maxRequestSize: 3MB
     
 upload:
  path: "src/main/webapp/img"
