@@ -170,7 +170,7 @@ public class BoardController {
 	}
 	
 	
-	@GetMapping("/searchOneMemberPosts")
+	@GetMapping("/search-one-member-posts")
 	public String searchOneMemberPosts(@RequestParam String searchType, @RequestParam String searchText, Model model, @PageableDefault(sort = "comNo", direction = Sort.Direction.DESC) Pageable pageable) {
 		
 		Page<BoardListDTO> listPage = boardService.searchPost(searchType, searchText, pageable);
@@ -185,6 +185,24 @@ public class BoardController {
 		model.addAttribute("endPage", endPage);
 		
 		return "board/memberpostslist";
+	}
+	
+	
+	@GetMapping("/search-likes")
+	public String searchLikesPosts(@RequestParam String memId, Model model, @PageableDefault(sort = "comNo", direction = Sort.Direction.DESC) Pageable pageable) {
+		
+		Page<BoardListDTO> listPage = boardService.searchLikesPosts(memId, pageable);
+		int nowPage = listPage.getPageable().getPageNumber()+1;
+		int startPage = Math.max(1, listPage.getPageable().getPageNumber() -2);
+		int endPage = Math.min(listPage.getPageable().getPageNumber() +2, listPage.getTotalPages());
+		
+		model.addAttribute("list", listPage.getContent());
+		model.addAttribute("listPage", listPage);
+		model.addAttribute("nowPage", nowPage);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("endPage", endPage);
+		
+		return "board/likepostslist";
 	}
 	
 	

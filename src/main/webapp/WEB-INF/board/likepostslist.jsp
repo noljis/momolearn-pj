@@ -25,7 +25,7 @@
 	        <div class="container">
 	            <div class="row justify-content">
 	                <div class="col-lg-10">
-	                    <div class="display-3" style="font-size: 20px;">작성글 보기</div>
+	                    <div class="display-3" style="font-size: 20px;">💕좋아요한 글 보기</div>
 	                </div>
 	            </div>
 	        </div>
@@ -54,9 +54,9 @@
                                 </thead>
                                 <tbody>
                                 	<!-- 게시글 시작 -->
-                                	<c:if test="${empty list}">
-                                		<h3>작성한 글이 없습니다.</h3>
-                               		</c:if>
+                                <c:if test="${empty list}">
+                                	<h3>좋아요한 글이 없습니다.</h3>
+                                </c:if>
                                 <c:forEach items="${list}" var="c">
                                     <tr>
                                         <th scope="row">${c.comNo}</th>

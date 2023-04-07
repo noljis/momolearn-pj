@@ -143,5 +143,13 @@ public class BoardService {
 		
 		return dtoList;
 	}
+	
+	public Page<BoardListDTO> searchLikesPosts(String memId, Pageable pageable) {
+		
+		Page<Board> entityPage = boardRepository.findAllWithLikesUsingJoin(memId, pageable);
+		Page<BoardListDTO> dtoPage = entityPage.map(e->new BoardListDTO(e));
+		
+		return dtoPage;
+	}
 
 }

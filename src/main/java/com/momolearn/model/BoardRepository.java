@@ -29,4 +29,7 @@ public interface BoardRepository extends JpaRepository<Board, Integer>{
 	List<Board> findTop5ByOrderByComViewCountDesc();
 	
 	Page<Board> findByType(String type, Pageable pageable);
+	
+	@Query("select b from Board b join b.likes l where l.members.memId=:memId")
+	Page<Board> findAllWithLikesUsingJoin(@Param("memId") String memId, Pageable pageable);
 }
