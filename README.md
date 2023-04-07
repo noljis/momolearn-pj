@@ -178,9 +178,9 @@
 ## [💣](#list)<a name="3">3. 트러블 슈팅</a>
 ☑ Lecture 조회 쿼리에서 강의를 조회한 후 카테고리를 조회하여 1+N 문제 발생<br>
 👉join fetch를 사용하여 해결하려고 하였으나, 쿼리 중복이 발생하여 강의 개수만큼 카테고리의 배열이 출력되는 이슈가 새롭게 발생하여 EntityGraph를 사용하여 해결하였습니다.<br>
-☑ 인기게시물 조회시 순환참조로 인한 직렬화 에러 이슈<br>
+☑ 인기게시물 조회시 순환참조로 인한 직렬화 에러 발생<br>
 👉 @JsonIgnore이나 yml파일 FAIL_ON_EMPTY_BEANS: false 설정 등 여러 해결책이 있으나 근본적인 문제해결을 위해 필요한 데이터만 담은 DTO객체를 만들어 조회하여 해결했습니다.<br>
-☑ 좋아요한 글 목록 조회시 fetch join과 paging 병용 불가 이슈<br>
+☑ 좋아요한 글 목록 조회시 fetch join과 paging 병용 불가<br>
 👉 JPA에서 paging할때 -ToMany 관계는 데이터의 수가 변해 fetch join이 불가능. fetch join을 제거하고 application.yml에 default_batch_fetch_size=10 추가해주었습니다.<br>
 ## [✨](#list)<a name="4">4. 프로젝트 개선할 점</a>
 ✅ 
