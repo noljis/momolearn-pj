@@ -93,11 +93,11 @@ function readComment(){
 						if(memId == response[i].membersMemId){//내가 쓴 댓글일때
 							html += '<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">';
 							html += '<li><a class="dropdown-item" href="#" onclick="window.open(\''+contextPath+'/member-info?memId='+response[i].membersMemId+'\', \'memberInfo\', \'width=600, height=500\'); return false;">내 정보 보기</a></li>';
-							html += '<li><a class="dropdown-item" href="#" onclick="window.open(\''+contextPath+'/board/searchOneMemberPosts?searchType=writer&searchText='+response[i].membersMemId+'\', \'memberInfo\', \'width=1500, height=600\'); return false;">내가 쓴 글 보기</a></li></ul>';							    
+							html += '<li><a class="dropdown-item" href="#" onclick="window.open(\''+contextPath+'/board/search-one-member-posts?searchType=writer&searchText='+response[i].membersMemId+'\', \'memberInfo\', \'width=1500, height=600\'); return false;">내가 쓴 글 보기</a></li></ul>';							    
 						}else{//남이 쓴 댓글일때
 							html += '<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">';
 							html += '<li><a class="dropdown-item" href="#" onclick="window.open(\''+contextPath+'/member-info?memId='+response[i].membersMemId+'\', \'memberInfo\', \'width=600, height=500\'); return false;">회원정보 보기</a></li>';
-							html += '<li><a class="dropdown-item" href="#" onclick="window.open(\''+contextPath+'/board/searchOneMemberPosts?searchType=writer&searchText='+response[i].membersMemId+'\', \'memberInfo\', \'width=1500, height=600\'); return false;">작성한 글 보기</a></li></ul>';
+							html += '<li><a class="dropdown-item" href="#" onclick="window.open(\''+contextPath+'/board/search-one-member-posts?searchType=writer&searchText='+response[i].membersMemId+'\', \'memberInfo\', \'width=1500, height=600\'); return false;">작성한 글 보기</a></li></ul>';
 						}
 						html += '</span>';
 					}
@@ -131,8 +131,7 @@ function readComment(){
 			
 		},
 		error:function(response){
-			alert('세션아웃 : 댓글 불러오기 실패. 새로고침 해주세요');
-			alert(response);
+			alert('댓글 불러오기 실패');
 		}
 	});
 }
@@ -157,7 +156,7 @@ function writeComment(){
 			readComment();
 		},
 		error:function(response){
-			alert('세션아웃 : 댓글 등록 실패. 다시 시도해주세요');
+			alert('댓글 등록 실패. 다시 시도해주세요');
 			alert(JSON.stringify(response));
 		}
     });

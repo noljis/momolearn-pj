@@ -61,13 +61,13 @@
 		                                        <c:when test="${members.memId == dto.member.memId}">
 		                                        	<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
 														<li><a class="dropdown-item" href="#" onclick="window.open('${pageContext.request.contextPath}/member-info?memId=${dto.member.memId}', 'memberInfo', 'width=600, height=500'); return false;">내 정보 보기</a></li>
-														<li><a class="dropdown-item" href="#" onclick="window.open('${pageContext.request.contextPath}/board/searchOneMemberPosts?searchType=writer&searchText=${dto.member.memId}', 'memberInfo', 'width=1500, height=600'); return false;">내가 쓴 글 보기</a></li>
+														<li><a class="dropdown-item" href="#" onclick="window.open('${pageContext.request.contextPath}/board/search-one-member-posts?searchType=writer&searchText=${dto.member.memId}', 'memberInfo', 'width=1500, height=600'); return false;">내가 쓴 글 보기</a></li>
 						  							</ul>
 		                                        </c:when>
 		                                        <c:otherwise>
 			                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
 														<li><a class="dropdown-item" href="#" onclick="window.open('${pageContext.request.contextPath}/member-info?memId=${dto.member.memId}', 'memberInfo', 'width=600, height=500'); return false;">회원정보 보기</a></li>
-														<li><a class="dropdown-item" href="#" onclick="window.open('${pageContext.request.contextPath}/board/searchOneMemberPosts?searchType=writer&searchText=${dto.member.memId}', 'memberInfo', 'width=1500, height=600'); return false;">작성한 글 보기</a></li>
+														<li><a class="dropdown-item" href="#" onclick="window.open('${pageContext.request.contextPath}/board/search-one-member-posts?searchType=writer&searchText=${dto.member.memId}', 'memberInfo', 'width=1500, height=600'); return false;">작성한 글 보기</a></li>
 						  							</ul>
 					  							</c:otherwise>
 				  							</c:choose>
@@ -181,8 +181,14 @@
         </div>
     </div>
     <!-- 블로그 끝 -->
- 
-
+<c:if test="${not empty members}">
+ 	<button class="floating-button" onclick="window.open('${pageContext.request.contextPath}/board/search-likes?memId=${members.memId}', 'memberInfo', 'width=1500, height=600'); return false;">
+	  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+	    <path fill="#FFF" d="M10 21.4l-.7-.6C4.6 14.2 2 11.7 2 8.9 2 6.8 3.6 5 6 5c1.6 0 3.1.9 4 2.3C12.9 5.9 14.4 5 16 5c2.4 0 4 1.8 4 3.9 0 2.8-2.6 5.3-9.3 12.1l-.7.6z"/>
+	  </svg>
+	  <span class="button-text">💕내가 좋아요한 글</span>
+	</button>
+</c:if>
     <!-- Back to Top -->
     <script>var contextPath = "${pageContext.request.contextPath}";</script>
 	<jsp:include page="/separate/script.jsp"></jsp:include>

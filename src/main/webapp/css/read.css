@@ -399,3 +399,49 @@ img {
 .ck-editor__editable {
 	height: 60vh;
 }
+.floating-button {
+  position: fixed;
+  right: 40px;
+  bottom: 100px;
+  z-index: 999;
+  background-color: #f44336;
+  color: white;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  box-shadow: 0px 3px 10px rgba(0,0,0,0.3);
+  width: 60px;
+  height: 60px;
+  transition: all 0.3s ease-in-out;
+}
+
+.floating-button:hover {
+  background-color: #d32f2f;
+  transform: scale(1.05);
+  box-shadow: 0px 5px 15px rgba(0,0,0,0.3);
+}
+
+.floating-button svg {
+  width: 30px;
+  height: 30px;
+  margin: 15px;
+}
+
+.floating-button:hover .button-text {
+    display: block;
+  }
+.button-text {
+  display: none;
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #000;
+  color: #fff;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+  white-space: nowrap;
+}
