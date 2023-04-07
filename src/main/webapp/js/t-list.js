@@ -11,11 +11,11 @@ function createCard(teacher) {
     const cardBody = document.createElement('div');
     cardBody.classList.add('card-body');
 
-    const cardImg = document.createElement('img');
-    cardImg.classList.add('card-img-bottom');
-    cardImg.src = '../img/about.jpg';
-    cardImg.alt = 'Card image';
-    cardImg.style.width = '100%';
+    // const cardImg = document.createElement('img');
+    // cardImg.classList.add('card-img-bottom');
+    // cardImg.src = '../img/about.jpg';
+    // cardImg.alt = 'Card image';
+    // cardImg.style.width = '100%';
 
     const cardTitle = document.createElement('h4');
     cardTitle.classList.add('card-title');
@@ -37,7 +37,7 @@ function createCard(teacher) {
     cardLink.style.borderTop = '2px solid var(--primary)';
 
 
-    cardBody.appendChild(cardImg);
+    // cardBody.appendChild(cardImg);
     cardBody.appendChild(cardTitle);
     cardBody.appendChild(cardText);
     cardBody.appendChild(cardLink);

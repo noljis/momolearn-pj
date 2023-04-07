@@ -34,8 +34,8 @@
 
             <div class="d-flex justify-content-center my-3">
                 <button type="button" class="btn btn-primary mr-2" onclick="location.href='${pageContext.request.contextPath}/applyteacher/applylist'">강사 신청 목록</button>
-                <button type="button" class="btn btn-primary mx-2" onclick="location.href='${pageContext.request.contextPath}'">관리자 메뉴 1</button>
-                <button type="button" class="btn btn-primary ml-2" onclick="location.href='${pageContext.request.contextPath}'">관리자 메뉴 2</button>
+                <!-- <button type="button" class="btn btn-primary mx-2" onclick="location.href='${pageContext.request.contextPath}'">관리자 메뉴 1</button>
+                <button type="button" class="btn btn-primary ml-2" onclick="location.href='${pageContext.request.contextPath}'">관리자 메뉴 2</button> -->
             </div>
             
 
