@@ -80,7 +80,7 @@ public class TeachersController {
 		return result.toString();
 	}
 
-	@GetMapping(value = "/t-list/{teacherNo}/lec/{teacherNo}", produces = "application/json; charset=utf-8")
+	@GetMapping(value = "/list/{teacherNo}/lec/{teacherNo}", produces = "application/json; charset=utf-8")
 	@ResponseBody
 	public String getTeacherLectures(@PathVariable int teacherNo) {
 	    List<Lectures> lectures = lecturesRepository.findByTeachersTeacherNo(teacherNo);

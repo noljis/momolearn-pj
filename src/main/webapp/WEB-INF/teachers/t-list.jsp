@@ -207,8 +207,8 @@
                         <span id="pf"><b>소개</b></span><br>
                         <span id="intro">intro</span><br>
 
-                        <button type="button" onclick="" class="cancelbtn" style=background-color:#06BBCC>개설
-                            강의</button>
+                        <!-- <button type="button" onclick="" class="cancelbtn" style=background-color:#06BBCC>개설
+                            강의</button> -->
 
                     </div>
                 </div>
