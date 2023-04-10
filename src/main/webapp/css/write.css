@@ -62,3 +62,14 @@ body{margin-top:20px;
         background-color: #fff;
     }
     
+.ck.ck-editor {
+	width: 80%;
+	max-width: 800px;
+	margin: 0 auto;
+}
+
+.ck-editor__editable {
+	height: 40vh;
+}
+
+

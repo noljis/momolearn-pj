@@ -17,19 +17,24 @@ import lombok.NoArgsConstructor;
 public class BoardSaveDTO {
 	
 	private String membersMemId;
+	
 	private String type;
+	
 	@NotBlank(message = "제목을 입력하세요.")
 	private String comTitle;
+	
 	@NotBlank(message = "카테고리를 선택하세요.")
 	private String subject;
 	
-	//@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime comRegdate;
+	
 	@NotBlank(message = "내용을 입력하세요.")
 	private String comContent;
+	
 	private int comViewCount;
 	
 	public Board toEntity(Members members) {
+		
 		return Board.builder()
 				.type(type)
 				.membersMemId(members)
@@ -38,5 +43,6 @@ public class BoardSaveDTO {
 				.comContent(comContent)
 				.comViewCount(comViewCount)
 				.build();
+		
 	}
 }

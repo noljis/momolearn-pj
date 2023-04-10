@@ -1,161 +1,299 @@
 package com.momolearn.controller;
 
 
+import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.momolearn.model.MembersRepository;
-import com.momolearn.model.entity.Members;
+import com.momolearn.exception.MessageException;
+import com.momolearn.model.dto.MembersDTO;
+import com.momolearn.model.service.FileService;
+import com.momolearn.model.service.KakaoService;
 import com.momolearn.model.service.MembersService;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.RequiredArgsConstructor;
 
-@Slf4j
 @Controller
 @RequestMapping("member")
 @SessionAttributes({"members"})
+@RequiredArgsConstructor
 public class MembersSignInController {
 	
-	@Autowired
-	private MembersService membersService;
+	private final MembersService membersService;
 	
-	//로그인 입력폼 (확인)
-    @GetMapping("/loginView")
-    protected ModelAndView memJoinView() throws SQLException {
-		
+	private final FileService fileService;
+	
+	private final KakaoService kakaoService;
+	
+	@GetMapping(value = "/kakaoLogin")
+	public ModelAndView kakaoLogin(@RequestParam("code") String code, HttpSession session, Model model) throws SQLException, MessageException {
+
 		ModelAndView mv = new ModelAndView();
 		
-		mv.setViewName("redirect:/page/member/login.jsp");   
+		String access_token = kakaoService.getAccessToken(code); 
+		
+		HashMap<String, Object> userInfo = kakaoService.getUserInfo(access_token);
+
+		if(userInfo.get("email") != null) {
+			
+	        String email = userInfo.get("email").toString();
+	        String[] memId = email.split("@");
+	        String name = userInfo.get("nickname").toString();
+	        String password = "1111" ;
+	        
+	        MembersDTO memberDto = new MembersDTO(memId[0], password, name, email, "user.jpg", "student", LocalDateTime.now());
+	        MembersDTO res = membersService.memJoin(memberDto);
+	        
+	        if (res != null) {
+	        	
+	            session.setAttribute("memId", email);
+	            session.setAttribute("access_token", access_token);
+	            mv.addObject("memId", email);
+	            
+	    		MembersDTO members = membersService.loginMember(memId[0].toString(), password);
+	    		
+	    		if (members != null) { 
+	    			
+	    			model.addAttribute("member", members); 
+
+	    			mv.setViewName("member/joinInfo");
+
+	    		} else {
+	    			
+	    			mv.setViewName("Error");
+	    		}
+	            
+			}else {
+				
+	            throw new RuntimeException("회원가입에 실패하였습니다.");
+	        }
+		
+		}
 		return mv;
 	}
+	
+    @GetMapping(value = "/joinView", produces = "application/json; charset=UTF-8")
+    protected String memJoinView() throws SQLException {
+		
+		return "member/join";
+	}
     
-	//로그인 (확인)
-	@PostMapping(value = "/login", produces = "application/json;charset=UTF-8")
-	public String login(Model sessionData, @RequestParam("memId") String memId, 
+	@PostMapping(value = "/join", produces = "application/json; charset=UTF-8")
+	public String memInsert(Model model, MembersDTO members, @RequestParam("memId") String memId
+						,@RequestParam("password") String pw, @RequestParam("name") String name, 
+						@RequestParam("email") String email,
+						@RequestParam("file") MultipartFile file) throws SQLException, IOException, MessageException {
+		
+		if(file != null && !file.isEmpty()) {
+			
+			String savedFileName = fileService.getProfile(memId, file);
+			members.setProfile(savedFileName);
+			
+		}else {
+			
+			members.setProfile("user.jpg");
+		}
+        
+		members.setMemId(memId);
+		members.setEmail(email);
+		members.setGrade("student");
+		members.setName(name);
+		members.setPw(pw);
+        members.setRegdate(LocalDateTime.now());
+		
+		membersService.memJoin(members); 
+		
+		model.addAttribute("member", members); 
+
+		return "member/joinInfo"; 
+	}
+    
+	@GetMapping(value = "/loginView", produces = "application/json; charset=UTF-8")
+    protected String memLoginView() throws SQLException {
+		
+		return "member/login";
+	}
+    
+	@GetMapping(value = "/findIdView")
+	public String findIdForm() {
+		
+		return "member/findId";
+	}
+
+	@PostMapping(value = "/findId", produces = "application/json; charset=UTF-8")
+	public String findId(Model model, @RequestParam("email") String email ) throws SQLException {
+		
+		MembersDTO member = membersService.findId(email);
+		
+        if (member == null) {
+        	
+            model.addAttribute("msg", "일치하는 회원 정보가 없습니다.");
+            
+        } else {
+        	
+            model.addAttribute("member", member);
+        }
+        
+        return "member/findIdResult";
+	}
+	
+	@GetMapping(value = "/findPwdView", produces = "application/json; charset=UTF-8")
+	public String findPwdForm() {
+		
+		return "member/findPw";
+	}
+
+	@PostMapping(value = "/findPwd", produces = "application/json; charset=UTF-8")
+	public String findPwd(Model model, @RequestParam("memId") String memId, @RequestParam("email") String email) throws SQLException {
+	
+		MembersDTO member = membersService.findPw(memId,email);
+		
+        if (member == null) {
+        	
+            model.addAttribute("msg", "일치하는 회원 정보가 없습니다.");
+            
+        } else {
+            model.addAttribute("member", member);
+            
+        }
+        
+        return "member/findPwResult";
+	
+	}
+    
+	@PostMapping(value = "/login", produces = "application/json; charset=UTF-8")
+	public String login(Model model, @RequestParam("memId") String memId, 
 						@RequestParam("password") String password) throws Exception {
 		
-		Members members = membersService.loginMember(memId, password);
-		System.out.println("----" + members);
+		MembersDTO members = membersService.loginMember(memId, password);
 		
-		if (members != null) { // 로그인성공
-			System.out.println("id확인 " + memId);
-			sessionData.addAttribute("members", members); // 세션에 프로필 저장
+		if (members != null) { 
+			model.addAttribute("members", members); 
 
-			return "redirect:/page/main.jsp"; // 로그인 후 메인화면
-			
+			return "redirect:/"; 
+
 		} else {
 			
-			return "redirect:/page/loginError.jsp"; // 에러메시지 창 띄우는걸로 수정하기
+			return "loginError"; 
 		}
-		
 		
 	}
 	
-	
-	//로그아웃 (확인)
-	@GetMapping(value = "/sessionOut")
-	public ModelAndView sessionOut(SessionStatus status) throws Exception {
+	@GetMapping(value = "/sessionOut", produces = "application/json; charset=UTF-8")
+	public String sessionOut(SessionStatus status, HttpSession session) throws Exception {
 
 		status.setComplete();
 		status = null;
 		
-		ModelAndView mv = new ModelAndView();
-		
-		mv.setViewName("redirect:/member/refresh");
+	    String accessToken = (String) session.getAttribute("access_token");
 
-		return mv;
+	    if (accessToken != null) {
+	    	
+	        kakaoService.kakaoLogout(accessToken);
+	        session.removeAttribute("access_token");
+	        session.removeAttribute("userId");
+	    }
+		
+		return "redirect:/";
+	} 
+	
+	@GetMapping(value = "/myinfo", produces = "application/json; charset=UTF-8")
+	public String viewOne(Model model, @ModelAttribute("members") MembersDTO mem) throws SQLException {
+ 
+		return "member/myinfoview";
 	}
 	
-	@GetMapping(value = "/refresh")
-	public ModelAndView refresh() throws Exception { 
-		ModelAndView mv = new ModelAndView();
-		
-		mv.setViewName("redirect:/page/index.html");
-		
-		return mv;
-	}
-	
-    /**
-     * 멤버 정보 관리 기능 
-     */
-	//로그인 후 정보조회 (확인)
-	@RequestMapping(value = "/myinfo", method = RequestMethod.GET)
-	public String viewOne(Model sessionData, @ModelAttribute("members") Members mem) throws SQLException {
+	@GetMapping(value = "/updatepage", produces = "application/json; charset=UTF-8")
+	public String updatePage(Model model, @ModelAttribute("members") MembersDTO mem) throws SQLException {
 
-		
-		return "redirect:/page/member/myinfo.jsp";
+		return "member/updateInfo";
 	}
 		
-	//프로필 수정 페이지 이동 (확인)
-	@RequestMapping(value = "/updatepage", method = RequestMethod.GET)
-	public String updatePage(Model sessionData, @ModelAttribute("members") Members mem) throws SQLException {
-
-		return "redirect:/page/member/updateInfo.jsp";
+	@PostMapping(value = "/update", produces = "application/json; charset=UTF-8")
+	public String updatePage( Model model, HttpSession session, @ModelAttribute("members") MembersDTO mem,
+			@RequestParam("newpw") String newpw, @RequestParam("password") String password, 
+			@RequestParam("name") String name, 
+			@RequestParam("file") MultipartFile file) throws SQLException, IOException {
+		
+		String memId = mem.getMemId(); 
+		
+		if(file == null || file.isEmpty()) {
+			
+			mem.setProfile(memId+".jpg");
+			
+		}else {
+			
+			String savedFileName = fileService.getProfile(memId, file);
+			mem.setProfile(savedFileName);
+		}
+		
+		mem.setName(name);
+		
+		if(newpw==null  || newpw.isEmpty()) {
+			
+			mem.setPw(mem.getPw());
+			
+		}else {
+			
+			mem.setPw(newpw);
+			
+		}
+		
+		membersService.updateMember(mem);
+		
+		model.addAttribute("members", mem); 
+		
+		return "member/myinfoview"; 
+		
 	}
 	
-	//프로필 수정 기능 (미확인)
-//	@RequestMapping(value = "/update", method = RequestMethod.POST)
-//	public String update(@ModelAttribute("memId") String id, @RequestParam("name") String name, @RequestParam("email") String email, @RequestParam("password") String pw, @RequestParam("profile") String file) throws SQLException {
-//
-//		System.out.println("update() ----- " + id);
-//		
-//		membersService.updateMember(id, email, name, pw, file);
-//
-//		return "auth/updateSuccess";
-//	}
+	@GetMapping(value = "/delete/{memId}", produces = "application/json; charset=UTF-8")
+	public String delete(Model model, @PathVariable String memId, SessionStatus status){
+		
+		 try {
+			 
+		        membersService.deleteMember(memId);
+				status.setComplete();
+				status = null;
+				
+		        model.addAttribute("message", "회원 탈퇴가 완료되었습니다.");
+		        
+		    } catch (Exception e) {
+		    	
+		        e.printStackTrace();
+		        model.addAttribute("message", "회원 탈퇴에 실패했습니다.");
+		        
+		        return "member/myinfoview";
+		    }
+		 
+		 return "redirect:/";
+	}
 	
-	//회원 삭제 (미확인)
-//	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-//	public String delete(@RequestParam("memId") String deleteId) throws SQLException {
-//		
-//		membersService.deleteMember(deleteId);
-//		
-//		return "redirect:/index.html"; 
-//	}
-//	
-//	//관리자 화면으로 이동
-//	@RequestMapping(value="/adPage", method = RequestMethod.GET)
-//	public String adMain() {
-//		return "member/adPage";
-//	}
-	
-	//관리자 - 전체회원조회
-//	@RequestMapping(value="/adAllView", method = RequestMethod.GET)
-//	public ModelAndView getMembers() throws SQLException {
-//		
-//		ModelAndView mv = new ModelAndView();
-//			
-////		mv.addObject("allData", memdao.getMembers());
-//		mv.setViewName("member/adAllView");
-//		
-//		return mv;
-//	}
-	
-	// 예외 처리에 대한 중복 코드를 분리해서 예외처리 전담 메소드
-	//http://localhost/team2_studyroom/WEB-INF/auth/error.jsp
 	@ExceptionHandler
 	public String totalEx(SQLException e, HttpServletRequest req) { 
-		System.out.println("예외 처리 전담");
+		
 		e.printStackTrace();
-
 		req.setAttribute("errorMsg", e.getMessage());
 
-		return "forward:/page/error.jsp";
+		return "error";
 	}
 
 	

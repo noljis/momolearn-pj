@@ -10,6 +10,9 @@ import lombok.NoArgsConstructor;
 public class CartDTO  {
 	
 	private int cartId;
-	private String memberId;
-	private int lectureId;
+	
+	private MembersDTO member;
+	
+	private LecturesDTO lecture;
+	
 }

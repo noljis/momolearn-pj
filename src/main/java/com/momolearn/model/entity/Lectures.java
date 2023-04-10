@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -20,6 +21,8 @@ import org.hibernate.annotations.DynamicInsert;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,48 +36,62 @@ import lombok.Setter;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
+@ApiModel(value="강의 정보", description = "강사에 할당된 강의번호, 강사, 강의명, 썸네일, 가격, 강좌수, 수강생수, 등록일, 설명 정보")
 public class Lectures  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id; //강의id
+    @ApiModelProperty(example="1")
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teacher_no")
-    private Teachers teachers; //강사id <- teachers
+    private Teachers teachers;
 
     @Column(length = 50, nullable = false)
-    private String title; //강의제목
-
+    @ApiModelProperty(example="자바의 정석")
+    private String title;
+    
     @Column(length = 255, nullable = false)
     @ColumnDefault("'default.jpg'")
-    private String image; //강의썸네일 default null not null 차이점
+    @ApiModelProperty(example="자바의 정석.png")
+    private String image; 
 
     @Column(length = 6, nullable = false)
-    private Integer price; //강의가격
+    @ApiModelProperty(example="5000")
+    private Integer price;
 
     @Column(length = 6, nullable = false)
     @ColumnDefault("0")
-    private Integer cnt; //강좌수
+    @ApiModelProperty(example="10")
+    private Integer cnt;
 
     @Column
     @CreatedDate
-    private LocalDateTime regdate; //강의등록일
+    @ApiModelProperty(example="2023-03-26T00:00:00")
+    private LocalDateTime regdate;
 
     @Column(length = 255, nullable = false)
-    private String info; //강의한줄설명
+    @ApiModelProperty(example="자바 입문강의")
+    private String info;
 
     @Column(columnDefinition = "TEXT", nullable = false)
-    private String description; //강의상세설명
+    @ApiModelProperty(example="자바의 역사부터 실전까지 차근차근 알려드립니다.")
+    private String description;
 
     @Column(length = 6, nullable = false)
-    private Integer applyCnt; //수강학생수
+    @ApiModelProperty(example="10")
+    private Integer applyCnt;
     
-    //강의 조회시 강좌도 조회 양방향 주테이블
-    @OneToMany(mappedBy = "lecture")
-    private List<Courses> courses = new ArrayList<>(); //강의 -> 강좌
+    @OneToMany(mappedBy = "lecture", cascade = CascadeType.REMOVE)
+    private List<Courses> courses = new ArrayList<>();
     
-    //강의 조회시 카테고리도 조회 양방향 주테이블
-    @OneToMany(mappedBy = "lecture")
+    @OneToMany(mappedBy = "lecture", cascade = CascadeType.REMOVE)
+    private List<MyLectures> mylectures = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "lecture", cascade = CascadeType.REMOVE)
+    private List<Cart> cart = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "lecture", cascade = CascadeType.REMOVE)
     private List<CategoryLecture> categoryLecture = new ArrayList<>();
     
 }

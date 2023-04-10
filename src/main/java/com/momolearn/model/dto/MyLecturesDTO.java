@@ -11,9 +11,12 @@ import lombok.NoArgsConstructor;
 @Data
 public class MyLecturesDTO  {
 	
-	private Integer mylecId;	//수강id
-	private String memberId; //학생id
-	private int lectureId; //강의id
-	private LocalDateTime lecRege; //수강신청일
+	private Integer mylecId;
+	
+	private String memberId;
+	
+	private int lectureId;
+	
+	private LocalDateTime lecRege;
 
 }

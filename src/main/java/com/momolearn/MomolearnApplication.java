@@ -9,8 +9,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 public class MomolearnApplication {
 
 	public static void main(String[] args) {
+		
 		SpringApplication.run(MomolearnApplication.class, args);
+		
 	}
 
 }
-//http://localhost/momolearn/page/index.html

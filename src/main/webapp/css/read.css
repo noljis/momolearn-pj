@@ -129,6 +129,31 @@ img {
 .contact-form .send {
     margin-top: 20px;
 }
+#submitComment {
+	float: right;
+}
+
+#btn-like{
+	background-color: #be98ff;
+	border-color: #be98ff;
+	display: block;
+	margin: auto;
+}
+
+#btn-cancel{
+	background-color: #be98ff;
+	border-color: #be98ff;
+	display: block;
+	margin: auto;
+}
+
+#btn-likeLogin{
+	background-color: #9f9aa9;
+	border-color: #9f9aa9;
+	display: block;
+	margin: auto;
+}
+
 .px-btn {
     padding: 0 50px 0 20px;
     line-height: 60px;
@@ -200,6 +225,11 @@ img {
     padding-left: 8px;
 }
 
+.border-separator {
+  padding-right: 1.0em;
+  border-right: 1px solid #8000ff;
+  margin-right: 1.0em;
+}
 
 
 .be-comment-block {
@@ -305,6 +335,19 @@ img {
   border-radius: 3px;
 }
 
+.form-input3{
+  font-size: 13px;
+  line-height: 50px;
+  font-weight: 400;
+  color: #b4b7c1;
+  height: 50px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border: 1px solid #edeff2;
+  border-radius: 3px;
+	
+}
+
 .form-group.fl_icon .form-input {
   padding-left: 30px;
 }
@@ -313,3 +356,92 @@ img {
   height: 150px;
 }
 
+.form-input2 {
+  height: 100px;
+  width: 100%;
+  font-size: 13px;
+  color: gray;
+  font-weight: 400;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
+  border: 1px solid #edeff2;
+  border-radius: 3px;
+}
+
+#btn-putdelete {
+	color:#AAAAAA;
+	font-size:12px;
+	padding-right: 10px;
+	font-weight:600;
+	float: right;
+}
+
+#btn-putdelete a:hover {
+	text-decoration:underline;
+}
+
+#btn-putdelete li:last-child {
+	padding-right:0;
+}
+
+#btn-putdelete li i {
+	color:#666666;
+	font-size:15px;
+	margin-right:10px;
+}
+.ck.ck-editor {
+	width: 80%;
+	max-width: 800px;
+	margin: 0 auto;
+}
+
+.ck-editor__editable {
+	height: 60vh;
+}
+.floating-button {
+  position: fixed;
+  right: 40px;
+  bottom: 100px;
+  z-index: 999;
+  background-color: #f44336;
+  color: white;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  box-shadow: 0px 3px 10px rgba(0,0,0,0.3);
+  width: 60px;
+  height: 60px;
+  transition: all 0.3s ease-in-out;
+}
+
+.floating-button:hover {
+  background-color: #d32f2f;
+  transform: scale(1.05);
+  box-shadow: 0px 5px 15px rgba(0,0,0,0.3);
+}
+
+.floating-button svg {
+  width: 30px;
+  height: 30px;
+  margin: 15px;
+}
+
+.floating-button:hover .button-text {
+    display: block;
+  }
+.button-text {
+  display: none;
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #000;
+  color: #fff;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+  white-space: nowrap;
+}

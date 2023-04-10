@@ -10,9 +10,13 @@ import lombok.NoArgsConstructor;
 public class CoursesDTO {
 
     private int courseId;
+    
     private int lectureId;
+    
     private String title;
+    
     private String time;
+    
     private String url;
 
 }

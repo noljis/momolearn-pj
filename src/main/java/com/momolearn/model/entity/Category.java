@@ -10,8 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -20,22 +21,25 @@ import lombok.NoArgsConstructor;
 @Getter
 
 @Entity
+@ApiModel(value="카테고리", description = "카테고리id, 카테고리명을 보유한 카테고리 정보")
 public class Category  {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer cateId;	//카테고리id
+	@ApiModelProperty(example="1")
+	private Integer cateId;
 	
 	@Column(length = 50, nullable = false)
-	private String cateName; //카테고리명
+	@ApiModelProperty(example="java")
+	private String cateName;
 	
-	//카테고리수강 테이블과 양방향 매핑. 주테이블
 	@OneToMany(mappedBy = "category")
 	public List<CategoryLecture> categoryLecture = new ArrayList<>();
 	
-	
 	public Category(String cateName) {
+		
 		this.cateName = cateName;
+		
 	}
 	
 }

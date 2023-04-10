@@ -5,9 +5,10 @@
 	font-family: "Noto Sans KR", sans-serif;
 }
 
-#a {
-	text-decoration: none;
-	color: black;
+#kakao-login-btn {
+  color: black;
+  font-size: 15px;
+  font-weight: bolder;
 }
 
 li {
@@ -37,10 +38,35 @@ li {
 
 .text{
     margin-top: 30px;
-	margin-left: 10%;
+    margin-left: 70px;
     font-size: 10pt;
     display: flex;
 }
+.login_sns {
+	
+	width:122%;
+	padding: 10px;
+	display: flex;
+	margin-left: -30px;
+	
+}
+
+.login_sns li {
+	padding: 0px 15px;
+	margin: 0px 25px;
+}
+
+.login_sns li{
+    width: 150%;
+    height: 50px;
+    padding: 0px 15px;
+  	margin: 0px 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px;
+    background: rgb(255, 230, 0);
+  }
 
 .join {
 	width: 30%;

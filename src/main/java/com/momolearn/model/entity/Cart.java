@@ -9,7 +9,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -18,22 +21,29 @@ import lombok.NoArgsConstructor;
 @Getter
 
 @Entity
+@ApiModel(value="수강바구니 정보", description = "카트번호, 회원, 강의정보를 보유한 강사 내역 정보")
 public class Cart  {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "cart_id")
-	private Integer cartId;	//수강바구니 id
+	@ApiModelProperty(example="1")
+	private Integer cartId;	
 	
-	//Members 테이블과 다대일 단방향
-	//바구니정보 조회시 Member조회 단방향
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-	private Members member; //학생id
+	private Members member;
 	
-	//Lectures 테이블과 다대일 단방향
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lecture_id")
-	private Lectures lecture; //강의id
+	private Lectures lecture;
+	
+	@Builder
+	public Cart(Members member, Lectures lecture) {
+		
+		this.member = member;
+		this.lecture = lecture;
+		
+	}
 	
 }

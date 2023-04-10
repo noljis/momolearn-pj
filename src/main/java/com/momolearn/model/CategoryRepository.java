@@ -10,6 +10,5 @@ import com.momolearn.model.entity.Category;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Integer>{
 
-	//카테고리명으로 조회
 	Optional<Category> findByCateName(String cate);
 }

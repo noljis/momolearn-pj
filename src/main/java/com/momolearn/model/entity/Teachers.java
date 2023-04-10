@@ -1,5 +1,9 @@
 package com.momolearn.model.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -7,9 +11,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,34 +27,45 @@ import lombok.Setter;
 @Getter
 @Setter
 
+@Builder
+
 @Entity
-//ApplyTeacher를 참조하고 있는데 연락처, 희망분야, 자기소개 ,포폴링크 속성이 필요할까?
+@ApiModel(value="강사 정보", description = "강사번호, 연락처, 희망분야, 소개, 포트폴리오url, 강사내역 정보")
 public class Teachers {	
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(length = 20)
-	private Integer teacherNo;	//강사번호
+	@ApiModelProperty(example="1")
+	private Integer teacherNo;
 	
 	@Column(name = "phone_num", nullable = false)
-	private String phoneNum;	//연락처
+	@ApiModelProperty(example="010-1234-5678")
+	private String phoneNum;
 
 	@Column(length = 20, nullable = false)
-	private String hope; //희망분야
+	@ApiModelProperty(example="컴퓨터 사이언스")
+	private String hope;
 	
 	@Column(length = 255, nullable = false)
-	private String intro;	//자기소개 수정할 수 있는 부분
+	@ApiModelProperty(example="안녕하세요 현재 ㅇㅇ대학교 4학년 재학중인 학생입니다.")
+	private String intro;
 	
 	@Column(name = "pf_link", length = 100, nullable = false)
-	private String pfLink;	//포폴링크
+	@ApiModelProperty(example="https://github.com")
+	private String pfLink;
 	
-	//양방향 연관관계의 주인. 대상테이블에 외래키가 존재 
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "apply_id")
 	private ApplyTeacher applyTeacher;
 	
+	@OneToMany(mappedBy = "teachers" , cascade = CascadeType.REMOVE)
+	public List<Lectures> lecture = new ArrayList<>();
+	
 	public void setTeacherNo(Integer teacherNo) {
+		
 		this.teacherNo = teacherNo;
+		
 	}
 	
 }
