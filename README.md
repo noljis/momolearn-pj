@@ -1,14 +1,33 @@
 # ✏️ MOMOLEARN(모모런) 
-![user](https://user-images.githubusercontent.com/85906821/228460846-a4f4cc2d-63e0-4e99-967d-c3a5bc87dea9.jpg)
 
 <img width="1266" alt="00  메인화면" src="https://user-images.githubusercontent.com/117498827/230244583-f5d347ce-80b8-4297-96bb-ca9b394c96dc.png">
 
 
 ## 💡 프로젝트 소개
+⚡ Spring Boot + Spring Data JPA 를 이용한 프로젝트입니다. <br>
+⚡ 재능기부를 중심으로 하는 온라인 강의 플랫폼 입니다. <br> 
+⚡ 누구나 강사 신청이 가능하며, 수강생들이 부담 없이 강의를 수강할 수 있습니다. <br>
+⚡ 수강생들끼리 소통할 수 있는 커뮤니티와 같은 다양한 기능을 제공하여 학습을 보다 효과적으로 진행할 수 있도록 도와줍니다. <br>
+
+
+## ⏰ 개발기간
+2023.03.13 ~ 2023.04.
+
+
+
+## 👩‍💻 팀원
+
+|   이름   |                        깃허브 주소                         | 
+| :------: | :--------------------------------------------------------: | 
+|  🌱김솔진  | [https://github.com/noljis](https://github.com/noljis)   | 
+|  🌌박혜인  | [https://github.com/PHyeinP](https://github.com/PHyeinP) |
+|  🐲이민지  | [https://github.com/minddi00](https://github.com/minddi00) |
+|  🍋이시현  | [https://github.com/SIHYEONee](https://github.com/SIHYEONee) |
 
 
 ## ‼️ DB설정을 위해 다음 파일을 받아주세요
 - [application-db.zip](https://github.com/HtaTeam2/momolearn-pj/files/11047249/application-db.zip) (경로 : src/main/resources)
+
 
 
 ## ☁ ERD
@@ -30,6 +49,14 @@
 
 ## ⚒️<a name="1">[기술 스택](#list)</a>
 <p>
+<img src="https://img.shields.io/badge/spring boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=green">
+<img src="https://img.shields.io/badge/spring data jpa-59666C?style=for-the-badge&logo=hibernate&logoColor=white"> 
+<img src="https://img.shields.io/badge/java-0F2B77?style=for-the-badge&logo=openjdk&logoColor=white"> 
+<img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"> 
+ <br>
+<img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
+<img src="https://img.shields.io/badge/ajax-5A29E4?style=for-the-badge&logo=ajax&logoColor=white">
+<img src="https://img.shields.io/badge/jquery-0769AD?style=for-the-badge&logo=jquery&logoColor=white">
 <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> 
 <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> 
 <img src="https://img.shields.io/badge/bootstrap-9933FF?style=for-the-badge&logo=bootstrap&logoColor=white">
@@ -132,6 +159,22 @@
 ⚡조회는 전체 등급이 가능하며, 작성/수정/삭제는 관리자 등급만 가능합니다.<br>
 ⚡사진 등록시 해당 사진이 썸네일로 노출됩니다.<br>
 
+
+1. 회원가입/탈퇴/로그인
+2. 소셜 간편회원가입
+3. ID/PW 찾기
+4. 회원/관리자 프로필 관리
+5. 강사 신청/신청서 관리
+6. 강사 승인/등록
+7. 강의 검색
+8. 강사 강의/강좌 관리
+9. 장바구니/결제
+10. 강의 수강
+11. 내 강의
+12. 커뮤니티 게시판-글 관리/댓글 관리/좋아요/좋아요한 글 
+13. 커뮤니티 게시판-검색/실시간랭킹/페이징/회원정보,작성글 확인
+14. 공지사항 게시판
+
 ## [💣](#list)<a name="3">3. 트러블 슈팅</a>
 ☑ Lecture 조회 쿼리에서 강의를 조회한 후 카테고리를 조회하여 1+N 문제 발생<br>
 👉join fetch를 사용하여 해결하려고 하였으나, 쿼리 중복이 발생하여 강의 개수만큼 카테고리의 배열이 출력되는 이슈가 새롭게 발생하여 EntityGraph를 사용하여 해결하였습니다.<br>
@@ -143,4 +186,3 @@
 ✅ 
 ✅   
 ✅   
-
