@@ -26,22 +26,20 @@ class MomolearnApplicationTests {
 
 	
 	
-	@Autowired MembersRepository membersRepository;
-	@Autowired MembersService membersService;
-	@Autowired LikesRepository likesRepository;
-	@Autowired LikesService likesService;
+// 	@Autowired MembersRepository membersRepository;
+// 	@Autowired MembersService membersService;
+// 	@Autowired LikesRepository likesRepository;
+// 	@Autowired LikesService likesService;
 
-	@Autowired ApplyTeacherRepository applyTeacherRepository;
-	@Autowired ApplyTeacherService applyTeacherService;
-	@Autowired TeachersRepository teacherRepository;
-	@Autowired TeachersService teacherService;
+// 	@Autowired ApplyTeacherRepository applyTeacherRepository;
+// 	@Autowired ApplyTeacherService applyTeacherService;
+// 	@Autowired TeachersRepository teacherRepository;
+// 	@Autowired TeachersService teacherService;
 
-	@Autowired
-	private WebApplicationContext controller;
-//	
-	private MockHttpSession session;
-//	
-	private MockMvc mock;
+// 	@Autowired
+// 	private WebApplicationContext controller;
+// 	private MockHttpSession session;
+// 	private MockMvc mock;
 	
 //	@MockBean
 //	private LecturesRepository lecturesRepository;
@@ -58,10 +56,10 @@ class MomolearnApplicationTests {
 //	@MockBean
 //	private FileService fileService;
 	
-	@BeforeEach
-	public void init() {
-		mock = MockMvcBuilders.webAppContextSetup(controller).build();
-	}
+// 	@BeforeEach
+// 	public void init() {
+// 		mock = MockMvcBuilders.webAppContextSetup(controller).build();
+// 	}
 	
 	
 //	@Test
