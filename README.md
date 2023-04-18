@@ -178,11 +178,20 @@
 ## [💣](#list)<a name="3">3. 트러블 슈팅</a>
 ☑ Lecture 조회 쿼리에서 강의를 조회한 후 카테고리를 조회하여 1+N 문제 발생<br>
 👉join fetch를 사용하여 해결하려고 하였으나, 쿼리 중복이 발생하여 강의 개수만큼 카테고리의 배열이 출력되는 이슈가 새롭게 발생하여 EntityGraph를 사용하여 해결하였습니다.<br>
-☑ 인기게시물 조회시 순환참조로 인한 직렬화 에러 발생<br>
-👉 @JsonIgnore이나 yml파일 FAIL_ON_EMPTY_BEANS: false 설정 등 여러 해결책이 있으나 근본적인 문제해결을 위해 필요한 데이터만 담은 DTO객체를 만들어 조회하여 해결했습니다.<br>
-☑ 좋아요한 글 목록 조회시 fetch join과 paging 병용 불가<br>
-👉 JPA에서 paging할때 -ToMany 관계는 데이터의 수가 변해 fetch join이 불가능. fetch join을 제거하고 application.yml에 default_batch_fetch_size=10 추가해주었습니다.<br>
-## [✨](#list)<a name="4">4. 프로젝트 개선할 점</a>
-✅ 
-✅   
-✅   
+☑ multipart도입 후 max-file-size: 3MB #파일의 최대 사이즈를 적용해도 1MB까지만 업로드 가능한 이슈<br>
+👉 yml에서 경로를 수정해주었습니다(server 하위 → servlet 하위로 이동)<br>
+```yaml
+multipart:
+    enabled: true
+    location: src/main/webapp/img
+    max-file-size: 3MB
+    max-request-size: 3MB
+```
+☑ 카카오페이 API 도입시 결제금액이 0원일경우 예외 발생<br>
+👉 0원일 경우 결제로 가지 않고 바로 수강신청되는 js함수를 생성하여 해결하였습니다.<br>
+☑ 기존에 사용하던 Swagger2.9.2버전에 대한 오류<br>
+👉 Swagger를 2.9.2버전에서 3.0버전으로 업그레이드 해주었습니다.(gradle의존경 변경)<br>
+## [✨](#list)<a name="4">4. 프로젝트를 진행하며 느낀 점</a>
+✅ JPA가 확실히 SQL문을 직접 쓰지 않아도 되는 것은 좋지만, 1+N문제 등을 발생시키지 않고 JPA를 더 잘 사용하기 위해 SQL을 더 깊이있게 공부해야 한다는 필요성을 느꼈습니다.<br>
+✅ `@Autowired`로 주입을 할 경우 순환참조 문제가 발생할 수 있어, final을 사용한 생성자 주입방식을 사용해야 한다는 점을 알게 되었습니다. <br>
+✅ 프로젝트에서 데이터베이스 테이블 간의 관계를 더욱 명확하게 정의하고 구조화할 필요성을 인지하였습니다.
