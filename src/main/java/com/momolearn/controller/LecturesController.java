@@ -91,7 +91,6 @@ public class LecturesController {
 
 		LecturesDTO lecture = lecturesService.uploadLecture(lectureDTO);
 		lecturesService.getCategory(category, lecture);
-		model.addAttribute("lecture", lecture);
 
 		return "redirect:courses-form/" + URLEncoder.encode(lecture.getTitle(), StandardCharsets.UTF_8) + "/" + lecture.getId();
 		
